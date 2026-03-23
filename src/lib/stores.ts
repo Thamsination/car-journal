@@ -32,13 +32,18 @@ export const error = writable<string | null>(null);
 
 export const statusFilter = writable<string>('all');
 
+function sortByKmThenDate(a: CarEvent, b: CarEvent): number {
+	const aKm = a.km ?? -1;
+	const bKm = b.km ?? -1;
+	if (aKm !== bKm) return bKm - aKm;
+	if (!a.date && !b.date) return 0;
+	if (!a.date) return 1;
+	if (!b.date) return -1;
+	return b.date.localeCompare(a.date);
+}
+
 export const filteredEvents = derived([events, statusFilter], ([$events, $filter]) => {
-	const sorted = [...$events].sort((a, b) => {
-		if (!a.date && !b.date) return 0;
-		if (!a.date) return 1;
-		if (!b.date) return -1;
-		return b.date.localeCompare(a.date);
-	});
+	const sorted = [...$events].sort(sortByKmThenDate);
 	if ($filter === 'all') return sorted;
 	return sorted.filter((e) => e.status === $filter);
 });
@@ -91,20 +96,17 @@ export const latestOdometer = derived([vehicle, events], ([$vehicle, $events]) =
 });
 
 export const nextScheduledEvent = derived(events, ($events) => {
-	const today = new Date().toISOString().split('T')[0];
 	const upcoming = $events
-		.filter(
-			(e) =>
-				(e.status === 'scheduled' || e.status === 'pending') &&
-				e.date
-		)
+		.filter((e) => e.status === 'scheduled' || e.status === 'pending')
 		.sort((a, b) => {
+			const aKm = a.km ?? Infinity;
+			const bKm = b.km ?? Infinity;
+			if (aKm !== bKm) return aKm - bKm;
 			const da = a.date || '9999';
 			const db = b.date || '9999';
 			return da.localeCompare(db);
 		});
-	const futureOnes = upcoming.filter((e) => e.date >= today);
-	return futureOnes.length > 0 ? futureOnes[0] : upcoming[0] ?? null;
+	return upcoming[0] ?? null;
 });
 
 export const nextBatchEvents = derived(
