@@ -3,8 +3,8 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import {
-		token, events, totalCost, costByCategory,
-		upcomingEvents, vehicle, latestOdometer,
+		token, events, totalSpent, totalPlanned, costByCategory,
+		nextBatchEvents, vehicle, latestOdometer,
 		nextScheduledEvent, statusFilter
 	} from '$lib/stores';
 	import { loadEvents, loadVehicle } from '$lib/github';
@@ -82,11 +82,6 @@
 		{/if}
 
 		<div class="stats-grid">
-			<div class="stat-card accent">
-				<span class="stat-value">{formatCost($totalCost)}</span>
-				<span class="stat-label">Total Spent</span>
-			</div>
-
 			<button class="stat-card tappable" onclick={goCompleted}>
 				<span class="stat-value">{completedCount}</span>
 				<span class="stat-label">Completed</span>
@@ -98,11 +93,11 @@
 			</button>
 		</div>
 
-		{#if $upcomingEvents.length > 0}
+		{#if $nextBatchEvents.length > 0}
 			<section class="section">
-				<h3 class="section-title">Upcoming Services</h3>
+				<h3 class="section-title">Upcoming Services — {$nextBatchEvents[0].km?.toLocaleString()} km</h3>
 				<div class="upcoming-list">
-					{#each $upcomingEvents as evt}
+					{#each $nextBatchEvents as evt}
 						<a href="{base}/events/{evt.id}" class="upcoming-card">
 							<div class="upcoming-header">
 								<span class="upcoming-event">{evt.event}</span>
@@ -112,14 +107,14 @@
 								></span>
 							</div>
 							<div class="upcoming-meta">
-								{#if evt.km}
-									<span>{evt.km.toLocaleString()} km</span>
-								{/if}
 								{#if evt.date}
 									<span>{formatDate(evt.date)}</span>
 								{/if}
 								{#if evt.cost > 0}
 									<span>{formatCost(evt.cost)}</span>
+								{/if}
+								{#if evt.provider}
+									<span>{evt.provider}</span>
 								{/if}
 							</div>
 							{#if $latestOdometer.km > 0 && evt.km}
@@ -144,7 +139,12 @@
 			</section>
 		{/if}
 
-		{#if $costByCategory.length > 0}
+		<div class="stat-card accent total-spent">
+			<span class="stat-value">{formatCost($totalSpent)}</span>
+			<span class="stat-label">Total Spent</span>
+		</div>
+
+		{#if $costByCategory.length > 0 || $totalPlanned > 0}
 			<section class="section">
 				<h3 class="section-title">Cost Breakdown</h3>
 				<div class="breakdown-list">
@@ -154,6 +154,12 @@
 							<span class="breakdown-value">{formatCost(cat.total)}</span>
 						</div>
 					{/each}
+					{#if $totalPlanned > 0}
+						<div class="breakdown-row planned">
+							<span class="breakdown-name">Planned (upcoming)</span>
+							<span class="breakdown-value">{formatCost($totalPlanned)}</span>
+						</div>
+					{/if}
 				</div>
 			</section>
 		{/if}
@@ -244,10 +250,6 @@
 		padding: 16px;
 		text-align: center;
 		color: var(--color-text);
-	}
-
-	.stat-card.accent {
-		grid-column: 1 / -1;
 	}
 
 	.stat-card.tappable {
@@ -385,6 +387,22 @@
 
 	.breakdown-value {
 		font-weight: 600;
+	}
+
+	.breakdown-row.planned {
+		opacity: 0.7;
+		font-style: italic;
+	}
+
+	.total-spent {
+		margin-bottom: 16px;
+		background: var(--color-accent);
+		border-color: var(--color-accent);
+		color: white;
+	}
+
+	.total-spent .stat-label {
+		color: rgba(255, 255, 255, 0.8);
 	}
 
 	.loading {

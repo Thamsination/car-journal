@@ -43,13 +43,21 @@ export const filteredEvents = derived([events, statusFilter], ([$events, $filter
 	return sorted.filter((e) => e.status === $filter);
 });
 
-export const totalCost = derived(events, ($events) => {
-	return $events.reduce((sum, e) => sum + (e.cost || 0), 0);
+export const totalSpent = derived(events, ($events) => {
+	return $events
+		.filter((e) => e.status === 'done')
+		.reduce((sum, e) => sum + (e.cost || 0), 0);
+});
+
+export const totalPlanned = derived(events, ($events) => {
+	return $events
+		.filter((e) => e.status !== 'done')
+		.reduce((sum, e) => sum + (e.cost || 0), 0);
 });
 
 export const costByCategory = derived(events, ($events) => {
 	const categories: Record<string, number> = {};
-	for (const e of $events) {
+	for (const e of $events.filter((ev) => ev.status === 'done')) {
 		const cat = e.event.split(' - ')[0] || 'Other';
 		categories[cat] = (categories[cat] || 0) + (e.cost || 0);
 	}
@@ -98,3 +106,14 @@ export const nextScheduledEvent = derived(events, ($events) => {
 	const futureOnes = upcoming.filter((e) => e.date >= today);
 	return futureOnes.length > 0 ? futureOnes[0] : upcoming[0] ?? null;
 });
+
+export const nextBatchEvents = derived(
+	[upcomingEvents, nextScheduledEvent],
+	([$upcoming, $next]) => {
+		const excluded = $next?.id;
+		const remaining = $upcoming.filter((e) => e.id !== excluded && e.km !== null);
+		if (remaining.length === 0) return [];
+		const lowestKm = remaining[0].km;
+		return remaining.filter((e) => e.km === lowestKm);
+	}
+);
