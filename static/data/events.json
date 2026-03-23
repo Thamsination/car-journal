@@ -91,15 +91,15 @@
       "event": "Purchase - winter wheels",
       "cost": 5900,
       "currency": "DKK",
-      "provider": "SH Däck&Fälg",
-      "notes": "17” rims, spiked tires, bought in Sweden",
+      "provider": "SH DÃ¤ck&FÃ¤lg",
+      "notes": "17â rims, spiked tires, bought in Sweden",
       "status": "done",
       "invoiceNr": "1804283037399417"
     },
     {
       "id": "evt_009",
       "km": 187033,
-      "date": "2025-03-24",
+      "date": "2026-03-24",
       "event": "Cleanse - fuel system (additive)",
       "cost": 95,
       "currency": "DKK",
