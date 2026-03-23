@@ -151,7 +151,7 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     with ZipFile(ods_path) as z:
-        content_xml = z.read("content.xml")
+        content_xml = z.read("content.xml").decode("utf-8")
 
     root = ET.fromstring(content_xml)
     body = root.find(".//office:body/office:spreadsheet", NS)
