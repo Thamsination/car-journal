@@ -91,8 +91,8 @@
       "event": "Purchase - winter wheels",
       "cost": 5900,
       "currency": "DKK",
-      "provider": "SH DÃ¤ck&FÃ¤lg",
-      "notes": "17â rims, spiked tires, bought in Sweden",
+      "provider": "SH DÃÂ¤ck&FÃÂ¤lg",
+      "notes": "17Ã¢ÂÂ rims, spiked tires, bought in Sweden",
       "status": "done",
       "invoiceNr": "1804283037399417"
     },
@@ -189,7 +189,7 @@
       "currency": "DKK",
       "provider": "DIY",
       "notes": "Prime car for new oil",
-      "status": "pending",
+      "status": "future",
       "invoiceNr": ""
     },
     {
