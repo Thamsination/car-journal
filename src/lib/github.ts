@@ -29,7 +29,9 @@ export async function getFile(path: string): Promise<FileContent> {
 		throw new Error(`GitHub API error: ${res.status} ${res.statusText}`);
 	}
 	const data = await res.json();
-	const content = atob(data.content.replace(/\n/g, ''));
+	const binary = atob(data.content.replace(/\n/g, ''));
+	const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+	const content = new TextDecoder().decode(bytes);
 	return { content, sha: data.sha };
 }
 
@@ -39,7 +41,9 @@ export async function putFile(
 	sha: string,
 	message: string
 ): Promise<string> {
-	const encoded = btoa(unescape(encodeURIComponent(content)));
+	const bytes = new TextEncoder().encode(content);
+	const binary = Array.from(bytes, (b) => String.fromCharCode(b)).join('');
+	const encoded = btoa(binary);
 	const body: Record<string, string> = { message, content: encoded };
 	if (sha) body.sha = sha;
 
