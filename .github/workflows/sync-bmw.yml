@@ -1,0 +1,40 @@
+name: Sync BMW Odometer
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install bimmer_connected
+
+      - name: Fetch vehicle data
+        env:
+          BMW_USERNAME: ${{ secrets.BMW_USERNAME }}
+          BMW_PASSWORD: ${{ secrets.BMW_PASSWORD }}
+          BMW_REGION: ${{ secrets.BMW_REGION }}
+          BMW_VIN: ${{ secrets.BMW_VIN }}
+        run: python scripts/sync-bmw.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "BMW Sync Bot"
+          git config user.email "bot@noreply.github.com"
+          git add static/data/vehicle.json
+          git diff --cached --quiet || git commit -m "Sync: odometer update $(date -I)"
+          git push

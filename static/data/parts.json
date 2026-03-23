@@ -1,0 +1,88 @@
+{
+  "parts": [
+    {
+      "id": "part_001",
+      "name": "Motor oil",
+      "oemPartNr": "83212465854",
+      "brand": "RAVENOL",
+      "supplierStatus": "Third party",
+      "partNr": "1111137-005",
+      "source": "",
+      "price": 910,
+      "currency": "DKK",
+      "notes": "Better than OEM: PAO-base instead of GTL, higher HTHS."
+    },
+    {
+      "id": "part_002",
+      "name": "Diesel additive",
+      "oemPartNr": "83192296922",
+      "brand": "BMW",
+      "supplierStatus": "OEM",
+      "partNr": "83192296922",
+      "source": "",
+      "price": 95,
+      "currency": "DKK",
+      "notes": "Scheduled every 2 oil changes"
+    },
+    {
+      "id": "part_003",
+      "name": "Oil filter",
+      "oemPartNr": "11428575211",
+      "brand": "Mann-filter",
+      "supplierStatus": "Official supplier",
+      "partNr": "HU 6014 z",
+      "source": "",
+      "price": 129,
+      "currency": "DKK",
+      "notes": "OEM is re-branded part"
+    },
+    {
+      "id": "part_004",
+      "name": "Cabin filter",
+      "oemPartNr": "64116996209",
+      "brand": "Mann-filter",
+      "supplierStatus": "Official supplier",
+      "partNr": "CUK 23 015-2",
+      "source": "",
+      "price": 379,
+      "currency": "DKK",
+      "notes": "OEM is re-branded part"
+    },
+    {
+      "id": "part_005",
+      "name": "Fuel filter",
+      "oemPartNr": "13328591019",
+      "brand": "Mann-filter",
+      "supplierStatus": "Official supplier",
+      "partNr": "WK 5017",
+      "source": "",
+      "price": 360,
+      "currency": "DKK",
+      "notes": "OEM is re-branded part"
+    },
+    {
+      "id": "part_006",
+      "name": "Air filter",
+      "oemPartNr": "13718577171",
+      "brand": "Mann-filter",
+      "supplierStatus": "Official supplier",
+      "partNr": "C 28 038",
+      "source": "",
+      "price": 235,
+      "currency": "DKK",
+      "notes": "OEM is re-branded part"
+    },
+    {
+      "id": "part_007",
+      "name": "Battery 12v 105Ah",
+      "oemPartNr": "61217604808",
+      "brand": "Biltema",
+      "supplierStatus": "Third party",
+      "partNr": "80-0105",
+      "source": "",
+      "price": 1999,
+      "currency": "DKK",
+      "notes": "Biltema battery is fine, and doesn’t affect car health."
+    }
+  ]
+}

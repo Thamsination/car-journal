@@ -1,0 +1,130 @@
+import { get } from 'svelte/store';
+import { token, repoOwner, repoName } from './stores';
+
+const API_BASE = 'https://api.github.com';
+
+function headers(): HeadersInit {
+	return {
+		Authorization: `Bearer ${get(token)}`,
+		Accept: 'application/vnd.github+json',
+		'X-GitHub-Api-Version': '2022-11-28'
+	};
+}
+
+function repoPath(): string {
+	return `${API_BASE}/repos/${get(repoOwner)}/${get(repoName)}`;
+}
+
+interface FileContent {
+	content: string;
+	sha: string;
+}
+
+export async function getFile(path: string): Promise<FileContent> {
+	const res = await fetch(`${repoPath()}/contents/${path}`, { headers: headers() });
+	if (!res.ok) {
+		if (res.status === 404) {
+			return { content: '', sha: '' };
+		}
+		throw new Error(`GitHub API error: ${res.status} ${res.statusText}`);
+	}
+	const data = await res.json();
+	const content = atob(data.content.replace(/\n/g, ''));
+	return { content, sha: data.sha };
+}
+
+export async function putFile(
+	path: string,
+	content: string,
+	sha: string,
+	message: string
+): Promise<string> {
+	const encoded = btoa(unescape(encodeURIComponent(content)));
+	const body: Record<string, string> = { message, content: encoded };
+	if (sha) body.sha = sha;
+
+	const res = await fetch(`${repoPath()}/contents/${path}`, {
+		method: 'PUT',
+		headers: headers(),
+		body: JSON.stringify(body)
+	});
+	if (!res.ok) {
+		const err = await res.json().catch(() => ({}));
+		throw new Error(`GitHub API error: ${res.status} — ${err.message || res.statusText}`);
+	}
+	const data = await res.json();
+	return data.content.sha;
+}
+
+export async function readJsonFile<T>(path: string): Promise<{ data: T; sha: string }> {
+	const { content, sha } = await getFile(path);
+	if (!content) {
+		throw new Error(`File not found: ${path}`);
+	}
+	const data = JSON.parse(content) as T;
+	return { data, sha };
+}
+
+export async function writeJsonFile<T>(
+	path: string,
+	data: T,
+	sha: string,
+	commitMessage: string
+): Promise<string> {
+	const content = JSON.stringify(data, null, 2) + '\n';
+	return putFile(path, content, sha, commitMessage);
+}
+
+export async function validateToken(): Promise<boolean> {
+	try {
+		const res = await fetch(`${repoPath()}`, { headers: headers() });
+		return res.ok;
+	} catch {
+		return false;
+	}
+}
+
+let eventsSha = '';
+let partsSha = '';
+
+export async function loadEvents(): Promise<import('./types').CarEvent[]> {
+	const { data, sha } = await readJsonFile<import('./types').EventsData>('data/events.json');
+	eventsSha = sha;
+	return data.events;
+}
+
+export async function saveEvents(
+	events: import('./types').CarEvent[],
+	message: string
+): Promise<void> {
+	const data: import('./types').EventsData = { events };
+	eventsSha = await writeJsonFile('data/events.json', data, eventsSha, message);
+}
+
+export async function loadParts(): Promise<import('./types').Part[]> {
+	const { data, sha } = await readJsonFile<import('./types').PartsData>('data/parts.json');
+	partsSha = sha;
+	return data.parts;
+}
+
+export async function saveParts(
+	parts: import('./types').Part[],
+	message: string
+): Promise<void> {
+	const data: import('./types').PartsData = { parts };
+	partsSha = await writeJsonFile('data/parts.json', data, partsSha, message);
+}
+
+export async function loadIDriveHistory(): Promise<import('./types').IDriveRecord[]> {
+	const { data } = await readJsonFile<import('./types').IDriveData>('data/idrive-history.json');
+	return data.records;
+}
+
+export async function loadVehicle(): Promise<import('./types').VehicleStatus> {
+	try {
+		const { data } = await readJsonFile<import('./types').VehicleStatus>('data/vehicle.json');
+		return data;
+	} catch {
+		return { vin: '', odometer: null, fuelLevel: null, lastSynced: null };
+	}
+}

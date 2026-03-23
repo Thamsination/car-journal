@@ -1,0 +1,67 @@
+{
+  "records": [
+    {
+      "status": "OK",
+      "date": "20170831",
+      "km": 4,
+      "serviceNr": "32634 BMW",
+      "event": "Pre-delivery check"
+    },
+    {
+      "status": "OK",
+      "date": "20180509",
+      "km": 30362,
+      "serviceNr": "24812 BMW",
+      "event": "Engine oil, micro filter"
+    },
+    {
+      "status": "OK",
+      "date": "20190107",
+      "km": 59208,
+      "serviceNr": "24812 BMW",
+      "event": "Engine oil, vehicle check, micro filter, air cleaner element, fuel filter"
+    },
+    {
+      "status": "OK",
+      "date": "20190918",
+      "km": 88207,
+      "serviceNr": "24812 BMW",
+      "event": "Engine oil, micro filter"
+    },
+    {
+      "status": "OK",
+      "date": "20200108",
+      "km": 101322,
+      "serviceNr": "24812 BMW",
+      "event": "Front brake pads"
+    },
+    {
+      "status": "OK",
+      "date": "20200812",
+      "km": 113348,
+      "serviceNr": "24812 BMW",
+      "event": "Engine oil, rear brake pads, brake fluid, vehicle check, micro filter, air cleaner element, fuel filter"
+    },
+    {
+      "status": "OK",
+      "date": "20220310",
+      "km": 141500,
+      "serviceNr": "46491 BMW",
+      "event": "Engine oil, micro filter"
+    },
+    {
+      "status": "OK",
+      "date": "20220822",
+      "km": 154146,
+      "serviceNr": "46491 BMW",
+      "event": "Brake fluid"
+    },
+    {
+      "status": "OK",
+      "date": "20220908",
+      "km": 155571,
+      "serviceNr": "46491 BMW",
+      "event": "Brake fluid"
+    }
+  ]
+}

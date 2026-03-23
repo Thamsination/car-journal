@@ -1,0 +1,155 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
+	import { token, repoOwner, repoName, events, parts, idriveRecords } from '$lib/stores';
+
+	function handleLogout() {
+		if (!confirm('Disconnect from GitHub? Your data is safe in the repository.')) return;
+		$token = '';
+		$events = [];
+		$parts = [];
+		$idriveRecords = [];
+		goto(`${base}/setup`);
+	}
+
+	function exportCsv() {
+		const header = 'KM,Date,Event,Cost (DKK),Provider,Notes,Status,Invoice nr';
+		const rows = $events.map((e) =>
+			[
+				e.km ?? '',
+				e.date,
+				`"${e.event.replace(/"/g, '""')}"`,
+				e.cost,
+				`"${e.provider.replace(/"/g, '""')}"`,
+				`"${e.notes.replace(/"/g, '""')}"`,
+				e.status,
+				e.invoiceNr
+			].join(',')
+		);
+		const csv = [header, ...rows].join('\n');
+		const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = 'car-journal-events.csv';
+		a.click();
+		URL.revokeObjectURL(url);
+	}
+</script>
+
+<svelte:head>
+	<title>Settings — G31 Journal</title>
+</svelte:head>
+
+<div class="container">
+	<div class="page-header">
+		<a href="{base}/" class="back-btn">← Back</a>
+		<h2>Settings</h2>
+	</div>
+
+	<div class="settings-card">
+		<div class="setting-row">
+			<span class="setting-label">Repository</span>
+			<span class="setting-value">{$repoOwner}/{$repoName}</span>
+		</div>
+		<div class="setting-row">
+			<span class="setting-label">Token</span>
+			<span class="setting-value">••••••{$token.slice(-4)}</span>
+		</div>
+	</div>
+
+	<div class="actions">
+		<button class="action-btn export" onclick={exportCsv}>
+			Export Events as CSV
+		</button>
+		<button class="action-btn logout" onclick={handleLogout}>
+			Disconnect
+		</button>
+	</div>
+
+	<p class="version-info">BMW G31 520d xDrive · EJ39063</p>
+</div>
+
+<style>
+	.page-header {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-bottom: 20px;
+	}
+
+	.page-header h2 {
+		font-size: 20px;
+		font-weight: 700;
+	}
+
+	.back-btn {
+		font-size: 14px;
+		color: var(--color-accent);
+		text-decoration: none;
+	}
+
+	.settings-card {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		margin-bottom: 24px;
+		overflow: hidden;
+	}
+
+	.setting-row {
+		display: flex;
+		justify-content: space-between;
+		padding: 14px 16px;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.setting-row:last-child {
+		border-bottom: none;
+	}
+
+	.setting-label {
+		color: var(--color-text-secondary);
+		font-size: 14px;
+	}
+
+	.setting-value {
+		font-size: 14px;
+		font-weight: 500;
+		font-family: monospace;
+	}
+
+	.actions {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.action-btn {
+		width: 100%;
+		padding: 14px;
+		border-radius: var(--radius-sm);
+		font-size: 15px;
+		font-weight: 600;
+		text-align: center;
+	}
+
+	.action-btn.export {
+		background: var(--color-surface);
+		color: var(--color-accent);
+		border: 1px solid var(--color-accent);
+	}
+
+	.action-btn.logout {
+		background: none;
+		color: var(--color-danger);
+		border: 1px solid var(--color-danger);
+	}
+
+	.version-info {
+		text-align: center;
+		font-size: 12px;
+		color: var(--color-text-secondary);
+		margin-top: 32px;
+	}
+</style>
