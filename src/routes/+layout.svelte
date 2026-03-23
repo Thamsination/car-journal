@@ -49,14 +49,16 @@
 	});
 
 	const navItems = [
-		{ href: `${base}/`, label: 'Events', icon: '⏱' },
-		{ href: `${base}/dashboard`, label: 'Dashboard', icon: '◎' },
+		{ href: `${base}/`, label: 'Dashboard', icon: '◎' },
+		{ href: `${base}/events`, label: 'Events', icon: '⏱' },
 		{ href: `${base}/parts`, label: 'Parts', icon: '⚙' },
 		{ href: `${base}/history`, label: 'History', icon: '☰' }
 	];
 
 	function isActive(href: string, currentPath: string): boolean {
-		if (href === `${base}/`) return currentPath === `${base}/` || currentPath === base;
+		if (href === `${base}/`) {
+			return currentPath === `${base}/` || currentPath === base;
+		}
 		return currentPath.startsWith(href);
 	}
 </script>

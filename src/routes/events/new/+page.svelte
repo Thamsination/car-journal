@@ -46,7 +46,7 @@
 			}
 
 			$events = updated;
-			goto(`${base}/`);
+			goto(`${base}/events`);
 		} catch (e: unknown) {
 			saveError = e instanceof Error ? e.message : 'Failed to save';
 		} finally {
@@ -61,7 +61,7 @@
 
 <div class="container">
 	<div class="page-header">
-		<a href="{base}/" class="back-btn">← Back</a>
+		<a href="{base}/events" class="back-btn">← Back</a>
 		<h2>New Event</h2>
 	</div>
 

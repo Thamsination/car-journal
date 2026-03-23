@@ -68,3 +68,33 @@ export const upcomingEvents = derived(events, ($events) => {
 			return a.km - b.km;
 		});
 });
+
+export const latestOdometer = derived([vehicle, events], ([$vehicle, $events]) => {
+	if ($vehicle.odometer) {
+		return { km: $vehicle.odometer, approximate: false };
+	}
+	const completed = $events
+		.filter((e) => e.status === 'done' && e.km !== null)
+		.sort((a, b) => (b.km ?? 0) - (a.km ?? 0));
+	if (completed.length > 0) {
+		return { km: completed[0].km!, approximate: true };
+	}
+	return { km: 0, approximate: false };
+});
+
+export const nextScheduledEvent = derived(events, ($events) => {
+	const today = new Date().toISOString().split('T')[0];
+	const upcoming = $events
+		.filter(
+			(e) =>
+				(e.status === 'scheduled' || e.status === 'pending') &&
+				e.date
+		)
+		.sort((a, b) => {
+			const da = a.date || '9999';
+			const db = b.date || '9999';
+			return da.localeCompare(db);
+		});
+	const futureOnes = upcoming.filter((e) => e.date >= today);
+	return futureOnes.length > 0 ? futureOnes[0] : upcoming[0] ?? null;
+});

@@ -1,163 +1,298 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { token, events, filteredEvents, statusFilter, isLoading, error } from '$lib/stores';
-	import { loadEvents } from '$lib/github';
-	import { formatCost, formatDate, statusLabel, statusColor } from '$lib/utils';
-	import type { EventStatus } from '$lib/types';
+	import { base } from '$app/paths';
+	import {
+		token, events, totalCost, costByCategory,
+		upcomingEvents, vehicle, latestOdometer,
+		nextScheduledEvent, statusFilter
+	} from '$lib/stores';
+	import { loadEvents, loadVehicle } from '$lib/github';
+	import { formatCost, formatDate, statusColor } from '$lib/utils';
 
-	const statuses: { value: string; label: string }[] = [
-		{ value: 'all', label: 'All' },
-		{ value: 'done', label: 'Done' },
-		{ value: 'scheduled', label: 'Scheduled' },
-		{ value: 'pending', label: 'Pending' },
-		{ value: 'future', label: 'Future' }
-	];
-
-	let searchQuery = $state('');
-
-	const displayEvents = $derived(
-		$filteredEvents.filter((e) => {
-			if (!searchQuery) return true;
-			const q = searchQuery.toLowerCase();
-			return (
-				e.event.toLowerCase().includes(q) ||
-				e.provider.toLowerCase().includes(q) ||
-				e.notes.toLowerCase().includes(q)
-			);
-		})
-	);
+	let loading = $state(true);
 
 	onMount(async () => {
 		if (!$token) {
 			goto(`${base}/setup`);
 			return;
 		}
-		await fetchEvents();
-	});
-
-	async function fetchEvents() {
-		$isLoading = true;
-		$error = null;
 		try {
 			$events = await loadEvents();
-		} catch (e: unknown) {
-			$error = e instanceof Error ? e.message : 'Failed to load events';
+			$vehicle = await loadVehicle();
+		} catch {
+			// data may not exist yet
 		} finally {
-			$isLoading = false;
+			loading = false;
 		}
+	});
+
+	const completedCount = $derived($events.filter((e) => e.status === 'done').length);
+	const pendingCount = $derived($events.filter((e) => e.status !== 'done').length);
+
+	function goCompleted() {
+		$statusFilter = 'done';
+		goto(`${base}/events`);
+	}
+
+	function goUpcoming() {
+		$statusFilter = 'scheduled';
+		goto(`${base}/events`);
 	}
 </script>
 
 <svelte:head>
-	<title>Events — G31 Journal</title>
+	<title>Dashboard — G31 Journal</title>
 </svelte:head>
 
 <div class="container">
-	<div class="search-bar">
-		<input type="search" placeholder="Search events..." bind:value={searchQuery} />
-	</div>
-
-	<div class="filter-row">
-		{#each statuses as s}
-			<button
-				class="filter-chip"
-				class:active={$statusFilter === s.value}
-				onclick={() => ($statusFilter = s.value)}
-			>
-				{s.label}
-			</button>
-		{/each}
-	</div>
-
-	{#if $isLoading}
-		<div class="loading">Loading events...</div>
-	{:else if $error}
-		<div class="error-card">
-			<p>{$error}</p>
-			<button class="retry-btn" onclick={fetchEvents}>Retry</button>
-		</div>
-	{:else if displayEvents.length === 0}
-		<div class="empty-state">
-			<p>No events found</p>
-		</div>
+	{#if loading}
+		<div class="loading">Loading dashboard...</div>
 	{:else}
-		<ul class="event-list">
-			{#each displayEvents as event (event.id)}
-				<li>
-					<a href="{base}/event/{event.id}" class="event-card">
-						<div class="event-header">
-							<span
-								class="status-badge"
-								style="background: {statusColor(event.status)}"
-							>
-								{statusLabel(event.status)}
-							</span>
-							<span class="event-date">{formatDate(event.date)}</span>
-						</div>
-						<h3 class="event-title">{event.event}</h3>
-						<div class="event-meta">
-							{#if event.km}
-								<span class="meta-item">{event.km.toLocaleString()} km</span>
-							{/if}
-							<span class="meta-item">{event.provider}</span>
-							{#if event.cost > 0}
-								<span class="meta-cost">{formatCost(event.cost)}</span>
-							{/if}
-						</div>
-						{#if event.notes}
-							<p class="event-notes">{event.notes}</p>
-						{/if}
-					</a>
-				</li>
-			{/each}
-		</ul>
-	{/if}
+		<div class="hero-card">
+			<div class="odometer">
+				<span class="odo-value">
+					{$latestOdometer.km.toLocaleString()}{$latestOdometer.approximate ? '+' : ''}
+				</span>
+				<span class="odo-unit">km</span>
+			</div>
+			{#if $vehicle.lastSynced}
+				<span class="odo-source">BMW synced {new Date($vehicle.lastSynced).toLocaleDateString('en-GB')}</span>
+			{:else if $latestOdometer.approximate}
+				<span class="odo-source">Based on last completed event</span>
+			{/if}
+		</div>
 
-	<a href="{base}/event/new" class="fab" aria-label="Add new event">+</a>
+		{#if $nextScheduledEvent}
+			<a href="{base}/events/{$nextScheduledEvent.id}" class="next-task-card">
+				<span class="next-label">Next Scheduled</span>
+				<span class="next-event">{$nextScheduledEvent.event}</span>
+				<div class="next-meta">
+					{#if $nextScheduledEvent.date}
+						<span>{formatDate($nextScheduledEvent.date)}</span>
+					{/if}
+					{#if $nextScheduledEvent.km}
+						<span>{$nextScheduledEvent.km.toLocaleString()} km</span>
+					{/if}
+					{#if $nextScheduledEvent.provider}
+						<span>{$nextScheduledEvent.provider}</span>
+					{/if}
+				</div>
+			</a>
+		{/if}
+
+		<div class="stats-grid">
+			<div class="stat-card accent">
+				<span class="stat-value">{formatCost($totalCost)}</span>
+				<span class="stat-label">Total Spent</span>
+			</div>
+
+			<button class="stat-card tappable" onclick={goCompleted}>
+				<span class="stat-value">{completedCount}</span>
+				<span class="stat-label">Completed</span>
+			</button>
+
+			<button class="stat-card tappable" onclick={goUpcoming}>
+				<span class="stat-value">{pendingCount}</span>
+				<span class="stat-label">Upcoming</span>
+			</button>
+		</div>
+
+		{#if $upcomingEvents.length > 0}
+			<section class="section">
+				<h3 class="section-title">Upcoming Services</h3>
+				<div class="upcoming-list">
+					{#each $upcomingEvents as evt}
+						<a href="{base}/events/{evt.id}" class="upcoming-card">
+							<div class="upcoming-header">
+								<span class="upcoming-event">{evt.event}</span>
+								<span
+									class="status-dot"
+									style="background: {statusColor(evt.status)}"
+								></span>
+							</div>
+							<div class="upcoming-meta">
+								{#if evt.km}
+									<span>{evt.km.toLocaleString()} km</span>
+								{/if}
+								{#if evt.date}
+									<span>{formatDate(evt.date)}</span>
+								{/if}
+								{#if evt.cost > 0}
+									<span>{formatCost(evt.cost)}</span>
+								{/if}
+							</div>
+							{#if $latestOdometer.km > 0 && evt.km}
+								{@const remaining = evt.km - $latestOdometer.km}
+								{#if remaining > 0}
+									<div class="km-remaining">
+										<div class="progress-bar">
+											<div
+												class="progress-fill"
+												style="width: {Math.min(100, Math.max(5, (1 - remaining / 20000) * 100))}%"
+											></div>
+										</div>
+										<span class="remaining-text">{remaining.toLocaleString()} km remaining</span>
+									</div>
+								{:else}
+									<span class="overdue-text">Overdue by {Math.abs(remaining).toLocaleString()} km</span>
+								{/if}
+							{/if}
+						</a>
+					{/each}
+				</div>
+			</section>
+		{/if}
+
+		{#if $costByCategory.length > 0}
+			<section class="section">
+				<h3 class="section-title">Cost Breakdown</h3>
+				<div class="breakdown-list">
+					{#each $costByCategory as cat}
+						<div class="breakdown-row">
+							<span class="breakdown-name">{cat.name}</span>
+							<span class="breakdown-value">{formatCost(cat.total)}</span>
+						</div>
+					{/each}
+				</div>
+			</section>
+		{/if}
+	{/if}
 </div>
 
 <style>
-	.search-bar {
+	.hero-card {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: 24px 16px 16px;
+		text-align: center;
 		margin-bottom: 12px;
 	}
 
-	.filter-row {
+	.odometer {
 		display: flex;
-		gap: 8px;
-		overflow-x: auto;
-		padding-bottom: 4px;
-		margin-bottom: 16px;
-		-webkit-overflow-scrolling: touch;
+		align-items: baseline;
+		justify-content: center;
+		gap: 6px;
 	}
 
-	.filter-chip {
-		padding: 6px 14px;
-		border-radius: 20px;
-		font-size: 13px;
+	.odo-value {
+		font-size: 36px;
+		font-weight: 800;
+		letter-spacing: -1px;
+	}
+
+	.odo-unit {
+		font-size: 16px;
 		font-weight: 500;
-		white-space: nowrap;
-		background: var(--color-surface);
 		color: var(--color-text-secondary);
-		border: 1px solid var(--color-border);
-		transition: all 0.2s;
 	}
 
-	.filter-chip.active {
+	.odo-source {
+		display: block;
+		margin-top: 4px;
+		font-size: 11px;
+		color: var(--color-text-secondary);
+	}
+
+	.next-task-card {
+		display: block;
 		background: var(--color-accent);
+		border-radius: var(--radius-md);
+		padding: 14px 16px;
+		margin-bottom: 12px;
+		text-decoration: none;
 		color: white;
-		border-color: var(--color-accent);
 	}
 
-	.event-list {
-		list-style: none;
+	.next-label {
+		display: block;
+		font-size: 11px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		opacity: 0.8;
+		margin-bottom: 4px;
+	}
+
+	.next-event {
+		display: block;
+		font-size: 16px;
+		font-weight: 700;
+		margin-bottom: 4px;
+	}
+
+	.next-meta {
+		display: flex;
+		gap: 12px;
+		font-size: 13px;
+		opacity: 0.85;
+	}
+
+	.stats-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 10px;
+		margin-bottom: 24px;
+	}
+
+	.stat-card {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		padding: 16px;
+		text-align: center;
+		color: var(--color-text);
+	}
+
+	.stat-card.accent {
+		grid-column: 1 / -1;
+	}
+
+	.stat-card.tappable {
+		cursor: pointer;
+		transition: box-shadow 0.2s;
+	}
+
+	.stat-card.tappable:active {
+		box-shadow: var(--shadow-md);
+	}
+
+	.stat-value {
+		display: block;
+		font-size: 22px;
+		font-weight: 700;
+		margin-bottom: 2px;
+	}
+
+	.stat-label {
+		font-size: 12px;
+		color: var(--color-text-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.section {
+		margin-bottom: 24px;
+	}
+
+	.section-title {
+		font-size: 15px;
+		font-weight: 700;
+		margin-bottom: 10px;
+		color: var(--color-text-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.upcoming-list {
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
+		gap: 8px;
 	}
 
-	.event-card {
+	.upcoming-card {
 		display: block;
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
@@ -165,122 +300,96 @@
 		padding: 14px 16px;
 		text-decoration: none;
 		color: var(--color-text);
-		transition: box-shadow 0.2s;
 	}
 
-	.event-card:active {
-		box-shadow: var(--shadow-md);
-	}
-
-	.event-header {
+	.upcoming-header {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		margin-bottom: 6px;
+		margin-bottom: 4px;
 	}
 
-	.status-badge {
-		font-size: 11px;
+	.upcoming-event {
 		font-weight: 600;
-		color: white;
-		padding: 2px 8px;
-		border-radius: 10px;
-		text-transform: uppercase;
-		letter-spacing: 0.3px;
+		font-size: 14px;
 	}
 
-	.event-date {
-		font-size: 13px;
-		color: var(--color-text-secondary);
+	.status-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		flex-shrink: 0;
 	}
 
-	.event-title {
-		font-size: 16px;
-		font-weight: 600;
-		margin-bottom: 6px;
-	}
-
-	.event-meta {
+	.upcoming-meta {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 8px;
-		align-items: center;
+		gap: 12px;
 		font-size: 13px;
 		color: var(--color-text-secondary);
 	}
 
-	.meta-item::after {
-		content: '·';
-		margin-left: 8px;
-		color: var(--color-border);
+	.km-remaining {
+		margin-top: 8px;
 	}
 
-	.meta-item:last-of-type::after {
-		content: '';
+	.progress-bar {
+		height: 4px;
+		background: var(--color-border);
+		border-radius: 2px;
+		overflow: hidden;
+		margin-bottom: 4px;
 	}
 
-	.meta-cost {
+	.progress-fill {
+		height: 100%;
+		background: var(--color-accent);
+		border-radius: 2px;
+		transition: width 0.3s;
+	}
+
+	.remaining-text {
+		font-size: 12px;
+		color: var(--color-text-secondary);
+	}
+
+	.overdue-text {
+		font-size: 12px;
+		color: var(--color-danger);
 		font-weight: 600;
-		color: var(--color-text);
-		margin-left: auto;
+		margin-top: 4px;
+		display: block;
 	}
 
-	.event-notes {
-		margin-top: 6px;
-		font-size: 13px;
-		color: var(--color-text-secondary);
-		line-height: 1.4;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
+	.breakdown-list {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
 		overflow: hidden;
 	}
 
-	.loading,
-	.empty-state {
-		text-align: center;
-		padding: 48px 16px;
+	.breakdown-row {
+		display: flex;
+		justify-content: space-between;
+		padding: 12px 16px;
+		border-bottom: 1px solid var(--color-border);
+		font-size: 14px;
+	}
+
+	.breakdown-row:last-child {
+		border-bottom: none;
+	}
+
+	.breakdown-name {
 		color: var(--color-text-secondary);
 	}
 
-	.error-card {
+	.breakdown-value {
+		font-weight: 600;
+	}
+
+	.loading {
 		text-align: center;
-		padding: 32px 16px;
-		background: var(--color-surface);
-		border-radius: var(--radius-md);
-		border: 1px solid var(--color-danger);
-		color: var(--color-danger);
-	}
-
-	.retry-btn {
-		margin-top: 12px;
-		padding: 8px 24px;
-		background: var(--color-accent);
-		color: white;
-		border-radius: var(--radius-sm);
-		font-weight: 500;
-	}
-
-	.fab {
-		position: fixed;
-		bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px) + 16px);
-		right: 20px;
-		width: 56px;
-		height: 56px;
-		border-radius: 50%;
-		background: var(--color-accent);
-		color: white;
-		font-size: 28px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		box-shadow: var(--shadow-md);
-		text-decoration: none;
-		z-index: 50;
-		transition: transform 0.2s, background 0.2s;
-	}
-
-	.fab:active {
-		transform: scale(0.92);
+		padding: 48px 16px;
+		color: var(--color-text-secondary);
 	}
 </style>

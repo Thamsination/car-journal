@@ -80,7 +80,7 @@
 				await queueWrite('events', updated, `Delete: ${form.event}`);
 			}
 			$events = updated;
-			goto(`${base}/`);
+			goto(`${base}/events`);
 		} catch (e: unknown) {
 			saveError = e instanceof Error ? e.message : 'Failed to delete';
 		} finally {
@@ -95,7 +95,7 @@
 
 <div class="container">
 	<div class="page-header">
-		<a href="{base}/" class="back-btn">← Back</a>
+		<a href="{base}/events" class="back-btn">← Back</a>
 		<h2>{editing ? 'Edit Event' : 'Event Details'}</h2>
 	</div>
 
