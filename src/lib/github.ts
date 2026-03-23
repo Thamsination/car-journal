@@ -92,8 +92,10 @@ export async function validateToken(): Promise<{ ok: boolean; error?: string }> 
 let eventsSha = '';
 let partsSha = '';
 
+const DATA_PATH = 'static/data';
+
 export async function loadEvents(): Promise<import('./types').CarEvent[]> {
-	const { data, sha } = await readJsonFile<import('./types').EventsData>('data/events.json');
+	const { data, sha } = await readJsonFile<import('./types').EventsData>(`${DATA_PATH}/events.json`);
 	eventsSha = sha;
 	return data.events;
 }
@@ -103,11 +105,11 @@ export async function saveEvents(
 	message: string
 ): Promise<void> {
 	const data: import('./types').EventsData = { events };
-	eventsSha = await writeJsonFile('data/events.json', data, eventsSha, message);
+	eventsSha = await writeJsonFile(`${DATA_PATH}/events.json`, data, eventsSha, message);
 }
 
 export async function loadParts(): Promise<import('./types').Part[]> {
-	const { data, sha } = await readJsonFile<import('./types').PartsData>('data/parts.json');
+	const { data, sha } = await readJsonFile<import('./types').PartsData>(`${DATA_PATH}/parts.json`);
 	partsSha = sha;
 	return data.parts;
 }
@@ -117,17 +119,17 @@ export async function saveParts(
 	message: string
 ): Promise<void> {
 	const data: import('./types').PartsData = { parts };
-	partsSha = await writeJsonFile('data/parts.json', data, partsSha, message);
+	partsSha = await writeJsonFile(`${DATA_PATH}/parts.json`, data, partsSha, message);
 }
 
 export async function loadIDriveHistory(): Promise<import('./types').IDriveRecord[]> {
-	const { data } = await readJsonFile<import('./types').IDriveData>('data/idrive-history.json');
+	const { data } = await readJsonFile<import('./types').IDriveData>(`${DATA_PATH}/idrive-history.json`);
 	return data.records;
 }
 
 export async function loadVehicle(): Promise<import('./types').VehicleStatus> {
 	try {
-		const { data } = await readJsonFile<import('./types').VehicleStatus>('data/vehicle.json');
+		const { data } = await readJsonFile<import('./types').VehicleStatus>(`${DATA_PATH}/vehicle.json`);
 		return data;
 	} catch {
 		return { vin: '', odometer: null, fuelLevel: null, lastSynced: null };
