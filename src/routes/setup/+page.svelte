@@ -23,11 +23,11 @@
 		$repoOwner = inputOwner.trim();
 		$repoName = inputRepo.trim();
 
-		const valid = await validateToken();
-		if (valid) {
+		const result = await validateToken();
+		if (result.ok) {
 			goto(`${base}/`);
 		} else {
-			validationError = 'Could not access the repository. Check your token and repo details.';
+			validationError = result.error || 'Could not access the repository.';
 			$token = '';
 		}
 		validating = false;

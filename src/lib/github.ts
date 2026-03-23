@@ -75,12 +75,17 @@ export async function writeJsonFile<T>(
 	return putFile(path, content, sha, commitMessage);
 }
 
-export async function validateToken(): Promise<boolean> {
+export async function validateToken(): Promise<{ ok: boolean; error?: string }> {
 	try {
 		const res = await fetch(`${repoPath()}`, { headers: headers() });
-		return res.ok;
-	} catch {
-		return false;
+		if (res.ok) return { ok: true };
+		const body = await res.json().catch(() => ({}));
+		return {
+			ok: false,
+			error: `${res.status}: ${body.message || res.statusText}`
+		};
+	} catch (e) {
+		return { ok: false, error: `Network error: ${e instanceof Error ? e.message : String(e)}` };
 	}
 }
 
