@@ -29,6 +29,7 @@ jobs:
           BMW_PASSWORD: ${{ secrets.BMW_PASSWORD }}
           BMW_REGION: ${{ secrets.BMW_REGION }}
           BMW_VIN: ${{ secrets.BMW_VIN }}
+          BMW_OAUTH_STORE: ${{ secrets.BMW_OAUTH_STORE }}
         run: python scripts/sync-bmw.py
 
       - name: Commit changes
