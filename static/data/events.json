@@ -234,18 +234,6 @@
       "invoiceNr": "",
       "completed": false,
       "category": "official-service"
-    },
-    {
-      "id": "evt_029",
-      "km": 216900,
-      "date": "",
-      "event": "Service - brake fluid flush",
-      "cost": 1000,
-      "currency": "DKK",
-      "provider": "BimmerUpgrade",
-      "notes": "2nd fluid change in history",
-      "invoiceNr": "",
-      "completed": false
     }
   ]
 }
