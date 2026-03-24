@@ -22,7 +22,7 @@
       "source": "",
       "price": 95,
       "currency": "DKK",
-      "notes": "Scheduled every 2 oil changes"
+      "notes": "Scheduled 1000km prior to oil changes"
     },
     {
       "id": "part_003",
