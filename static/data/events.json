@@ -18,7 +18,7 @@
       "id": "evt_002",
       "km": 162486,
       "date": "2025-04-14",
-      "event": "Oil change and brake fluid",
+      "event": "engine oil, brake fluid",
       "cost": 0,
       "currency": "DKK",
       "provider": "SSH-Biler",
@@ -26,7 +26,7 @@
       "invoiceNr": "-",
       "completed": true,
       "category": "other-service",
-      "tasks": ["Oil change", "brake fluid"]
+      "tasks": ["engine oil", "brake fluid"]
     },
     {
       "id": "evt_003",
@@ -60,7 +60,7 @@
       "id": "evt_005",
       "km": null,
       "date": "2025-04-17",
-      "event": "Summer tires",
+      "event": "summer tires",
       "cost": 0,
       "currency": "DKK",
       "provider": "SSH-Biler",
@@ -68,13 +68,13 @@
       "invoiceNr": "-",
       "completed": true,
       "category": "warranty",
-      "tasks": ["Summer tires"]
+      "tasks": ["summer tires"]
     },
     {
       "id": "evt_006",
       "km": 166571,
       "date": "2025-05-30",
-      "event": "EGR Replacement",
+      "event": "EGR replacement",
       "cost": 0,
       "currency": "DKK",
       "provider": "Jan Nygaard",
@@ -82,13 +82,13 @@
       "invoiceNr": "-",
       "completed": true,
       "category": "warranty",
-      "tasks": ["EGR Replacement"]
+      "tasks": ["EGR replacement"]
     },
     {
       "id": "evt_007",
       "km": 166571,
       "date": "2025-05-30",
-      "event": "Telematic battery",
+      "event": "telematic battery",
       "cost": 2500,
       "currency": "DKK",
       "provider": "Jan Nygaard",
@@ -96,7 +96,7 @@
       "invoiceNr": "250045702",
       "completed": true,
       "category": "official-service",
-      "tasks": ["Telematic battery"]
+      "tasks": ["telematic battery"]
     },
     {
       "id": "evt_008",
@@ -116,7 +116,7 @@
       "id": "evt_009",
       "km": 187037,
       "date": "2026-03-24",
-      "event": "Cleanse fuel system (additive)",
+      "event": "cleanse fuel system (additive)",
       "cost": 95,
       "currency": "DKK",
       "provider": "DIY",
@@ -124,13 +124,13 @@
       "invoiceNr": "547620",
       "completed": true,
       "category": "other-service",
-      "tasks": ["Cleanse fuel system (additive)"]
+      "tasks": ["cleanse fuel system (additive)"]
     },
     {
       "id": "evt_010",
       "km": 187200,
       "date": "2026-03-25",
-      "event": "Engine oil, micro filter, air cleaner element, fuel filter, vehicle check",
+      "event": "engine oil, micro filter, air cleaner element, fuel filter, vehicle check",
       "cost": 5000,
       "currency": "DKK",
       "provider": "BimmerUpgrade",
@@ -138,13 +138,13 @@
       "invoiceNr": "",
       "completed": false,
       "category": "official-service",
-      "tasks": ["Engine oil", "micro filter", "air cleaner element", "fuel filter", "vehicle check"]
+      "tasks": ["engine oil", "micro filter", "air cleaner element", "fuel filter", "vehicle check"]
     },
     {
       "id": "evt_015",
       "km": 187600,
       "date": "2026-03-26",
-      "event": "Starter motor",
+      "event": "starter motor",
       "cost": 0,
       "currency": "DKK",
       "provider": "Jan Nygaard",
@@ -152,13 +152,13 @@
       "invoiceNr": "",
       "completed": false,
       "category": "warranty",
-      "tasks": ["Starter motor"]
+      "tasks": ["starter motor"]
     },
     {
       "id": "evt_016",
       "km": 194000,
       "date": "",
-      "event": "Cleanse fuel system (additive)",
+      "event": "cleanse fuel system (additive)",
       "cost": 95,
       "currency": "DKK",
       "provider": "DIY",
@@ -166,13 +166,13 @@
       "invoiceNr": "",
       "completed": false,
       "category": "other-service",
-      "tasks": ["Cleanse fuel system (additive)"]
+      "tasks": ["cleanse fuel system (additive)"]
     },
     {
       "id": "evt_017",
       "km": 195000,
       "date": "",
-      "event": "Oil change",
+      "event": "engine oil",
       "cost": 1039,
       "currency": "DKK",
       "provider": "DIY",
@@ -180,7 +180,7 @@
       "invoiceNr": "",
       "completed": false,
       "category": "other-service",
-      "tasks": ["Oil change"]
+      "tasks": ["engine oil"]
     },
     {
       "id": "evt_018",
@@ -200,7 +200,7 @@
       "id": "evt_022",
       "km": 205000,
       "date": "",
-      "event": "Intake carbon clean, oil change",
+      "event": "intake carbon clean, engine oil",
       "cost": 5000,
       "currency": "DKK",
       "provider": "Specialist",
@@ -208,13 +208,13 @@
       "invoiceNr": "",
       "completed": false,
       "category": "official-service",
-      "tasks": ["Intake carbon clean", "oil change"]
+      "tasks": ["intake carbon clean", "engine oil"]
     },
     {
       "id": "evt_024",
       "km": 209000,
       "date": "",
-      "event": "Cleanse fuel system (additive)",
+      "event": "cleanse fuel system (additive)",
       "cost": 95,
       "currency": "DKK",
       "provider": "DIY",
@@ -222,13 +222,13 @@
       "invoiceNr": "",
       "completed": false,
       "category": "other-service",
-      "tasks": ["Cleanse fuel system (additive)"]
+      "tasks": ["cleanse fuel system (additive)"]
     },
     {
       "id": "evt_025",
       "km": 210000,
       "date": "",
-      "event": "Timing chain",
+      "event": "timing chain",
       "cost": 18000,
       "currency": "DKK",
       "provider": "Specialist",
@@ -236,13 +236,13 @@
       "invoiceNr": "",
       "completed": false,
       "category": "replacement",
-      "tasks": ["Timing chain"]
+      "tasks": ["timing chain"]
     },
     {
       "id": "evt_026",
       "km": 216000,
       "date": "",
-      "event": "Cleanse fuel system (additive)",
+      "event": "cleanse fuel system (additive)",
       "cost": 95,
       "currency": "DKK",
       "provider": "DIY",
@@ -250,13 +250,13 @@
       "invoiceNr": "",
       "completed": false,
       "category": "other-service",
-      "tasks": ["Cleanse fuel system (additive)"]
+      "tasks": ["cleanse fuel system (additive)"]
     },
     {
       "id": "evt_027",
       "km": 217000,
       "date": "",
-      "event": "Oil change, engine air filter, brake fluid flush",
+      "event": "engine oil, engine air filter, brake fluid flush",
       "cost": 3000,
       "currency": "DKK",
       "provider": "BimmerUpgrade",
@@ -264,7 +264,7 @@
       "invoiceNr": "",
       "completed": false,
       "category": "official-service",
-      "tasks": ["Oil change", "engine air filter", "brake fluid flush"]
+      "tasks": ["engine oil", "engine air filter", "brake fluid flush"]
     }
   ]
 }
