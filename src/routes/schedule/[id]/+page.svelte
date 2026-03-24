@@ -135,7 +135,7 @@
 <div class="container">
 	<div class="page-header">
 		<button class="back-btn" onclick={() => history.back()}>← Back</button>
-		<h2>{editing ? 'Edit Entry' : 'Entry Details'}</h2>
+		<h2>{editing ? 'Edit Entry' : (event?.event ?? 'Entry Details')}</h2>
 	</div>
 
 	{#if !event}
