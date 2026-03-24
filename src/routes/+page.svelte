@@ -5,7 +5,7 @@
 	import {
 		token, events, totalSpent, totalPlanned, costByCategory,
 		nextBatchEvents, vehicle, latestOdometer,
-		nextScheduledEvent, statusFilter
+		nextScheduledEvent
 	} from '$lib/stores';
 	import { loadEvents, loadVehicle } from '$lib/github';
 	import { formatCost, formatDate, statusColor } from '$lib/utils';
@@ -28,16 +28,14 @@
 	});
 
 	const completedCount = $derived($events.filter((e) => e.status === 'done').length);
-	const pendingCount = $derived($events.filter((e) => e.status !== 'done').length);
+	const upcomingCount = $derived($events.filter((e) => e.status !== 'done').length);
 
 	function goCompleted() {
-		$statusFilter = 'done';
-		goto(`${base}/events`);
+		goto(`${base}/history`);
 	}
 
 	function goUpcoming() {
-		$statusFilter = 'scheduled';
-		goto(`${base}/events`);
+		goto(`${base}/schedule`);
 	}
 </script>
 
@@ -64,7 +62,7 @@
 		</div>
 
 		{#if $nextScheduledEvent}
-			<a href="{base}/events/{$nextScheduledEvent.id}" class="next-task-card">
+			<a href="{base}/schedule/{$nextScheduledEvent.id}" class="next-task-card">
 				<span class="next-label">Next Scheduled</span>
 				<span class="next-event">{$nextScheduledEvent.event}</span>
 				<div class="next-meta">
@@ -88,7 +86,7 @@
 			</button>
 
 			<button class="stat-card tappable" onclick={goUpcoming}>
-				<span class="stat-value">{pendingCount}</span>
+				<span class="stat-value">{upcomingCount}</span>
 				<span class="stat-label">Upcoming</span>
 			</button>
 		</div>
@@ -98,7 +96,7 @@
 				<h3 class="section-title">Upcoming Services — {$nextBatchEvents[0].km?.toLocaleString()} km</h3>
 				<div class="upcoming-list">
 					{#each $nextBatchEvents as evt}
-						<a href="{base}/events/{evt.id}" class="upcoming-card">
+						<a href="{base}/schedule/{evt.id}" class="upcoming-card">
 							<div class="upcoming-header">
 								<span class="upcoming-event">{evt.event}</span>
 								<span

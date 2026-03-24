@@ -6,7 +6,7 @@
 	import { saveEvents, loadEvents } from '$lib/github';
 	import { formatCost } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
-	import type { CarEvent, EventStatus } from '$lib/types';
+	import type { CarEvent } from '$lib/types';
 	import { onMount } from 'svelte';
 
 	let event = $state<CarEvent | null>(null);
@@ -79,8 +79,8 @@
 			} else {
 				await queueWrite('events', updated, `Delete: ${form.event}`);
 			}
-			$events = updated;
-			goto(`${base}/events`);
+		$events = updated;
+		goto(`${base}/schedule`);
 		} catch (e: unknown) {
 			saveError = e instanceof Error ? e.message : 'Failed to delete';
 		} finally {
@@ -90,13 +90,13 @@
 </script>
 
 <svelte:head>
-	<title>{event?.event ?? 'Event'} — G31 Journal</title>
+	<title>{event?.event ?? 'Entry'} — G31 Journal</title>
 </svelte:head>
 
 <div class="container">
 	<div class="page-header">
-		<a href="{base}/events" class="back-btn">← Back</a>
-		<h2>{editing ? 'Edit Event' : 'Event Details'}</h2>
+		<a href="{base}/schedule" class="back-btn">← Back</a>
+		<h2>{editing ? 'Edit Entry' : 'Entry Details'}</h2>
 	</div>
 
 	{#if !event}
@@ -129,7 +129,6 @@
 					<select id="status" bind:value={form.status}>
 						<option value="done">Done</option>
 						<option value="scheduled">Scheduled</option>
-						<option value="pending">Pending</option>
 						<option value="future">Future</option>
 					</select>
 				</div>

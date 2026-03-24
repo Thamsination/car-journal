@@ -1,14 +1,27 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { idriveRecords } from '$lib/stores';
-	import { loadIDriveHistory } from '$lib/github';
+	import { base } from '$app/paths';
+	import { events, completedEvents, idriveRecords } from '$lib/stores';
+	import { loadEvents, loadIDriveHistory } from '$lib/github';
+	import { formatCost, formatDate } from '$lib/utils';
+	import type { CarEvent, IDriveRecord } from '$lib/types';
+
+	type TimelineItem =
+		| { kind: 'journal'; data: CarEvent }
+		| { kind: 'idrive'; data: IDriveRecord };
 
 	let loading = $state(true);
 	let loadError = $state('');
+	let searchQuery = $state('');
 
 	onMount(async () => {
 		try {
-			$idriveRecords = await loadIDriveHistory();
+			const [evts, records] = await Promise.all([
+				$events.length === 0 ? loadEvents() : Promise.resolve($events),
+				loadIDriveHistory()
+			]);
+			if ($events.length === 0) $events = evts;
+			$idriveRecords = records;
 		} catch (e: unknown) {
 			loadError = e instanceof Error ? e.message : 'Failed to load history';
 		} finally {
@@ -21,46 +34,109 @@
 		const y = dateStr.slice(0, 4);
 		const m = dateStr.slice(4, 6);
 		const d = dateStr.slice(6, 8);
-		return new Date(`${y}-${m}-${d}`).toLocaleDateString('en-GB', {
-			day: 'numeric',
-			month: 'short',
-			year: 'numeric'
-		});
+		return `${y}-${m}-${d}`;
 	}
+
+	function idriveKm(record: IDriveRecord): number {
+		return record.km ?? 0;
+	}
+
+	const timeline = $derived.by(() => {
+		const items: TimelineItem[] = [];
+
+		for (const evt of $completedEvents) {
+			items.push({ kind: 'journal', data: evt });
+		}
+		for (const rec of $idriveRecords) {
+			items.push({ kind: 'idrive', data: rec });
+		}
+
+		items.sort((a, b) => {
+			const aKm = a.kind === 'journal' ? (a.data as CarEvent).km ?? -1 : idriveKm(a.data as IDriveRecord);
+			const bKm = b.kind === 'journal' ? (b.data as CarEvent).km ?? -1 : idriveKm(b.data as IDriveRecord);
+			if (aKm !== bKm) return bKm - aKm;
+
+			const aDate = a.kind === 'journal' ? (a.data as CarEvent).date : formatIDriveDate((a.data as IDriveRecord).date);
+			const bDate = b.kind === 'journal' ? (b.data as CarEvent).date : formatIDriveDate((b.data as IDriveRecord).date);
+			return (bDate || '').localeCompare(aDate || '');
+		});
+
+		if (!searchQuery) return items;
+		const q = searchQuery.toLowerCase();
+		return items.filter((item) => {
+			if (item.kind === 'journal') {
+				const d = item.data as CarEvent;
+				return d.event.toLowerCase().includes(q) || d.provider.toLowerCase().includes(q) || d.notes.toLowerCase().includes(q);
+			}
+			const d = item.data as IDriveRecord;
+			return d.event.toLowerCase().includes(q) || d.serviceNr.toLowerCase().includes(q);
+		});
+	});
 </script>
 
 <svelte:head>
-	<title>iDrive History — G31 Journal</title>
+	<title>History — G31 Journal</title>
 </svelte:head>
 
 <div class="container">
-	<h2 class="page-title">iDrive Service History</h2>
-	<p class="page-subtitle">Service records from the vehicle's digital service book</p>
+	<h2 class="page-title">History</h2>
+	<p class="page-subtitle">Completed work and iDrive service records</p>
+
+	<div class="search-bar">
+		<input type="search" placeholder="Search history..." bind:value={searchQuery} />
+	</div>
 
 	{#if loading}
 		<div class="loading">Loading history...</div>
 	{:else if loadError}
 		<div class="error-state">{loadError}</div>
-	{:else if $idriveRecords.length === 0}
-		<div class="empty-state">No iDrive records found</div>
+	{:else if timeline.length === 0}
+		<div class="empty-state">No history found</div>
 	{:else}
 		<ul class="history-list">
-			{#each $idriveRecords as record, i}
+			{#each timeline as item, i}
 				<li class="history-card">
 					<div class="history-marker">
-						<div class="marker-dot"></div>
-						{#if i < $idriveRecords.length - 1}
+						<div class="marker-dot" class:idrive={item.kind === 'idrive'}></div>
+						{#if i < timeline.length - 1}
 							<div class="marker-line"></div>
 						{/if}
 					</div>
-					<div class="history-content">
-						<div class="history-header">
-							<span class="history-date">{formatIDriveDate(record.date)}</span>
-							<span class="history-km">{record.km.toLocaleString()} km</span>
+
+					{#if item.kind === 'journal'}
+						{@const evt = item.data as CarEvent}
+						<a href="{base}/schedule/{evt.id}" class="history-content journal">
+							<div class="history-header">
+								<span class="history-date">{formatDate(evt.date)}</span>
+								<span class="source-badge journal-badge">Journal</span>
+							</div>
+							<p class="history-event">{evt.event}</p>
+							<div class="history-meta">
+								{#if evt.km}
+									<span>{evt.km.toLocaleString()} km</span>
+								{/if}
+								{#if evt.provider}
+									<span>{evt.provider}</span>
+								{/if}
+								{#if evt.cost > 0}
+									<span class="history-cost">{formatCost(evt.cost)}</span>
+								{/if}
+							</div>
+						</a>
+					{:else}
+						{@const rec = item.data as IDriveRecord}
+						<div class="history-content idrive">
+							<div class="history-header">
+								<span class="history-date">{formatDate(formatIDriveDate(rec.date))}</span>
+								<span class="source-badge idrive-badge">iDrive</span>
+							</div>
+							<p class="history-event">{rec.event}</p>
+							<div class="history-meta">
+								<span>{rec.km.toLocaleString()} km</span>
+								<span>Service: {rec.serviceNr}</span>
+							</div>
 						</div>
-						<p class="history-event">{record.event}</p>
-						<span class="history-service">Service: {record.serviceNr}</span>
-					</div>
+					{/if}
 				</li>
 			{/each}
 		</ul>
@@ -77,7 +153,11 @@
 	.page-subtitle {
 		font-size: 13px;
 		color: var(--color-text-secondary);
-		margin-bottom: 20px;
+		margin-bottom: 16px;
+	}
+
+	.search-bar {
+		margin-bottom: 16px;
 	}
 
 	.history-list {
@@ -101,9 +181,13 @@
 		width: 10px;
 		height: 10px;
 		border-radius: 50%;
-		background: var(--color-accent);
+		background: var(--color-success);
 		flex-shrink: 0;
 		margin-top: 6px;
+	}
+
+	.marker-dot.idrive {
+		background: var(--color-accent);
 	}
 
 	.marker-line {
@@ -122,6 +206,16 @@
 		margin-bottom: 8px;
 	}
 
+	a.history-content {
+		text-decoration: none;
+		color: var(--color-text);
+		transition: box-shadow 0.2s;
+	}
+
+	a.history-content:active {
+		box-shadow: var(--shadow-md);
+	}
+
 	.history-header {
 		display: flex;
 		justify-content: space-between;
@@ -132,12 +226,26 @@
 	.history-date {
 		font-size: 13px;
 		font-weight: 600;
-		color: var(--color-accent);
+		color: var(--color-text-secondary);
 	}
 
-	.history-km {
-		font-size: 12px;
-		color: var(--color-text-secondary);
+	.source-badge {
+		font-size: 10px;
+		font-weight: 600;
+		padding: 2px 7px;
+		border-radius: 8px;
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
+	}
+
+	.journal-badge {
+		background: var(--color-success);
+		color: white;
+	}
+
+	.idrive-badge {
+		background: var(--color-accent);
+		color: white;
 	}
 
 	.history-event {
@@ -147,9 +255,17 @@
 		line-height: 1.4;
 	}
 
-	.history-service {
+	.history-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
 		font-size: 12px;
 		color: var(--color-text-secondary);
+	}
+
+	.history-cost {
+		font-weight: 600;
+		color: var(--color-text);
 	}
 
 	.loading, .empty-state, .error-state {

@@ -33,7 +33,6 @@ export function statusLabel(status: EventStatus): string {
 	const labels: Record<EventStatus, string> = {
 		done: 'Done',
 		scheduled: 'Scheduled',
-		pending: 'Pending',
 		future: 'Future'
 	};
 	return labels[status] || status;
@@ -43,7 +42,6 @@ export function statusColor(status: EventStatus): string {
 	const colors: Record<EventStatus, string> = {
 		done: 'var(--color-success)',
 		scheduled: 'var(--color-warning)',
-		pending: 'var(--color-pending)',
 		future: 'var(--color-future)'
 	};
 	return colors[status] || 'var(--color-text-secondary)';

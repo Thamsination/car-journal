@@ -1,4 +1,4 @@
-export type EventStatus = 'done' | 'scheduled' | 'pending' | 'future';
+export type EventStatus = 'done' | 'scheduled' | 'future';
 
 export interface CarEvent {
 	id: string;

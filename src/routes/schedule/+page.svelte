@@ -2,23 +2,20 @@
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { token, events, filteredEvents, statusFilter, isLoading, error } from '$lib/stores';
+	import { token, events, scheduleEvents, statusFilter, isLoading, error } from '$lib/stores';
 	import { loadEvents } from '$lib/github';
 	import { formatCost, formatDate, statusLabel, statusColor } from '$lib/utils';
-	import type { EventStatus } from '$lib/types';
 
 	const statuses: { value: string; label: string }[] = [
 		{ value: 'all', label: 'All' },
-		{ value: 'done', label: 'Done' },
 		{ value: 'scheduled', label: 'Scheduled' },
-		{ value: 'pending', label: 'Pending' },
 		{ value: 'future', label: 'Future' }
 	];
 
 	let searchQuery = $state('');
 
 	const displayEvents = $derived(
-		$filteredEvents.filter((e) => {
+		$scheduleEvents.filter((e) => {
 			if (!searchQuery) return true;
 			const q = searchQuery.toLowerCase();
 			return (
@@ -53,12 +50,12 @@
 </script>
 
 <svelte:head>
-	<title>Events — G31 Journal</title>
+	<title>Schedule — G31 Journal</title>
 </svelte:head>
 
 <div class="container">
 	<div class="search-bar">
-		<input type="search" placeholder="Search events..." bind:value={searchQuery} />
+		<input type="search" placeholder="Search schedule..." bind:value={searchQuery} />
 	</div>
 
 	<div class="filter-row">
@@ -74,7 +71,7 @@
 	</div>
 
 	{#if $isLoading}
-		<div class="loading">Loading events...</div>
+		<div class="loading">Loading schedule...</div>
 	{:else if $error}
 		<div class="error-card">
 			<p>{$error}</p>
@@ -82,13 +79,13 @@
 		</div>
 	{:else if displayEvents.length === 0}
 		<div class="empty-state">
-			<p>No events found</p>
+			<p>No scheduled items found</p>
 		</div>
 	{:else}
 		<ul class="event-list">
 			{#each displayEvents as event (event.id)}
 				<li>
-					<a href="{base}/events/{event.id}" class="event-card">
+					<a href="{base}/schedule/{event.id}" class="event-card">
 						<div class="event-header">
 							<span
 								class="status-badge"
@@ -117,7 +114,7 @@
 		</ul>
 	{/if}
 
-	<a href="{base}/events/new" class="fab" aria-label="Add new event">+</a>
+	<a href="{base}/schedule/new" class="fab" aria-label="Add new event">+</a>
 </div>
 
 <style>

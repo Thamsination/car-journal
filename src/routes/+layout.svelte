@@ -50,7 +50,7 @@
 
 	const navItems = [
 		{ href: `${base}/`, label: 'Dashboard', icon: '◎' },
-		{ href: `${base}/events`, label: 'Events', icon: '⏱' },
+		{ href: `${base}/schedule`, label: 'Schedule', icon: '⏱' },
 		{ href: `${base}/parts`, label: 'Parts', icon: '⚙' },
 		{ href: `${base}/history`, label: 'History', icon: '☰' }
 	];

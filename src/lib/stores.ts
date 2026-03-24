@@ -42,10 +42,14 @@ function sortByKmThenDate(a: CarEvent, b: CarEvent): number {
 	return b.date.localeCompare(a.date);
 }
 
-export const filteredEvents = derived([events, statusFilter], ([$events, $filter]) => {
-	const sorted = [...$events].sort(sortByKmThenDate);
-	if ($filter === 'all') return sorted;
-	return sorted.filter((e) => e.status === $filter);
+export const scheduleEvents = derived([events, statusFilter], ([$events, $filter]) => {
+	const nonDone = $events.filter((e) => e.status !== 'done').sort(sortByKmThenDate);
+	if ($filter === 'all') return nonDone;
+	return nonDone.filter((e) => e.status === $filter);
+});
+
+export const completedEvents = derived(events, ($events) => {
+	return $events.filter((e) => e.status === 'done').sort(sortByKmThenDate);
 });
 
 export const totalSpent = derived(events, ($events) => {
@@ -73,7 +77,7 @@ export const costByCategory = derived(events, ($events) => {
 
 export const upcomingEvents = derived(events, ($events) => {
 	return $events
-		.filter((e) => e.status === 'scheduled' || e.status === 'pending' || e.status === 'future')
+		.filter((e) => e.status === 'scheduled' || e.status === 'future')
 		.sort((a, b) => {
 			if (a.km === null && b.km === null) return 0;
 			if (a.km === null) return 1;
@@ -97,7 +101,7 @@ export const latestOdometer = derived([vehicle, events], ([$vehicle, $events]) =
 
 export const nextScheduledEvent = derived(events, ($events) => {
 	const upcoming = $events
-		.filter((e) => e.status === 'scheduled' || e.status === 'pending')
+		.filter((e) => e.status === 'scheduled')
 		.sort((a, b) => {
 			const aKm = a.km ?? Infinity;
 			const bKm = b.km ?? Infinity;

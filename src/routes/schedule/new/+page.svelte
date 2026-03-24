@@ -5,7 +5,7 @@
 	import { saveEvents, loadEvents } from '$lib/github';
 	import { generateId, formatDateISO } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
-	import type { CarEvent, EventStatus } from '$lib/types';
+	import type { CarEvent } from '$lib/types';
 
 	let saving = $state(false);
 	let saveError = $state('');
@@ -46,7 +46,7 @@
 			}
 
 			$events = updated;
-			goto(`${base}/events`);
+			goto(`${base}/schedule`);
 		} catch (e: unknown) {
 			saveError = e instanceof Error ? e.message : 'Failed to save';
 		} finally {
@@ -56,13 +56,13 @@
 </script>
 
 <svelte:head>
-	<title>New Event — G31 Journal</title>
+	<title>New Entry — G31 Journal</title>
 </svelte:head>
 
 <div class="container">
 	<div class="page-header">
-		<a href="{base}/events" class="back-btn">← Back</a>
-		<h2>New Event</h2>
+		<a href="{base}/schedule" class="back-btn">← Back</a>
+		<h2>New Entry</h2>
 	</div>
 
 	<form class="event-form" onsubmit={(e) => { e.preventDefault(); handleSave(); }}>
@@ -92,7 +92,6 @@
 				<select id="status" bind:value={form.status}>
 					<option value="done">Done</option>
 					<option value="scheduled">Scheduled</option>
-					<option value="pending">Pending</option>
 					<option value="future">Future</option>
 				</select>
 			</div>
