@@ -174,18 +174,6 @@
       "category": "official-service"
     },
     {
-      "id": "evt_020",
-      "km": 200000,
-      "date": "",
-      "event": "Service - front & Rear Diff fluids",
-      "cost": 1500,
-      "currency": "DKK",
-      "provider": "Specialist",
-      "notes": "Essential drivetrain longevity",
-      "invoiceNr": "",
-      "completed": false
-    },
-    {
       "id": "evt_021",
       "km": 200000,
       "date": "",
