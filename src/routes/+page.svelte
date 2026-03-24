@@ -3,11 +3,11 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import {
-		token, events, totalSpent, totalPlanned, costByCategory,
+		token, events, idriveRecords, totalSpent, totalPlanned, costByCategory,
 		nextBatchEvents, vehicle, latestOdometer,
 		nextScheduledEvent
 	} from '$lib/stores';
-	import { loadEvents, loadVehicle } from '$lib/github';
+	import { loadEvents, loadVehicle, loadIDriveHistory } from '$lib/github';
 	import {
 		formatCost, formatDateISO, deriveStatus, statusColor,
 		eventCategory, categoryLabel, categoryColor
@@ -22,8 +22,14 @@
 			return;
 		}
 		try {
-			$events = await loadEvents();
-			$vehicle = await loadVehicle();
+			const [evts, veh, idrive] = await Promise.all([
+				loadEvents(),
+				loadVehicle(),
+				loadIDriveHistory()
+			]);
+			$events = evts;
+			$vehicle = veh;
+			$idriveRecords = idrive;
 		} catch {
 			// data may not exist yet
 		} finally {
@@ -31,7 +37,7 @@
 		}
 	});
 
-	const completedCount = $derived($events.filter((e) => e.completed).length);
+	const completedCount = $derived($events.filter((e) => e.completed).length + $idriveRecords.length);
 	const upcomingCount = $derived($events.filter((e) => !e.completed).length);
 
 	function goCompleted() {
