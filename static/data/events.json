@@ -122,19 +122,6 @@
       "completed": false
     },
     {
-      "id": "evt_011",
-      "km": 187500,
-      "date": "2026-03-25",
-      "event": "Service - engine air filter",
-      "cost": 235,
-      "currency": "DKK",
-      "provider": "BimmerUpgrade",
-      "notes": "Mann part nr - C 28 038",
-      "invoiceNr": "",
-      "category": "official-service",
-      "completed": false
-    },
-    {
       "id": "evt_012",
       "km": 187500,
       "date": "2026-03-25",
