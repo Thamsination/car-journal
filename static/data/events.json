@@ -174,18 +174,6 @@
       "category": "official-service"
     },
     {
-      "id": "evt_019",
-      "km": 200000,
-      "date": "",
-      "event": "Service - xDrive transfer case fluid",
-      "cost": 2500,
-      "currency": "DKK",
-      "provider": "Specialist",
-      "notes": "Prevents transfer case wear",
-      "invoiceNr": "",
-      "completed": false
-    },
-    {
       "id": "evt_020",
       "km": 200000,
       "date": "",
