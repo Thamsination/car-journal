@@ -122,19 +122,6 @@
       "completed": false
     },
     {
-      "id": "evt_014",
-      "km": 187500,
-      "date": "2026-03-25",
-      "event": "Vehicle check",
-      "cost": 1500,
-      "currency": "DKK",
-      "provider": "BimmerUpgrade",
-      "notes": "Incl. Timing Chain/Suspension/Brakes",
-      "invoiceNr": "",
-      "category": "official-service",
-      "completed": false
-    },
-    {
       "id": "evt_015",
       "km": 187600,
       "date": "2026-03-26",
