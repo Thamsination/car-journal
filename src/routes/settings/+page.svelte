@@ -106,6 +106,7 @@
 	</div>
 
 	<div class="actions">
+		<a href="{base}/bmw" class="action-btn bmw-link">Connect myBMW</a>
 		<button class="action-btn export" onclick={exportCsv}>
 			Export Events as CSV
 		</button>
@@ -228,6 +229,13 @@
 		border-radius: var(--radius-sm);
 		font-size: 15px;
 		font-weight: 600;
+		text-align: center;
+	}
+
+	.action-btn.bmw-link {
+		background: var(--color-accent);
+		color: white;
+		text-decoration: none;
 		text-align: center;
 	}
 

@@ -139,3 +139,44 @@ export async function loadVehicle(): Promise<import('./types').VehicleStatus> {
 		return { vin: '', odometer: null, fuelLevel: null, lastSynced: null };
 	}
 }
+
+async function getRepoPublicKey(): Promise<{ key_id: string; key: string }> {
+	const res = await fetch(`${repoPath()}/actions/secrets/public-key`, { headers: headers() });
+	if (!res.ok) throw new Error(`Failed to get repo public key: ${res.status}`);
+	return res.json();
+}
+
+export async function setRepoSecret(name: string, value: string): Promise<void> {
+	const sealedbox = await import('tweetnacl-sealedbox-js');
+
+	const { key_id, key } = await getRepoPublicKey();
+	const publicKeyBytes = Uint8Array.from(atob(key), (c) => c.charCodeAt(0));
+	const messageBytes = new TextEncoder().encode(value);
+	const encrypted = sealedbox.seal(messageBytes, publicKeyBytes);
+	const encryptedBase64 = btoa(String.fromCharCode(...encrypted));
+
+	const res = await fetch(`${repoPath()}/actions/secrets/${name}`, {
+		method: 'PUT',
+		headers: headers(),
+		body: JSON.stringify({ encrypted_value: encryptedBase64, key_id })
+	});
+	if (!res.ok) {
+		const err = await res.json().catch(() => ({}));
+		throw new Error(`Failed to set secret ${name}: ${res.status} — ${err.message || res.statusText}`);
+	}
+}
+
+export async function triggerWorkflow(workflowFile: string, inputs?: Record<string, string>): Promise<void> {
+	const body: Record<string, unknown> = { ref: 'main' };
+	if (inputs) body.inputs = inputs;
+
+	const res = await fetch(`${repoPath()}/actions/workflows/${workflowFile}/dispatches`, {
+		method: 'POST',
+		headers: headers(),
+		body: JSON.stringify(body)
+	});
+	if (!res.ok) {
+		const err = await res.json().catch(() => ({}));
+		throw new Error(`Failed to trigger workflow: ${res.status} — ${err.message || res.statusText}`);
+	}
+}
