@@ -187,18 +187,6 @@
       "category": "official-service"
     },
     {
-      "id": "evt_023",
-      "km": 205000,
-      "date": "",
-      "event": "Service - oil change",
-      "cost": 1039,
-      "currency": "DKK",
-      "provider": "Specialist",
-      "notes": "Post-carbon clean flush, oil + oil filter",
-      "invoiceNr": "",
-      "completed": false
-    },
-    {
       "id": "evt_024",
       "km": 209000,
       "date": "",
