@@ -128,5 +128,6 @@ export function getEventTasks(evt: CarEvent): string[] {
 }
 
 export function buildEventString(tasks: string[]): string {
-	return tasks.join(', ');
+	const str = tasks.join(', ');
+	return str.charAt(0).toUpperCase() + str.slice(1);
 }
