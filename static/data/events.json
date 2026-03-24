@@ -83,7 +83,8 @@
       "provider": "Jan Nygaard",
       "notes": "OEM, part nr - 84102447710",
       "invoiceNr": "250045702",
-      "completed": true
+      "completed": true,
+      "category": "official-service"
     },
     {
       "id": "evt_008",
