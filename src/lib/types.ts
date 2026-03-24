@@ -37,13 +37,6 @@ export interface IDriveRecord {
 	event: string;
 }
 
-export interface VehicleStatus {
-	vin: string;
-	odometer: number | null;
-	fuelLevel: number | null;
-	lastSynced: string | null;
-}
-
 export interface EventsData {
 	events: CarEvent[];
 }

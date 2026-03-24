@@ -78,10 +78,10 @@
 	<div class="settings-card">
 		<h3 class="card-title">Odometer</h3>
 		<p class="card-desc">
-			{#if $latestOdometer.source === 'bmw'}
-				BMW synced: {$latestOdometer.km.toLocaleString()} km
-			{:else if $latestOdometer.source === 'manual'}
+			{#if $latestOdometer.source === 'manual'}
 				Manual: {$latestOdometer.km.toLocaleString()} km
+			{:else if $latestOdometer.source === 'estimated'}
+				Estimated: ~{$latestOdometer.km.toLocaleString()} km
 			{:else if $latestOdometer.source === 'event'}
 				From completed event: {$latestOdometer.km.toLocaleString()}+ km
 			{:else}
@@ -106,7 +106,6 @@
 	</div>
 
 	<div class="actions">
-		<a href="{base}/bmw" class="action-btn bmw-link">Connect myBMW</a>
 		<button class="action-btn export" onclick={exportCsv}>
 			Export Events as CSV
 		</button>
@@ -229,13 +228,6 @@
 		border-radius: var(--radius-sm);
 		font-size: 15px;
 		font-weight: 600;
-		text-align: center;
-	}
-
-	.action-btn.bmw-link {
-		background: var(--color-accent);
-		color: white;
-		text-decoration: none;
 		text-align: center;
 	}
 

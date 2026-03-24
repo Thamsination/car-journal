@@ -1,5 +1,5 @@
 import { writable, derived } from 'svelte/store';
-import type { CarEvent, Part, IDriveRecord, VehicleStatus, DerivedStatus } from './types';
+import type { CarEvent, Part, IDriveRecord, DerivedStatus } from './types';
 import { deriveStatus } from './utils';
 
 function persistedWritable<T>(key: string, initial: T) {
@@ -22,12 +22,6 @@ export const manualOdometer = persistedWritable<number | null>('manual_odometer'
 export const events = writable<CarEvent[]>([]);
 export const parts = writable<Part[]>([]);
 export const idriveRecords = writable<IDriveRecord[]>([]);
-export const vehicle = writable<VehicleStatus>({
-	vin: '',
-	odometer: null,
-	fuelLevel: null,
-	lastSynced: null
-});
 
 export const isLoading = writable(false);
 export const error = writable<string | null>(null);
@@ -114,11 +108,8 @@ export const dailyAverageKm = derived(events, ($events) => {
 });
 
 export const latestOdometer = derived(
-	[vehicle, manualOdometer, events, dailyAverageKm],
-	([$vehicle, $manual, $events, $avgKm]) => {
-		if ($vehicle.odometer) {
-			return { km: $vehicle.odometer, approximate: false, source: 'bmw' as const };
-		}
+	[manualOdometer, events, dailyAverageKm],
+	([$manual, $events, $avgKm]) => {
 		if ($manual !== null && $manual > 0) {
 			return { km: $manual, approximate: false, source: 'manual' as const };
 		}

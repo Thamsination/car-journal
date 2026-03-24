@@ -4,10 +4,10 @@
 	import { base } from '$app/paths';
 	import {
 		token, events, idriveRecords, totalSpent, totalPlanned, costByCategory,
-		nextBatchEvents, vehicle, latestOdometer, lastCompletedKm, dailyAverageKm,
+		nextBatchEvents, latestOdometer, lastCompletedKm, dailyAverageKm,
 		nextScheduledEvent
 	} from '$lib/stores';
-	import { loadEvents, loadVehicle, loadIDriveHistory } from '$lib/github';
+	import { loadEvents, loadIDriveHistory } from '$lib/github';
 	import {
 		formatCost, formatDateISO, deriveStatus, statusColor,
 		eventCategory, categoryLabel, categoryColor
@@ -22,13 +22,11 @@
 			return;
 		}
 		try {
-			const [evts, veh, idrive] = await Promise.all([
+			const [evts, idrive] = await Promise.all([
 				loadEvents(),
-				loadVehicle(),
 				loadIDriveHistory()
 			]);
 			$events = evts;
-			$vehicle = veh;
 			$idriveRecords = idrive;
 		} catch {
 			// data may not exist yet
@@ -83,9 +81,7 @@
 				</span>
 				<span class="odo-unit">km</span>
 			</div>
-			{#if $latestOdometer.source === 'bmw'}
-				<span class="odo-source">BMW synced {new Date($vehicle.lastSynced ?? '').toLocaleDateString('en-GB')}</span>
-			{:else if $latestOdometer.source === 'manual'}
+			{#if $latestOdometer.source === 'manual'}
 				<span class="odo-source">Manually set</span>
 			{:else if $latestOdometer.source === 'estimated'}
 				<span class="odo-source">Estimated · {$dailyAverageKm} km/day avg</span>
