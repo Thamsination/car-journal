@@ -95,7 +95,7 @@
 
 <div class="container">
 	<div class="page-header">
-		<a href="{base}/schedule" class="back-btn">← Back</a>
+		<button class="back-btn" onclick={() => history.back()}>← Back</button>
 		<h2>{editing ? 'Edit Entry' : 'Entry Details'}</h2>
 	</div>
 
@@ -223,7 +223,10 @@
 	.back-btn {
 		font-size: 14px;
 		color: var(--color-accent);
-		text-decoration: none;
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
 	}
 
 	.detail-card {
