@@ -17,6 +17,7 @@
 	let costInput = $state('');
 	let selectedCategory = $state<EventCategory | ''>('');
 	let customTask = $state('');
+	let selectedTasks = $state<string[]>([]);
 	let providerMode = $state<'select' | 'custom'>('select');
 	let providerSelect = $state('');
 	let customProvider = $state('');
@@ -38,6 +39,10 @@
 		invoiceNr: ''
 	});
 
+	function splitTasks(raw: string): string[] {
+		return raw.split(/,|\band\b/i).map(s => s.trim()).filter(Boolean);
+	}
+
 	function extractTaskName(evt: CarEvent): string {
 		const parts = evt.event.split(' - ');
 		return parts.length > 1 ? parts.slice(1).join(' - ').trim() : evt.event.trim();
@@ -52,14 +57,15 @@
 		for (const evt of $events) {
 			const cat = eventCategory(evt.event, evt.category);
 			if (isService ? SERVICE_CATEGORIES.includes(cat) : cat === selectedCategory) {
-				tasks.add(extractTaskName(evt));
+				for (const t of splitTasks(extractTaskName(evt))) {
+					tasks.add(t.toLowerCase());
+				}
 			}
 		}
 		if (isService) {
 			for (const rec of $idriveRecords) {
-				for (const part of rec.event.split(',')) {
-					const trimmed = part.trim();
-					if (trimmed) tasks.add(trimmed);
+				for (const t of splitTasks(rec.event)) {
+					tasks.add(t.toLowerCase());
 				}
 			}
 		}
@@ -74,15 +80,23 @@
 		return [...set].sort((a, b) => a.localeCompare(b));
 	});
 
-	function selectTask(task: string) {
-		form.event = task;
-		customTask = '';
+	function syncFormEvent() {
+		const parts = [...selectedTasks];
+		if (customTask.trim()) parts.push(customTask.trim());
+		form.event = parts.join(', ');
+	}
+
+	function toggleTask(task: string) {
+		if (selectedTasks.includes(task)) {
+			selectedTasks = selectedTasks.filter(t => t !== task);
+		} else {
+			selectedTasks = [...selectedTasks, task];
+		}
+		syncFormEvent();
 	}
 
 	function applyCustomTask() {
-		if (customTask.trim()) {
-			form.event = customTask.trim();
-		}
+		syncFormEvent();
 	}
 
 	function resolveProvider(): string {
@@ -94,6 +108,7 @@
 		editing = true;
 		selectedCategory = event!.category || '';
 		customTask = '';
+		selectedTasks = splitTasks(extractTaskName(event!)).map(t => t.toLowerCase());
 		const existingProvider = event!.provider;
 		if (existingProvider && providers.includes(existingProvider)) {
 			providerMode = 'select';
@@ -236,8 +251,8 @@
 							<button
 								type="button"
 								class="task-chip"
-								class:selected={form.event === task}
-								onclick={() => selectTask(task)}
+								class:selected={selectedTasks.includes(task)}
+								onclick={() => toggleTask(task)}
 							>
 								{task}
 							</button>
@@ -249,11 +264,10 @@
 					type="text"
 					bind:value={customTask}
 					oninput={applyCustomTask}
-					placeholder={selectedCategory ? 'Or type a custom task...' : 'Select a category first, or type here'}
-					onfocus={() => { if (customTask === '' && form.event) customTask = form.event; }}
+					placeholder={selectedTasks.length ? 'Add another task...' : (selectedCategory ? 'Or type a custom task...' : 'Select a category first, or type here')}
 				/>
-				{#if form.event && customTask !== form.event}
-					<span class="selected-task">Selected: {form.event}</span>
+				{#if form.event}
+					<span class="selected-task">{form.event}</span>
 				{/if}
 			</div>
 
