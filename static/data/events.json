@@ -314,24 +314,6 @@
         "engine air filter",
         "brake fluid flush"
       ]
-    },
-    {
-      "id": "evt_mn4w25f3_vz02e",
-      "km": 230000,
-      "date": "",
-      "event": "Micro filter, fuel filter, differential fluids",
-      "cost": 0,
-      "currency": "DKK",
-      "provider": "BimmerUpgrade",
-      "notes": "Test",
-      "completed": false,
-      "invoiceNr": "",
-      "tasks": [
-        "micro filter",
-        "fuel filter",
-        "differential fluids"
-      ],
-      "category": "official-service"
     }
   ]
 }
