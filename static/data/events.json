@@ -112,7 +112,7 @@
       "id": "evt_010",
       "km": 187045,
       "date": "2026-03-25",
-      "event": "Service - oil change",
+      "event": "Oil change",
       "cost": 3600,
       "currency": "DKK",
       "provider": "BimmerUpgrade",
