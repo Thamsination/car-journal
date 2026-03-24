@@ -13,6 +13,7 @@ export interface CarEvent {
 	notes: string;
 	completed: boolean;
 	category?: EventCategory;
+	tasks?: string[];
 	invoiceNr: string;
 }
 

@@ -121,3 +121,12 @@ export function parseCostInput(value: string): number {
 	const cleaned = value.replace(/[^0-9.,\-]/g, '').replace(',', '.');
 	return Math.round(parseFloat(cleaned) || 0);
 }
+
+export function getEventTasks(evt: CarEvent): string[] {
+	if (evt.tasks && evt.tasks.length > 0) return evt.tasks;
+	return evt.event.split(',').map(s => s.trim()).filter(Boolean);
+}
+
+export function buildEventString(tasks: string[]): string {
+	return tasks.join(', ');
+}

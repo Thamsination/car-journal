@@ -4,7 +4,7 @@
 	import { base } from '$app/paths';
 	import { events, idriveRecords } from '$lib/stores';
 	import { saveEvents, loadEvents, loadIDriveHistory } from '$lib/github';
-	import { formatCost, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, allCategories } from '$lib/utils';
+	import { formatCost, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, allCategories, getEventTasks, buildEventString } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent, EventCategory } from '$lib/types';
 	import { onMount } from 'svelte';
@@ -17,6 +17,7 @@
 	let costInput = $state('');
 	let selectedCategory = $state<EventCategory | ''>('');
 	let customTask = $state('');
+	let selectedTasks = $state<string[]>([]);
 	let providerMode = $state<'select' | 'custom'>('select');
 	let providerSelect = $state('');
 	let customProvider = $state('');
@@ -38,11 +39,6 @@
 		invoiceNr: ''
 	});
 
-	function extractTaskName(evt: CarEvent): string {
-		const parts = evt.event.split(' - ');
-		return parts.length > 1 ? parts.slice(1).join(' - ').trim() : evt.event.trim();
-	}
-
 	const SERVICE_CATEGORIES: EventCategory[] = ['official-service', 'other-service'];
 
 	const taskSuggestions = $derived.by(() => {
@@ -52,7 +48,9 @@
 		for (const evt of $events) {
 			const cat = eventCategory(evt.event, evt.category);
 			if (isService ? SERVICE_CATEGORIES.includes(cat) : cat === selectedCategory) {
-				tasks.add(extractTaskName(evt));
+				for (const t of getEventTasks(evt)) {
+					tasks.add(t);
+				}
 			}
 		}
 		if (isService) {
@@ -63,7 +61,7 @@
 				}
 			}
 		}
-		return [...tasks].sort((a, b) => a.localeCompare(b));
+		return [...tasks].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 	});
 
 	const providers = $derived.by(() => {
@@ -74,15 +72,24 @@
 		return [...set].sort((a, b) => a.localeCompare(b));
 	});
 
-	function selectTask(task: string) {
-		form.event = task;
-		customTask = '';
+	function syncFormEvent() {
+		const all = [...selectedTasks];
+		if (customTask.trim()) all.push(customTask.trim());
+		form.tasks = all.length > 0 ? all : undefined;
+		form.event = buildEventString(all);
+	}
+
+	function toggleTask(task: string) {
+		if (selectedTasks.includes(task)) {
+			selectedTasks = selectedTasks.filter(t => t !== task);
+		} else {
+			selectedTasks = [...selectedTasks, task];
+		}
+		syncFormEvent();
 	}
 
 	function applyCustomTask() {
-		if (customTask.trim()) {
-			form.event = customTask.trim();
-		}
+		syncFormEvent();
 	}
 
 	function resolveProvider(): string {
@@ -94,6 +101,7 @@
 		editing = true;
 		selectedCategory = event!.category || '';
 		customTask = '';
+		selectedTasks = getEventTasks(event!);
 		const existingProvider = event!.provider;
 		if (existingProvider && providers.includes(existingProvider)) {
 			providerMode = 'select';
@@ -133,6 +141,7 @@
 			form.cost = Math.round(parseFloat(costInput.replace(/[^0-9.,\-]/g, '').replace(',', '.')) || 0);
 			form.category = selectedCategory || undefined;
 			form.provider = resolveProvider();
+			syncFormEvent();
 			const updated = $events.map((e) => (e.id === form.id ? { ...form } : e));
 
 			if (isOnline()) {
@@ -236,8 +245,8 @@
 							<button
 								type="button"
 								class="task-chip"
-								class:selected={form.event === task}
-								onclick={() => selectTask(task)}
+								class:selected={selectedTasks.includes(task)}
+								onclick={() => toggleTask(task)}
 							>
 								{task}
 							</button>
@@ -249,11 +258,10 @@
 					type="text"
 					bind:value={customTask}
 					oninput={applyCustomTask}
-					placeholder={selectedCategory ? 'Or type a custom task...' : 'Select a category first, or type here'}
-					onfocus={() => { if (customTask === '' && form.event) customTask = form.event; }}
+					placeholder={selectedTasks.length ? 'Add another task...' : (selectedCategory ? 'Or type a custom task...' : 'Select a category first, or type here')}
 				/>
-				{#if form.event && customTask !== form.event}
-					<span class="selected-task">Selected: {form.event}</span>
+				{#if form.event}
+					<span class="selected-task">{form.event}</span>
 				{/if}
 			</div>
 
