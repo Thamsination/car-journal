@@ -224,15 +224,16 @@
     },
     {
       "id": "evt_027",
-      "km": 216900,
+      "km": 217000,
       "date": "",
-      "event": "Service - engine air filter",
-      "cost": 235,
+      "event": "Oil change, engine air filter, brake fluid flush",
+      "cost": 3000,
       "currency": "DKK",
       "provider": "BimmerUpgrade",
       "notes": "30k km interval reached",
       "invoiceNr": "",
-      "completed": false
+      "completed": false,
+      "category": "official-service"
     },
     {
       "id": "evt_028",
