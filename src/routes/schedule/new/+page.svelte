@@ -1,14 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { events, idriveRecords } from '$lib/stores';
-	import { saveEvents, loadEvents, loadIDriveHistory } from '$lib/github';
+	import { events } from '$lib/stores';
+	import { saveEvents, loadEvents } from '$lib/github';
 	import { generateId, formatDateISO, allCategories, eventCategory, getEventTasks, buildEventString } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent, EventCategory } from '$lib/types';
-	import { onMount } from 'svelte';
-
-	onMount(() => { loadIDriveHistory(); });
 
 	let saving = $state(false);
 	let saveError = $state('');
@@ -46,15 +43,6 @@
 			if (isService ? SERVICE_CATEGORIES.includes(cat) : cat === selectedCategory) {
 				for (const t of getEventTasks(evt)) {
 					tasks.add(t);
-				}
-			}
-		}
-
-		if (isService) {
-			for (const rec of $idriveRecords) {
-				for (const part of rec.event.split(',')) {
-					const trimmed = part.trim();
-					if (trimmed) tasks.add(trimmed);
 				}
 			}
 		}

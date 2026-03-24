@@ -1,14 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
-	import { events, completedEvents, idriveRecords } from '$lib/stores';
-	import { loadEvents, loadIDriveHistory } from '$lib/github';
+	import { events, completedEvents } from '$lib/stores';
+	import { loadEvents } from '$lib/github';
 	import { formatCost, formatDate, eventCategory, categoryLabel, categoryColor } from '$lib/utils';
-	import type { CarEvent, IDriveRecord } from '$lib/types';
-
-	type TimelineItem =
-		| { kind: 'journal'; data: CarEvent }
-		| { kind: 'idrive'; data: IDriveRecord };
 
 	let loading = $state(true);
 	let loadError = $state('');
@@ -16,12 +11,9 @@
 
 	onMount(async () => {
 		try {
-			const [evts, records] = await Promise.all([
-				$events.length === 0 ? loadEvents() : Promise.resolve($events),
-				loadIDriveHistory()
-			]);
-			if ($events.length === 0) $events = evts;
-			$idriveRecords = records;
+			if ($events.length === 0) {
+				$events = await loadEvents();
+			}
 		} catch (e: unknown) {
 			loadError = e instanceof Error ? e.message : 'Failed to load history';
 		} finally {
@@ -29,48 +21,16 @@
 		}
 	});
 
-	function formatIDriveDate(dateStr: string): string {
-		if (!dateStr || dateStr.length !== 8) return dateStr;
-		const y = dateStr.slice(0, 4);
-		const m = dateStr.slice(4, 6);
-		const d = dateStr.slice(6, 8);
-		return `${y}-${m}-${d}`;
-	}
-
-	function idriveKm(record: IDriveRecord): number {
-		return record.km ?? 0;
-	}
-
 	const timeline = $derived.by(() => {
-		const items: TimelineItem[] = [];
-
-		for (const evt of $completedEvents) {
-			items.push({ kind: 'journal', data: evt });
-		}
-		for (const rec of $idriveRecords) {
-			items.push({ kind: 'idrive', data: rec });
-		}
-
-		items.sort((a, b) => {
-			const aDate = a.kind === 'journal' ? (a.data as CarEvent).date : formatIDriveDate((a.data as IDriveRecord).date);
-			const bDate = b.kind === 'journal' ? (b.data as CarEvent).date : formatIDriveDate((b.data as IDriveRecord).date);
-			if (aDate !== bDate) return (bDate || '').localeCompare(aDate || '');
-
-			const aKm = a.kind === 'journal' ? (a.data as CarEvent).km ?? -1 : idriveKm(a.data as IDriveRecord);
-			const bKm = b.kind === 'journal' ? (b.data as CarEvent).km ?? -1 : idriveKm(b.data as IDriveRecord);
-			return bKm - aKm;
-		});
+		const items = [...$completedEvents];
 
 		if (!searchQuery) return items;
 		const q = searchQuery.toLowerCase();
-		return items.filter((item) => {
-			if (item.kind === 'journal') {
-				const d = item.data as CarEvent;
-				return d.event.toLowerCase().includes(q) || d.provider.toLowerCase().includes(q) || d.notes.toLowerCase().includes(q);
-			}
-			const d = item.data as IDriveRecord;
-			return d.event.toLowerCase().includes(q) || d.serviceNr.toLowerCase().includes(q);
-		});
+		return items.filter((evt) =>
+			evt.event.toLowerCase().includes(q) ||
+			evt.provider.toLowerCase().includes(q) ||
+			evt.notes.toLowerCase().includes(q)
+		);
 	});
 </script>
 
@@ -80,7 +40,7 @@
 
 <div class="container">
 	<h2 class="page-title">History</h2>
-	<p class="page-subtitle">Completed work and iDrive service records</p>
+	<p class="page-subtitle">Completed work</p>
 
 	<div class="search-bar">
 		<input type="search" placeholder="Search history..." bind:value={searchQuery} />
@@ -94,50 +54,34 @@
 		<div class="empty-state">No history found</div>
 	{:else}
 		<ul class="history-list">
-			{#each timeline as item, i}
+			{#each timeline as evt, i}
+				{@const cat = eventCategory(evt.event, evt.category)}
 				<li class="history-card">
 					<div class="history-marker">
-						<div class="marker-dot" class:idrive={item.kind === 'idrive'}></div>
+						<div class="marker-dot"></div>
 						{#if i < timeline.length - 1}
 							<div class="marker-line"></div>
 						{/if}
 					</div>
 
-					{#if item.kind === 'journal'}
-						{@const evt = item.data as CarEvent}
-						{@const cat = eventCategory(evt.event, evt.category)}
-						<a href="{base}/schedule/{evt.id}" class="history-content">
-							<div class="history-header">
-								<span class="history-date">{formatDate(evt.date)}</span>
-								<span class="category-badge" style="background: {categoryColor(cat)}">{categoryLabel(cat)}</span>
-							</div>
-							<p class="history-event">{evt.event}</p>
-							<div class="history-meta">
-								{#if evt.km}
-									<span>{evt.km.toLocaleString()} km</span>
-								{/if}
-								{#if evt.provider}
-									<span>{evt.provider}</span>
-								{/if}
-								{#if evt.cost > 0}
-									<span class="history-cost">{formatCost(evt.cost)}</span>
-								{/if}
-							</div>
-						</a>
-					{:else}
-						{@const rec = item.data as IDriveRecord}
-						<div class="history-content">
-							<div class="history-header">
-								<span class="history-date">{formatDate(formatIDriveDate(rec.date))}</span>
-								<span class="category-badge" style="background: {categoryColor('official-service')}">{categoryLabel('official-service')}</span>
-							</div>
-							<p class="history-event">{rec.event}</p>
-							<div class="history-meta">
-								<span>{rec.km.toLocaleString()} km</span>
-								<span>Service: {rec.serviceNr}</span>
-							</div>
+					<a href="{base}/schedule/{evt.id}" class="history-content">
+						<div class="history-header">
+							<span class="history-date">{formatDate(evt.date)}</span>
+							<span class="category-badge" style="background: {categoryColor(cat)}">{categoryLabel(cat)}</span>
 						</div>
-					{/if}
+						<p class="history-event">{evt.event}</p>
+						<div class="history-meta">
+							{#if evt.km}
+								<span>{evt.km.toLocaleString()} km</span>
+							{/if}
+							{#if evt.provider}
+								<span>{evt.provider}</span>
+							{/if}
+							{#if evt.cost > 0}
+								<span class="history-cost">{formatCost(evt.cost)}</span>
+							{/if}
+						</div>
+					</a>
 				</li>
 			{/each}
 		</ul>

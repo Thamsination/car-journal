@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { token, repoOwner, repoName, events, parts, idriveRecords, manualOdometer, latestOdometer } from '$lib/stores';
+	import { token, repoOwner, repoName, events, parts, manualOdometer, latestOdometer } from '$lib/stores';
 
 	let odoInput = $state($manualOdometer?.toString() ?? '');
 	let odoSaved = $state(false);
@@ -25,7 +25,6 @@
 		$token = '';
 		$events = [];
 		$parts = [];
-		$idriveRecords = [];
 		goto(`${base}/setup`);
 	}
 

@@ -30,22 +30,10 @@ export interface Part {
 	notes: string;
 }
 
-export interface IDriveRecord {
-	status: string;
-	date: string;
-	km: number;
-	serviceNr: string;
-	event: string;
-}
-
 export interface EventsData {
 	events: CarEvent[];
 }
 
 export interface PartsData {
 	parts: Part[];
-}
-
-export interface IDriveData {
-	records: IDriveRecord[];
 }

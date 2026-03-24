@@ -2,8 +2,8 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { events, idriveRecords } from '$lib/stores';
-	import { saveEvents, loadEvents, loadIDriveHistory } from '$lib/github';
+	import { events } from '$lib/stores';
+	import { saveEvents, loadEvents } from '$lib/github';
 	import { formatCost, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, allCategories, getEventTasks, buildEventString } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent, EventCategory } from '$lib/types';
@@ -50,14 +50,6 @@
 			if (isService ? SERVICE_CATEGORIES.includes(cat) : cat === selectedCategory) {
 				for (const t of getEventTasks(evt)) {
 					tasks.add(t);
-				}
-			}
-		}
-		if (isService) {
-			for (const rec of $idriveRecords) {
-				for (const part of rec.event.split(',')) {
-					const trimmed = part.trim();
-					if (trimmed) tasks.add(trimmed);
 				}
 			}
 		}
@@ -119,7 +111,6 @@
 	}
 
 	onMount(() => {
-		loadIDriveHistory();
 		const id = $page.params.id;
 		const found = $events.find((e) => e.id === id);
 		if (found) {

@@ -126,8 +126,3 @@ export async function saveParts(
 	partsSha = await writeJsonFile(`${DATA_PATH}/parts.json`, data, partsSha, message);
 }
 
-export async function loadIDriveHistory(): Promise<import('./types').IDriveRecord[]> {
-	const { data } = await readJsonFile<import('./types').IDriveData>(`${DATA_PATH}/idrive-history.json`);
-	return data.records;
-}
-
