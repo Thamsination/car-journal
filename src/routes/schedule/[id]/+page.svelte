@@ -13,6 +13,7 @@
 	let editing = $state(false);
 	let saving = $state(false);
 	let deleting = $state(false);
+	let completing = $state(false);
 	let saveError = $state('');
 	let costInput = $state('');
 	let categoryOverride = $state<EventCategory | ''>('');
@@ -72,6 +73,29 @@
 		}
 	}
 
+	async function handleComplete() {
+		completing = true;
+		saveError = '';
+		try {
+			const updated = $events.map((e) =>
+				e.id === form.id ? { ...e, status: 'done' as const } : e
+			);
+
+			if (isOnline()) {
+				await loadEvents();
+				await saveEvents(updated, `Complete: ${form.event}`);
+			} else {
+				await queueWrite('events', updated, `Complete: ${form.event}`);
+			}
+			$events = updated;
+			goto(`${base}/history`);
+		} catch (e: unknown) {
+			saveError = e instanceof Error ? e.message : 'Failed to mark as completed';
+		} finally {
+			completing = false;
+		}
+	}
+
 	async function handleDelete() {
 		if (!confirm('Delete this event permanently?')) return;
 		deleting = true;
@@ -84,8 +108,8 @@
 			} else {
 				await queueWrite('events', updated, `Delete: ${form.event}`);
 			}
-		$events = updated;
-		goto(`${base}/schedule`);
+			$events = updated;
+			goto(`${base}/schedule`);
 		} catch (e: unknown) {
 			saveError = e instanceof Error ? e.message : 'Failed to delete';
 		} finally {
@@ -221,6 +245,12 @@
 				</div>
 			{/if}
 
+			{#if event.status !== 'done'}
+				<button class="complete-btn" onclick={handleComplete} disabled={completing}>
+					{completing ? 'Saving...' : 'Completed'}
+				</button>
+			{/if}
+
 			<div class="button-row">
 				<button class="edit-btn" onclick={() => (editing = true)}>Edit</button>
 				<button class="delete-btn" onclick={handleDelete} disabled={deleting}>
@@ -328,6 +358,22 @@
 		display: flex;
 		gap: 12px;
 		margin-top: 16px;
+	}
+
+	.complete-btn {
+		width: 100%;
+		padding: 12px;
+		background: var(--color-success);
+		color: white;
+		border-radius: var(--radius-sm);
+		font-size: 15px;
+		font-weight: 600;
+		margin-top: 16px;
+	}
+
+	.complete-btn:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
 	}
 
 	.edit-btn,
