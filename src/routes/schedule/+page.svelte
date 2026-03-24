@@ -2,9 +2,28 @@
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { token, events, scheduleEvents, statusFilter, isLoading, error } from '$lib/stores';
+	import { token, events, scheduleEvents, statusFilter, latestOdometer, isLoading, error } from '$lib/stores';
 	import { loadEvents } from '$lib/github';
-	import { formatCost, formatDate, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor } from '$lib/utils';
+	import { formatCost, formatDateISO, deriveStatus, statusColor, eventCategory, categoryLabel, categoryColor } from '$lib/utils';
+	import type { CarEvent, DerivedStatus } from '$lib/types';
+
+	function smartStatusText(evt: CarEvent, status: DerivedStatus, odoKm: number): string {
+		if (status === 'today') return 'Today';
+		if (status === 'scheduled' && evt.date) {
+			const today = new Date(formatDateISO(new Date()) + 'T00:00:00');
+			const target = new Date(evt.date + 'T00:00:00');
+			const days = Math.round((target.getTime() - today.getTime()) / 86400000);
+			return days === 1 ? 'In 1 day' : `In ${days} days`;
+		}
+		if (status === 'delayed' && evt.km !== null && odoKm > 0) {
+			const overdue = odoKm - evt.km;
+			if (overdue > 0) return `Overdue ${overdue.toLocaleString()} km`;
+		}
+		if (status === 'planned') return 'Planned';
+		if (status === 'backlog') return 'Backlog';
+		if (status === 'delayed') return 'Delayed';
+		return '';
+	}
 
 	const statuses: { value: string; label: string }[] = [
 		{ value: 'all', label: 'All' },
@@ -88,24 +107,19 @@
 		<ul class="event-list">
 			{#each displayEvents as event (event.id)}
 				{@const evtStatus = deriveStatus(event)}
+				{@const statusText = smartStatusText(event, evtStatus, $latestOdometer.km)}
 				<li>
 					<a href="{base}/schedule/{event.id}" class="event-card">
 						<div class="event-header">
-							<div class="badge-group">
-								<span
-									class="category-badge"
-									style="background: {categoryColor(eventCategory(event.event, event.category))}"
-								>
-									{categoryLabel(eventCategory(event.event, event.category))}
-								</span>
-								<span
-									class="status-badge"
-									style="background: {statusColor(evtStatus)}"
-								>
-									{statusLabel(evtStatus)}
-								</span>
-							</div>
-							<span class="event-date">{formatDate(event.date)}</span>
+							<span
+								class="category-badge"
+								style="background: {categoryColor(eventCategory(event.event, event.category))}"
+							>
+								{categoryLabel(eventCategory(event.event, event.category))}
+							</span>
+							<span class="status-text" style="color: {statusColor(evtStatus)}">
+								{statusText}
+							</span>
 						</div>
 						<h3 class="event-title">{event.event}</h3>
 						<div class="event-meta">
@@ -190,14 +204,7 @@
 		margin-bottom: 6px;
 	}
 
-	.badge-group {
-		display: flex;
-		gap: 4px;
-		align-items: center;
-	}
-
-	.category-badge,
-	.status-badge {
+	.category-badge {
 		font-size: 11px;
 		font-weight: 600;
 		color: white;
@@ -207,9 +214,10 @@
 		letter-spacing: 0.3px;
 	}
 
-	.event-date {
-		font-size: 13px;
-		color: var(--color-text-secondary);
+	.status-text {
+		font-size: 12px;
+		font-weight: 600;
+		white-space: nowrap;
 	}
 
 	.event-title {
