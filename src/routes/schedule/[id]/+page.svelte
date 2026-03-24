@@ -372,6 +372,10 @@
 					<span class="detail-value">{event.invoiceNr}</span>
 				</div>
 			{/if}
+			<div class="detail-row">
+				<span class="detail-label">Entry ID</span>
+				<span class="detail-value entry-id">{event.id}</span>
+			</div>
 
 			{#if !event.completed}
 				<button class="complete-btn" onclick={openCompleteModal}>
@@ -478,6 +482,13 @@
 		font-size: 14px;
 		font-weight: 500;
 		text-align: right;
+	}
+
+	.entry-id {
+		font-family: monospace;
+		font-size: 12px;
+		color: var(--color-text-secondary);
+		font-weight: 400;
 	}
 
 	.event-form {
