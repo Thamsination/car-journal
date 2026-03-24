@@ -70,7 +70,7 @@ export function statusColor(status: DerivedStatus): string {
 	return statusColors[status] || '#8e8e93';
 }
 
-const ALL_CATEGORIES: EventCategory[] = ['purchase', 'recall', 'replacement', 'official-service', 'other-service', 'inspection'];
+const ALL_CATEGORIES: EventCategory[] = ['purchase', 'warranty', 'replacement', 'official-service', 'other-service', 'inspection'];
 
 export function allCategories(): { value: EventCategory; label: string }[] {
 	return ALL_CATEGORIES.map((c) => ({ value: c, label: categoryLabels[c] }));
@@ -78,7 +78,7 @@ export function allCategories(): { value: EventCategory; label: string }[] {
 
 const prefixToCategory: Record<string, EventCategory> = {
 	purchase: 'purchase',
-	recall: 'recall',
+	recall: 'warranty',
 	replace: 'replacement',
 	inspection: 'inspection',
 	service: 'other-service',
@@ -93,7 +93,7 @@ export function eventCategory(description: string, stored?: EventCategory): Even
 
 const categoryLabels: Record<EventCategory, string> = {
 	purchase: 'Purchase',
-	recall: 'Recall',
+	warranty: 'Warranty',
 	replacement: 'Replacement',
 	'official-service': 'Official Service',
 	'other-service': 'Other Service',
@@ -102,7 +102,7 @@ const categoryLabels: Record<EventCategory, string> = {
 
 const categoryColors: Record<EventCategory, string> = {
 	purchase: '#5856d6',
-	recall: '#ff3b30',
+	warranty: '#ff3b30',
 	replacement: '#ff9500',
 	'official-service': '#007aff',
 	'other-service': '#34c759',

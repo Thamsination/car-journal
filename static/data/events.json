@@ -59,7 +59,7 @@
       "notes": "SSH-biler replaced worn summer tires. Tire type - Aplus A610 100Y",
       "invoiceNr": "-",
       "completed": true,
-      "category": "recall"
+      "category": "warranty"
     },
     {
       "id": "evt_006",
@@ -72,7 +72,7 @@
       "notes": "BMW Technical Campaign 0011350700",
       "invoiceNr": "-",
       "completed": true,
-      "category": "recall"
+      "category": "warranty"
     },
     {
       "id": "evt_007",
@@ -135,7 +135,7 @@
       "notes": "BMW Technical Campaign 0012560600",
       "invoiceNr": "",
       "completed": false,
-      "category": "recall"
+      "category": "warranty"
     },
     {
       "id": "evt_016",

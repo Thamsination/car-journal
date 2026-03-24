@@ -1,6 +1,6 @@
 export type DerivedStatus = 'completed' | 'today' | 'scheduled' | 'delayed' | 'planned' | 'backlog';
 
-export type EventCategory = 'purchase' | 'recall' | 'replacement' | 'official-service' | 'other-service' | 'inspection';
+export type EventCategory = 'purchase' | 'warranty' | 'replacement' | 'official-service' | 'other-service' | 'inspection';
 
 export interface CarEvent {
 	id: string;
