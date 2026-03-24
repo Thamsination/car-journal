@@ -4,7 +4,7 @@
 	import { base } from '$app/paths';
 	import {
 		token, events, idriveRecords, totalSpent, totalPlanned, costByCategory,
-		nextBatchEvents, vehicle, latestOdometer, lastCompletedKm,
+		nextBatchEvents, vehicle, latestOdometer, lastCompletedKm, dailyAverageKm,
 		nextScheduledEvent
 	} from '$lib/stores';
 	import { loadEvents, loadVehicle, loadIDriveHistory } from '$lib/github';
@@ -79,7 +79,7 @@
 		<div class="hero-card">
 			<div class="odometer">
 				<span class="odo-value">
-					{$latestOdometer.km.toLocaleString()}{$latestOdometer.approximate ? '+' : ''}
+					{$latestOdometer.source === 'estimated' ? '~' : ''}{$latestOdometer.km.toLocaleString()}{$latestOdometer.source === 'event' ? '+' : ''}
 				</span>
 				<span class="odo-unit">km</span>
 			</div>
@@ -87,6 +87,8 @@
 				<span class="odo-source">BMW synced {new Date($vehicle.lastSynced ?? '').toLocaleDateString('en-GB')}</span>
 			{:else if $latestOdometer.source === 'manual'}
 				<span class="odo-source">Manually set</span>
+			{:else if $latestOdometer.source === 'estimated'}
+				<span class="odo-source">Estimated · {$dailyAverageKm} km/day avg</span>
 			{:else if $latestOdometer.source === 'event'}
 				<span class="odo-source">Based on last completed event</span>
 			{/if}

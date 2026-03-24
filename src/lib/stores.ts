@@ -100,9 +100,22 @@ export const lastCompletedKm = derived(events, ($events) => {
 	return completed.length > 0 ? completed[0].km! : 0;
 });
 
+export const dailyAverageKm = derived(events, ($events) => {
+	const withBoth = $events
+		.filter((e) => e.completed && e.km !== null && e.date)
+		.sort((a, b) => (a.date!).localeCompare(b.date!));
+	if (withBoth.length < 2) return 0;
+	const earliest = withBoth[0];
+	const latest = withBoth[withBoth.length - 1];
+	const kmDiff = (latest.km ?? 0) - (earliest.km ?? 0);
+	const daysDiff = (new Date(latest.date!).getTime() - new Date(earliest.date!).getTime()) / 86400000;
+	if (daysDiff <= 0 || kmDiff <= 0) return 0;
+	return Math.round((kmDiff / daysDiff) * 10) / 10;
+});
+
 export const latestOdometer = derived(
-	[vehicle, manualOdometer, events],
-	([$vehicle, $manual, $events]) => {
+	[vehicle, manualOdometer, events, dailyAverageKm],
+	([$vehicle, $manual, $events, $avgKm]) => {
 		if ($vehicle.odometer) {
 			return { km: $vehicle.odometer, approximate: false, source: 'bmw' as const };
 		}
@@ -110,8 +123,14 @@ export const latestOdometer = derived(
 			return { km: $manual, approximate: false, source: 'manual' as const };
 		}
 		const completed = $events
-			.filter((e) => e.completed && e.km !== null)
+			.filter((e) => e.completed && e.km !== null && e.date)
 			.sort((a, b) => (b.km ?? 0) - (a.km ?? 0));
+		if (completed.length > 0 && $avgKm > 0) {
+			const latest = completed[0];
+			const daysSince = (Date.now() - new Date(latest.date!).getTime()) / 86400000;
+			const estimated = Math.round(latest.km! + daysSince * $avgKm);
+			return { km: estimated, approximate: true, source: 'estimated' as const };
+		}
 		if (completed.length > 0) {
 			return { km: completed[0].km!, approximate: true, source: 'event' as const };
 		}
