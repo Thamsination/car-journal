@@ -17,6 +17,7 @@ function persistedWritable<T>(key: string, initial: T) {
 export const token = persistedWritable<string>('gh_token', '');
 export const repoOwner = persistedWritable<string>('repo_owner', 'Thamsination');
 export const repoName = persistedWritable<string>('repo_name', 'car-journal');
+export const manualOdometer = persistedWritable<number | null>('manual_odometer', null);
 
 export const events = writable<CarEvent[]>([]);
 export const parts = writable<Part[]>([]);
@@ -92,18 +93,31 @@ export const upcomingEvents = derived(events, ($events) => {
 		.sort(sortByKmAsc);
 });
 
-export const latestOdometer = derived([vehicle, events], ([$vehicle, $events]) => {
-	if ($vehicle.odometer) {
-		return { km: $vehicle.odometer, approximate: false };
-	}
+export const lastCompletedKm = derived(events, ($events) => {
 	const completed = $events
 		.filter((e) => e.completed && e.km !== null)
 		.sort((a, b) => (b.km ?? 0) - (a.km ?? 0));
-	if (completed.length > 0) {
-		return { km: completed[0].km!, approximate: true };
-	}
-	return { km: 0, approximate: false };
+	return completed.length > 0 ? completed[0].km! : 0;
 });
+
+export const latestOdometer = derived(
+	[vehicle, manualOdometer, events],
+	([$vehicle, $manual, $events]) => {
+		if ($vehicle.odometer) {
+			return { km: $vehicle.odometer, approximate: false, source: 'bmw' as const };
+		}
+		if ($manual !== null && $manual > 0) {
+			return { km: $manual, approximate: false, source: 'manual' as const };
+		}
+		const completed = $events
+			.filter((e) => e.completed && e.km !== null)
+			.sort((a, b) => (b.km ?? 0) - (a.km ?? 0));
+		if (completed.length > 0) {
+			return { km: completed[0].km!, approximate: true, source: 'event' as const };
+		}
+		return { km: 0, approximate: false, source: 'none' as const };
+	}
+);
 
 export const nextScheduledEvent = derived(events, ($events) => {
 	const upcoming = $events

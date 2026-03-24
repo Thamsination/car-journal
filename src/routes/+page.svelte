@@ -4,7 +4,7 @@
 	import { base } from '$app/paths';
 	import {
 		token, events, idriveRecords, totalSpent, totalPlanned, costByCategory,
-		nextBatchEvents, vehicle, latestOdometer,
+		nextBatchEvents, vehicle, latestOdometer, lastCompletedKm,
 		nextScheduledEvent
 	} from '$lib/stores';
 	import { loadEvents, loadVehicle, loadIDriveHistory } from '$lib/github';
@@ -83,9 +83,11 @@
 				</span>
 				<span class="odo-unit">km</span>
 			</div>
-			{#if $vehicle.lastSynced}
-				<span class="odo-source">BMW synced {new Date($vehicle.lastSynced).toLocaleDateString('en-GB')}</span>
-			{:else if $latestOdometer.approximate}
+			{#if $latestOdometer.source === 'bmw'}
+				<span class="odo-source">BMW synced {new Date($vehicle.lastSynced ?? '').toLocaleDateString('en-GB')}</span>
+			{:else if $latestOdometer.source === 'manual'}
+				<span class="odo-source">Manually set</span>
+			{:else if $latestOdometer.source === 'event'}
 				<span class="odo-source">Based on last completed event</span>
 			{/if}
 		</div>
@@ -136,12 +138,14 @@
 					</div>
 					{#if $latestOdometer.km > 0 && nse.km}
 						{@const remaining = nse.km - $latestOdometer.km}
+						{@const totalWindow = nse.km - $lastCompletedKm}
+						{@const driven = $latestOdometer.km - $lastCompletedKm}
 						{#if remaining > 0}
 							<div class="km-remaining">
 								<div class="progress-bar">
 									<div
 										class="progress-fill"
-										style="width: {Math.min(100, Math.max(5, (1 - remaining / 20000) * 100))}%"
+										style="width: {totalWindow > 0 ? Math.min(100, Math.max(3, (driven / totalWindow) * 100)) : 5}%"
 									></div>
 								</div>
 								<span class="remaining-text">{remaining.toLocaleString()} km remaining</span>
@@ -188,12 +192,14 @@
 							</div>
 							{#if $latestOdometer.km > 0 && evt.km}
 								{@const remaining = evt.km - $latestOdometer.km}
+								{@const totalWindow = evt.km - $lastCompletedKm}
+								{@const driven = $latestOdometer.km - $lastCompletedKm}
 								{#if remaining > 0}
 									<div class="km-remaining">
 										<div class="progress-bar">
 											<div
 												class="progress-fill"
-												style="width: {Math.min(100, Math.max(5, (1 - remaining / 20000) * 100))}%"
+												style="width: {totalWindow > 0 ? Math.min(100, Math.max(3, (driven / totalWindow) * 100)) : 5}%"
 											></div>
 										</div>
 										<span class="remaining-text">{remaining.toLocaleString()} km remaining</span>

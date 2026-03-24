@@ -1,7 +1,24 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { token, repoOwner, repoName, events, parts, idriveRecords } from '$lib/stores';
+	import { token, repoOwner, repoName, events, parts, idriveRecords, manualOdometer, latestOdometer } from '$lib/stores';
+
+	let odoInput = $state($manualOdometer?.toString() ?? '');
+	let odoSaved = $state(false);
+
+	function saveOdometer() {
+		const val = parseInt(odoInput, 10);
+		$manualOdometer = val > 0 ? val : null;
+		odoSaved = true;
+		setTimeout(() => (odoSaved = false), 2000);
+	}
+
+	function clearOdometer() {
+		odoInput = '';
+		$manualOdometer = null;
+		odoSaved = true;
+		setTimeout(() => (odoSaved = false), 2000);
+	}
 
 	function handleLogout() {
 		if (!confirm('Disconnect from GitHub? Your data is safe in the repository.')) return;
@@ -56,6 +73,36 @@
 			<span class="setting-label">Token</span>
 			<span class="setting-value">••••••{$token.slice(-4)}</span>
 		</div>
+	</div>
+
+	<div class="settings-card">
+		<h3 class="card-title">Odometer</h3>
+		<p class="card-desc">
+			{#if $latestOdometer.source === 'bmw'}
+				BMW synced: {$latestOdometer.km.toLocaleString()} km
+			{:else if $latestOdometer.source === 'manual'}
+				Manual: {$latestOdometer.km.toLocaleString()} km
+			{:else if $latestOdometer.source === 'event'}
+				From completed event: {$latestOdometer.km.toLocaleString()}+ km
+			{:else}
+				No odometer data available
+			{/if}
+		</p>
+		<div class="odo-input-row">
+			<input
+				type="number"
+				inputmode="numeric"
+				placeholder="e.g. 187045"
+				bind:value={odoInput}
+				class="odo-input"
+			/>
+			<button class="odo-save-btn" onclick={saveOdometer}>
+				{odoSaved ? 'Saved!' : 'Set'}
+			</button>
+		</div>
+		{#if $manualOdometer}
+			<button class="odo-clear-btn" onclick={clearOdometer}>Clear manual odometer</button>
+		{/if}
 	</div>
 
 	<div class="actions">
@@ -117,6 +164,56 @@
 		font-size: 14px;
 		font-weight: 500;
 		font-family: monospace;
+	}
+
+	.card-title {
+		font-size: 15px;
+		font-weight: 700;
+		padding: 14px 16px 0;
+	}
+
+	.card-desc {
+		font-size: 13px;
+		color: var(--color-text-secondary);
+		padding: 4px 16px 0;
+	}
+
+	.odo-input-row {
+		display: flex;
+		gap: 8px;
+		padding: 12px 16px;
+	}
+
+	.odo-input {
+		flex: 1;
+		padding: 10px 12px;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		font-size: 15px;
+		background: var(--color-bg);
+		color: var(--color-text);
+	}
+
+	.odo-save-btn {
+		padding: 10px 20px;
+		background: var(--color-accent);
+		color: white;
+		border-radius: var(--radius-sm);
+		font-size: 14px;
+		font-weight: 600;
+		white-space: nowrap;
+	}
+
+	.odo-clear-btn {
+		display: block;
+		width: 100%;
+		padding: 10px 16px;
+		background: none;
+		color: var(--color-danger);
+		font-size: 13px;
+		font-weight: 500;
+		text-align: center;
+		border-top: 1px solid var(--color-border);
 	}
 
 	.actions {
