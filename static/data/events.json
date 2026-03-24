@@ -183,7 +183,8 @@
       "provider": "Specialist",
       "notes": "Walnut blasting for B47 soot",
       "invoiceNr": "",
-      "completed": false
+      "completed": false,
+      "category": "official-service"
     },
     {
       "id": "evt_023",
