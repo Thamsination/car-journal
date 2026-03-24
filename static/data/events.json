@@ -52,13 +52,14 @@
       "id": "evt_005",
       "km": null,
       "date": "2025-04-17",
-      "event": "Replace - summer tires",
+      "event": "Summer tires",
       "cost": 0,
       "currency": "DKK",
       "provider": "SSH-Biler",
-      "notes": "Tire type - Aplus A610 100Y",
+      "notes": "SSH-biler replaced worn summer tires. Tire type - Aplus A610 100Y",
       "invoiceNr": "-",
-      "completed": true
+      "completed": true,
+      "category": "recall"
     },
     {
       "id": "evt_006",
