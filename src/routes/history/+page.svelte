@@ -3,7 +3,7 @@
 	import { base } from '$app/paths';
 	import { events, completedEvents, idriveRecords } from '$lib/stores';
 	import { loadEvents, loadIDriveHistory } from '$lib/github';
-	import { formatCost, formatDate } from '$lib/utils';
+	import { formatCost, formatDate, eventCategory, categoryLabel, categoryColor } from '$lib/utils';
 	import type { CarEvent, IDriveRecord } from '$lib/types';
 
 	type TimelineItem =
@@ -105,10 +105,11 @@
 
 					{#if item.kind === 'journal'}
 						{@const evt = item.data as CarEvent}
-						<a href="{base}/schedule/{evt.id}" class="history-content journal">
+						{@const cat = eventCategory(evt.event)}
+						<a href="{base}/schedule/{evt.id}" class="history-content">
 							<div class="history-header">
 								<span class="history-date">{formatDate(evt.date)}</span>
-								<span class="source-badge journal-badge">Journal</span>
+								<span class="category-badge" style="background: {categoryColor(cat)}">{categoryLabel(cat)}</span>
 							</div>
 							<p class="history-event">{evt.event}</p>
 							<div class="history-meta">
@@ -125,10 +126,10 @@
 						</a>
 					{:else}
 						{@const rec = item.data as IDriveRecord}
-						<div class="history-content idrive">
+						<div class="history-content">
 							<div class="history-header">
 								<span class="history-date">{formatDate(formatIDriveDate(rec.date))}</span>
-								<span class="source-badge idrive-badge">iDrive</span>
+								<span class="category-badge" style="background: {categoryColor('official-service')}">{categoryLabel('official-service')}</span>
 							</div>
 							<p class="history-event">{rec.event}</p>
 							<div class="history-meta">
@@ -181,13 +182,9 @@
 		width: 10px;
 		height: 10px;
 		border-radius: 50%;
-		background: var(--color-success);
+		background: var(--color-accent);
 		flex-shrink: 0;
 		margin-top: 6px;
-	}
-
-	.marker-dot.idrive {
-		background: var(--color-accent);
 	}
 
 	.marker-line {
@@ -229,22 +226,13 @@
 		color: var(--color-text-secondary);
 	}
 
-	.source-badge {
+	.category-badge {
 		font-size: 10px;
 		font-weight: 600;
 		padding: 2px 7px;
 		border-radius: 8px;
 		text-transform: uppercase;
 		letter-spacing: 0.3px;
-	}
-
-	.journal-badge {
-		background: var(--color-success);
-		color: white;
-	}
-
-	.idrive-badge {
-		background: var(--color-accent);
 		color: white;
 	}
 

@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { token, events, scheduleEvents, statusFilter, isLoading, error } from '$lib/stores';
 	import { loadEvents } from '$lib/github';
-	import { formatCost, formatDate, statusLabel, statusColor } from '$lib/utils';
+	import { formatCost, formatDate, eventCategory, categoryLabel, categoryColor } from '$lib/utils';
 
 	const statuses: { value: string; label: string }[] = [
 		{ value: 'all', label: 'All' },
@@ -88,10 +88,10 @@
 					<a href="{base}/schedule/{event.id}" class="event-card">
 						<div class="event-header">
 							<span
-								class="status-badge"
-								style="background: {statusColor(event.status)}"
+								class="category-badge"
+								style="background: {categoryColor(eventCategory(event.event))}"
 							>
-								{statusLabel(event.status)}
+								{categoryLabel(eventCategory(event.event))}
 							</span>
 							<span class="event-date">{formatDate(event.date)}</span>
 						</div>
@@ -178,7 +178,7 @@
 		margin-bottom: 6px;
 	}
 
-	.status-badge {
+	.category-badge {
 		font-size: 11px;
 		font-weight: 600;
 		color: white;

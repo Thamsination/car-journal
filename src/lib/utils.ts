@@ -47,6 +47,48 @@ export function statusColor(status: EventStatus): string {
 	return colors[status] || 'var(--color-text-secondary)';
 }
 
+export type EventCategory = 'purchase' | 'recall' | 'replacement' | 'official-service' | 'other-service' | 'inspection';
+
+const prefixToCategory: Record<string, EventCategory> = {
+	purchase: 'purchase',
+	recall: 'recall',
+	replace: 'replacement',
+	inspection: 'inspection',
+	service: 'other-service',
+	cleanse: 'other-service'
+};
+
+export function eventCategory(description: string): EventCategory {
+	const prefix = (description.split(' - ')[0] || '').toLowerCase().trim();
+	return prefixToCategory[prefix] || 'other-service';
+}
+
+const categoryLabels: Record<EventCategory, string> = {
+	purchase: 'Purchase',
+	recall: 'Recall',
+	replacement: 'Replacement',
+	'official-service': 'Official Service',
+	'other-service': 'Other Service',
+	inspection: 'Inspection'
+};
+
+const categoryColors: Record<EventCategory, string> = {
+	purchase: '#5856d6',
+	recall: '#ff3b30',
+	replacement: '#ff9500',
+	'official-service': '#007aff',
+	'other-service': '#34c759',
+	inspection: '#5ac8fa'
+};
+
+export function categoryLabel(cat: EventCategory): string {
+	return categoryLabels[cat];
+}
+
+export function categoryColor(cat: EventCategory): string {
+	return categoryColors[cat];
+}
+
 export function parseCostInput(value: string): number {
 	const cleaned = value.replace(/[^0-9.,\-]/g, '').replace(',', '.');
 	return Math.round(parseFloat(cleaned) || 0);
