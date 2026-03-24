@@ -122,19 +122,6 @@
       "completed": false
     },
     {
-      "id": "evt_013",
-      "km": 187500,
-      "date": "2026-03-25",
-      "event": "Fuel filter",
-      "cost": 360,
-      "currency": "DKK",
-      "provider": "BimmerUpgrade",
-      "notes": "Mann part nr - WK 5017",
-      "invoiceNr": "",
-      "category": "official-service",
-      "completed": false
-    },
-    {
       "id": "evt_014",
       "km": 187500,
       "date": "2026-03-25",
