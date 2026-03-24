@@ -2,8 +2,8 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { events } from '$lib/stores';
-	import { saveEvents, loadEvents } from '$lib/github';
+	import { events, idriveRecords } from '$lib/stores';
+	import { saveEvents, loadEvents, loadIDriveHistory } from '$lib/github';
 	import { formatCost, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, allCategories } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent, EventCategory } from '$lib/types';
@@ -15,7 +15,11 @@
 	let deleting = $state(false);
 	let saveError = $state('');
 	let costInput = $state('');
-	let categoryOverride = $state<EventCategory | ''>('');
+	let selectedCategory = $state<EventCategory | ''>('');
+	let customTask = $state('');
+	let providerMode = $state<'select' | 'custom'>('select');
+	let providerSelect = $state('');
+	let customProvider = $state('');
 
 	let showCompleteModal = $state(false);
 	let completeKmInput = $state('');
@@ -34,29 +38,101 @@
 		invoiceNr: ''
 	});
 
+	function extractTaskName(evt: CarEvent): string {
+		const parts = evt.event.split(' - ');
+		return parts.length > 1 ? parts.slice(1).join(' - ').trim() : evt.event.trim();
+	}
+
+	const SERVICE_CATEGORIES: EventCategory[] = ['official-service', 'other-service'];
+
+	const taskSuggestions = $derived.by(() => {
+		if (!selectedCategory) return [];
+		const tasks = new Set<string>();
+		const isService = SERVICE_CATEGORIES.includes(selectedCategory);
+		for (const evt of $events) {
+			const cat = eventCategory(evt.event, evt.category);
+			if (isService ? SERVICE_CATEGORIES.includes(cat) : cat === selectedCategory) {
+				tasks.add(extractTaskName(evt));
+			}
+		}
+		if (isService) {
+			for (const rec of $idriveRecords) {
+				for (const part of rec.event.split(',')) {
+					const trimmed = part.trim();
+					if (trimmed) tasks.add(trimmed);
+				}
+			}
+		}
+		return [...tasks].sort((a, b) => a.localeCompare(b));
+	});
+
+	const providers = $derived.by(() => {
+		const set = new Set<string>();
+		for (const evt of $events) {
+			if (evt.provider.trim()) set.add(evt.provider.trim());
+		}
+		return [...set].sort((a, b) => a.localeCompare(b));
+	});
+
+	function selectTask(task: string) {
+		form.event = task;
+		customTask = '';
+	}
+
+	function applyCustomTask() {
+		if (customTask.trim()) {
+			form.event = customTask.trim();
+		}
+	}
+
+	function resolveProvider(): string {
+		if (providerMode === 'custom') return customProvider;
+		return providerSelect;
+	}
+
+	function startEditing() {
+		editing = true;
+		selectedCategory = event!.category || '';
+		customTask = '';
+		const existingProvider = event!.provider;
+		if (existingProvider && providers.includes(existingProvider)) {
+			providerMode = 'select';
+			providerSelect = existingProvider;
+			customProvider = '';
+		} else if (existingProvider) {
+			providerMode = 'custom';
+			customProvider = existingProvider;
+			providerSelect = '';
+		} else {
+			providerMode = 'select';
+			providerSelect = '';
+			customProvider = '';
+		}
+	}
+
 	onMount(() => {
+		loadIDriveHistory();
 		const id = $page.params.id;
 		const found = $events.find((e) => e.id === id);
 		if (found) {
 			event = found;
 			form = { ...found };
 			costInput = found.cost > 0 ? found.cost.toString() : '';
-			categoryOverride = found.category || '';
+			selectedCategory = found.category || '';
 		}
 	});
 
-	const derivedCategory = $derived(eventCategory(form.event, categoryOverride || undefined));
-
 	async function handleSave() {
 		if (!form.event.trim()) {
-			saveError = 'Event description is required';
+			saveError = 'Task description is required';
 			return;
 		}
 		saving = true;
 		saveError = '';
 		try {
 			form.cost = Math.round(parseFloat(costInput.replace(/[^0-9.,\-]/g, '').replace(',', '.')) || 0);
-			form.category = categoryOverride || undefined;
+			form.category = selectedCategory || undefined;
+			form.provider = resolveProvider();
 			const updated = $events.map((e) => (e.id === form.id ? { ...form } : e));
 
 			if (isOnline()) {
@@ -143,8 +219,42 @@
 	{:else if editing}
 		<form class="event-form" onsubmit={(e) => { e.preventDefault(); handleSave(); }}>
 			<div class="field">
-				<label for="event">Event</label>
-				<input id="event" type="text" bind:value={form.event} required />
+				<label for="category">Category</label>
+				<select id="category" bind:value={selectedCategory}>
+					<option value="">Select category...</option>
+					{#each allCategories() as cat}
+						<option value={cat.value}>{cat.label}</option>
+					{/each}
+				</select>
+			</div>
+
+			<div class="field">
+				<label for="task">Task(s)</label>
+				{#if selectedCategory && taskSuggestions.length > 0}
+					<div class="task-chips">
+						{#each taskSuggestions as task}
+							<button
+								type="button"
+								class="task-chip"
+								class:selected={form.event === task}
+								onclick={() => selectTask(task)}
+							>
+								{task}
+							</button>
+						{/each}
+					</div>
+				{/if}
+				<input
+					id="task"
+					type="text"
+					bind:value={customTask}
+					oninput={applyCustomTask}
+					placeholder={selectedCategory ? 'Or type a custom task...' : 'Select a category first, or type here'}
+					onfocus={() => { if (customTask === '' && form.event) customTask = form.event; }}
+				/>
+				{#if form.event && customTask !== form.event}
+					<span class="selected-task">Selected: {form.event}</span>
+				{/if}
 			</div>
 
 			<div class="field-row">
@@ -163,20 +273,34 @@
 				<input id="cost" type="text" bind:value={costInput} inputmode="decimal" />
 			</div>
 
-			<div class="field-row">
-				<div class="field">
-					<label for="category">Category</label>
-					<select id="category" bind:value={categoryOverride}>
-						<option value="">Auto ({allCategories().find(c => c.value === derivedCategory)?.label})</option>
-						{#each allCategories() as cat}
-							<option value={cat.value}>{cat.label}</option>
+			<div class="field">
+				<label for="provider">Provider</label>
+				{#if providerMode === 'select'}
+					<select id="provider" bind:value={providerSelect} onchange={(e) => {
+						if ((e.target as HTMLSelectElement).value === '__custom__') {
+							providerMode = 'custom';
+							providerSelect = '';
+						}
+					}}>
+						<option value="">Select provider...</option>
+						{#each providers as p}
+							<option value={p}>{p}</option>
 						{/each}
+						<option value="__custom__">Other...</option>
 					</select>
-				</div>
-				<div class="field">
-					<label for="provider">Provider</label>
-					<input id="provider" type="text" bind:value={form.provider} />
-				</div>
+				{:else}
+					<div class="custom-provider-row">
+						<input
+							id="provider-custom"
+							type="text"
+							bind:value={customProvider}
+							placeholder="Enter provider name"
+						/>
+						<button type="button" class="provider-back-btn" onclick={() => { providerMode = 'select'; customProvider = ''; }}>
+							Cancel
+						</button>
+					</div>
+				{/if}
 			</div>
 
 			<div class="field">
@@ -194,7 +318,7 @@
 			{/if}
 
 			<div class="button-row">
-				<button type="button" class="cancel-btn" onclick={() => { editing = false; form = { ...event! }; categoryOverride = event!.category || ''; }}>
+				<button type="button" class="cancel-btn" onclick={() => { editing = false; form = { ...event! }; selectedCategory = event!.category || ''; }}>
 					Cancel
 				</button>
 				<button type="submit" class="submit-btn" disabled={saving}>
@@ -260,7 +384,7 @@
 			{/if}
 
 			<div class="button-row">
-				<button class="edit-btn" onclick={() => (editing = true)}>Edit</button>
+				<button class="edit-btn" onclick={startEditing}>Edit</button>
 				<button class="delete-btn" onclick={handleDelete} disabled={deleting}>
 					{deleting ? 'Deleting...' : 'Delete'}
 				</button>
@@ -374,6 +498,63 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 12px;
+	}
+
+	.task-chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 8px;
+	}
+
+	.task-chip {
+		padding: 6px 12px;
+		border-radius: 16px;
+		font-size: 13px;
+		font-weight: 500;
+		background: var(--color-surface);
+		color: var(--color-text);
+		border: 1px solid var(--color-border);
+		cursor: pointer;
+		transition: all 0.15s;
+	}
+
+	.task-chip.selected {
+		background: var(--color-accent);
+		color: white;
+		border-color: var(--color-accent);
+	}
+
+	.task-chip:active {
+		transform: scale(0.95);
+	}
+
+	.selected-task {
+		display: block;
+		margin-top: 4px;
+		font-size: 12px;
+		color: var(--color-accent);
+		font-weight: 500;
+	}
+
+	.custom-provider-row {
+		display: flex;
+		gap: 8px;
+	}
+
+	.custom-provider-row input {
+		flex: 1;
+	}
+
+	.provider-back-btn {
+		padding: 8px 14px;
+		font-size: 13px;
+		font-weight: 500;
+		background: var(--color-surface-raised);
+		color: var(--color-text-secondary);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		white-space: nowrap;
 	}
 
 	textarea {
