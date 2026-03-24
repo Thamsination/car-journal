@@ -42,8 +42,18 @@ function sortByKmThenDate(a: CarEvent, b: CarEvent): number {
 	return b.date.localeCompare(a.date);
 }
 
+function sortByKmAsc(a: CarEvent, b: CarEvent): number {
+	const aKm = a.km ?? Infinity;
+	const bKm = b.km ?? Infinity;
+	if (aKm !== bKm) return aKm - bKm;
+	if (!a.date && !b.date) return 0;
+	if (!a.date) return 1;
+	if (!b.date) return -1;
+	return a.date.localeCompare(b.date);
+}
+
 export const scheduleEvents = derived([events, statusFilter], ([$events, $filter]) => {
-	const nonDone = $events.filter((e) => e.status !== 'done').sort(sortByKmThenDate);
+	const nonDone = $events.filter((e) => e.status !== 'done').sort(sortByKmAsc);
 	if ($filter === 'all') return nonDone;
 	return nonDone.filter((e) => e.status === $filter);
 });

@@ -52,13 +52,13 @@
 		}
 
 		items.sort((a, b) => {
-			const aKm = a.kind === 'journal' ? (a.data as CarEvent).km ?? -1 : idriveKm(a.data as IDriveRecord);
-			const bKm = b.kind === 'journal' ? (b.data as CarEvent).km ?? -1 : idriveKm(b.data as IDriveRecord);
-			if (aKm !== bKm) return bKm - aKm;
-
 			const aDate = a.kind === 'journal' ? (a.data as CarEvent).date : formatIDriveDate((a.data as IDriveRecord).date);
 			const bDate = b.kind === 'journal' ? (b.data as CarEvent).date : formatIDriveDate((b.data as IDriveRecord).date);
-			return (bDate || '').localeCompare(aDate || '');
+			if (aDate !== bDate) return (bDate || '').localeCompare(aDate || '');
+
+			const aKm = a.kind === 'journal' ? (a.data as CarEvent).km ?? -1 : idriveKm(a.data as IDriveRecord);
+			const bKm = b.kind === 'journal' ? (b.data as CarEvent).km ?? -1 : idriveKm(b.data as IDriveRecord);
+			return bKm - aKm;
 		});
 
 		if (!searchQuery) return items;
