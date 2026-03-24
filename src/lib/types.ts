@@ -1,5 +1,7 @@
 export type EventStatus = 'done' | 'scheduled' | 'future';
 
+export type EventCategory = 'purchase' | 'recall' | 'replacement' | 'official-service' | 'other-service' | 'inspection';
+
 export interface CarEvent {
 	id: string;
 	km: number | null;
@@ -10,6 +12,7 @@ export interface CarEvent {
 	provider: string;
 	notes: string;
 	status: EventStatus;
+	category?: EventCategory;
 	invoiceNr: string;
 }
 

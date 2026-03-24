@@ -1,4 +1,5 @@
-import type { EventStatus } from './types';
+import type { EventStatus, EventCategory } from './types';
+export type { EventCategory } from './types';
 
 export function generateId(prefix: string): string {
 	const timestamp = Date.now().toString(36);
@@ -47,7 +48,11 @@ export function statusColor(status: EventStatus): string {
 	return colors[status] || 'var(--color-text-secondary)';
 }
 
-export type EventCategory = 'purchase' | 'recall' | 'replacement' | 'official-service' | 'other-service' | 'inspection';
+const ALL_CATEGORIES: EventCategory[] = ['purchase', 'recall', 'replacement', 'official-service', 'other-service', 'inspection'];
+
+export function allCategories(): { value: EventCategory; label: string }[] {
+	return ALL_CATEGORIES.map((c) => ({ value: c, label: categoryLabels[c] }));
+}
 
 const prefixToCategory: Record<string, EventCategory> = {
 	purchase: 'purchase',
@@ -58,7 +63,8 @@ const prefixToCategory: Record<string, EventCategory> = {
 	cleanse: 'other-service'
 };
 
-export function eventCategory(description: string): EventCategory {
+export function eventCategory(description: string, stored?: EventCategory): EventCategory {
+	if (stored) return stored;
 	const prefix = (description.split(' - ')[0] || '').toLowerCase().trim();
 	return prefixToCategory[prefix] || 'other-service';
 }

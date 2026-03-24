@@ -89,9 +89,9 @@
 						<div class="event-header">
 							<span
 								class="category-badge"
-								style="background: {categoryColor(eventCategory(event.event))}"
+								style="background: {categoryColor(eventCategory(event.event, event.category))}"
 							>
-								{categoryLabel(eventCategory(event.event))}
+								{categoryLabel(eventCategory(event.event, event.category))}
 							</span>
 							<span class="event-date">{formatDate(event.date)}</span>
 						</div>

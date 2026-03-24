@@ -4,9 +4,9 @@
 	import { base } from '$app/paths';
 	import { events } from '$lib/stores';
 	import { saveEvents, loadEvents } from '$lib/github';
-	import { formatCost } from '$lib/utils';
+	import { formatCost, eventCategory, categoryLabel, categoryColor, allCategories } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
-	import type { CarEvent } from '$lib/types';
+	import type { CarEvent, EventCategory } from '$lib/types';
 	import { onMount } from 'svelte';
 
 	let event = $state<CarEvent | null>(null);
@@ -15,6 +15,7 @@
 	let deleting = $state(false);
 	let saveError = $state('');
 	let costInput = $state('');
+	let categoryOverride = $state<EventCategory | ''>('');
 
 	let form = $state<CarEvent>({
 		id: '',
@@ -36,8 +37,11 @@
 			event = found;
 			form = { ...found };
 			costInput = found.cost > 0 ? found.cost.toString() : '';
+			categoryOverride = found.category || '';
 		}
 	});
+
+	const derivedCategory = $derived(eventCategory(form.event, categoryOverride || undefined));
 
 	async function handleSave() {
 		if (!form.event.trim()) {
@@ -48,6 +52,7 @@
 		saveError = '';
 		try {
 			form.cost = Math.round(parseFloat(costInput.replace(/[^0-9.,\-]/g, '').replace(',', '.')) || 0);
+			form.category = categoryOverride || undefined;
 			const updated = $events.map((e) => (e.id === form.id ? { ...form } : e));
 
 			if (isOnline()) {
@@ -134,9 +139,20 @@
 				</div>
 			</div>
 
-			<div class="field">
-				<label for="provider">Provider</label>
-				<input id="provider" type="text" bind:value={form.provider} />
+			<div class="field-row">
+				<div class="field">
+					<label for="category">Category</label>
+					<select id="category" bind:value={categoryOverride}>
+						<option value="">Auto ({allCategories().find(c => c.value === derivedCategory)?.label})</option>
+						{#each allCategories() as cat}
+							<option value={cat.value}>{cat.label}</option>
+						{/each}
+					</select>
+				</div>
+				<div class="field">
+					<label for="provider">Provider</label>
+					<input id="provider" type="text" bind:value={form.provider} />
+				</div>
 			</div>
 
 			<div class="field">
@@ -163,7 +179,15 @@
 			</div>
 		</form>
 	{:else}
+		{@const cat = eventCategory(event.event, event.category)}
 		<div class="detail-card">
+			<div class="detail-row">
+				<span class="detail-label">Category</span>
+				<span class="detail-value">
+					<span class="category-dot" style="background: {categoryColor(cat)}"></span>
+					{categoryLabel(cat)}
+				</span>
+			</div>
 			<div class="detail-row">
 				<span class="detail-label">Status</span>
 				<span class="detail-value">{event.status.charAt(0).toUpperCase() + event.status.slice(1)}</span>
@@ -227,6 +251,15 @@
 		border: none;
 		padding: 0;
 		cursor: pointer;
+	}
+
+	.category-dot {
+		display: inline-block;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		margin-right: 4px;
+		vertical-align: middle;
 	}
 
 	.detail-card {

@@ -105,7 +105,7 @@
 
 					{#if item.kind === 'journal'}
 						{@const evt = item.data as CarEvent}
-						{@const cat = eventCategory(evt.event)}
+						{@const cat = eventCategory(evt.event, evt.category)}
 						<a href="{base}/schedule/{evt.id}" class="history-content">
 							<div class="history-header">
 								<span class="history-date">{formatDate(evt.date)}</span>

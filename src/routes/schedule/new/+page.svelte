@@ -3,9 +3,10 @@
 	import { base } from '$app/paths';
 	import { events } from '$lib/stores';
 	import { saveEvents, loadEvents } from '$lib/github';
-	import { generateId, formatDateISO } from '$lib/utils';
+	import { generateId, formatDateISO, allCategories, eventCategory } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent } from '$lib/types';
+	import type { EventCategory } from '$lib/types';
 
 	let saving = $state(false);
 	let saveError = $state('');
@@ -23,7 +24,10 @@
 		invoiceNr: ''
 	});
 
+	let categoryOverride = $state<EventCategory | ''>('');
 	let costInput = $state('');
+
+	const derivedCategory = $derived(eventCategory(form.event, categoryOverride || undefined));
 
 	async function handleSave() {
 		if (!form.event.trim()) {
@@ -36,6 +40,7 @@
 
 		try {
 			form.cost = Math.round(parseFloat(costInput.replace(/[^0-9.,\-]/g, '').replace(',', '.')) || 0);
+			if (categoryOverride) form.category = categoryOverride;
 			const updated = [...$events, { ...form }];
 
 			if (isOnline()) {
@@ -97,9 +102,20 @@
 			</div>
 		</div>
 
-		<div class="field">
-			<label for="provider">Provider</label>
-			<input id="provider" type="text" bind:value={form.provider} placeholder="BimmerUpgrade" />
+		<div class="field-row">
+			<div class="field">
+				<label for="category">Category</label>
+				<select id="category" bind:value={categoryOverride}>
+					<option value="">Auto ({allCategories().find(c => c.value === derivedCategory)?.label})</option>
+					{#each allCategories() as cat}
+						<option value={cat.value}>{cat.label}</option>
+					{/each}
+				</select>
+			</div>
+			<div class="field">
+				<label for="provider">Provider</label>
+				<input id="provider" type="text" bind:value={form.provider} placeholder="BimmerUpgrade" />
+			</div>
 		</div>
 
 		<div class="field">
