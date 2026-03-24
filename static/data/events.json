@@ -189,7 +189,7 @@
       "currency": "DKK",
       "provider": "DIY",
       "notes": "Prime car for new oil",
-      "status": "scheduled",
+      "status": "future",
       "invoiceNr": ""
     },
     {
