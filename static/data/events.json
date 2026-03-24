@@ -118,7 +118,8 @@
       "provider": "BimmerUpgrade",
       "notes": "Oil and oil filter, digital stamp",
       "status": "scheduled",
-      "invoiceNr": ""
+      "invoiceNr": "",
+      "category": "official-service"
     },
     {
       "id": "evt_011",
