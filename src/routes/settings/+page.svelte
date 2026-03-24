@@ -13,7 +13,7 @@
 	}
 
 	function exportCsv() {
-		const header = 'KM,Date,Event,Cost (DKK),Provider,Notes,Status,Invoice nr';
+		const header = 'KM,Date,Event,Cost (DKK),Provider,Notes,Completed,Invoice nr';
 		const rows = $events.map((e) =>
 			[
 				e.km ?? '',
@@ -22,7 +22,7 @@
 				e.cost,
 				`"${e.provider.replace(/"/g, '""')}"`,
 				`"${e.notes.replace(/"/g, '""')}"`,
-				e.status,
+				e.completed ? 'Yes' : 'No',
 				e.invoiceNr
 			].join(',')
 		);

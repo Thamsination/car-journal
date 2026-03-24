@@ -1,4 +1,4 @@
-export type EventStatus = 'done' | 'scheduled' | 'future';
+export type DerivedStatus = 'completed' | 'today' | 'scheduled' | 'delayed' | 'planned' | 'backlog';
 
 export type EventCategory = 'purchase' | 'recall' | 'replacement' | 'official-service' | 'other-service' | 'inspection';
 
@@ -11,7 +11,7 @@ export interface CarEvent {
 	currency: string;
 	provider: string;
 	notes: string;
-	status: EventStatus;
+	completed: boolean;
 	category?: EventCategory;
 	invoiceNr: string;
 }

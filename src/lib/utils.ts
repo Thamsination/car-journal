@@ -1,4 +1,4 @@
-import type { EventStatus, EventCategory } from './types';
+import type { DerivedStatus, EventCategory, CarEvent } from './types';
 export type { EventCategory } from './types';
 
 export function generateId(prefix: string): string {
@@ -30,22 +30,44 @@ export function formatDateISO(date: Date): string {
 	return date.toISOString().split('T')[0];
 }
 
-export function statusLabel(status: EventStatus): string {
-	const labels: Record<EventStatus, string> = {
-		done: 'Done',
-		scheduled: 'Scheduled',
-		future: 'Future'
-	};
-	return labels[status] || status;
+function todayISO(): string {
+	return formatDateISO(new Date());
 }
 
-export function statusColor(status: EventStatus): string {
-	const colors: Record<EventStatus, string> = {
-		done: 'var(--color-success)',
-		scheduled: 'var(--color-warning)',
-		future: 'var(--color-future)'
-	};
-	return colors[status] || 'var(--color-text-secondary)';
+export function deriveStatus(evt: CarEvent): DerivedStatus {
+	const today = todayISO();
+	if (evt.completed) return 'completed';
+	if (evt.date === today) return 'today';
+	if (evt.date && evt.date > today) return 'scheduled';
+	if (evt.date && evt.date < today) return 'delayed';
+	if (evt.km !== null) return 'planned';
+	return 'backlog';
+}
+
+const statusLabels: Record<DerivedStatus, string> = {
+	completed: 'Completed',
+	today: 'Today',
+	scheduled: 'Scheduled',
+	delayed: 'Delayed',
+	planned: 'Planned',
+	backlog: 'Backlog'
+};
+
+const statusColors: Record<DerivedStatus, string> = {
+	completed: '#34c759',
+	today: '#ff9500',
+	scheduled: '#007aff',
+	delayed: '#ff3b30',
+	planned: '#8e8e93',
+	backlog: '#636366'
+};
+
+export function statusLabel(status: DerivedStatus): string {
+	return statusLabels[status] || status;
+}
+
+export function statusColor(status: DerivedStatus): string {
+	return statusColors[status] || '#8e8e93';
 }
 
 const ALL_CATEGORIES: EventCategory[] = ['purchase', 'recall', 'replacement', 'official-service', 'other-service', 'inspection'];

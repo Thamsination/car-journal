@@ -4,7 +4,7 @@
 	import { base } from '$app/paths';
 	import { events } from '$lib/stores';
 	import { saveEvents, loadEvents } from '$lib/github';
-	import { formatCost, eventCategory, categoryLabel, categoryColor, allCategories } from '$lib/utils';
+	import { formatCost, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, allCategories } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent, EventCategory } from '$lib/types';
 	import { onMount } from 'svelte';
@@ -13,10 +13,13 @@
 	let editing = $state(false);
 	let saving = $state(false);
 	let deleting = $state(false);
-	let completing = $state(false);
 	let saveError = $state('');
 	let costInput = $state('');
 	let categoryOverride = $state<EventCategory | ''>('');
+
+	let showCompleteModal = $state(false);
+	let completeKmInput = $state('');
+	let completing = $state(false);
 
 	let form = $state<CarEvent>({
 		id: '',
@@ -27,7 +30,7 @@
 		currency: 'DKK',
 		provider: '',
 		notes: '',
-		status: 'done',
+		completed: false,
 		invoiceNr: ''
 	});
 
@@ -73,12 +76,18 @@
 		}
 	}
 
-	async function handleComplete() {
+	function openCompleteModal() {
+		completeKmInput = event?.km?.toString() || '';
+		showCompleteModal = true;
+	}
+
+	async function confirmComplete() {
 		completing = true;
 		saveError = '';
 		try {
+			const km = completeKmInput ? parseInt(completeKmInput, 10) : null;
 			const updated = $events.map((e) =>
-				e.id === form.id ? { ...e, status: 'done' as const } : e
+				e.id === form.id ? { ...e, completed: true, km: km ?? e.km } : e
 			);
 
 			if (isOnline()) {
@@ -88,6 +97,7 @@
 				await queueWrite('events', updated, `Complete: ${form.event}`);
 			}
 			$events = updated;
+			showCompleteModal = false;
 			goto(`${base}/history`);
 		} catch (e: unknown) {
 			saveError = e instanceof Error ? e.message : 'Failed to mark as completed';
@@ -148,19 +158,9 @@
 				</div>
 			</div>
 
-			<div class="field-row">
-				<div class="field">
-					<label for="cost">Cost (DKK)</label>
-					<input id="cost" type="text" bind:value={costInput} inputmode="decimal" />
-				</div>
-				<div class="field">
-					<label for="status">Status</label>
-					<select id="status" bind:value={form.status}>
-						<option value="done">Done</option>
-						<option value="scheduled">Scheduled</option>
-						<option value="future">Future</option>
-					</select>
-				</div>
+			<div class="field">
+				<label for="cost">Cost (DKK)</label>
+				<input id="cost" type="text" bind:value={costInput} inputmode="decimal" />
 			</div>
 
 			<div class="field-row">
@@ -194,7 +194,7 @@
 			{/if}
 
 			<div class="button-row">
-				<button type="button" class="cancel-btn" onclick={() => { editing = false; form = { ...event! }; }}>
+				<button type="button" class="cancel-btn" onclick={() => { editing = false; form = { ...event! }; categoryOverride = event!.category || ''; }}>
 					Cancel
 				</button>
 				<button type="submit" class="submit-btn" disabled={saving}>
@@ -204,6 +204,7 @@
 		</form>
 	{:else}
 		{@const cat = eventCategory(event.event, event.category)}
+		{@const status = deriveStatus(event)}
 		<div class="detail-card">
 			<div class="detail-row">
 				<span class="detail-label">Category</span>
@@ -214,7 +215,10 @@
 			</div>
 			<div class="detail-row">
 				<span class="detail-label">Status</span>
-				<span class="detail-value">{event.status.charAt(0).toUpperCase() + event.status.slice(1)}</span>
+				<span class="detail-value">
+					<span class="status-dot" style="background: {statusColor(status)}"></span>
+					{statusLabel(status)}
+				</span>
 			</div>
 			<div class="detail-row">
 				<span class="detail-label">Date</span>
@@ -245,10 +249,14 @@
 				</div>
 			{/if}
 
-			{#if event.status !== 'done'}
-				<button class="complete-btn" onclick={handleComplete} disabled={completing}>
-					{completing ? 'Saving...' : 'Completed'}
+			{#if !event.completed}
+				<button class="complete-btn" onclick={openCompleteModal}>
+					Completed
 				</button>
+			{/if}
+
+			{#if saveError}
+				<p class="error-msg" style="margin-top: 12px">{saveError}</p>
 			{/if}
 
 			<div class="button-row">
@@ -260,6 +268,31 @@
 		</div>
 	{/if}
 </div>
+
+{#if showCompleteModal}
+	<div class="modal-overlay" onclick={() => (showCompleteModal = false)} role="presentation">
+		<div class="modal" onclick={(e) => e.stopPropagation()} role="dialog" aria-label="Confirm completion" tabindex="-1" onkeydown={(e) => { if (e.key === 'Escape') showCompleteModal = false; }}>
+			<h3 class="modal-title">Confirm Completion</h3>
+			<p class="modal-desc">Enter the odometer reading at the time of completion.</p>
+			<div class="field">
+				<label for="complete-km">Odometer (km)</label>
+				<input
+					id="complete-km"
+					type="number"
+					bind:value={completeKmInput}
+					placeholder="e.g. 187045"
+					inputmode="numeric"
+				/>
+			</div>
+			<div class="modal-buttons">
+				<button class="cancel-btn" onclick={() => (showCompleteModal = false)}>Cancel</button>
+				<button class="confirm-btn" onclick={confirmComplete} disabled={completing}>
+					{completing ? 'Saving...' : 'Confirm'}
+				</button>
+			</div>
+		</div>
+	</div>
+{/if}
 
 <style>
 	.page-header {
@@ -283,7 +316,7 @@
 		cursor: pointer;
 	}
 
-	.category-dot {
+	.category-dot, .status-dot {
 		display: inline-block;
 		width: 8px;
 		height: 8px;
@@ -371,11 +404,6 @@
 		margin-top: 16px;
 	}
 
-	.complete-btn:disabled {
-		opacity: 0.6;
-		cursor: not-allowed;
-	}
-
 	.edit-btn,
 	.submit-btn {
 		flex: 1;
@@ -410,7 +438,9 @@
 	}
 
 	.submit-btn:disabled,
-	.delete-btn:disabled {
+	.delete-btn:disabled,
+	.complete-btn:disabled,
+	.confirm-btn:disabled {
 		opacity: 0.6;
 		cursor: not-allowed;
 	}
@@ -419,5 +449,54 @@
 		text-align: center;
 		padding: 48px 16px;
 		color: var(--color-text-secondary);
+	}
+
+	.modal-overlay {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 200;
+		padding: 20px;
+	}
+
+	.modal {
+		background: var(--color-bg);
+		border-radius: var(--radius-lg);
+		padding: 24px;
+		width: 100%;
+		max-width: 360px;
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+	}
+
+	.modal-title {
+		font-size: 18px;
+		font-weight: 700;
+		margin-bottom: 6px;
+	}
+
+	.modal-desc {
+		font-size: 13px;
+		color: var(--color-text-secondary);
+		margin-bottom: 16px;
+		line-height: 1.4;
+	}
+
+	.modal-buttons {
+		display: flex;
+		gap: 10px;
+		margin-top: 16px;
+	}
+
+	.confirm-btn {
+		flex: 1;
+		padding: 12px;
+		background: var(--color-success);
+		color: white;
+		border-radius: var(--radius-sm);
+		font-size: 15px;
+		font-weight: 600;
 	}
 </style>

@@ -4,12 +4,15 @@
 	import { goto } from '$app/navigation';
 	import { token, events, scheduleEvents, statusFilter, isLoading, error } from '$lib/stores';
 	import { loadEvents } from '$lib/github';
-	import { formatCost, formatDate, eventCategory, categoryLabel, categoryColor } from '$lib/utils';
+	import { formatCost, formatDate, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor } from '$lib/utils';
 
 	const statuses: { value: string; label: string }[] = [
 		{ value: 'all', label: 'All' },
+		{ value: 'today', label: 'Today' },
 		{ value: 'scheduled', label: 'Scheduled' },
-		{ value: 'future', label: 'Future' }
+		{ value: 'delayed', label: 'Delayed' },
+		{ value: 'planned', label: 'Planned' },
+		{ value: 'backlog', label: 'Backlog' }
 	];
 
 	let searchQuery = $state('');
@@ -84,15 +87,24 @@
 	{:else}
 		<ul class="event-list">
 			{#each displayEvents as event (event.id)}
+				{@const evtStatus = deriveStatus(event)}
 				<li>
 					<a href="{base}/schedule/{event.id}" class="event-card">
 						<div class="event-header">
-							<span
-								class="category-badge"
-								style="background: {categoryColor(eventCategory(event.event, event.category))}"
-							>
-								{categoryLabel(eventCategory(event.event, event.category))}
-							</span>
+							<div class="badge-group">
+								<span
+									class="category-badge"
+									style="background: {categoryColor(eventCategory(event.event, event.category))}"
+								>
+									{categoryLabel(eventCategory(event.event, event.category))}
+								</span>
+								<span
+									class="status-badge"
+									style="background: {statusColor(evtStatus)}"
+								>
+									{statusLabel(evtStatus)}
+								</span>
+							</div>
 							<span class="event-date">{formatDate(event.date)}</span>
 						</div>
 						<h3 class="event-title">{event.event}</h3>
@@ -178,7 +190,14 @@
 		margin-bottom: 6px;
 	}
 
-	.category-badge {
+	.badge-group {
+		display: flex;
+		gap: 4px;
+		align-items: center;
+	}
+
+	.category-badge,
+	.status-badge {
 		font-size: 11px;
 		font-weight: 600;
 		color: white;

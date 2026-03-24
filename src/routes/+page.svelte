@@ -8,7 +8,7 @@
 		nextScheduledEvent
 	} from '$lib/stores';
 	import { loadEvents, loadVehicle } from '$lib/github';
-	import { formatCost, formatDate, statusColor } from '$lib/utils';
+	import { formatCost, formatDate, deriveStatus, statusColor, eventCategory, categoryColor } from '$lib/utils';
 
 	let loading = $state(true);
 
@@ -27,8 +27,8 @@
 		}
 	});
 
-	const completedCount = $derived($events.filter((e) => e.status === 'done').length);
-	const upcomingCount = $derived($events.filter((e) => e.status !== 'done').length);
+	const completedCount = $derived($events.filter((e) => e.completed).length);
+	const upcomingCount = $derived($events.filter((e) => !e.completed).length);
 
 	function goCompleted() {
 		goto(`${base}/history`);
@@ -101,7 +101,7 @@
 								<span class="upcoming-event">{evt.event}</span>
 								<span
 									class="status-dot"
-									style="background: {statusColor(evt.status)}"
+									style="background: {categoryColor(eventCategory(evt.event, evt.category))}"
 								></span>
 							</div>
 							<div class="upcoming-meta">

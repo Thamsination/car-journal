@@ -20,7 +20,7 @@
 		currency: 'DKK',
 		provider: '',
 		notes: '',
-		status: 'done',
+		completed: false,
 		invoiceNr: ''
 	});
 
@@ -87,19 +87,9 @@
 			</div>
 		</div>
 
-		<div class="field-row">
-			<div class="field">
-				<label for="cost">Cost (DKK)</label>
-				<input id="cost" type="text" bind:value={costInput} placeholder="3,600" inputmode="decimal" />
-			</div>
-			<div class="field">
-				<label for="status">Status</label>
-				<select id="status" bind:value={form.status}>
-					<option value="done">Done</option>
-					<option value="scheduled">Scheduled</option>
-					<option value="future">Future</option>
-				</select>
-			</div>
+		<div class="field">
+			<label for="cost">Cost (DKK)</label>
+			<input id="cost" type="text" bind:value={costInput} placeholder="3,600" inputmode="decimal" />
 		</div>
 
 		<div class="field-row">

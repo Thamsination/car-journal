@@ -1,5 +1,6 @@
 import { writable, derived } from 'svelte/store';
-import type { CarEvent, Part, IDriveRecord, VehicleStatus } from './types';
+import type { CarEvent, Part, IDriveRecord, VehicleStatus, DerivedStatus } from './types';
+import { deriveStatus } from './utils';
 
 function persistedWritable<T>(key: string, initial: T) {
 	const stored = typeof localStorage !== 'undefined' ? localStorage.getItem(key) : null;
@@ -32,16 +33,6 @@ export const error = writable<string | null>(null);
 
 export const statusFilter = writable<string>('all');
 
-function sortByKmThenDate(a: CarEvent, b: CarEvent): number {
-	const aKm = a.km ?? -1;
-	const bKm = b.km ?? -1;
-	if (aKm !== bKm) return bKm - aKm;
-	if (!a.date && !b.date) return 0;
-	if (!a.date) return 1;
-	if (!b.date) return -1;
-	return b.date.localeCompare(a.date);
-}
-
 function sortByKmAsc(a: CarEvent, b: CarEvent): number {
 	const aKm = a.km ?? Infinity;
 	const bKm = b.km ?? Infinity;
@@ -52,31 +43,41 @@ function sortByKmAsc(a: CarEvent, b: CarEvent): number {
 	return a.date.localeCompare(b.date);
 }
 
+function sortByDateDesc(a: CarEvent, b: CarEvent): number {
+	if (!a.date && !b.date) return 0;
+	if (!a.date) return 1;
+	if (!b.date) return -1;
+	if (a.date !== b.date) return b.date.localeCompare(a.date);
+	const aKm = a.km ?? -1;
+	const bKm = b.km ?? -1;
+	return bKm - aKm;
+}
+
 export const scheduleEvents = derived([events, statusFilter], ([$events, $filter]) => {
-	const nonDone = $events.filter((e) => e.status !== 'done').sort(sortByKmAsc);
-	if ($filter === 'all') return nonDone;
-	return nonDone.filter((e) => e.status === $filter);
+	const nonCompleted = $events.filter((e) => !e.completed).sort(sortByKmAsc);
+	if ($filter === 'all') return nonCompleted;
+	return nonCompleted.filter((e) => deriveStatus(e) === $filter);
 });
 
 export const completedEvents = derived(events, ($events) => {
-	return $events.filter((e) => e.status === 'done').sort(sortByKmThenDate);
+	return $events.filter((e) => e.completed).sort(sortByDateDesc);
 });
 
 export const totalSpent = derived(events, ($events) => {
 	return $events
-		.filter((e) => e.status === 'done')
+		.filter((e) => e.completed)
 		.reduce((sum, e) => sum + (e.cost || 0), 0);
 });
 
 export const totalPlanned = derived(events, ($events) => {
 	return $events
-		.filter((e) => e.status !== 'done')
+		.filter((e) => !e.completed)
 		.reduce((sum, e) => sum + (e.cost || 0), 0);
 });
 
 export const costByCategory = derived(events, ($events) => {
 	const categories: Record<string, number> = {};
-	for (const e of $events.filter((ev) => ev.status === 'done')) {
+	for (const e of $events.filter((ev) => ev.completed)) {
 		const cat = e.event.split(' - ')[0] || 'Other';
 		categories[cat] = (categories[cat] || 0) + (e.cost || 0);
 	}
@@ -87,13 +88,8 @@ export const costByCategory = derived(events, ($events) => {
 
 export const upcomingEvents = derived(events, ($events) => {
 	return $events
-		.filter((e) => e.status === 'scheduled' || e.status === 'future')
-		.sort((a, b) => {
-			if (a.km === null && b.km === null) return 0;
-			if (a.km === null) return 1;
-			if (b.km === null) return -1;
-			return a.km - b.km;
-		});
+		.filter((e) => !e.completed)
+		.sort(sortByKmAsc);
 });
 
 export const latestOdometer = derived([vehicle, events], ([$vehicle, $events]) => {
@@ -101,7 +97,7 @@ export const latestOdometer = derived([vehicle, events], ([$vehicle, $events]) =
 		return { km: $vehicle.odometer, approximate: false };
 	}
 	const completed = $events
-		.filter((e) => e.status === 'done' && e.km !== null)
+		.filter((e) => e.completed && e.km !== null)
 		.sort((a, b) => (b.km ?? 0) - (a.km ?? 0));
 	if (completed.length > 0) {
 		return { km: completed[0].km!, approximate: true };
@@ -111,15 +107,8 @@ export const latestOdometer = derived([vehicle, events], ([$vehicle, $events]) =
 
 export const nextScheduledEvent = derived(events, ($events) => {
 	const upcoming = $events
-		.filter((e) => e.status === 'scheduled')
-		.sort((a, b) => {
-			const aKm = a.km ?? Infinity;
-			const bKm = b.km ?? Infinity;
-			if (aKm !== bKm) return aKm - bKm;
-			const da = a.date || '9999';
-			const db = b.date || '9999';
-			return da.localeCompare(db);
-		});
+		.filter((e) => !e.completed)
+		.sort(sortByKmAsc);
 	return upcoming[0] ?? null;
 });
 
