@@ -122,19 +122,6 @@
       "completed": false
     },
     {
-      "id": "evt_012",
-      "km": 187500,
-      "date": "2026-03-25",
-      "event": "Cabin filter",
-      "cost": 379,
-      "currency": "DKK",
-      "provider": "BimmerUpgrade",
-      "notes": "Mann part nr - CUK 23 015-2",
-      "invoiceNr": "",
-      "category": "official-service",
-      "completed": false
-    },
-    {
       "id": "evt_013",
       "km": 187500,
       "date": "2026-03-25",
