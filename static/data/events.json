@@ -236,18 +236,6 @@
       "category": "official-service"
     },
     {
-      "id": "evt_028",
-      "km": 216900,
-      "date": "",
-      "event": "Service - oil service",
-      "cost": 3500,
-      "currency": "DKK",
-      "provider": "BimmerUpgrade",
-      "notes": "Full Digital Stamp + Vehicle Check",
-      "invoiceNr": "",
-      "completed": false
-    },
-    {
       "id": "evt_029",
       "km": 216900,
       "date": "",
