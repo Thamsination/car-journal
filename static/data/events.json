@@ -144,7 +144,8 @@
       "provider": "BimmerUpgrade",
       "notes": "Mann part nr - CUK 23 015-2",
       "status": "scheduled",
-      "invoiceNr": ""
+      "invoiceNr": "",
+      "category": "official-service"
     },
     {
       "id": "evt_013",
