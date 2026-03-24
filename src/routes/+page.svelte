@@ -8,7 +8,11 @@
 		nextScheduledEvent
 	} from '$lib/stores';
 	import { loadEvents, loadVehicle } from '$lib/github';
-	import { formatCost, formatDate, deriveStatus, statusColor, eventCategory, categoryColor } from '$lib/utils';
+	import {
+		formatCost, formatDateISO, deriveStatus, statusColor,
+		eventCategory, categoryLabel, categoryColor
+	} from '$lib/utils';
+	import type { CarEvent, DerivedStatus } from '$lib/types';
 
 	let loading = $state(true);
 
@@ -37,6 +41,24 @@
 	function goUpcoming() {
 		goto(`${base}/schedule`);
 	}
+
+	function smartStatusText(evt: CarEvent, status: DerivedStatus, odoKm: number): string {
+		if (status === 'today') return 'Today';
+		if (status === 'scheduled' && evt.date) {
+			const today = new Date(formatDateISO(new Date()) + 'T00:00:00');
+			const target = new Date(evt.date + 'T00:00:00');
+			const days = Math.round((target.getTime() - today.getTime()) / 86400000);
+			return days === 1 ? 'In 1 day' : `In ${days} days`;
+		}
+		if (status === 'delayed' && evt.km !== null && odoKm > 0) {
+			const overdue = odoKm - evt.km;
+			if (overdue > 0) return `Overdue ${overdue.toLocaleString()} km`;
+		}
+		if (status === 'planned') return 'Planned';
+		if (status === 'backlog') return 'Backlog';
+		if (status === 'delayed') return 'Delayed';
+		return '';
+	}
 </script>
 
 <svelte:head>
@@ -47,6 +69,7 @@
 	{#if loading}
 		<div class="loading">Loading dashboard...</div>
 	{:else}
+		<!-- 1. Odometer -->
 		<div class="hero-card">
 			<div class="odometer">
 				<span class="odo-value">
@@ -61,24 +84,7 @@
 			{/if}
 		</div>
 
-		{#if $nextScheduledEvent}
-			<a href="{base}/schedule/{$nextScheduledEvent.id}" class="next-task-card">
-				<span class="next-label">Next Scheduled</span>
-				<span class="next-event">{$nextScheduledEvent.event}</span>
-				<div class="next-meta">
-					{#if $nextScheduledEvent.date}
-						<span>{formatDate($nextScheduledEvent.date)}</span>
-					{/if}
-					{#if $nextScheduledEvent.km}
-						<span>{$nextScheduledEvent.km.toLocaleString()} km</span>
-					{/if}
-					{#if $nextScheduledEvent.provider}
-						<span>{$nextScheduledEvent.provider}</span>
-					{/if}
-				</div>
-			</a>
-		{/if}
-
+		<!-- 2. Completed / Upcoming counters -->
 		<div class="stats-grid">
 			<button class="stat-card tappable" onclick={goCompleted}>
 				<span class="stat-value">{completedCount}</span>
@@ -91,28 +97,87 @@
 			</button>
 		</div>
 
+		<!-- 3. Next Scheduled (single card, schedule-style) -->
+		{#if $nextScheduledEvent}
+			{@const nse = $nextScheduledEvent}
+			{@const nseStatus = deriveStatus(nse)}
+			{@const nseText = smartStatusText(nse, nseStatus, $latestOdometer.km)}
+			<section class="section">
+				<h3 class="section-title">Next Scheduled</h3>
+				<a href="{base}/schedule/{nse.id}" class="event-card">
+					<div class="event-header">
+						<span
+							class="category-badge"
+							style="background: {categoryColor(eventCategory(nse.event, nse.category))}"
+						>
+							{categoryLabel(eventCategory(nse.event, nse.category))}
+						</span>
+						<span class="status-text" style="color: {statusColor(nseStatus)}">
+							{nseText}
+						</span>
+					</div>
+					<h3 class="event-title">{nse.event}</h3>
+					<div class="event-meta">
+						{#if nse.km}
+							<span class="meta-item">{nse.km.toLocaleString()} km</span>
+						{/if}
+						{#if nse.provider}
+							<span class="meta-item">{nse.provider}</span>
+						{/if}
+						{#if nse.cost > 0}
+							<span class="meta-cost">{formatCost(nse.cost)}</span>
+						{/if}
+					</div>
+					{#if $latestOdometer.km > 0 && nse.km}
+						{@const remaining = nse.km - $latestOdometer.km}
+						{#if remaining > 0}
+							<div class="km-remaining">
+								<div class="progress-bar">
+									<div
+										class="progress-fill"
+										style="width: {Math.min(100, Math.max(5, (1 - remaining / 20000) * 100))}%"
+									></div>
+								</div>
+								<span class="remaining-text">{remaining.toLocaleString()} km remaining</span>
+							</div>
+						{:else}
+							<span class="overdue-text">Overdue by {Math.abs(remaining).toLocaleString()} km</span>
+						{/if}
+					{/if}
+				</a>
+			</section>
+		{/if}
+
+		<!-- 4. Upcoming Services batch (schedule-style cards with KM tracker) -->
 		{#if $nextBatchEvents.length > 0}
 			<section class="section">
 				<h3 class="section-title">Upcoming Services — {$nextBatchEvents[0].km?.toLocaleString()} km</h3>
-				<div class="upcoming-list">
+				<div class="card-list">
 					{#each $nextBatchEvents as evt}
-						<a href="{base}/schedule/{evt.id}" class="upcoming-card">
-							<div class="upcoming-header">
-								<span class="upcoming-event">{evt.event}</span>
+						{@const evtStatus = deriveStatus(evt)}
+						{@const evtText = smartStatusText(evt, evtStatus, $latestOdometer.km)}
+						<a href="{base}/schedule/{evt.id}" class="event-card">
+							<div class="event-header">
 								<span
-									class="status-dot"
+									class="category-badge"
 									style="background: {categoryColor(eventCategory(evt.event, evt.category))}"
-								></span>
+								>
+									{categoryLabel(eventCategory(evt.event, evt.category))}
+								</span>
+								<span class="status-text" style="color: {statusColor(evtStatus)}">
+									{evtText}
+								</span>
 							</div>
-							<div class="upcoming-meta">
-								{#if evt.date}
-									<span>{formatDate(evt.date)}</span>
-								{/if}
-								{#if evt.cost > 0}
-									<span>{formatCost(evt.cost)}</span>
+							<h3 class="event-title">{evt.event}</h3>
+							<div class="event-meta">
+								{#if evt.km}
+									<span class="meta-item">{evt.km.toLocaleString()} km</span>
 								{/if}
 								{#if evt.provider}
-									<span>{evt.provider}</span>
+									<span class="meta-item">{evt.provider}</span>
+								{/if}
+								{#if evt.cost > 0}
+									<span class="meta-cost">{formatCost(evt.cost)}</span>
 								{/if}
 							</div>
 							{#if $latestOdometer.km > 0 && evt.km}
@@ -137,11 +202,13 @@
 			</section>
 		{/if}
 
+		<!-- 5. Total Spent -->
 		<div class="stat-card accent total-spent">
 			<span class="stat-value">{formatCost($totalSpent)}</span>
 			<span class="stat-label">Total Spent</span>
 		</div>
 
+		<!-- 6. Cost Breakdown -->
 		{#if $costByCategory.length > 0 || $totalPlanned > 0}
 			<section class="section">
 				<h3 class="section-title">Cost Breakdown</h3>
@@ -200,40 +267,6 @@
 		color: var(--color-text-secondary);
 	}
 
-	.next-task-card {
-		display: block;
-		background: var(--color-accent);
-		border-radius: var(--radius-md);
-		padding: 14px 16px;
-		margin-bottom: 12px;
-		text-decoration: none;
-		color: white;
-	}
-
-	.next-label {
-		display: block;
-		font-size: 11px;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-		opacity: 0.8;
-		margin-bottom: 4px;
-	}
-
-	.next-event {
-		display: block;
-		font-size: 16px;
-		font-weight: 700;
-		margin-bottom: 4px;
-	}
-
-	.next-meta {
-		display: flex;
-		gap: 12px;
-		font-size: 13px;
-		opacity: 0.85;
-	}
-
 	.stats-grid {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -286,13 +319,8 @@
 		letter-spacing: 0.5px;
 	}
 
-	.upcoming-list {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-	}
-
-	.upcoming-card {
+	/* Shared card styles matching Schedule page */
+	.event-card {
 		display: block;
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
@@ -300,32 +328,65 @@
 		padding: 14px 16px;
 		text-decoration: none;
 		color: var(--color-text);
+		transition: box-shadow 0.2s;
 	}
 
-	.upcoming-header {
+	.event-card:active {
+		box-shadow: var(--shadow-md);
+	}
+
+	.event-header {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		margin-bottom: 4px;
+		margin-bottom: 6px;
 	}
 
-	.upcoming-event {
+	.category-badge {
+		font-size: 11px;
 		font-weight: 600;
-		font-size: 14px;
+		color: white;
+		padding: 2px 8px;
+		border-radius: 10px;
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
 	}
 
-	.status-dot {
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		flex-shrink: 0;
+	.status-text {
+		font-size: 12px;
+		font-weight: 600;
+		white-space: nowrap;
 	}
 
-	.upcoming-meta {
+	.event-title {
+		font-size: 16px;
+		font-weight: 600;
+		margin-bottom: 6px;
+	}
+
+	.event-meta {
 		display: flex;
-		gap: 12px;
+		flex-wrap: wrap;
+		gap: 8px;
+		align-items: center;
 		font-size: 13px;
 		color: var(--color-text-secondary);
+	}
+
+	.meta-item::after {
+		content: '·';
+		margin-left: 8px;
+		color: var(--color-border);
+	}
+
+	.meta-item:last-of-type::after {
+		content: '';
+	}
+
+	.meta-cost {
+		font-weight: 600;
+		color: var(--color-text);
+		margin-left: auto;
 	}
 
 	.km-remaining {
@@ -360,6 +421,23 @@
 		display: block;
 	}
 
+	.card-list {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.total-spent {
+		margin-bottom: 16px;
+		background: var(--color-accent);
+		border-color: var(--color-accent);
+		color: white;
+	}
+
+	.total-spent .stat-label {
+		color: rgba(255, 255, 255, 0.8);
+	}
+
 	.breakdown-list {
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
@@ -390,17 +468,6 @@
 	.breakdown-row.planned {
 		opacity: 0.7;
 		font-style: italic;
-	}
-
-	.total-spent {
-		margin-bottom: 16px;
-		background: var(--color-accent);
-		border-color: var(--color-accent);
-		color: white;
-	}
-
-	.total-spent .stat-label {
-		color: rgba(255, 255, 255, 0.8);
 	}
 
 	.loading {
