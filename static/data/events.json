@@ -98,7 +98,7 @@
     },
     {
       "id": "evt_009",
-      "km": 187033,
+      "km": 187037,
       "date": "2026-03-24",
       "event": "Cleanse fuel system (additive)",
       "cost": 95,
@@ -106,7 +106,7 @@
       "provider": "DIY",
       "notes": "To prime the car for new oil",
       "invoiceNr": "547620",
-      "completed": false
+      "completed": true
     },
     {
       "id": "evt_010",
