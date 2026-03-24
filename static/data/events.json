@@ -71,7 +71,8 @@
       "provider": "Jan Nygaard",
       "notes": "BMW Technical Campaign 0011350700",
       "invoiceNr": "-",
-      "completed": true
+      "completed": true,
+      "category": "recall"
     },
     {
       "id": "evt_007",
