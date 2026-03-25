@@ -3,56 +3,73 @@
     {
       "id": "engine-oil",
       "name": "Engine Oil",
-      "taskMatches": ["engine oil"],
-      "intervalKm": 30000,
+      "taskMatches": [
+        "engine oil"
+      ],
+      "intervalKm": 10000,
       "intervalMonths": 24
     },
     {
       "id": "micro-filter",
       "name": "Micro Filter",
-      "taskMatches": ["micro filter"],
+      "taskMatches": [
+        "micro filter"
+      ],
       "intervalKm": 30000,
       "intervalMonths": 24
     },
     {
       "id": "air-filter",
       "name": "Air Cleaner Element",
-      "taskMatches": ["air cleaner element"],
+      "taskMatches": [
+        "air cleaner element"
+      ],
       "intervalKm": 60000,
       "intervalMonths": 48
     },
     {
       "id": "fuel-filter",
       "name": "Fuel Filter",
-      "taskMatches": ["fuel filter"],
+      "taskMatches": [
+        "fuel filter"
+      ],
       "intervalKm": 60000,
       "intervalMonths": 48
     },
     {
       "id": "brake-fluid",
       "name": "Brake Fluid",
-      "taskMatches": ["brake fluid"],
+      "taskMatches": [
+        "brake fluid"
+      ],
       "intervalKm": null,
       "intervalMonths": 24
     },
     {
       "id": "front-brakes",
       "name": "Front Brake Pads",
-      "taskMatches": ["front brake pads"],
+      "taskMatches": [
+        "front brake pads"
+      ],
       "intervalKm": 50000,
       "intervalMonths": null
     },
     {
       "id": "rear-brakes",
       "name": "Rear Brake Pads",
-      "taskMatches": ["rear brake pads"],
+      "taskMatches": [
+        "rear brake pads"
+      ],
       "intervalKm": 60000,
       "intervalMonths": null
     },
     {
       "id": "vehicle-check",
       "name": "Vehicle Inspection",
-      "taskMatches": ["vehicle check", "pass"],
+      "taskMatches": [
+        "vehicle check",
+        "pass"
+      ],
       "intervalKm": null,
       "intervalMonths": 24
     }
