@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent } from '$lib/stores';
@@ -11,6 +12,12 @@
 	let loadError = $state('');
 	let searchQuery = $state('');
 	let anchorEl: HTMLElement | null = null;
+	let focusId = $state<string | null>(null);
+
+	$effect(() => {
+		const params = $page.url.searchParams;
+		focusId = params.get('focus');
+	});
 
 	function anchorAction(node: HTMLElement, shouldAnchor: boolean) {
 		if (shouldAnchor) anchorEl = node;
@@ -181,8 +188,8 @@
 					<div
 						class="tl-row odometer-row"
 						style="margin-top: {gap}px"
-						use:anchorAction={true}
-					>
+					use:anchorAction={!focusId}
+				>
 						<div class="tl-ruler">
 							<div class="ruler-line"></div>
 							<div class="ruler-km odo-km">
@@ -207,11 +214,13 @@
 					{@const evt = entry.evt}
 					{@const status = deriveStatus(evt)}
 					{@const isNext = evt.id === nextId}
+					{@const isFocus = focusId ? evt.id === focusId : false}
 					<div
 						class="tl-row"
 						class:next-scheduled={isNext}
+						class:focused-row={isFocus}
 						style="margin-top: {gap}px"
-						use:anchorAction={isNext}
+						use:anchorAction={isFocus || (!focusId && isNext)}
 					>
 						<div class="tl-ruler">
 							<div class="ruler-line" class:completed-line={evt.completed}></div>
@@ -431,6 +440,10 @@
 		font-size: 12px;
 		color: var(--color-danger);
 		font-weight: 600;
+	}
+
+	.focused-row .tl-card {
+		box-shadow: 0 0 0 2px var(--color-accent), 0 2px 12px rgba(0, 113, 227, 0.15);
 	}
 
 	/* ---- Event cards ---- */

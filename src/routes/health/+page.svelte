@@ -51,6 +51,8 @@
 		const odoKm = $latestOdometer.km;
 		const now = Date.now();
 
+		const healthOrder = { overdue: 0, warning: 1, good: 2 };
+
 		return intervals.map((interval) => {
 			const lastEvent = findLastService(interval);
 			const lastKm = lastEvent?.km ?? null;
@@ -98,6 +100,10 @@
 				usedTimePct,
 				health
 			};
+		}).sort((a, b) => {
+			const diff = healthOrder[a.health] - healthOrder[b.health];
+			if (diff !== 0) return diff;
+			return Math.max(b.usedKmPct, b.usedTimePct) - Math.max(a.usedKmPct, a.usedTimePct);
 		});
 	});
 
@@ -211,10 +217,22 @@
 
 		<div class="component-list">
 			{#each componentStatuses as comp}
-				<div class="comp-card" class:comp-overdue={comp.health === 'overdue'} class:comp-warning={comp.health === 'warning'}>
+				<div
+					class="comp-card"
+					class:comp-overdue={comp.health === 'overdue'}
+					class:comp-warning={comp.health === 'warning'}
+					class:comp-clickable={editingId !== comp.interval.id && !!comp.lastEvent}
+					onclick={() => {
+						if (editingId !== comp.interval.id && comp.lastEvent) {
+							goto(`${base}/timeline?focus=${comp.lastEvent.id}`);
+						}
+					}}
+					role={editingId !== comp.interval.id && comp.lastEvent ? 'link' : undefined}
+					tabindex={editingId !== comp.interval.id && comp.lastEvent ? 0 : undefined}
+				>
 					<div class="comp-header">
 						<span class="comp-name">{comp.interval.name}</span>
-						<button class="comp-edit" onclick={() => startEdit(comp.interval.id)} aria-label="Edit interval">✎</button>
+						<button class="comp-edit" onclick={(e) => { e.stopPropagation(); startEdit(comp.interval.id); }} aria-label="Edit interval">✎</button>
 					</div>
 
 					{#if editingId === comp.interval.id}
@@ -339,6 +357,14 @@
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-md);
 		padding: 14px 16px;
+	}
+
+	.comp-card.comp-clickable {
+		cursor: pointer;
+	}
+
+	.comp-card.comp-clickable:active {
+		opacity: 0.85;
 	}
 
 	.comp-card.comp-overdue {
