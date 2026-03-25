@@ -107,7 +107,7 @@
 			}
 
 			$events = updated;
-			goto(`${base}/schedule`);
+			goto(`${base}/timeline`);
 		} catch (e: unknown) {
 			saveError = e instanceof Error ? e.message : 'Failed to save';
 		} finally {
@@ -122,7 +122,7 @@
 
 <div class="container">
 	<div class="page-header">
-		<a href="{base}/schedule" class="back-btn">← Back</a>
+		<a href="{base}/timeline" class="back-btn">← Back</a>
 		<h2>New Entry</h2>
 	</div>
 

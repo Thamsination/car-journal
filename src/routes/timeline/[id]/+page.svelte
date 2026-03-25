@@ -174,7 +174,7 @@
 			}
 			$events = updated;
 			showCompleteModal = false;
-			goto(`${base}/history`);
+			goto(`${base}/timeline`);
 		} catch (e: unknown) {
 			saveError = e instanceof Error ? e.message : 'Failed to mark as completed';
 		} finally {
@@ -195,7 +195,7 @@
 				await queueWrite('events', updated, `Delete: ${form.event}`);
 			}
 			$events = updated;
-			goto(`${base}/schedule`);
+			goto(`${base}/timeline`);
 		} catch (e: unknown) {
 			saveError = e instanceof Error ? e.message : 'Failed to delete';
 		} finally {

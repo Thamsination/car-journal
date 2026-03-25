@@ -34,11 +34,11 @@
 	const upcomingCount = $derived($events.filter((e) => !e.completed).length);
 
 	function goCompleted() {
-		goto(`${base}/history`);
+		goto(`${base}/timeline`);
 	}
 
 	function goUpcoming() {
-		goto(`${base}/schedule`);
+		goto(`${base}/timeline`);
 	}
 
 	function smartStatusText(evt: CarEvent, status: DerivedStatus, odoKm: number): string {
@@ -105,7 +105,7 @@
 			{@const nseText = smartStatusText(nse, nseStatus, $latestOdometer.km)}
 			<section class="section">
 				<h3 class="section-title">Next Scheduled</h3>
-				<a href="{base}/schedule/{nse.id}" class="event-card">
+				<a href="{base}/timeline/{nse.id}" class="event-card">
 					<div class="event-header">
 						<span
 							class="category-badge"
@@ -159,7 +159,7 @@
 					{#each $nextBatchEvents as evt}
 						{@const evtStatus = deriveStatus(evt)}
 						{@const evtText = smartStatusText(evt, evtStatus, $latestOdometer.km)}
-						<a href="{base}/schedule/{evt.id}" class="event-card">
+						<a href="{base}/timeline/{evt.id}" class="event-card">
 							<div class="event-header">
 								<span
 									class="category-badge"

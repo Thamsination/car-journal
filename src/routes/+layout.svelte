@@ -50,9 +50,8 @@
 
 	const navItems = [
 		{ href: `${base}/`, label: 'Dashboard', icon: '◎' },
-		{ href: `${base}/schedule`, label: 'Schedule', icon: '⏱' },
-		{ href: `${base}/parts`, label: 'Parts', icon: '⚙' },
-		{ href: `${base}/history`, label: 'History', icon: '☰' }
+		{ href: `${base}/timeline`, label: 'Timeline', icon: '⏱' },
+		{ href: `${base}/parts`, label: 'Parts', icon: '⚙' }
 	];
 
 	function isActive(href: string, currentPath: string): boolean {
