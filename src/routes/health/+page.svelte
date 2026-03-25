@@ -424,12 +424,14 @@
 		background: var(--color-border);
 		border-radius: 4px;
 		overflow: hidden;
+		display: flex;
 	}
 
 	.progress-fill {
 		height: 100%;
 		border-radius: 4px;
 		transition: width 0.3s ease;
+		margin-left: auto;
 	}
 
 	.progress-label {
