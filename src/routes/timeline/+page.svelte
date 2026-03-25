@@ -149,20 +149,22 @@
 </svelte:head>
 
 <div class="container timeline-container">
-	<div class="search-bar">
-		<input type="search" placeholder="Search timeline..." bind:value={searchQuery} />
-	</div>
+	<div class="sticky-header">
+		<div class="search-bar">
+			<input type="search" placeholder="Search timeline..." bind:value={searchQuery} />
+		</div>
 
-	<div class="filter-row">
-		{#each statuses as s}
-			<button
-				class="filter-chip"
-				class:active={$statusFilter === s.value}
-				onclick={() => ($statusFilter = s.value)}
-			>
-				{s.label}
-			</button>
-		{/each}
+		<div class="filter-row">
+			{#each statuses as s}
+				<button
+					class="filter-chip"
+					class:active={$statusFilter === s.value}
+					onclick={() => ($statusFilter = s.value)}
+				>
+					{s.label}
+				</button>
+			{/each}
+		</div>
 	</div>
 
 	{#if loading}
@@ -267,6 +269,15 @@
 		padding-bottom: 80px;
 	}
 
+	.sticky-header {
+		position: sticky;
+		top: 0;
+		z-index: 40;
+		background: var(--color-bg);
+		padding-top: 4px;
+		padding-bottom: 4px;
+	}
+
 	.search-bar {
 		margin-bottom: 12px;
 	}
@@ -276,7 +287,7 @@
 		gap: 8px;
 		overflow-x: auto;
 		padding-bottom: 4px;
-		margin-bottom: 16px;
+		margin-bottom: 12px;
 		-webkit-overflow-scrolling: touch;
 	}
 
