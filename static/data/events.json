@@ -12,7 +12,9 @@
       "invoiceNr": "",
       "completed": true,
       "category": "official-service",
-      "tasks": ["pre-delivery check"]
+      "tasks": [
+        "pre-delivery check"
+      ]
     },
     {
       "id": "evt_idrive_002",
@@ -26,7 +28,10 @@
       "invoiceNr": "",
       "completed": true,
       "category": "official-service",
-      "tasks": ["engine oil", "micro filter"]
+      "tasks": [
+        "engine oil",
+        "micro filter"
+      ]
     },
     {
       "id": "evt_idrive_003",
@@ -40,7 +45,13 @@
       "invoiceNr": "",
       "completed": true,
       "category": "official-service",
-      "tasks": ["engine oil", "vehicle check", "micro filter", "air cleaner element", "fuel filter"]
+      "tasks": [
+        "engine oil",
+        "vehicle check",
+        "micro filter",
+        "air cleaner element",
+        "fuel filter"
+      ]
     },
     {
       "id": "evt_idrive_004",
@@ -54,7 +65,10 @@
       "invoiceNr": "",
       "completed": true,
       "category": "official-service",
-      "tasks": ["engine oil", "micro filter"]
+      "tasks": [
+        "engine oil",
+        "micro filter"
+      ]
     },
     {
       "id": "evt_idrive_005",
@@ -68,7 +82,9 @@
       "invoiceNr": "",
       "completed": true,
       "category": "official-service",
-      "tasks": ["front brake pads"]
+      "tasks": [
+        "front brake pads"
+      ]
     },
     {
       "id": "evt_idrive_006",
@@ -82,7 +98,15 @@
       "invoiceNr": "",
       "completed": true,
       "category": "official-service",
-      "tasks": ["engine oil", "rear brake pads", "brake fluid", "vehicle check", "micro filter", "air cleaner element", "fuel filter"]
+      "tasks": [
+        "engine oil",
+        "rear brake pads",
+        "brake fluid",
+        "vehicle check",
+        "micro filter",
+        "air cleaner element",
+        "fuel filter"
+      ]
     },
     {
       "id": "evt_idrive_007",
@@ -96,7 +120,10 @@
       "invoiceNr": "",
       "completed": true,
       "category": "official-service",
-      "tasks": ["engine oil", "micro filter"]
+      "tasks": [
+        "engine oil",
+        "micro filter"
+      ]
     },
     {
       "id": "evt_idrive_008",
@@ -110,7 +137,9 @@
       "invoiceNr": "",
       "completed": true,
       "category": "official-service",
-      "tasks": ["brake fluid"]
+      "tasks": [
+        "brake fluid"
+      ]
     },
     {
       "id": "evt_idrive_009",
@@ -124,7 +153,9 @@
       "invoiceNr": "",
       "completed": true,
       "category": "official-service",
-      "tasks": ["brake fluid"]
+      "tasks": [
+        "brake fluid"
+      ]
     },
     {
       "id": "evt_001",
@@ -138,7 +169,9 @@
       "invoiceNr": "62100314",
       "completed": true,
       "category": "purchase",
-      "tasks": ["car"]
+      "tasks": [
+        "car"
+      ]
     },
     {
       "id": "evt_002",
@@ -152,7 +185,10 @@
       "invoiceNr": "-",
       "completed": true,
       "category": "other-service",
-      "tasks": ["engine oil", "brake fluid"]
+      "tasks": [
+        "engine oil",
+        "brake fluid"
+      ]
     },
     {
       "id": "evt_003",
@@ -166,7 +202,9 @@
       "invoiceNr": "35443810",
       "completed": true,
       "category": "inspection",
-      "tasks": ["pass"]
+      "tasks": [
+        "pass"
+      ]
     },
     {
       "id": "evt_004",
@@ -180,7 +218,9 @@
       "invoiceNr": "CDI0039509",
       "completed": true,
       "category": "purchase",
-      "tasks": ["OEM CarPlay upgrade"]
+      "tasks": [
+        "OEM CarPlay upgrade"
+      ]
     },
     {
       "id": "evt_005",
@@ -194,7 +234,9 @@
       "invoiceNr": "-",
       "completed": true,
       "category": "warranty",
-      "tasks": ["summer tires"]
+      "tasks": [
+        "summer tires"
+      ]
     },
     {
       "id": "evt_006",
@@ -208,21 +250,26 @@
       "invoiceNr": "-",
       "completed": true,
       "category": "warranty",
-      "tasks": ["EGR replacement"]
+      "tasks": [
+        "EGR replacement"
+      ]
     },
     {
       "id": "evt_007",
       "km": 166571,
       "date": "2025-05-30",
-      "event": "Telematic battery",
+      "event": "Telematic battery, telematic battery",
       "cost": 2500,
       "currency": "DKK",
       "provider": "Jan Nygaard",
       "notes": "OEM, part nr - 84102447710",
       "invoiceNr": "250045702",
       "completed": true,
-      "category": "official-service",
-      "tasks": ["telematic battery"]
+      "category": "replacement",
+      "tasks": [
+        "telematic battery",
+        "telematic battery"
+      ]
     },
     {
       "id": "evt_008",
@@ -236,7 +283,9 @@
       "invoiceNr": "1804283037399417",
       "completed": true,
       "category": "purchase",
-      "tasks": ["winter wheels"]
+      "tasks": [
+        "winter wheels"
+      ]
     },
     {
       "id": "evt_009",
@@ -250,7 +299,9 @@
       "invoiceNr": "547620",
       "completed": true,
       "category": "other-service",
-      "tasks": ["cleanse fuel system (additive)"]
+      "tasks": [
+        "cleanse fuel system (additive)"
+      ]
     },
     {
       "id": "evt_010",
@@ -264,7 +315,13 @@
       "invoiceNr": "",
       "completed": false,
       "category": "official-service",
-      "tasks": ["engine oil", "micro filter", "air cleaner element", "fuel filter", "vehicle check"]
+      "tasks": [
+        "engine oil",
+        "micro filter",
+        "air cleaner element",
+        "fuel filter",
+        "vehicle check"
+      ]
     },
     {
       "id": "evt_015",
@@ -278,7 +335,9 @@
       "invoiceNr": "",
       "completed": false,
       "category": "warranty",
-      "tasks": ["starter motor"]
+      "tasks": [
+        "starter motor"
+      ]
     },
     {
       "id": "evt_016",
@@ -292,7 +351,9 @@
       "invoiceNr": "",
       "completed": false,
       "category": "other-service",
-      "tasks": ["cleanse fuel system (additive)"]
+      "tasks": [
+        "cleanse fuel system (additive)"
+      ]
     },
     {
       "id": "evt_017",
@@ -306,7 +367,9 @@
       "invoiceNr": "",
       "completed": false,
       "category": "other-service",
-      "tasks": ["engine oil"]
+      "tasks": [
+        "engine oil"
+      ]
     },
     {
       "id": "evt_018",
@@ -320,7 +383,12 @@
       "invoiceNr": "",
       "completed": false,
       "category": "official-service",
-      "tasks": ["ZF8 gearbox", "xDrive transfer case fluid", "differential fluids", "coolant system flush"]
+      "tasks": [
+        "ZF8 gearbox",
+        "xDrive transfer case fluid",
+        "differential fluids",
+        "coolant system flush"
+      ]
     },
     {
       "id": "evt_022",
@@ -334,7 +402,10 @@
       "invoiceNr": "",
       "completed": false,
       "category": "official-service",
-      "tasks": ["intake carbon clean", "engine oil"]
+      "tasks": [
+        "intake carbon clean",
+        "engine oil"
+      ]
     },
     {
       "id": "evt_024",
@@ -348,7 +419,9 @@
       "invoiceNr": "",
       "completed": false,
       "category": "other-service",
-      "tasks": ["cleanse fuel system (additive)"]
+      "tasks": [
+        "cleanse fuel system (additive)"
+      ]
     },
     {
       "id": "evt_025",
@@ -362,7 +435,9 @@
       "invoiceNr": "",
       "completed": false,
       "category": "replacement",
-      "tasks": ["timing chain"]
+      "tasks": [
+        "timing chain"
+      ]
     },
     {
       "id": "evt_026",
@@ -376,7 +451,9 @@
       "invoiceNr": "",
       "completed": false,
       "category": "other-service",
-      "tasks": ["cleanse fuel system (additive)"]
+      "tasks": [
+        "cleanse fuel system (additive)"
+      ]
     },
     {
       "id": "evt_027",
@@ -390,7 +467,11 @@
       "invoiceNr": "",
       "completed": false,
       "category": "official-service",
-      "tasks": ["engine oil", "engine air filter", "brake fluid flush"]
+      "tasks": [
+        "engine oil",
+        "engine air filter",
+        "brake fluid flush"
+      ]
     }
   ]
 }
