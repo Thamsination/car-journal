@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent } from '$lib/stores';
 	import { loadEvents } from '$lib/github';
-	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor } from '$lib/utils';
+	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality } from '$lib/utils';
 	import type { CarEvent, DerivedStatus } from '$lib/types';
 
 	let loading = $state(true);
@@ -22,7 +22,7 @@
 	}
 
 	function smartStatusText(evt: CarEvent, status: DerivedStatus, odoKm: number): string {
-		if (status === 'completed') return 'Completed';
+		if (status === 'completed') return '✓';
 		if (status === 'today') return 'Today';
 		if (status === 'scheduled' && evt.date) {
 			const today = new Date(formatDateISO(new Date()) + 'T00:00:00');
@@ -231,9 +231,14 @@
 								>
 									{categoryLabel(eventCategory(evt.event, evt.category))}
 								</span>
-								<span class="status-text" style="color: {statusColor(status)}">
-									{smartStatusText(evt, status, $latestOdometer.km)}
-								</span>
+								{#if status === 'completed'}
+									{@const quality = completionQuality(evt)}
+									<span class="quality-mark quality-{quality}" title={quality === 'green' ? 'Fully documented' : quality === 'amber' ? 'Missing receipt' : 'Missing information'}>✓</span>
+								{:else}
+									<span class="status-text" style="color: {statusColor(status)}">
+										{smartStatusText(evt, status, $latestOdometer.km)}
+									</span>
+								{/if}
 							</div>
 							<h3 class="tl-card-title" class:tl-card-title-next={isNext}>{evt.event}</h3>
 							<div class="tl-card-meta">
@@ -463,6 +468,32 @@
 		font-size: 12px;
 		font-weight: 600;
 		white-space: nowrap;
+	}
+
+	.quality-mark {
+		font-size: 16px;
+		font-weight: 800;
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		flex-shrink: 0;
+		line-height: 1;
+	}
+
+	.quality-green {
+		background: #34c759;
+	}
+
+	.quality-amber {
+		background: #ff9500;
+	}
+
+	.quality-red {
+		background: #ff3b30;
 	}
 
 	.tl-card-title {

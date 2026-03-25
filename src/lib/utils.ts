@@ -131,3 +131,22 @@ export function buildEventString(tasks: string[]): string {
 	const str = tasks.join(', ');
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export type CompletionQuality = 'green' | 'amber' | 'red';
+
+export function completionQuality(evt: CarEvent): CompletionQuality {
+	const cat = evt.category || eventCategory(evt.event);
+	const hasCategory = !!cat;
+	const hasDate = !!evt.date;
+	const hasKm = evt.km !== null && evt.km > 0;
+	const hasCost = typeof evt.cost === 'number';
+	const providerRequired = cat !== 'official-service';
+	const hasProvider = !providerRequired || !!evt.provider.trim();
+	const hasReceipt = !!evt.receipts && evt.receipts.length > 0;
+
+	const coreComplete = hasCategory && hasDate && hasKm && hasCost && hasProvider;
+
+	if (!coreComplete) return 'red';
+	if (!hasReceipt) return 'amber';
+	return 'green';
+}
