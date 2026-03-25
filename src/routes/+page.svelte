@@ -207,13 +207,7 @@
 			</section>
 		{/if}
 
-		<!-- 5. Total Spent -->
-		<div class="stat-card accent total-spent">
-			<span class="stat-value">{formatCost($totalSpent)}</span>
-			<span class="stat-label">Total Spent</span>
-		</div>
-
-		<!-- 6. Cost Breakdown -->
+		<!-- 5. Cost Breakdown -->
 		{#if $costByCategory.length > 0 || $totalPlanned > 0}
 			<section class="section">
 				<h3 class="section-title">Cost Breakdown</h3>
@@ -230,6 +224,10 @@
 							<span class="breakdown-value">{formatCost($totalPlanned)}</span>
 						</div>
 					{/if}
+					<div class="breakdown-row total-row">
+						<span class="breakdown-name">Total Spent</span>
+						<span class="breakdown-value">{formatCost($totalSpent)}</span>
+					</div>
 				</div>
 			</section>
 		{/if}
@@ -432,17 +430,6 @@
 		gap: 10px;
 	}
 
-	.total-spent {
-		margin-bottom: 16px;
-		background: var(--color-accent);
-		border-color: var(--color-accent);
-		color: white;
-	}
-
-	.total-spent .stat-label {
-		color: rgba(255, 255, 255, 0.8);
-	}
-
 	.breakdown-list {
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
@@ -473,6 +460,16 @@
 	.breakdown-row.planned {
 		opacity: 0.7;
 		font-style: italic;
+	}
+
+	.breakdown-row.total-row {
+		background: var(--color-surface-raised);
+		font-weight: 700;
+	}
+
+	.breakdown-row.total-row .breakdown-name {
+		color: var(--color-text);
+		font-weight: 700;
 	}
 
 	.loading {

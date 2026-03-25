@@ -1,6 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import type { CarEvent, Part, DerivedStatus } from './types';
-import { deriveStatus } from './utils';
+import { deriveStatus, eventCategory } from './utils';
 
 function persistedWritable<T>(key: string, initial: T) {
 	const stored = typeof localStorage !== 'undefined' ? localStorage.getItem(key) : null;
@@ -69,15 +69,27 @@ export const totalPlanned = derived(events, ($events) => {
 		.reduce((sum, e) => sum + (e.cost || 0), 0);
 });
 
+const dashboardCategoryMap: Record<string, string> = {
+	'purchase': 'Purchases',
+	'warranty': 'Car',
+	'replacement': 'Replacement',
+	'official-service': 'Service',
+	'other-service': 'Service',
+	'inspection': 'Service'
+};
+
+const dashboardCategoryOrder = ['Car', 'Purchases', 'Service', 'Replacement'];
+
 export const costByCategory = derived(events, ($events) => {
-	const categories: Record<string, number> = {};
+	const buckets: Record<string, number> = {};
 	for (const e of $events.filter((ev) => ev.completed)) {
-		const cat = e.event.split(' - ')[0] || 'Other';
-		categories[cat] = (categories[cat] || 0) + (e.cost || 0);
+		const cat = eventCategory(e.event, e.category);
+		const label = dashboardCategoryMap[cat] || 'Service';
+		buckets[label] = (buckets[label] || 0) + (e.cost || 0);
 	}
-	return Object.entries(categories)
-		.map(([name, total]) => ({ name, total }))
-		.sort((a, b) => b.total - a.total);
+	return dashboardCategoryOrder
+		.filter((name) => (buckets[name] || 0) > 0)
+		.map((name) => ({ name, total: buckets[name] }));
 });
 
 export const upcomingEvents = derived(events, ($events) => {
