@@ -451,7 +451,7 @@
       "id": "evt_025",
       "km": 210000,
       "date": "",
-      "event": "Timing chain",
+      "event": "Timing chain, engine oil",
       "cost": 18000,
       "currency": "DKK",
       "provider": "Specialist",
@@ -460,7 +460,8 @@
       "completed": false,
       "category": "replacement",
       "tasks": [
-        "timing chain"
+        "timing chain",
+        "engine oil"
       ]
     },
     {
