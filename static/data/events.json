@@ -171,6 +171,9 @@
       "category": "purchase",
       "tasks": [
         "car"
+      ],
+      "receipts": [
+        "evt_001_1.jpg"
       ]
     },
     {
