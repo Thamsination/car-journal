@@ -6,8 +6,8 @@
       "taskMatches": [
         "engine oil"
       ],
-      "intervalKm": 32000,
-      "intervalMonths": 24
+      "intervalKm": 10000,
+      "intervalMonths": null
     },
     {
       "id": "micro-filter",
