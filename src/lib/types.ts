@@ -14,6 +14,7 @@ export interface CarEvent {
 	completed: boolean;
 	category?: EventCategory;
 	tasks?: string[];
+	kmEstimated?: boolean;
 	invoiceNr: string;
 }
 

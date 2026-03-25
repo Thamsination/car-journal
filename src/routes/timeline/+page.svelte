@@ -64,9 +64,12 @@
 		} finally {
 			loading = false;
 			await tick();
-			if (anchorEl) {
-				anchorEl.scrollIntoView({ block: 'center' });
-			}
+			await tick();
+			requestAnimationFrame(() => {
+				if (anchorEl) {
+					anchorEl.scrollIntoView({ block: 'center', behavior: 'instant' });
+				}
+			});
 		}
 	});
 
@@ -212,7 +215,7 @@
 							<div class="ruler-line" class:completed-line={evt.completed}></div>
 							{#if evt.km}
 								<div class="ruler-km" class:completed-km={evt.completed}>
-									{evt.km.toLocaleString()}
+									{evt.kmEstimated ? '~' : ''}{evt.km.toLocaleString()}
 								</div>
 							{:else}
 								<div class="ruler-km no-km">—</div>
