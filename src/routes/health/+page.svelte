@@ -263,15 +263,15 @@
 							{@const usedPct = Math.max(comp.usedKmPct, comp.usedTimePct)}
 							{@const remainPct = Math.max(0, 1 - usedPct)}
 							<div class="progress-row">
+								<span class="progress-label" style="color: {remainingColor(remainPct)}">
+									{Math.round(remainPct * 100)}%
+								</span>
 								<div class="progress-bar">
 									<div
 										class="progress-fill"
 										style="width: {remainPct * 100}%; background: {remainingColor(remainPct)}"
 									></div>
 								</div>
-								<span class="progress-label" style="color: {remainingColor(remainPct)}">
-									{Math.round(remainPct * 100)}%
-								</span>
 							</div>
 
 							<div class="comp-remaining">
@@ -436,7 +436,7 @@
 		font-size: 12px;
 		font-weight: 700;
 		min-width: 36px;
-		text-align: right;
+		text-align: left;
 	}
 
 	.comp-remaining {
