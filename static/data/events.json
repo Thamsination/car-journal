@@ -303,6 +303,9 @@
       "category": "other-service",
       "tasks": [
         "cleanse fuel system (additive)"
+      ],
+      "receipts": [
+        "evt_009_1.pdf"
       ]
     },
     {
