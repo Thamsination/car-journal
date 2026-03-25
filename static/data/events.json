@@ -258,7 +258,7 @@
       "id": "evt_007",
       "km": 166571,
       "date": "2025-05-30",
-      "event": "Telematic battery, telematic battery",
+      "event": "Telematic battery",
       "cost": 2500,
       "currency": "DKK",
       "provider": "Jan Nygaard",
@@ -267,7 +267,6 @@
       "completed": true,
       "category": "replacement",
       "tasks": [
-        "telematic battery",
         "telematic battery"
       ]
     },
