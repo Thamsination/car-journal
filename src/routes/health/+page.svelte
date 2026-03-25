@@ -180,9 +180,9 @@
 		return parts.join(' · ') || 'No data';
 	}
 
-	function progressColor(pct: number): string {
-		if (pct >= 1) return '#ff3b30';
-		if (pct >= WARNING_THRESHOLD) return '#ff9500';
+	function remainingColor(remainPct: number): string {
+		if (remainPct <= 0) return '#ff3b30';
+		if (remainPct <= (1 - WARNING_THRESHOLD)) return '#ff9500';
 		return '#34c759';
 	}
 </script>
@@ -260,16 +260,17 @@
 						</div>
 
 						{#if comp.lastEvent}
-							{@const mainPct = Math.max(comp.usedKmPct, comp.usedTimePct)}
+							{@const usedPct = Math.max(comp.usedKmPct, comp.usedTimePct)}
+							{@const remainPct = Math.max(0, 1 - usedPct)}
 							<div class="progress-row">
 								<div class="progress-bar">
 									<div
 										class="progress-fill"
-										style="width: {Math.min(mainPct, 1) * 100}%; background: {progressColor(mainPct)}"
+										style="width: {remainPct * 100}%; background: {remainingColor(remainPct)}"
 									></div>
 								</div>
-								<span class="progress-label" style="color: {progressColor(mainPct)}">
-									{Math.round(mainPct * 100)}%
+								<span class="progress-label" style="color: {remainingColor(remainPct)}">
+									{Math.round(remainPct * 100)}%
 								</span>
 							</div>
 
