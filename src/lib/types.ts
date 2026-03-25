@@ -39,3 +39,15 @@ export interface EventsData {
 export interface PartsData {
 	parts: Part[];
 }
+
+export interface ServiceInterval {
+	id: string;
+	name: string;
+	taskMatches: string[];
+	intervalKm: number | null;
+	intervalMonths: number | null;
+}
+
+export interface HealthConfig {
+	intervals: ServiceInterval[];
+}

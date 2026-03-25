@@ -95,6 +95,7 @@ export async function validateToken(): Promise<{ ok: boolean; error?: string }> 
 
 let eventsSha = '';
 let partsSha = '';
+let healthSha = '';
 
 const DATA_PATH = 'static/data';
 
@@ -124,6 +125,22 @@ export async function saveParts(
 ): Promise<void> {
 	const data: import('./types').PartsData = { parts };
 	partsSha = await writeJsonFile(`${DATA_PATH}/parts.json`, data, partsSha, message);
+}
+
+export async function loadHealthConfig(): Promise<import('./types').HealthConfig> {
+	const { content, sha } = await getFile(`${DATA_PATH}/health-config.json`);
+	healthSha = sha;
+	if (!content) {
+		return { intervals: [] };
+	}
+	return JSON.parse(content) as import('./types').HealthConfig;
+}
+
+export async function saveHealthConfig(
+	config: import('./types').HealthConfig,
+	message: string
+): Promise<void> {
+	healthSha = await writeJsonFile(`${DATA_PATH}/health-config.json`, config, healthSha, message);
 }
 
 const RECEIPTS_PATH = `${DATA_PATH}/receipts`;
