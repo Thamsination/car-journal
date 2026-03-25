@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import { events } from '$lib/stores';
-	import { saveEvents, loadEvents } from '$lib/github';
+	import { saveEvents, loadEvents, uploadReceipt, deleteReceipt, receiptUrl } from '$lib/github';
 	import { formatCost, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, allCategories, getEventTasks, buildEventString } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent, EventCategory } from '$lib/types';
@@ -25,6 +25,11 @@
 	let showCompleteModal = $state(false);
 	let completeKmInput = $state('');
 	let completing = $state(false);
+
+	let uploading = $state(false);
+	let uploadError = $state('');
+	let lightboxSrc = $state('');
+	let showLightbox = $state(false);
 
 	let form = $state<CarEvent>({
 		id: '',
@@ -202,6 +207,118 @@
 			deleting = false;
 		}
 	}
+
+	function compressImage(file: File, maxWidth: number, quality: number): Promise<string> {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onload = () => {
+				const img = new Image();
+				img.onload = () => {
+					const scale = img.width > maxWidth ? maxWidth / img.width : 1;
+					const w = Math.round(img.width * scale);
+					const h = Math.round(img.height * scale);
+					const canvas = document.createElement('canvas');
+					canvas.width = w;
+					canvas.height = h;
+					const ctx = canvas.getContext('2d')!;
+					ctx.drawImage(img, 0, 0, w, h);
+					const dataUrl = canvas.toDataURL('image/jpeg', quality);
+					resolve(dataUrl.split(',')[1]);
+				};
+				img.onerror = reject;
+				img.src = reader.result as string;
+			};
+			reader.onerror = reject;
+			reader.readAsDataURL(file);
+		});
+	}
+
+	function fileToBase64(file: File): Promise<string> {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onload = () => {
+				const result = reader.result as string;
+				resolve(result.split(',')[1]);
+			};
+			reader.onerror = reject;
+			reader.readAsDataURL(file);
+		});
+	}
+
+	async function handleReceiptUpload(e: Event) {
+		const input = e.target as HTMLInputElement;
+		const files = input.files;
+		if (!files || files.length === 0 || !event) return;
+
+		uploading = true;
+		uploadError = '';
+
+		try {
+			const currentReceipts = event.receipts ? [...event.receipts] : [];
+
+			for (const file of files) {
+				const idx = currentReceipts.length + 1;
+				const isPdf = file.type === 'application/pdf';
+				const ext = isPdf ? 'pdf' : 'jpg';
+				const filename = `${event.id}_${idx}.${ext}`;
+
+				let base64: string;
+				if (isPdf) {
+					base64 = await fileToBase64(file);
+				} else {
+					base64 = await compressImage(file, 1600, 0.85);
+				}
+
+				await uploadReceipt(filename, base64, `Receipt: ${filename}`);
+				currentReceipts.push(filename);
+			}
+
+			const updated = $events.map((ev) =>
+				ev.id === event!.id ? { ...ev, receipts: currentReceipts } : ev
+			);
+			await loadEvents();
+			await saveEvents(updated, `Add receipt(s) to ${event.event}`);
+			$events = updated;
+			event = { ...event, receipts: currentReceipts };
+			form = { ...event };
+		} catch (err: unknown) {
+			uploadError = err instanceof Error ? err.message : 'Upload failed';
+		} finally {
+			uploading = false;
+			input.value = '';
+		}
+	}
+
+	async function handleDeleteReceipt(filename: string) {
+		if (!confirm('Delete this receipt?') || !event) return;
+		uploading = true;
+		uploadError = '';
+		try {
+			await deleteReceipt(filename, `Delete receipt: ${filename}`);
+			const newReceipts = (event.receipts || []).filter((r) => r !== filename);
+			const updated = $events.map((ev) =>
+				ev.id === event!.id ? { ...ev, receipts: newReceipts.length > 0 ? newReceipts : undefined } : ev
+			);
+			await loadEvents();
+			await saveEvents(updated, `Remove receipt from ${event.event}`);
+			$events = updated;
+			event = { ...event, receipts: newReceipts.length > 0 ? newReceipts : undefined };
+			form = { ...event };
+		} catch (err: unknown) {
+			uploadError = err instanceof Error ? err.message : 'Delete failed';
+		} finally {
+			uploading = false;
+		}
+	}
+
+	function openLightbox(filename: string) {
+		lightboxSrc = receiptUrl(filename);
+		showLightbox = true;
+	}
+
+	function isPdf(filename: string): boolean {
+		return filename.toLowerCase().endsWith('.pdf');
+	}
 </script>
 
 <svelte:head>
@@ -375,23 +492,69 @@
 				<span class="detail-label">Entry ID</span>
 				<span class="detail-value entry-id">{event.id}</span>
 			</div>
+		</div>
 
-			{#if !event.completed}
-				<button class="complete-btn" onclick={openCompleteModal}>
-					Completed
-				</button>
+		<section class="receipts-section">
+			<h3 class="receipts-title">Receipts</h3>
+			{#if event.receipts && event.receipts.length > 0}
+				<div class="receipt-grid">
+					{#each event.receipts as filename}
+						<div class="receipt-item">
+							{#if isPdf(filename)}
+								<a href={receiptUrl(filename)} target="_blank" rel="noopener" class="receipt-thumb pdf-thumb">
+									<span class="pdf-icon">PDF</span>
+									<span class="receipt-name">{filename}</span>
+								</a>
+							{:else}
+								<button class="receipt-thumb" onclick={() => openLightbox(filename)}>
+									<img src={receiptUrl(filename)} alt={filename} loading="lazy" />
+								</button>
+							{/if}
+							<button
+								class="receipt-delete"
+								onclick={() => handleDeleteReceipt(filename)}
+								disabled={uploading}
+								aria-label="Delete receipt"
+							>×</button>
+						</div>
+					{/each}
+				</div>
+			{:else}
+				<p class="no-receipts">No receipts attached</p>
 			{/if}
 
-			{#if saveError}
-				<p class="error-msg" style="margin-top: 12px">{saveError}</p>
-			{/if}
+			<label class="upload-btn" class:disabled={uploading}>
+				<input
+					type="file"
+					accept="image/*,.pdf"
+					multiple
+					onchange={handleReceiptUpload}
+					disabled={uploading}
+					hidden
+				/>
+				{uploading ? 'Uploading...' : 'Add Receipt'}
+			</label>
 
-			<div class="button-row">
-				<button class="edit-btn" onclick={startEditing}>Edit</button>
-				<button class="delete-btn" onclick={handleDelete} disabled={deleting}>
-					{deleting ? 'Deleting...' : 'Delete'}
-				</button>
-			</div>
+			{#if uploadError}
+				<p class="error-msg" style="margin-top: 8px">{uploadError}</p>
+			{/if}
+		</section>
+
+		{#if !event.completed}
+			<button class="complete-btn" onclick={openCompleteModal}>
+				Completed
+			</button>
+		{/if}
+
+		{#if saveError}
+			<p class="error-msg" style="margin-top: 12px">{saveError}</p>
+		{/if}
+
+		<div class="button-row">
+			<button class="edit-btn" onclick={startEditing}>Edit</button>
+			<button class="delete-btn" onclick={handleDelete} disabled={deleting}>
+				{deleting ? 'Deleting...' : 'Delete'}
+			</button>
 		</div>
 	{/if}
 </div>
@@ -418,6 +581,13 @@
 				</button>
 			</div>
 		</div>
+	</div>
+{/if}
+
+{#if showLightbox}
+	<div class="lightbox-overlay" onclick={() => (showLightbox = false)} role="presentation" onkeydown={(e) => { if (e.key === 'Escape') showLightbox = false; }}>
+		<button class="lightbox-close" onclick={() => (showLightbox = false)} aria-label="Close">×</button>
+		<img src={lightboxSrc} alt="Receipt" class="lightbox-img" onclick={(e) => e.stopPropagation()} />
 	</div>
 {/if}
 
@@ -689,5 +859,159 @@
 		border-radius: var(--radius-sm);
 		font-size: 15px;
 		font-weight: 600;
+	}
+
+	.receipts-section {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-top: none;
+		padding: 16px 20px;
+	}
+
+	.receipts-title {
+		font-size: 14px;
+		font-weight: 700;
+		color: var(--color-text-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin-bottom: 12px;
+	}
+
+	.receipt-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+		gap: 10px;
+		margin-bottom: 12px;
+	}
+
+	.receipt-item {
+		position: relative;
+	}
+
+	.receipt-thumb {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		aspect-ratio: 1;
+		border-radius: var(--radius-sm);
+		border: 1px solid var(--color-border);
+		overflow: hidden;
+		cursor: pointer;
+		background: var(--color-input-bg);
+		padding: 0;
+	}
+
+	.receipt-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.pdf-thumb {
+		flex-direction: column;
+		gap: 4px;
+		text-decoration: none;
+		color: var(--color-text);
+	}
+
+	.pdf-icon {
+		font-size: 20px;
+		font-weight: 800;
+		color: var(--color-danger);
+	}
+
+	.receipt-name {
+		font-size: 9px;
+		color: var(--color-text-secondary);
+		text-align: center;
+		word-break: break-all;
+		padding: 0 4px;
+		line-height: 1.2;
+	}
+
+	.receipt-delete {
+		position: absolute;
+		top: -6px;
+		right: -6px;
+		width: 22px;
+		height: 22px;
+		border-radius: 50%;
+		background: var(--color-danger);
+		color: white;
+		font-size: 14px;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 2px solid var(--color-surface);
+		cursor: pointer;
+		line-height: 1;
+	}
+
+	.receipt-delete:disabled {
+		opacity: 0.5;
+	}
+
+	.no-receipts {
+		font-size: 13px;
+		color: var(--color-text-secondary);
+		margin-bottom: 12px;
+	}
+
+	.upload-btn {
+		display: block;
+		width: 100%;
+		padding: 10px;
+		text-align: center;
+		background: var(--color-accent);
+		color: white;
+		border-radius: var(--radius-sm);
+		font-size: 14px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: opacity 0.2s;
+	}
+
+	.upload-btn.disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+
+	.lightbox-overlay {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.9);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 300;
+		padding: 20px;
+		cursor: pointer;
+	}
+
+	.lightbox-close {
+		position: absolute;
+		top: env(safe-area-inset-top, 16px);
+		right: 16px;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.15);
+		color: white;
+		font-size: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		z-index: 301;
+	}
+
+	.lightbox-img {
+		max-width: 100%;
+		max-height: 90vh;
+		object-fit: contain;
+		border-radius: var(--radius-sm);
+		cursor: default;
 	}
 </style>

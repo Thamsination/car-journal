@@ -126,3 +126,52 @@ export async function saveParts(
 	partsSha = await writeJsonFile(`${DATA_PATH}/parts.json`, data, partsSha, message);
 }
 
+const RECEIPTS_PATH = `${DATA_PATH}/receipts`;
+
+export async function uploadReceipt(
+	filename: string,
+	base64Content: string,
+	message: string
+): Promise<string> {
+	const path = `${RECEIPTS_PATH}/${filename}`;
+	const { sha: existingSha } = await getFile(path).catch(() => ({ sha: '' }));
+	const body: Record<string, string> = { message, content: base64Content };
+	if (existingSha) body.sha = existingSha;
+
+	const res = await fetch(`${repoPath()}/contents/${path}`, {
+		method: 'PUT',
+		headers: headers(),
+		body: JSON.stringify(body)
+	});
+	if (!res.ok) {
+		const err = await res.json().catch(() => ({}));
+		throw new Error(`Upload failed: ${res.status} — ${err.message || res.statusText}`);
+	}
+	const data = await res.json();
+	return data.content.sha;
+}
+
+export async function deleteReceipt(
+	filename: string,
+	message: string
+): Promise<void> {
+	const path = `${RECEIPTS_PATH}/${filename}`;
+	const res = await fetch(`${repoPath()}/contents/${path}`, { headers: headers() });
+	if (!res.ok) return;
+	const fileData = await res.json();
+
+	const delRes = await fetch(`${repoPath()}/contents/${path}`, {
+		method: 'DELETE',
+		headers: headers(),
+		body: JSON.stringify({ message, sha: fileData.sha })
+	});
+	if (!delRes.ok) {
+		const err = await delRes.json().catch(() => ({}));
+		throw new Error(`Delete failed: ${delRes.status} — ${err.message || delRes.statusText}`);
+	}
+}
+
+export function receiptUrl(filename: string): string {
+	return `https://${get(repoOwner)}.github.io/${get(repoName)}/data/receipts/${filename}`;
+}
+
