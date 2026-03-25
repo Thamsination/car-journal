@@ -71,20 +71,22 @@ export const totalPlanned = derived(events, ($events) => {
 
 const dashboardCategoryMap: Record<string, string> = {
 	'purchase': 'Purchases',
-	'warranty': 'Car',
+	'warranty': 'Warranty',
 	'replacement': 'Replacement',
 	'official-service': 'Service',
 	'other-service': 'Service',
 	'inspection': 'Service'
 };
 
-const dashboardCategoryOrder = ['Car', 'Purchases', 'Service', 'Replacement'];
+const dashboardCategoryOrder = ['Car', 'Purchases', 'Service', 'Replacement', 'Warranty'];
 
 export const costByCategory = derived(events, ($events) => {
 	const buckets: Record<string, number> = {};
 	for (const e of $events.filter((ev) => ev.completed)) {
-		const cat = eventCategory(e.event, e.category);
-		const label = dashboardCategoryMap[cat] || 'Service';
+		const isCarPurchase = e.event.toLowerCase() === 'car';
+		const label = isCarPurchase
+			? 'Car'
+			: dashboardCategoryMap[eventCategory(e.event, e.category)] || 'Service';
 		buckets[label] = (buckets[label] || 0) + (e.cost || 0);
 	}
 	return dashboardCategoryOrder
