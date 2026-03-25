@@ -4,15 +4,17 @@
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent } from '$lib/stores';
-	import { loadEvents } from '$lib/github';
+	import { loadEvents, loadServiceSchedule } from '$lib/github';
 	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality } from '$lib/utils';
-	import type { CarEvent, DerivedStatus } from '$lib/types';
+	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
 
 	let loading = $state(true);
 	let loadError = $state('');
 	let searchQuery = $state('');
 	let anchorEl: HTMLElement | null = null;
 	let focusId = $state<string | null>(null);
+	let milestones = $state<ServiceMilestone[]>([]);
+	let showMilestones = $state(true);
 
 	$effect(() => {
 		const params = $page.url.searchParams;
@@ -63,9 +65,11 @@
 			return;
 		}
 		try {
-			if ($events.length === 0) {
-				$events = await loadEvents();
-			}
+			const [, loadedMilestones] = await Promise.all([
+				$events.length === 0 ? loadEvents().then((e) => ($events = e)) : Promise.resolve(),
+				loadServiceSchedule()
+			]);
+			milestones = loadedMilestones;
 		} catch (e: unknown) {
 			loadError = e instanceof Error ? e.message : 'Failed to load';
 		} finally {
@@ -81,8 +85,9 @@
 	});
 
 	interface TimelineEntry {
-		kind: 'event' | 'odometer';
+		kind: 'event' | 'odometer' | 'milestone';
 		evt?: CarEvent;
+		milestone?: ServiceMilestone;
 		km: number;
 		sortDate: string;
 	}
@@ -123,17 +128,31 @@
 	const timelineEntries = $derived.by(() => {
 		const entries: TimelineEntry[] = [];
 		const odoKm = $latestOdometer.km;
-		let odoInserted = false;
 
+		const combined: TimelineEntry[] = [];
 		for (const evt of sortedEvents) {
-			const evtKm = evt.km ?? 0;
-			if (!odoInserted && odoKm > 0 && evtKm > odoKm) {
+			combined.push({ kind: 'event', evt, km: evt.km ?? 0, sortDate: evt.date || '' });
+		}
+		if (showMilestones) {
+			for (const ms of milestones) {
+				combined.push({ kind: 'milestone', milestone: ms, km: ms.km, sortDate: '' });
+			}
+		}
+		combined.sort((a, b) => {
+			if (a.km !== b.km) return a.km - b.km;
+			if (a.kind === 'milestone' && b.kind !== 'milestone') return 1;
+			if (a.kind !== 'milestone' && b.kind === 'milestone') return -1;
+			return 0;
+		});
+
+		let odoInserted = false;
+		for (const entry of combined) {
+			if (!odoInserted && odoKm > 0 && entry.km > odoKm) {
 				entries.push({ kind: 'odometer', km: odoKm, sortDate: '' });
 				odoInserted = true;
 			}
-			entries.push({ kind: 'event', evt, km: evtKm, sortDate: evt.date || '' });
+			entries.push(entry);
 		}
-
 		if (!odoInserted && odoKm > 0) {
 			entries.push({ kind: 'odometer', km: odoKm, sortDate: '' });
 		}
@@ -171,6 +190,13 @@
 					{s.label}
 				</button>
 			{/each}
+			<button
+				class="filter-chip filter-chip-mfr"
+				class:active={showMilestones}
+				onclick={() => (showMilestones = !showMilestones)}
+			>
+				MFR
+			</button>
 		</div>
 	</div>
 
@@ -208,6 +234,20 @@
 									<span class="odo-overdue">Overdue by {Math.abs(remaining).toLocaleString()} km</span>
 								{/if}
 							{/if}
+						</div>
+					</div>
+				{:else if entry.kind === 'milestone' && entry.milestone}
+					{@const ms = entry.milestone}
+					<div class="tl-row" style="margin-top: {gap}px">
+						<div class="tl-ruler">
+							<div class="ruler-line ruler-line-mfr"></div>
+							<div class="ruler-km mfr-km">{ms.km.toLocaleString()}</div>
+							<div class="ruler-dot mfr-dot"></div>
+							<div class="ruler-line ruler-line-mfr"></div>
+						</div>
+						<div class="mfr-card">
+							<span class="mfr-badge">MFR</span>
+							<span class="mfr-tasks">{ms.tasks.join(', ')}</span>
 						</div>
 					</div>
 				{:else if entry.evt}
@@ -578,6 +618,66 @@
 
 	.fab:active {
 		transform: scale(0.92);
+	}
+
+	/* ---- MFR milestone cards ---- */
+	.filter-chip-mfr {
+		border-style: dashed;
+	}
+
+	.filter-chip-mfr.active {
+		background: #8e8e93;
+		border-color: #8e8e93;
+		border-style: solid;
+	}
+
+	.ruler-line-mfr {
+		background: #c7c7cc;
+		opacity: 0.5;
+	}
+
+	.mfr-km {
+		color: #8e8e93 !important;
+		font-weight: 500 !important;
+		opacity: 0.7;
+	}
+
+	.mfr-dot {
+		width: 8px !important;
+		height: 8px !important;
+		background: #c7c7cc !important;
+		border: 1px dashed #8e8e93;
+	}
+
+	.mfr-card {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		background: transparent;
+		border: 1px dashed #c7c7cc;
+		border-radius: var(--radius-md);
+		padding: 8px 12px;
+		margin-left: 8px;
+	}
+
+	.mfr-badge {
+		font-size: 9px;
+		font-weight: 700;
+		color: #8e8e93;
+		background: var(--color-surface);
+		padding: 2px 6px;
+		border-radius: 6px;
+		border: 1px solid #c7c7cc;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		flex-shrink: 0;
+	}
+
+	.mfr-tasks {
+		font-size: 12px;
+		color: #8e8e93;
+		line-height: 1.3;
 	}
 
 	.loading, .empty-state, .error-state {

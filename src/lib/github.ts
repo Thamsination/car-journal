@@ -127,6 +127,13 @@ export async function saveParts(
 	partsSha = await writeJsonFile(`${DATA_PATH}/parts.json`, data, partsSha, message);
 }
 
+export async function loadServiceSchedule(): Promise<import('./types').ServiceMilestone[]> {
+	const { content } = await getFile(`${DATA_PATH}/service-schedule.json`);
+	if (!content) return [];
+	const data = JSON.parse(content) as import('./types').ServiceSchedule;
+	return data.milestones;
+}
+
 export async function loadHealthConfig(): Promise<import('./types').HealthConfig> {
 	const { content, sha } = await getFile(`${DATA_PATH}/health-config.json`);
 	healthSha = sha;

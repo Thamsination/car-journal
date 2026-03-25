@@ -51,3 +51,12 @@ export interface ServiceInterval {
 export interface HealthConfig {
 	intervals: ServiceInterval[];
 }
+
+export interface ServiceMilestone {
+	km: number;
+	tasks: string[];
+}
+
+export interface ServiceSchedule {
+	milestones: ServiceMilestone[];
+}
