@@ -136,12 +136,14 @@ export type CompletionQuality = 'green' | 'amber' | 'red';
 
 export function completionQuality(evt: CarEvent): CompletionQuality {
 	const cat = evt.category || eventCategory(evt.event);
+
+	if (cat === 'official-service') return 'green';
+
 	const hasCategory = !!cat;
 	const hasDate = !!evt.date;
 	const hasKm = evt.km !== null && evt.km > 0;
 	const hasCost = typeof evt.cost === 'number';
-	const providerRequired = cat !== 'official-service';
-	const hasProvider = !providerRequired || !!evt.provider.trim();
+	const hasProvider = !!evt.provider.trim();
 	const hasReceipt = !!evt.receipts && evt.receipts.length > 0;
 
 	const coreComplete = hasCategory && hasDate && hasKm && hasCost && hasProvider;
