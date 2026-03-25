@@ -221,7 +221,10 @@
       "tasks": [
         "OEM CarPlay upgrade"
       ],
-      "kmEstimated": true
+      "kmEstimated": true,
+      "receipts": [
+        "evt_004_1.pdf"
+      ]
     },
     {
       "id": "evt_005",
