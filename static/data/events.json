@@ -307,7 +307,7 @@
     },
     {
       "id": "evt_010",
-      "km": 187200,
+      "km": 187147,
       "date": "2026-03-25",
       "event": "Engine oil, micro filter, air cleaner element, fuel filter, vehicle check",
       "cost": 4210,
@@ -315,7 +315,7 @@
       "provider": "BimmerUpgrade",
       "notes": "Resetting service history",
       "invoiceNr": "",
-      "completed": false,
+      "completed": true,
       "category": "official-service",
       "tasks": [
         "engine oil",
