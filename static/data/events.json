@@ -335,7 +335,7 @@
       "notes": "Resetting service history",
       "invoiceNr": "",
       "completed": true,
-      "category": "official-service",
+      "category": "other-service",
       "tasks": [
         "engine oil",
         "micro filter",
