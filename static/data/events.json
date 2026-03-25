@@ -270,6 +270,9 @@
       "category": "official-service",
       "tasks": [
         "telematic battery"
+      ],
+      "receipts": [
+        "evt_007_1.pdf"
       ]
     },
     {
