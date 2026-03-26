@@ -139,7 +139,11 @@
 		}
 		if (showRec) {
 			for (const ms of recMilestones) {
-				combined.push({ kind: 'milestone', milestone: ms, km: ms.km, sortDate: '' });
+				const stats = milestoneTaskStatuses(ms, $events, odoKm);
+				const card = milestoneCardStatus(stats);
+				if (card === 'covered' || card === 'amber' || card === 'red' || ms.km > odoKm) {
+					combined.push({ kind: 'milestone', milestone: ms, km: ms.km, sortDate: '' });
+				}
 			}
 		}
 		combined.sort((a, b) => {
