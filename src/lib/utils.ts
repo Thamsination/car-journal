@@ -147,6 +147,8 @@ const SERVICE_INTERVALS: ServiceInterval[] = [
 	{ task: 'fuel filter', km: 60000, kind: 'mfr' },
 	{ task: 'check front brake pads', km: 50000, kind: 'mfr' },
 	{ task: 'check rear brake pads', km: 60000, kind: 'mfr' },
+	{ task: 'vehicle check', km: 60000, kind: 'mfr' },
+	{ task: 'engine oil', km: 10000, kind: 'rec' },
 	{ task: 'ZF8 gearbox fluid', km: 100000, kind: 'rec' },
 	{ task: 'xDrive transfer case fluid', km: 80000, kind: 'rec' },
 	{ task: 'differential fluids', km: 80000, kind: 'rec' },
@@ -170,6 +172,7 @@ export const SERVICE_NOTES: Record<string, string> = {
 	'timing chain': 'The B47 diesel timing chain is located at the rear of the engine. While more reliable than the earlier N47, preventive replacement around 200,000 km avoids the risk of catastrophic engine failure from a stretched or broken chain.',
 	'coolant flush': 'Engine coolant loses its anti-corrosion properties over time. A flush removes deposits and replenishes protection for the cooling system, water pump, and heater core.',
 	'intake carbon clean': 'Direct injection diesel engines accumulate carbon deposits on intake valves since fuel is not sprayed over them. Carbon buildup restricts airflow, reducing power and efficiency. Walnut blasting or chemical cleaning restores performance.',
+	'vehicle check': 'BMW CBS scheduled inspection (typically every 2nd oil service). A comprehensive inspection covering braking systems, vehicle diagnostics, and technical components. The exact interval is determined by the car\'s CBS computer based on driving style and conditions.',
 	'fuel system cleanse': 'A diesel fuel additive cleans injectors, the fuel pump, and combustion chambers. Best used before an oil change so any loosened deposits are captured by the oil filter being replaced.',
 };
 
@@ -235,6 +238,20 @@ export function computeRecMilestones(events: CarEvent[]): ServiceMilestone[] {
 	const recMilestones = computeIntervalMilestones(SERVICE_INTERVALS, events, 'rec');
 
 	const mfrMilestones = computeMfrMilestones(events);
+
+	const mfrTasksByKm = new Map<number, Set<string>>();
+	for (const ms of mfrMilestones) {
+		if (!mfrTasksByKm.has(ms.km)) mfrTasksByKm.set(ms.km, new Set());
+		for (const t of ms.tasks) mfrTasksByKm.get(ms.km)!.add(t);
+	}
+
+	for (const ms of recMilestones) {
+		const mfrTasks = mfrTasksByKm.get(ms.km);
+		if (mfrTasks) {
+			ms.tasks = ms.tasks.filter((t) => !mfrTasks.has(t));
+		}
+	}
+
 	const oilKms = mfrMilestones
 		.filter((ms) => ms.tasks.includes('engine oil'))
 		.map((ms) => ms.km);
@@ -244,15 +261,19 @@ export function computeRecMilestones(events: CarEvent[]): ServiceMilestone[] {
 		if (cleanseKm > 0 && cleanseKm <= MAX_SERVICE_KM) {
 			const existing = recMilestones.find((ms) => ms.km === cleanseKm);
 			if (existing) {
-				existing.tasks.push('fuel system cleanse');
-				existing.tasks.sort();
+				if (!existing.tasks.includes('fuel system cleanse')) {
+					existing.tasks.push('fuel system cleanse');
+					existing.tasks.sort();
+				}
 			} else {
 				recMilestones.push({ km: cleanseKm, tasks: ['fuel system cleanse'], kind: 'rec' });
 			}
 		}
 	}
 
-	return recMilestones.sort((a, b) => a.km - b.km);
+	return recMilestones
+		.filter((ms) => ms.tasks.length > 0)
+		.sort((a, b) => a.km - b.km);
 }
 
 export function milestoneId(ms: ServiceMilestone): string {
