@@ -132,6 +132,86 @@ export function buildEventString(tasks: string[]): string {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+import type { ServiceMilestone } from './types';
+
+interface MfrInterval {
+	task: string;
+	km: number;
+}
+
+const MFR_INTERVALS: MfrInterval[] = [
+	{ task: 'engine oil', km: 30000 },
+	{ task: 'micro filter', km: 30000 },
+	{ task: 'air cleaner element', km: 60000 },
+	{ task: 'fuel filter', km: 60000 },
+	{ task: 'front brake pads', km: 50000 },
+	{ task: 'rear brake pads', km: 60000 },
+	{ task: 'ZF8 gearbox fluid', km: 100000 },
+	{ task: 'xDrive transfer case fluid', km: 80000 },
+	{ task: 'differential fluids', km: 80000 },
+	{ task: 'timing chain', km: 200000 },
+	{ task: 'coolant flush', km: 120000 },
+	{ task: 'intake carbon clean', km: 120000 },
+];
+
+const MAX_MFR_KM = 300000;
+
+export function computeMfrMilestones(events: CarEvent[]): ServiceMilestone[] {
+	const completedByTask = new Map<string, number[]>();
+	for (const evt of events) {
+		if (!evt.completed || evt.km === null) continue;
+		const tasks = evt.tasks ?? [evt.event];
+		for (const t of tasks) {
+			const key = t.toLowerCase().trim();
+			if (!completedByTask.has(key)) completedByTask.set(key, []);
+			completedByTask.get(key)!.push(evt.km);
+		}
+	}
+
+	const milestoneMap = new Map<number, string[]>();
+
+	for (const interval of MFR_INTERVALS) {
+		const doneKms = (completedByTask.get(interval.task) ?? []).sort((a, b) => a - b);
+
+		let nextDueKm = interval.km;
+		let doneIdx = 0;
+
+		while (nextDueKm <= MAX_MFR_KM) {
+			while (doneIdx < doneKms.length && doneKms[doneIdx] < nextDueKm) {
+				nextDueKm = doneKms[doneIdx] + interval.km;
+				doneIdx++;
+			}
+			if (nextDueKm > MAX_MFR_KM) break;
+
+			if (doneIdx < doneKms.length && doneKms[doneIdx] === nextDueKm) {
+				nextDueKm = doneKms[doneIdx] + interval.km;
+				doneIdx++;
+				continue;
+			}
+
+			if (!milestoneMap.has(nextDueKm)) milestoneMap.set(nextDueKm, []);
+			milestoneMap.get(nextDueKm)!.push(interval.task);
+			nextDueKm += interval.km;
+		}
+	}
+
+	const oilMilestoneKms = [...milestoneMap.entries()]
+		.filter(([, tasks]) => tasks.includes('engine oil'))
+		.map(([km]) => km);
+
+	for (const oilKm of oilMilestoneKms) {
+		const cleanseKm = oilKm - 1000;
+		if (cleanseKm > 0 && cleanseKm <= MAX_MFR_KM) {
+			if (!milestoneMap.has(cleanseKm)) milestoneMap.set(cleanseKm, []);
+			milestoneMap.get(cleanseKm)!.push('fuel system cleanse');
+		}
+	}
+
+	return [...milestoneMap.entries()]
+		.sort(([a], [b]) => a - b)
+		.map(([km, tasks]) => ({ km, tasks: tasks.sort() }));
+}
+
 export type CompletionQuality = 'green' | 'amber' | 'red';
 
 export function completionQuality(evt: CarEvent): CompletionQuality {

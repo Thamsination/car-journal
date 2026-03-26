@@ -4,16 +4,15 @@
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent } from '$lib/stores';
-	import { loadEvents, loadServiceSchedule } from '$lib/github';
-	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality } from '$lib/utils';
-	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
+	import { loadEvents } from '$lib/github';
+	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones } from '$lib/utils';
+	import type { CarEvent, DerivedStatus } from '$lib/types';
 
 	let loading = $state(true);
 	let loadError = $state('');
 	let searchQuery = $state('');
 	let anchorEl: HTMLElement | null = null;
 	let focusId = $state<string | null>(null);
-	let milestones = $state<ServiceMilestone[]>([]);
 	let showMilestones = $state(true);
 
 	$effect(() => {
@@ -65,11 +64,9 @@
 			return;
 		}
 		try {
-			const [, loadedMilestones] = await Promise.all([
-				$events.length === 0 ? loadEvents().then((e) => ($events = e)) : Promise.resolve(),
-				loadServiceSchedule()
-			]);
-			milestones = loadedMilestones;
+			if ($events.length === 0) {
+				$events = await loadEvents();
+			}
 		} catch (e: unknown) {
 			loadError = e instanceof Error ? e.message : 'Failed to load';
 		} finally {
@@ -91,6 +88,8 @@
 		km: number;
 		sortDate: string;
 	}
+
+	const milestones = $derived(computeMfrMilestones($events));
 
 	const PX_PER_KM = 0.004;
 	const MIN_GAP = 12;
