@@ -1,4 +1,4 @@
-export type DerivedStatus = 'completed' | 'today' | 'scheduled' | 'delayed' | 'planned' | 'backlog';
+export type DerivedStatus = 'completed' | 'scheduled' | 'overdue';
 
 export type EventCategory = 'purchase' | 'warranty' | 'replacement' | 'official-service' | 'other-service' | 'inspection';
 

@@ -47,12 +47,6 @@ function sortByDateDesc(a: CarEvent, b: CarEvent): number {
 	return bKm - aKm;
 }
 
-export const scheduleEvents = derived([events, statusFilter], ([$events, $filter]) => {
-	const nonCompleted = $events.filter((e) => !e.completed).sort(sortByKmAsc);
-	if ($filter === 'all') return nonCompleted;
-	return nonCompleted.filter((e) => deriveStatus(e) === $filter);
-});
-
 export const completedEvents = derived(events, ($events) => {
 	return $events.filter((e) => e.completed).sort(sortByDateDesc);
 });
@@ -141,6 +135,12 @@ export const latestOdometer = derived(
 		return { km: 0, approximate: false, source: 'none' as const };
 	}
 );
+
+export const scheduleEvents = derived([events, statusFilter, latestOdometer], ([$events, $filter, $odo]) => {
+	const nonCompleted = $events.filter((e) => !e.completed).sort(sortByKmAsc);
+	if ($filter === 'all') return nonCompleted;
+	return nonCompleted.filter((e) => deriveStatus(e, $odo.km) === $filter);
+});
 
 export const nextScheduledEvent = derived(events, ($events) => {
 	const upcoming = $events

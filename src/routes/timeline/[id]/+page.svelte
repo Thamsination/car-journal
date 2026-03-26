@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { events } from '$lib/stores';
+	import { events, latestOdometer } from '$lib/stores';
 	import { saveEvents, loadEvents, uploadReceipt, deleteReceipt, receiptUrl } from '$lib/github';
 	import { formatCost, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, allCategories, getEventTasks, buildEventString } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
@@ -444,7 +444,7 @@
 		</form>
 	{:else}
 		{@const cat = eventCategory(event.event, event.category)}
-		{@const status = deriveStatus(event)}
+		{@const status = deriveStatus(event, $latestOdometer.km)}
 		<div class="detail-card">
 			<div class="detail-row">
 				<span class="detail-label">Category</span>

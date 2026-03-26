@@ -42,21 +42,20 @@
 	}
 
 	function smartStatusText(evt: CarEvent, status: DerivedStatus, odoKm: number): string {
-		if (status === 'today') return 'Today';
+		if (status === 'overdue' && evt.km !== null && odoKm > 0) {
+			const over = odoKm - evt.km;
+			if (over > 0) return `Overdue ${over.toLocaleString()} km`;
+			return 'Overdue';
+		}
+		if (status === 'overdue') return 'Overdue';
 		if (status === 'scheduled' && evt.date) {
 			const today = new Date(formatDateISO(new Date()) + 'T00:00:00');
 			const target = new Date(evt.date + 'T00:00:00');
 			const days = Math.round((target.getTime() - today.getTime()) / 86400000);
+			if (days === 0) return 'Today';
 			return days === 1 ? 'In 1 day' : `In ${days} days`;
 		}
-		if (status === 'delayed' && evt.km !== null && odoKm > 0) {
-			const overdue = odoKm - evt.km;
-			if (overdue > 0) return `Overdue ${overdue.toLocaleString()} km`;
-		}
-		if (status === 'planned') return 'Planned';
-		if (status === 'backlog') return 'Backlog';
-		if (status === 'delayed') return 'Delayed';
-		return '';
+		return 'Scheduled';
 	}
 </script>
 
@@ -101,7 +100,7 @@
 		<!-- 3. Next Scheduled (single card, schedule-style) -->
 		{#if $nextScheduledEvent}
 			{@const nse = $nextScheduledEvent}
-			{@const nseStatus = deriveStatus(nse)}
+			{@const nseStatus = deriveStatus(nse, $latestOdometer.km)}
 			{@const nseText = smartStatusText(nse, nseStatus, $latestOdometer.km)}
 			<section class="section">
 				<h3 class="section-title">Next Scheduled</h3>
@@ -157,7 +156,7 @@
 				<h3 class="section-title">Upcoming Services — {$nextBatchEvents[0].km?.toLocaleString()} km</h3>
 				<div class="card-list">
 					{#each $nextBatchEvents as evt}
-						{@const evtStatus = deriveStatus(evt)}
+						{@const evtStatus = deriveStatus(evt, $latestOdometer.km)}
 						{@const evtText = smartStatusText(evt, evtStatus, $latestOdometer.km)}
 						<a href="{base}/timeline/{evt.id}" class="event-card">
 							<div class="event-header">

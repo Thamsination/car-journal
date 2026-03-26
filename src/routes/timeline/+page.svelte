@@ -32,31 +32,27 @@
 
 	function smartStatusText(evt: CarEvent, status: DerivedStatus, odoKm: number): string {
 		if (status === 'completed') return '✓';
-		if (status === 'today') return 'Today';
+		if (status === 'overdue' && evt.km !== null && odoKm > 0) {
+			const over = odoKm - evt.km;
+			if (over > 0) return `Overdue ${over.toLocaleString()} km`;
+			return 'Overdue';
+		}
+		if (status === 'overdue') return 'Overdue';
 		if (status === 'scheduled' && evt.date) {
 			const today = new Date(formatDateISO(new Date()) + 'T00:00:00');
 			const target = new Date(evt.date + 'T00:00:00');
 			const days = Math.round((target.getTime() - today.getTime()) / 86400000);
+			if (days === 0) return 'Today';
 			return days === 1 ? 'In 1 day' : `In ${days} days`;
 		}
-		if (status === 'delayed' && evt.km !== null && odoKm > 0) {
-			const overdue = odoKm - evt.km;
-			if (overdue > 0) return `Overdue ${overdue.toLocaleString()} km`;
-		}
-		if (status === 'planned') return 'Planned';
-		if (status === 'backlog') return 'Backlog';
-		if (status === 'delayed') return 'Delayed';
-		return '';
+		return 'Scheduled';
 	}
 
 	const statuses: { value: string; label: string }[] = [
 		{ value: 'all', label: 'All' },
 		{ value: 'completed', label: 'Completed' },
-		{ value: 'today', label: 'Today' },
 		{ value: 'scheduled', label: 'Scheduled' },
-		{ value: 'delayed', label: 'Delayed' },
-		{ value: 'planned', label: 'Planned' },
-		{ value: 'backlog', label: 'Backlog' }
+		{ value: 'overdue', label: 'Overdue' }
 	];
 
 	onMount(async () => {
@@ -110,7 +106,8 @@
 		}
 
 		if ($statusFilter !== 'all') {
-			all = all.filter((e) => deriveStatus(e) === $statusFilter);
+			const odoKm = $latestOdometer.km;
+			all = all.filter((e) => deriveStatus(e, odoKm) === $statusFilter);
 		}
 
 		all.sort((a, b) => {
@@ -249,26 +246,31 @@
 							{/if}
 						</div>
 					</div>
-			{:else if entry.kind === 'milestone' && entry.milestone}
-				{@const ms = entry.milestone}
-				<div class="tl-row" style="margin-top: {gap}px">
-					<div class="tl-ruler">
-						<div class="ruler-line ruler-line-ms"></div>
-						<div class="ruler-km ms-km">{ms.km.toLocaleString()}</div>
-						<div class="ruler-dot ms-dot"></div>
-						<div class="ruler-line ruler-line-ms"></div>
-					</div>
-					<a
-						href="{base}/timeline/service?kind={ms.kind}&km={ms.km}"
-						class="ms-card ms-card-{ms.kind}"
-					>
-						<span class="ms-badge ms-badge-{ms.kind}">{ms.kind === 'mfr' ? 'MFR' : 'REC'}</span>
-						<span class="ms-tasks">{ms.tasks.join(', ')}</span>
-					</a>
+		{:else if entry.kind === 'milestone' && entry.milestone}
+			{@const ms = entry.milestone}
+			{@const msOverdue = $latestOdometer.km > 0 && ms.km < $latestOdometer.km}
+			<div class="tl-row" style="margin-top: {gap}px">
+				<div class="tl-ruler">
+					<div class="ruler-line ruler-line-ms"></div>
+					<div class="ruler-km ms-km">{ms.km.toLocaleString()}</div>
+					<div class="ruler-dot ms-dot" class:ms-dot-overdue={msOverdue}></div>
+					<div class="ruler-line ruler-line-ms"></div>
 				</div>
+				<a
+					href="{base}/timeline/service?kind={ms.kind}&km={ms.km}"
+					class="ms-card ms-card-{ms.kind}"
+					class:ms-card-overdue={msOverdue}
+				>
+					<span class="ms-badge ms-badge-{ms.kind}" class:ms-badge-overdue={msOverdue}>{ms.kind === 'mfr' ? 'MFR' : 'REC'}</span>
+					<span class="ms-tasks" class:ms-tasks-overdue={msOverdue}>{ms.tasks.join(', ')}</span>
+					{#if msOverdue}
+						<span class="ms-overdue-label">Overdue {($latestOdometer.km - ms.km).toLocaleString()} km</span>
+					{/if}
+				</a>
+			</div>
 				{:else if entry.evt}
 					{@const evt = entry.evt}
-					{@const status = deriveStatus(evt)}
+					{@const status = deriveStatus(evt, $latestOdometer.km)}
 					{@const isNext = evt.id === nextId}
 					{@const isFocus = focusId ? evt.id === focusId : false}
 					<div
@@ -720,6 +722,35 @@
 		font-size: 12px;
 		color: #8e8e93;
 		line-height: 1.3;
+		flex: 1;
+	}
+
+	.ms-card-overdue {
+		border-color: #ff3b30;
+		border-style: solid;
+	}
+
+	.ms-dot-overdue {
+		background: #ff3b30 !important;
+		border-color: #ff3b30 !important;
+		border-style: solid !important;
+	}
+
+	.ms-badge-overdue {
+		color: #ff3b30 !important;
+		border-color: #ff3b30 !important;
+	}
+
+	.ms-tasks-overdue {
+		color: #ff3b30;
+	}
+
+	.ms-overdue-label {
+		font-size: 10px;
+		font-weight: 600;
+		color: #ff3b30;
+		white-space: nowrap;
+		flex-shrink: 0;
 	}
 
 	.loading, .empty-state, .error-state {

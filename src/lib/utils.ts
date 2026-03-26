@@ -34,32 +34,24 @@ function todayISO(): string {
 	return formatDateISO(new Date());
 }
 
-export function deriveStatus(evt: CarEvent): DerivedStatus {
-	const today = todayISO();
+export function deriveStatus(evt: CarEvent, currentOdometer = 0): DerivedStatus {
 	if (evt.completed) return 'completed';
-	if (evt.date === today) return 'today';
-	if (evt.date && evt.date > today) return 'scheduled';
-	if (evt.date && evt.date < today) return 'delayed';
-	if (evt.km !== null) return 'planned';
-	return 'backlog';
+	const today = todayISO();
+	if (evt.km !== null && currentOdometer > 0 && currentOdometer > evt.km) return 'overdue';
+	if (evt.date && evt.date < today) return 'overdue';
+	return 'scheduled';
 }
 
 const statusLabels: Record<DerivedStatus, string> = {
 	completed: 'Completed',
-	today: 'Today',
 	scheduled: 'Scheduled',
-	delayed: 'Delayed',
-	planned: 'Planned',
-	backlog: 'Backlog'
+	overdue: 'Overdue'
 };
 
 const statusColors: Record<DerivedStatus, string> = {
 	completed: '#34c759',
-	today: '#ff9500',
 	scheduled: '#007aff',
-	delayed: '#ff3b30',
-	planned: '#8e8e93',
-	backlog: '#636366'
+	overdue: '#ff3b30'
 };
 
 export function statusLabel(status: DerivedStatus): string {
