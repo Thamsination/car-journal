@@ -168,48 +168,146 @@ export const SERVICE_NOTES: Record<string, string> = {
 	'fuel system cleanse': 'A diesel fuel additive cleans injectors, the fuel pump, and combustion chambers. Best used before an oil change so any loosened deposits are captured by the oil filter being replaced.',
 };
 
-function computeIntervalMilestones(
-	intervals: ServiceInterval[],
-	events: CarEvent[],
-	kind: MilestoneKind
-): ServiceMilestone[] {
-	const completedByTask = new Map<string, number[]>();
+const COVER_TOLERANCE_KM = 1000;
+
+function completedByTaskMap(events: CarEvent[]): Map<string, number[]> {
+	const map = new Map<string, number[]>();
 	for (const evt of events) {
 		if (!evt.completed || evt.km === null) continue;
 		const tasks = evt.tasks ?? [evt.event];
 		for (const t of tasks) {
 			const key = t.toLowerCase().trim();
-			if (!completedByTask.has(key)) completedByTask.set(key, []);
-			completedByTask.get(key)!.push(evt.km);
+			if (!map.has(key)) map.set(key, []);
+			map.get(key)!.push(evt.km);
+		}
+	}
+	for (const [, kms] of map) kms.sort((a, b) => a - b);
+	return map;
+}
+
+interface RollingMilestone {
+	km: number;
+	task: string;
+	covered: boolean;
+}
+
+function buildRollingChain(
+	task: string,
+	intervalKm: number,
+	doneKms: number[]
+): RollingMilestone[] {
+	const milestones: RollingMilestone[] = [];
+	let nextDueKm = intervalKm;
+
+	for (const dkm of doneKms) {
+		while (nextDueKm <= MAX_SERVICE_KM && nextDueKm + COVER_TOLERANCE_KM < dkm) {
+			milestones.push({ km: nextDueKm, task, covered: false });
+			nextDueKm += intervalKm;
+		}
+		if (nextDueKm <= MAX_SERVICE_KM && dkm <= nextDueKm + COVER_TOLERANCE_KM) {
+			milestones.push({ km: dkm, task, covered: true });
+			nextDueKm = dkm + intervalKm;
 		}
 	}
 
-	const milestoneMap = new Map<number, string[]>();
+	while (nextDueKm <= MAX_SERVICE_KM) {
+		milestones.push({ km: nextDueKm, task, covered: false });
+		nextDueKm += intervalKm;
+	}
+
+	return milestones;
+}
+
+function computeIntervalMilestones(
+	intervals: ServiceInterval[],
+	events: CarEvent[],
+	kind: MilestoneKind
+): ServiceMilestone[] {
+	const completed = completedByTaskMap(events);
 	const filtered = intervals.filter((i) => i.kind === kind);
 
+	const allRolling: RollingMilestone[] = [];
 	for (const interval of filtered) {
 		const matchKey = interval.task.replace('check ', '');
-		const doneKms = (
-			completedByTask.get(interval.task) ??
-			completedByTask.get(matchKey) ??
-			[]
-		).sort((a, b) => a - b);
+		const doneKms = completed.get(interval.task) ?? completed.get(matchKey) ?? [];
+		allRolling.push(...buildRollingChain(interval.task, interval.km, doneKms));
+	}
 
-		const lastDoneKm = doneKms.length > 0 ? doneKms[doneKms.length - 1] : 0;
-		let nextDueKm = lastDoneKm > 0
-			? lastDoneKm + interval.km
-			: interval.km;
-
-		while (nextDueKm <= MAX_SERVICE_KM) {
-			if (!milestoneMap.has(nextDueKm)) milestoneMap.set(nextDueKm, []);
-			milestoneMap.get(nextDueKm)!.push(interval.task);
-			nextDueKm += interval.km;
-		}
+	const milestoneMap = new Map<number, { tasks: string[]; coveredTasks: Set<string> }>();
+	for (const rm of allRolling) {
+		if (!milestoneMap.has(rm.km)) milestoneMap.set(rm.km, { tasks: [], coveredTasks: new Set() });
+		const entry = milestoneMap.get(rm.km)!;
+		entry.tasks.push(rm.task);
+		if (rm.covered) entry.coveredTasks.add(rm.task);
 	}
 
 	return [...milestoneMap.entries()]
 		.sort(([a], [b]) => a - b)
-		.map(([km, tasks]) => ({ km, tasks: tasks.sort(), kind }));
+		.map(([km, { tasks }]) => ({ km, tasks: tasks.sort(), kind }));
+}
+
+export type TaskStatus = 'covered' | 'amber' | 'red' | 'scheduled';
+
+export interface TaskWithStatus {
+	task: string;
+	status: TaskStatus;
+	overdueKm: number;
+}
+
+function findEarliestUncoveredKm(task: string, intervalKm: number, doneKms: number[]): number {
+	const chain = buildRollingChain(task, intervalKm, doneKms);
+	for (const m of chain) {
+		if (!m.covered) return m.km;
+	}
+	return Infinity;
+}
+
+export function milestoneTaskStatuses(
+	ms: ServiceMilestone,
+	events: CarEvent[],
+	currentOdometer: number
+): TaskWithStatus[] {
+	const completed = completedByTaskMap(events);
+
+	const allIntervals = SERVICE_INTERVALS;
+
+	return ms.tasks.map((task) => {
+		if (ms.km > currentOdometer) {
+			return { task, status: 'scheduled' as TaskStatus, overdueKm: 0 };
+		}
+
+		const matchKey = task.replace('check ', '');
+		const doneKms = completed.get(task) ?? completed.get(matchKey) ?? [];
+
+		const interval = allIntervals.find((i) => i.task === task);
+		if (!interval) {
+			return { task, status: 'covered' as TaskStatus, overdueKm: 0 };
+		}
+
+		const chain = buildRollingChain(task, interval.km, doneKms);
+		const thisEntry = chain.find((m) => m.km === ms.km);
+		if (thisEntry?.covered) {
+			return { task, status: 'covered' as TaskStatus, overdueKm: 0 };
+		}
+
+		const earliestUncovered = findEarliestUncoveredKm(task, interval.km, doneKms);
+		if (earliestUncovered > currentOdometer) {
+			return { task, status: 'scheduled' as TaskStatus, overdueKm: 0 };
+		}
+
+		const overdueKm = currentOdometer - earliestUncovered;
+		if (overdueKm <= 10000) {
+			return { task, status: 'amber' as TaskStatus, overdueKm };
+		}
+		return { task, status: 'red' as TaskStatus, overdueKm };
+	});
+}
+
+export function milestoneCardStatus(taskStatuses: TaskWithStatus[]): TaskStatus {
+	if (taskStatuses.some((t) => t.status === 'red')) return 'red';
+	if (taskStatuses.some((t) => t.status === 'amber')) return 'amber';
+	if (taskStatuses.some((t) => t.status === 'scheduled')) return 'scheduled';
+	return 'covered';
 }
 
 export function computeMfrMilestones(events: CarEvent[]): ServiceMilestone[] {
@@ -218,7 +316,6 @@ export function computeMfrMilestones(events: CarEvent[]): ServiceMilestone[] {
 
 export function computeRecMilestones(events: CarEvent[]): ServiceMilestone[] {
 	const recMilestones = computeIntervalMilestones(SERVICE_INTERVALS, events, 'rec');
-
 	const mfrMilestones = computeMfrMilestones(events);
 
 	const mfrTasksByKm = new Map<number, Set<string>>();
@@ -234,11 +331,15 @@ export function computeRecMilestones(events: CarEvent[]): ServiceMilestone[] {
 		}
 	}
 
-	const oilKms = mfrMilestones
+	const mfrOilKms = mfrMilestones
 		.filter((ms) => ms.tasks.includes('engine oil'))
 		.map((ms) => ms.km);
+	const recOilKms = recMilestones
+		.filter((ms) => ms.tasks.includes('engine oil'))
+		.map((ms) => ms.km);
+	const allOilKms = [...mfrOilKms, ...recOilKms];
 
-	for (const oilKm of oilKms) {
+	for (const oilKm of allOilKms) {
 		const cleanseKm = oilKm - 1000;
 		if (cleanseKm > 0 && cleanseKm <= MAX_SERVICE_KM) {
 			const existing = recMilestones.find((ms) => ms.km === cleanseKm);

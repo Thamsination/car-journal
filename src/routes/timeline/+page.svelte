@@ -5,7 +5,8 @@
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent } from '$lib/stores';
 	import { loadEvents } from '$lib/github';
-	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId } from '$lib/utils';
+	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus } from '$lib/utils';
+	import type { TaskWithStatus } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
 
 	let loading = $state(true);
@@ -248,23 +249,33 @@
 					</div>
 		{:else if entry.kind === 'milestone' && entry.milestone}
 			{@const ms = entry.milestone}
-			{@const msOverdue = $latestOdometer.km > 0 && ms.km < $latestOdometer.km}
+			{@const taskStats = milestoneTaskStatuses(ms, $events, $latestOdometer.km)}
+			{@const cardStatus = milestoneCardStatus(taskStats)}
 			<div class="tl-row" style="margin-top: {gap}px">
 				<div class="tl-ruler">
 					<div class="ruler-line ruler-line-ms"></div>
 					<div class="ruler-km ms-km">{ms.km.toLocaleString()}</div>
-					<div class="ruler-dot ms-dot" class:ms-dot-overdue={msOverdue}></div>
+					<div class="ruler-dot ms-dot" class:ms-dot-covered={cardStatus === 'covered'} class:ms-dot-amber={cardStatus === 'amber'} class:ms-dot-red={cardStatus === 'red'}></div>
 					<div class="ruler-line ruler-line-ms"></div>
 				</div>
 				<a
 					href="{base}/timeline/service?kind={ms.kind}&km={ms.km}"
 					class="ms-card ms-card-{ms.kind}"
-					class:ms-card-overdue={msOverdue}
+					class:ms-card-covered={cardStatus === 'covered'}
+					class:ms-card-amber={cardStatus === 'amber'}
+					class:ms-card-red={cardStatus === 'red'}
 				>
-					<span class="ms-badge ms-badge-{ms.kind}" class:ms-badge-overdue={msOverdue}>{ms.kind === 'mfr' ? 'MFR' : 'REC'}</span>
-					<span class="ms-tasks" class:ms-tasks-overdue={msOverdue}>{ms.tasks.join(', ')}</span>
-					{#if msOverdue}
-						<span class="ms-overdue-label">Overdue {($latestOdometer.km - ms.km).toLocaleString()} km</span>
+					<span class="ms-badge ms-badge-{ms.kind}">{ms.kind === 'mfr' ? 'MFR' : 'REC'}</span>
+					<span class="ms-task-list">
+						{#each taskStats as ts}
+							<span class="ms-task-item ms-task-{ts.status}">{ts.task}</span>
+						{/each}
+					</span>
+					{#if cardStatus === 'covered'}
+						<span class="ms-covered-mark">✓</span>
+					{:else if cardStatus === 'amber' || cardStatus === 'red'}
+						{@const worst = taskStats.reduce((a, b) => b.overdueKm > a.overdueKm ? b : a)}
+						<span class="ms-overdue-label ms-overdue-{cardStatus}">Overdue {worst.overdueKm.toLocaleString()} km</span>
 					{/if}
 				</a>
 			</div>
@@ -718,40 +729,72 @@
 		border: 1px solid #d97706;
 	}
 
-	.ms-tasks {
-		font-size: 12px;
-		color: #8e8e93;
-		line-height: 1.3;
+	.ms-task-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2px 6px;
 		flex: 1;
+		font-size: 12px;
+		line-height: 1.3;
 	}
 
-	.ms-card-overdue {
+	.ms-task-item {
+		white-space: nowrap;
+	}
+
+	.ms-task-covered { color: #8e8e93; }
+	.ms-task-scheduled { color: #8e8e93; }
+	.ms-task-amber { color: #f59e0b; }
+	.ms-task-red { color: #ff3b30; }
+
+	.ms-card-covered {
+		border-color: #8e8e93;
+		opacity: 0.6;
+	}
+
+	.ms-card-amber {
+		border-color: #f59e0b;
+		border-style: solid;
+	}
+
+	.ms-card-red {
 		border-color: #ff3b30;
 		border-style: solid;
 	}
 
-	.ms-dot-overdue {
+	.ms-dot-covered {
+		background: #8e8e93 !important;
+		border-style: solid !important;
+	}
+
+	.ms-dot-amber {
+		background: #f59e0b !important;
+		border-color: #f59e0b !important;
+		border-style: solid !important;
+	}
+
+	.ms-dot-red {
 		background: #ff3b30 !important;
 		border-color: #ff3b30 !important;
 		border-style: solid !important;
 	}
 
-	.ms-badge-overdue {
-		color: #ff3b30 !important;
-		border-color: #ff3b30 !important;
-	}
-
-	.ms-tasks-overdue {
-		color: #ff3b30;
+	.ms-covered-mark {
+		color: #8e8e93;
+		font-size: 14px;
+		font-weight: 700;
+		flex-shrink: 0;
 	}
 
 	.ms-overdue-label {
 		font-size: 10px;
 		font-weight: 600;
-		color: #ff3b30;
 		white-space: nowrap;
 		flex-shrink: 0;
 	}
+
+	.ms-overdue-amber { color: #f59e0b; }
+	.ms-overdue-red { color: #ff3b30; }
 
 	.loading, .empty-state, .error-state {
 		text-align: center;
