@@ -165,7 +165,7 @@ export const SERVICE_NOTES: Record<string, string> = {
 	'coolant flush': 'Engine coolant loses its anti-corrosion properties over time. A flush removes deposits and replenishes protection for the cooling system, water pump, and heater core.',
 	'intake carbon clean': 'Direct injection diesel engines accumulate carbon deposits on intake valves since fuel is not sprayed over them. Carbon buildup restricts airflow, reducing power and efficiency. Walnut blasting or chemical cleaning restores performance.',
 	'vehicle check': 'BMW CBS scheduled inspection (typically every 2nd oil service). A comprehensive inspection covering braking systems, vehicle diagnostics, and technical components. The exact interval is determined by the car\'s CBS computer based on driving style and conditions.',
-	'fuel system cleanse': 'A diesel fuel additive cleans injectors, the fuel pump, and combustion chambers. Best used before an oil change so any loosened deposits are captured by the oil filter being replaced.',
+	'fuel system cleanse (additive)': 'A diesel fuel additive cleans injectors, the fuel pump, and combustion chambers. Best used before an oil change so any loosened deposits are captured by the oil filter being replaced.',
 };
 
 const COVER_TOLERANCE_KM = 1000;
@@ -350,12 +350,12 @@ export function computeRecMilestones(events: CarEvent[]): ServiceMilestone[] {
 		if (cleanseKm > 0 && cleanseKm <= MAX_SERVICE_KM) {
 			const existing = recMilestones.find((ms) => ms.km === cleanseKm);
 			if (existing) {
-				if (!existing.tasks.includes('fuel system cleanse')) {
-					existing.tasks.push('fuel system cleanse');
+				if (!existing.tasks.includes('fuel system cleanse (additive)')) {
+					existing.tasks.push('fuel system cleanse (additive)');
 					existing.tasks.sort();
 				}
 			} else {
-				recMilestones.push({ km: cleanseKm, tasks: ['fuel system cleanse'], kind: 'rec' });
+				recMilestones.push({ km: cleanseKm, tasks: ['fuel system cleanse (additive)'], kind: 'rec' });
 			}
 		}
 	}
