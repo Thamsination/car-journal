@@ -170,6 +170,8 @@ export const SERVICE_NOTES: Record<string, string> = {
 
 const COVER_TOLERANCE_KM = 1000;
 
+const WEAR_BASED_TASKS = new Set(['check front brake pads', 'check rear brake pads']);
+
 function completedByTaskMap(events: CarEvent[]): Map<string, number[]> {
 	const map = new Map<string, number[]>();
 	for (const evt of events) {
@@ -288,6 +290,10 @@ export function milestoneTaskStatuses(
 		const thisEntry = chain.find((m) => m.km === ms.km);
 		if (thisEntry?.covered) {
 			return { task, status: 'covered' as TaskStatus, overdueKm: 0 };
+		}
+
+		if (WEAR_BASED_TASKS.has(task)) {
+			return { task, status: 'scheduled' as TaskStatus, overdueKm: 0 };
 		}
 
 		const earliestUncovered = findEarliestUncoveredKm(task, interval.km, doneKms);
