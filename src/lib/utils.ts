@@ -283,7 +283,11 @@ export function milestoneTaskStatuses(
 
 		const interval = allIntervals.find((i) => i.task === task);
 		if (!interval) {
-			return { task, status: 'covered' as TaskStatus, overdueKm: 0 };
+			const hasCoveringService = doneKms.some((dkm) => dkm <= ms.km + COVER_TOLERANCE_KM);
+			if (hasCoveringService) {
+				return { task, status: 'covered' as TaskStatus, overdueKm: 0 };
+			}
+			return { task, status: 'scheduled' as TaskStatus, overdueKm: 0 };
 		}
 
 		const chain = buildRollingChain(task, interval.km, doneKms);
