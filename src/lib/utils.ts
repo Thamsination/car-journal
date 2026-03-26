@@ -195,22 +195,12 @@ function computeIntervalMilestones(
 			[]
 		).sort((a, b) => a - b);
 
-		let nextDueKm = interval.km;
-		let doneIdx = 0;
+		const lastDoneKm = doneKms.length > 0 ? doneKms[doneKms.length - 1] : 0;
+		let nextDueKm = lastDoneKm > 0
+			? lastDoneKm + interval.km
+			: interval.km;
 
 		while (nextDueKm <= MAX_SERVICE_KM) {
-			while (doneIdx < doneKms.length && doneKms[doneIdx] < nextDueKm) {
-				nextDueKm = doneKms[doneIdx] + interval.km;
-				doneIdx++;
-			}
-			if (nextDueKm > MAX_SERVICE_KM) break;
-
-			if (doneIdx < doneKms.length && doneKms[doneIdx] === nextDueKm) {
-				nextDueKm = doneKms[doneIdx] + interval.km;
-				doneIdx++;
-				continue;
-			}
-
 			if (!milestoneMap.has(nextDueKm)) milestoneMap.set(nextDueKm, []);
 			milestoneMap.get(nextDueKm)!.push(interval.task);
 			nextDueKm += interval.km;
