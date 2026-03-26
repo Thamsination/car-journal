@@ -5,15 +5,16 @@
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent } from '$lib/stores';
 	import { loadEvents } from '$lib/github';
-	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones } from '$lib/utils';
-	import type { CarEvent, DerivedStatus } from '$lib/types';
+	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId } from '$lib/utils';
+	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
 
 	let loading = $state(true);
 	let loadError = $state('');
 	let searchQuery = $state('');
 	let anchorEl: HTMLElement | null = null;
 	let focusId = $state<string | null>(null);
-	let showMilestones = $state(true);
+	let showMfr = $state(true);
+	let showRec = $state(true);
 
 	$effect(() => {
 		const params = $page.url.searchParams;
@@ -89,7 +90,8 @@
 		sortDate: string;
 	}
 
-	const milestones = $derived(computeMfrMilestones($events));
+	const mfrMilestones = $derived(computeMfrMilestones($events));
+	const recMilestones = $derived(computeRecMilestones($events));
 
 	const PX_PER_KM = 0.004;
 	const MIN_GAP = 12;
@@ -132,8 +134,13 @@
 		for (const evt of sortedEvents) {
 			combined.push({ kind: 'event', evt, km: evt.km ?? 0, sortDate: evt.date || '' });
 		}
-		if (showMilestones) {
-			for (const ms of milestones) {
+		if (showMfr) {
+			for (const ms of mfrMilestones) {
+				combined.push({ kind: 'milestone', milestone: ms, km: ms.km, sortDate: '' });
+			}
+		}
+		if (showRec) {
+			for (const ms of recMilestones) {
 				combined.push({ kind: 'milestone', milestone: ms, km: ms.km, sortDate: '' });
 			}
 		}
@@ -191,10 +198,17 @@
 			{/each}
 			<button
 				class="filter-chip filter-chip-mfr"
-				class:active={showMilestones}
-				onclick={() => (showMilestones = !showMilestones)}
+				class:active={showMfr}
+				onclick={() => (showMfr = !showMfr)}
 			>
 				MFR
+			</button>
+			<button
+				class="filter-chip filter-chip-rec"
+				class:active={showRec}
+				onclick={() => (showRec = !showRec)}
+			>
+				REC
 			</button>
 		</div>
 	</div>
@@ -235,20 +249,23 @@
 							{/if}
 						</div>
 					</div>
-				{:else if entry.kind === 'milestone' && entry.milestone}
-					{@const ms = entry.milestone}
-					<div class="tl-row" style="margin-top: {gap}px">
-						<div class="tl-ruler">
-							<div class="ruler-line ruler-line-mfr"></div>
-							<div class="ruler-km mfr-km">{ms.km.toLocaleString()}</div>
-							<div class="ruler-dot mfr-dot"></div>
-							<div class="ruler-line ruler-line-mfr"></div>
-						</div>
-						<div class="mfr-card">
-							<span class="mfr-badge">MFR</span>
-							<span class="mfr-tasks">{ms.tasks.join(', ')}</span>
-						</div>
+			{:else if entry.kind === 'milestone' && entry.milestone}
+				{@const ms = entry.milestone}
+				<div class="tl-row" style="margin-top: {gap}px">
+					<div class="tl-ruler">
+						<div class="ruler-line ruler-line-ms"></div>
+						<div class="ruler-km ms-km">{ms.km.toLocaleString()}</div>
+						<div class="ruler-dot ms-dot"></div>
+						<div class="ruler-line ruler-line-ms"></div>
 					</div>
+					<a
+						href="{base}/timeline/service?kind={ms.kind}&km={ms.km}"
+						class="ms-card ms-card-{ms.kind}"
+					>
+						<span class="ms-badge ms-badge-{ms.kind}">{ms.kind === 'mfr' ? 'MFR' : 'REC'}</span>
+						<span class="ms-tasks">{ms.tasks.join(', ')}</span>
+					</a>
+				</div>
 				{:else if entry.evt}
 					{@const evt = entry.evt}
 					{@const status = deriveStatus(evt)}
@@ -630,25 +647,31 @@
 		border-style: solid;
 	}
 
-	.ruler-line-mfr {
+	.filter-chip-rec.active {
+		background: #92400e;
+		border-color: #92400e;
+		border-style: solid;
+	}
+
+	.ruler-line-ms {
 		background: #c7c7cc;
 		opacity: 0.5;
 	}
 
-	.mfr-km {
+	.ms-km {
 		color: #8e8e93 !important;
 		font-weight: 500 !important;
 		opacity: 0.7;
 	}
 
-	.mfr-dot {
+	.ms-dot {
 		width: 8px !important;
 		height: 8px !important;
 		background: #c7c7cc !important;
 		border: 1px dashed #8e8e93;
 	}
 
-	.mfr-card {
+	.ms-card {
 		flex: 1;
 		display: flex;
 		align-items: center;
@@ -658,22 +681,42 @@
 		border-radius: var(--radius-md);
 		padding: 8px 12px;
 		margin-left: 8px;
+		text-decoration: none;
+		color: inherit;
+		cursor: pointer;
+		transition: background 0.15s;
 	}
 
-	.mfr-badge {
+	.ms-card:hover, .ms-card:active {
+		background: rgba(142, 142, 147, 0.1);
+	}
+
+	.ms-card-rec {
+		border-color: #d97706;
+	}
+
+	.ms-badge {
 		font-size: 9px;
 		font-weight: 700;
-		color: #8e8e93;
-		background: var(--color-surface);
 		padding: 2px 6px;
 		border-radius: 6px;
-		border: 1px solid #c7c7cc;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
 		flex-shrink: 0;
+		background: var(--color-surface);
 	}
 
-	.mfr-tasks {
+	.ms-badge-mfr {
+		color: #8e8e93;
+		border: 1px solid #c7c7cc;
+	}
+
+	.ms-badge-rec {
+		color: #92400e;
+		border: 1px solid #d97706;
+	}
+
+	.ms-tasks {
 		font-size: 12px;
 		color: #8e8e93;
 		line-height: 1.3;

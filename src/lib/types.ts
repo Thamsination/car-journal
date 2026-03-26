@@ -52,11 +52,10 @@ export interface HealthConfig {
 	intervals: ServiceInterval[];
 }
 
+export type MilestoneKind = 'mfr' | 'rec';
+
 export interface ServiceMilestone {
 	km: number;
 	tasks: string[];
-}
-
-export interface ServiceSchedule {
-	milestones: ServiceMilestone[];
+	kind: MilestoneKind;
 }
