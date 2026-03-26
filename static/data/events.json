@@ -276,7 +276,7 @@
       "notes": "OEM, part nr - 84102447710",
       "invoiceNr": "250045702",
       "completed": true,
-      "category": "official-service",
+      "category": "replacement",
       "tasks": [
         "telematic battery"
       ],
