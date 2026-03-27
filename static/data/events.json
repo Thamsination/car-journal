@@ -180,7 +180,7 @@
       "id": "evt_002",
       "km": 162486,
       "date": "2025-04-14",
-      "event": "Engine oil, brake fluid, vehicle check",
+      "event": "Engine oil, brake fluid",
       "cost": 0,
       "currency": "DKK",
       "provider": "Kastrup autoservice",
@@ -190,8 +190,7 @@
       "category": "other-service",
       "tasks": [
         "engine oil",
-        "brake fluid",
-        "vehicle check"
+        "brake fluid"
       ]
     },
     {
