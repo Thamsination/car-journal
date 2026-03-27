@@ -15,11 +15,11 @@
     {
       "id": "winter-01",
       "season": "winter",
-      "brand": "SH Däck&Fälg",
-      "model": "Spiked",
+      "brand": "Goodyear",
+      "model": "Ultragrip 600",
       "frontSize": "225/55R17",
       "rearSize": null,
-      "frontDot": "",
+      "frontDot": "1419",
       "rearDot": null,
       "maxKm": 30000,
       "maxMonths": 48
