@@ -232,9 +232,9 @@
 						<span class="vehicle-detail">{$vehicleConfig.engine} · {$vehicleConfig.drivetrain}</span>
 					{/if}
 				</div>
-				<span class="health-badge" style="background: {overallColors[overallHealth]}">
-					{overallHealth === 'good' ? 'Good' : overallHealth === 'okay' ? 'Attention' : 'Overdue'}
-				</span>
+			<span class="health-badge" style="color: {overallColors[overallHealth]}">
+				{overallHealth === 'good' ? 'Good' : overallHealth === 'okay' ? 'Attention' : 'Overdue'}
+			</span>
 			</div>
 			{#if editingOdo}
 				<div class="odo-edit">
@@ -328,10 +328,10 @@
 				<a href="{base}/timeline/{nse.id}" class="event-card">
 					<div class="event-header">
 						<span
-							class="category-badge"
-							style="background: {categoryColor(eventCategory(nse.event, nse.category))}"
-						>
-							{categoryLabel(eventCategory(nse.event, nse.category))}
+						class="category-label"
+						style="color: {categoryColor(eventCategory(nse.event, nse.category))}"
+					>
+						{categoryLabel(eventCategory(nse.event, nse.category))}
 						</span>
 						<span class="status-text" style="color: {statusColor(nseStatus)}">
 							{nseText}
@@ -382,10 +382,10 @@
 						<a href="{base}/timeline/{evt.id}" class="event-card">
 							<div class="event-header">
 								<span
-									class="category-badge"
-									style="background: {categoryColor(eventCategory(evt.event, evt.category))}"
-								>
-									{categoryLabel(eventCategory(evt.event, evt.category))}
+								class="category-label"
+								style="color: {categoryColor(eventCategory(evt.event, evt.category))}"
+							>
+								{categoryLabel(eventCategory(evt.event, evt.category))}
 								</span>
 								<span class="status-text" style="color: {statusColor(evtStatus)}">
 									{evtText}
@@ -489,14 +489,12 @@
 	}
 
 	.health-badge {
-		font-size: 11px;
+		font-size: 12px;
 		font-weight: 700;
-		color: white;
-		padding: 3px 10px;
-		border-radius: 12px;
 		white-space: nowrap;
 		flex-shrink: 0;
-		margin-top: 2px;
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
 	}
 
 	.health-summary {
@@ -758,12 +756,9 @@
 		margin-bottom: 6px;
 	}
 
-	.category-badge {
+	.category-label {
 		font-size: 11px;
 		font-weight: 600;
-		color: white;
-		padding: 2px 8px;
-		border-radius: 10px;
 		text-transform: uppercase;
 		letter-spacing: 0.3px;
 	}

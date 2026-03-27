@@ -372,11 +372,11 @@
 							</span>
 							{#if status === 'completed'}
 								{@const quality = completionQuality(evt)}
-								<span class="status-badge status-badge-{quality}">
+								<span class="status-label" style="color: {quality === 'green' ? '#34c759' : quality === 'amber' ? '#ff9500' : '#ff3b30'}">
 									{quality === 'green' ? 'OK' : quality === 'amber' ? 'No Receipt' : 'Overdue'}
 								</span>
 							{:else if status === 'overdue'}
-								<span class="status-badge status-badge-red">
+								<span class="status-label" style="color: #ff3b30">
 									{smartStatusText(evt, status, $latestOdometer.km)}
 								</span>
 							{/if}
@@ -793,26 +793,13 @@
 		letter-spacing: 0.3px;
 	}
 
-	.status-badge {
-		font-size: 11px;
+	.status-label {
+		font-size: 12px;
 		font-weight: 700;
-		color: white;
-		padding: 3px 10px;
-		border-radius: 12px;
 		white-space: nowrap;
 		flex-shrink: 0;
-	}
-
-	.status-badge-green {
-		background: #34c759;
-	}
-
-	.status-badge-amber {
-		background: #ff9500;
-	}
-
-	.status-badge-red {
-		background: #ff3b30;
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
 	}
 
 	.tl-card-title {

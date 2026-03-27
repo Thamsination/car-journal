@@ -455,9 +455,9 @@
 						<span class="vehicle-detail">{$vehicleConfig.engine} · {$vehicleConfig.drivetrain}</span>
 					{/if}
 				</div>
-				<span class="health-badge" style="background: {overallColors[overallHealth]}">
-					{overallHealth === 'good' ? 'Good' : overallHealth === 'okay' ? 'Attention' : 'Overdue'}
-				</span>
+			<span class="health-badge" style="color: {overallColors[overallHealth]}">
+				{overallHealth === 'good' ? 'Good' : overallHealth === 'okay' ? 'Attention' : 'Overdue'}
+			</span>
 			</div>
 			{#if editingOdo}
 				<div class="odo-edit">
@@ -924,14 +924,12 @@
 	}
 
 	.health-badge {
-		font-size: 11px;
+		font-size: 12px;
 		font-weight: 700;
-		color: white;
-		padding: 3px 10px;
-		border-radius: 12px;
 		white-space: nowrap;
 		flex-shrink: 0;
-		margin-top: 2px;
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
 	}
 
 	.health-summary {
