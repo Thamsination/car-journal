@@ -318,23 +318,27 @@
 				</div>
 				<a
 					href="{base}/timeline/service?kind={ms.kind}&km={ms.km}"
-					class="ms-card ms-card-{ms.kind}"
+					class="ms-card"
 					class:ms-card-covered={cardStatus === 'covered'}
 					class:ms-card-amber={cardStatus === 'amber'}
 					class:ms-card-red={cardStatus === 'red'}
 				>
-					<span class="ms-badge ms-badge-{ms.kind}">{ms.kind === 'mfr' ? 'MFR' : 'REC'}</span>
-					<span class="ms-task-list">
+					<div class="ms-card-header">
+						<span class="ms-category-label">
+							{ms.kind === 'mfr' ? 'Manufacturer Service' : 'Recommended Service'}
+						</span>
+						{#if cardStatus === 'covered'}
+							<span class="ms-status-label" style="color: #34c759">OK</span>
+						{:else if cardStatus === 'amber' || cardStatus === 'red'}
+							{@const worst = taskStats.reduce((a, b) => b.overdueKm > a.overdueKm ? b : a)}
+							<span class="ms-status-label" style="color: {cardStatus === 'red' ? '#ff3b30' : '#ff9500'}">Overdue {worst.overdueKm.toLocaleString()} km</span>
+						{/if}
+					</div>
+					<div class="ms-task-list">
 						{#each taskStats as ts}
 							<span class="ms-task-item ms-task-{ts.status}">{ts.task}</span>
 						{/each}
-					</span>
-					{#if cardStatus === 'covered'}
-						<span class="ms-covered-mark">✓</span>
-					{:else if cardStatus === 'amber' || cardStatus === 'red'}
-						{@const worst = taskStats.reduce((a, b) => b.overdueKm > a.overdueKm ? b : a)}
-						<span class="ms-overdue-label ms-overdue-{cardStatus}">Overdue {worst.overdueKm.toLocaleString()} km</span>
-					{/if}
+					</div>
 				</a>
 			</div>
 			{:else if entry.evt}
@@ -899,80 +903,75 @@
 
 	.ms-card {
 		flex: 1;
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		background: transparent;
-		border: 1px dashed #c7c7cc;
+		display: block;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
 		border-radius: var(--radius-md);
-		padding: 8px 12px;
+		padding: 12px 14px;
 		margin-left: 8px;
 		text-decoration: none;
-		color: inherit;
+		color: var(--color-text);
 		cursor: pointer;
-		transition: background 0.15s;
+		transition: box-shadow 0.2s;
 	}
 
-	.ms-card:hover, .ms-card:active {
-		background: rgba(142, 142, 147, 0.1);
+	.ms-card:active {
+		box-shadow: var(--shadow-md);
 	}
 
-	.ms-card-rec {
-		border-color: #d97706;
+	.ms-card-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 4px;
 	}
 
-	.ms-badge {
-		font-size: 9px;
-		font-weight: 700;
-		padding: 2px 6px;
-		border-radius: 6px;
+	.ms-category-label {
+		font-size: 11px;
+		font-weight: 600;
+		color: var(--color-text-secondary);
 		text-transform: uppercase;
-		letter-spacing: 0.5px;
+		letter-spacing: 0.3px;
+	}
+
+	.ms-status-label {
+		font-size: 12px;
+		font-weight: 700;
+		white-space: nowrap;
 		flex-shrink: 0;
-		background: var(--color-surface);
-	}
-
-	.ms-badge-mfr {
-		color: #8e8e93;
-		border: 1px solid #c7c7cc;
-	}
-
-	.ms-badge-rec {
-		color: #92400e;
-		border: 1px solid #d97706;
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
 	}
 
 	.ms-task-list {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 2px 6px;
-		flex: 1;
-		font-size: 12px;
-		line-height: 1.3;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1.4;
+		text-transform: capitalize;
 	}
 
 	.ms-task-item {
 		white-space: nowrap;
 	}
 
-	.ms-task-covered { color: #8e8e93; }
-	.ms-task-scheduled { color: #8e8e93; }
+	.ms-task-covered { color: var(--color-text-secondary); }
+	.ms-task-scheduled { color: var(--color-text); }
 	.ms-task-amber { color: #f59e0b; }
 	.ms-task-red { color: #ff3b30; }
 
 	.ms-card-covered {
-		border-color: #8e8e93;
 		opacity: 0.6;
 	}
 
 	.ms-card-amber {
 		border-color: #f59e0b;
-		border-style: solid;
 	}
 
 	.ms-card-red {
 		border-color: #ff3b30;
-		border-style: solid;
 	}
 
 	.ms-dot-covered {
