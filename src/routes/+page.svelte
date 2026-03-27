@@ -223,13 +223,18 @@
 	{#if loading}
 		<div class="loading">Loading dashboard...</div>
 	{:else}
-		<!-- 1. Vehicle Info + Odometer -->
+		<!-- 1. Vehicle Info + Odometer + Health -->
 		<div class="hero-card">
-			<div class="vehicle-identity">
-				<h2 class="vehicle-name">{vehicleTitle($vehicleConfig)}</h2>
-				{#if $vehicleConfig}
-					<span class="vehicle-detail">{$vehicleConfig.engine} · {$vehicleConfig.drivetrain}</span>
-				{/if}
+			<div class="vehicle-header">
+				<div class="vehicle-identity">
+					<h2 class="vehicle-name">{vehicleTitle($vehicleConfig)}</h2>
+					{#if $vehicleConfig}
+						<span class="vehicle-detail">{$vehicleConfig.engine} · {$vehicleConfig.drivetrain}</span>
+					{/if}
+				</div>
+				<span class="health-badge" style="background: {overallColors[overallHealth]}">
+					{overallHealth === 'good' ? 'Good' : overallHealth === 'okay' ? 'Attention' : 'Overdue'}
+				</span>
 			</div>
 			{#if editingOdo}
 				<div class="odo-edit">
@@ -264,14 +269,7 @@
 			{:else}
 				<span class="odo-source">Tap to set km</span>
 			{/if}
-		</div>
-
-		<!-- 2. Health Summary -->
-		<div class="summary-card" style="border-color: {overallColors[overallHealth]}">
-			<div class="summary-icon" style="background: {overallColors[overallHealth]}">
-				{overallIcons[overallHealth]}
-			</div>
-			<p class="summary-text">{healthSummary}</p>
+			<p class="health-summary">{healthSummary}</p>
 		</div>
 
 		<!-- 3. Next Milestone -->
@@ -467,8 +465,15 @@
 		margin-bottom: 12px;
 	}
 
-	.vehicle-identity {
+	.vehicle-header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
 		margin-bottom: 12px;
+	}
+
+	.vehicle-identity {
+		text-align: left;
 	}
 
 	.vehicle-name {
@@ -480,6 +485,24 @@
 
 	.vehicle-detail {
 		font-size: 13px;
+		color: var(--color-text-secondary);
+	}
+
+	.health-badge {
+		font-size: 11px;
+		font-weight: 700;
+		color: white;
+		padding: 3px 10px;
+		border-radius: 12px;
+		white-space: nowrap;
+		flex-shrink: 0;
+		margin-top: 2px;
+	}
+
+	.health-summary {
+		margin-top: 10px;
+		font-size: 13px;
+		line-height: 1.4;
 		color: var(--color-text-secondary);
 	}
 
@@ -541,37 +564,6 @@
 	.odo-input::-webkit-outer-spin-button {
 		-webkit-appearance: none;
 		margin: 0;
-	}
-
-	/* Health summary */
-	.summary-card {
-		display: flex;
-		align-items: center;
-		gap: 14px;
-		padding: 16px;
-		background: var(--color-surface);
-		border: 2px solid;
-		border-radius: var(--radius-lg);
-		margin-bottom: 12px;
-	}
-
-	.summary-icon {
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: white;
-		font-size: 20px;
-		font-weight: 800;
-		flex-shrink: 0;
-	}
-
-	.summary-text {
-		font-size: 14px;
-		line-height: 1.4;
-		color: var(--color-text);
 	}
 
 	/* You are here card */
