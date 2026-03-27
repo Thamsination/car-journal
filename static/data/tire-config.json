@@ -7,10 +7,10 @@
       "model": "A610 100Y",
       "frontSize": "225/55R17",
       "rearSize": null,
-      "frontDot": "",
+      "frontDot": "1124",
       "rearDot": null,
-      "maxKm": 40000,
-      "maxMonths": 60
+      "maxKm": 30000,
+      "maxMonths": 48
     },
     {
       "id": "winter-01",
