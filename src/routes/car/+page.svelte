@@ -629,20 +629,20 @@
 											<input id="tire-model" type="text" bind:value={tireEditModel} placeholder="e.g. A610 100Y" />
 										</div>
 									</div>
+								<label class="toggle-row">
+									<input type="checkbox" bind:checked={tireEditStaggered} />
+									<span>Staggered (different rear size)</span>
+								</label>
+								<div class="edit-field">
+									<label for="tire-front-size">{tireEditStaggered ? 'Front size' : 'Size'}</label>
+									<input id="tire-front-size" type="text" bind:value={tireEditFrontSize} placeholder="e.g. 225/55R17" />
+								</div>
+								{#if tireEditStaggered}
 									<div class="edit-field">
-										<label for="tire-front-size">Front size</label>
-										<input id="tire-front-size" type="text" bind:value={tireEditFrontSize} placeholder="e.g. 225/55R17" />
+										<label for="tire-rear-size">Rear size</label>
+										<input id="tire-rear-size" type="text" bind:value={tireEditRearSize} placeholder="e.g. 255/45R17" />
 									</div>
-									<label class="toggle-row">
-										<input type="checkbox" bind:checked={tireEditStaggered} />
-										<span>Staggered (different rear size)</span>
-									</label>
-									{#if tireEditStaggered}
-										<div class="edit-field">
-											<label for="tire-rear-size">Rear size</label>
-											<input id="tire-rear-size" type="text" bind:value={tireEditRearSize} placeholder="e.g. 255/45R17" />
-										</div>
-									{/if}
+								{/if}
 									<div class="edit-field">
 										<label for="tire-season">Season</label>
 										<select id="tire-season" bind:value={tireEditSeason}>
