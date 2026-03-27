@@ -362,23 +362,6 @@
       "tasks": [
         "starter motor"
       ]
-    },
-    {
-      "id": "evt_swap_mn94w2d0",
-      "km": 187190,
-      "date": "2026-03-27",
-      "event": "Summer tires",
-      "cost": 0,
-      "currency": "DKK",
-      "provider": "",
-      "notes": "Profile: summer-01",
-      "invoiceNr": "",
-      "completed": true,
-      "category": "tire-swap",
-      "tasks": [
-        "summer tires"
-      ],
-      "kmEstimated": false
     }
   ]
 }
