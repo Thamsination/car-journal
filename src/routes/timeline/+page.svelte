@@ -366,22 +366,21 @@
 					<!-- svelte-ignore a11y_click_events_have_key_events -->
 					<div class="tl-card-wrapper" onclick={(e) => { if (e.target instanceof HTMLElement && e.target.closest('.tl-detail')) return; toggleExpand(evt.id); }}>
 						<div class="tl-card" class:tl-card-next={isNext} class:tl-card-expanded={isExpanded}>
-							<div class="tl-card-header">
-								<span
-									class="category-badge"
-									style="background: {categoryColor(eventCategory(evt.event, evt.category))}"
-								>
-									{categoryLabel(eventCategory(evt.event, evt.category))}
+						<div class="tl-card-header">
+							<span class="category-label">
+								{categoryLabel(eventCategory(evt.event, evt.category))}
+							</span>
+							{#if status === 'completed'}
+								{@const quality = completionQuality(evt)}
+								<span class="status-badge status-badge-{quality}">
+									{quality === 'green' ? 'OK' : quality === 'amber' ? 'No Receipt' : 'Overdue'}
 								</span>
-								{#if status === 'completed'}
-									{@const quality = completionQuality(evt)}
-									<span class="quality-mark quality-{quality}" title={quality === 'green' ? 'Fully documented' : quality === 'amber' ? 'Missing receipt' : 'Missing information'}>✓</span>
-								{:else}
-									<span class="status-text" style="color: {statusColor(status)}">
-										{smartStatusText(evt, status, $latestOdometer.km)}
-									</span>
-								{/if}
-							</div>
+							{:else if status === 'overdue'}
+								<span class="status-badge status-badge-red">
+									{smartStatusText(evt, status, $latestOdometer.km)}
+								</span>
+							{/if}
+						</div>
 							<h3 class="tl-card-title" class:tl-card-title-next={isNext}>{evt.event}</h3>
 							<div class="tl-card-meta">
 								{#if evt.date}
@@ -802,45 +801,33 @@
 		margin-bottom: 4px;
 	}
 
-	.category-badge {
-		font-size: 10px;
+	.category-label {
+		font-size: 11px;
 		font-weight: 600;
-		color: white;
-		padding: 2px 7px;
-		border-radius: 8px;
+		color: var(--color-text-secondary);
 		text-transform: uppercase;
 		letter-spacing: 0.3px;
 	}
 
-	.status-text {
-		font-size: 12px;
-		font-weight: 600;
-		white-space: nowrap;
-	}
-
-	.quality-mark {
-		font-size: 16px;
-		font-weight: 800;
-		width: 24px;
-		height: 24px;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	.status-badge {
+		font-size: 11px;
+		font-weight: 700;
 		color: white;
+		padding: 3px 10px;
+		border-radius: 12px;
+		white-space: nowrap;
 		flex-shrink: 0;
-		line-height: 1;
 	}
 
-	.quality-green {
+	.status-badge-green {
 		background: #34c759;
 	}
 
-	.quality-amber {
+	.status-badge-amber {
 		background: #ff9500;
 	}
 
-	.quality-red {
+	.status-badge-red {
 		background: #ff3b30;
 	}
 
