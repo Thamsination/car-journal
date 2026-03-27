@@ -189,10 +189,16 @@
 			const evtKm = evt.km ?? 0;
 			const matched: ServiceMilestone[] = [];
 			if (evt.completed && evtKm > 0) {
+				const evtTasks = new Set(
+					(evt.tasks && evt.tasks.length > 0 ? evt.tasks : [evt.event])
+						.map((t) => t.toLowerCase().trim())
+				);
 				for (const ms of allMilestones) {
 					const stats = milestoneTaskStatuses(ms, $events, odoKm);
 					const card = milestoneCardStatus(stats);
-					if (card === 'covered' && Math.abs(ms.km - evtKm) <= ATTACH_TOLERANCE_KM) {
+					if (card !== 'covered' || Math.abs(ms.km - evtKm) > ATTACH_TOLERANCE_KM) continue;
+					const hasOverlap = ms.tasks.some((t) => evtTasks.has(t.toLowerCase().trim()));
+					if (hasOverlap) {
 						matched.push(ms);
 						attachedMsIds.add(`${ms.kind}-${ms.km}`);
 					}
