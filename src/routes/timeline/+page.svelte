@@ -434,7 +434,6 @@
 											<span class="covered-ms-label">
 												{cms.kind === 'mfr' ? 'Manufacturer Service' : 'Recommended Service'} · {cms.km.toLocaleString()} km
 											</span>
-											<span class="covered-ms-check">✓</span>
 										</a>
 									{/each}
 								</div>
