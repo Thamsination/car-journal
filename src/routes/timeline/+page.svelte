@@ -904,19 +904,19 @@
 	.ms-card {
 		flex: 1;
 		display: block;
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
+		background: transparent;
+		border: 1px dashed #c7c7cc;
 		border-radius: var(--radius-md);
 		padding: 12px 14px;
 		margin-left: 8px;
 		text-decoration: none;
 		color: var(--color-text);
 		cursor: pointer;
-		transition: box-shadow 0.2s;
+		transition: background 0.15s;
 	}
 
-	.ms-card:active {
-		box-shadow: var(--shadow-md);
+	.ms-card:hover, .ms-card:active {
+		background: rgba(142, 142, 147, 0.1);
 	}
 
 	.ms-card-header {
@@ -963,15 +963,18 @@
 	.ms-task-red { color: #ff3b30; }
 
 	.ms-card-covered {
+		border-color: #8e8e93;
 		opacity: 0.6;
 	}
 
 	.ms-card-amber {
-		border-color: #f59e0b;
+		border-color: #c7c7cc;
+		border-style: solid;
 	}
 
 	.ms-card-red {
-		border-color: #ff3b30;
+		border-color: #c7c7cc;
+		border-style: solid;
 	}
 
 	.ms-dot-covered {
