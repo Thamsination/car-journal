@@ -24,8 +24,8 @@
       "taskMatches": [
         "air cleaner element"
       ],
-      "intervalKm": 60000,
-      "intervalMonths": 48
+      "intervalKm": 10000,
+      "intervalMonths": 12
     },
     {
       "id": "fuel-filter",
