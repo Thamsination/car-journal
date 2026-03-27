@@ -402,17 +402,7 @@
 										<p class="detail-text">{evt.notes}</p>
 									</div>
 								{/if}
-								{#if evt.tasks && evt.tasks.length > 0}
-									<div class="detail-section">
-										<span class="detail-label">Tasks</span>
-										<ul class="detail-tasks">
-											{#each evt.tasks as task}
-												<li>{capitalizeTask(task)}</li>
-											{/each}
-										</ul>
-									</div>
-								{/if}
-								{#if evt.invoiceNr}
+							{#if evt.invoiceNr}
 									<div class="detail-section">
 										<span class="detail-label">Invoice</span>
 										<span class="detail-value">{evt.invoiceNr}</span>
