@@ -624,7 +624,7 @@
 		gap: 2px;
 		padding: 10px 14px;
 		background: var(--color-surface);
-		border: 2px solid var(--color-success);
+		border: 2px solid var(--color-text);
 		border-radius: var(--radius-md);
 		margin-left: 8px;
 	}
@@ -632,7 +632,7 @@
 	.odo-label {
 		font-size: 14px;
 		font-weight: 700;
-		color: var(--color-success);
+		color: var(--color-text);
 	}
 
 	.odo-remaining {
