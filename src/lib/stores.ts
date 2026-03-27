@@ -1,5 +1,5 @@
 import { writable, derived } from 'svelte/store';
-import type { CarEvent, Part, DerivedStatus } from './types';
+import type { CarEvent, Part, DerivedStatus, ServiceInterval as HealthInterval } from './types';
 import { deriveStatus, eventCategory } from './utils';
 
 function persistedWritable<T>(key: string, initial: T) {
@@ -21,6 +21,7 @@ export const manualOdometer = persistedWritable<number | null>('manual_odometer'
 
 export const events = writable<CarEvent[]>([]);
 export const parts = writable<Part[]>([]);
+export const healthIntervals = writable<HealthInterval[]>([]);
 
 export const isLoading = writable(false);
 export const error = writable<string | null>(null);
@@ -159,3 +160,74 @@ export const nextBatchEvents = derived(
 		return remaining.filter((e) => e.km === lowestKm);
 	}
 );
+
+export type ComponentHealth = 'good' | 'warning' | 'overdue';
+
+const WARNING_THRESHOLD = 0.8;
+
+export const componentHealthMap = derived(
+	[healthIntervals, events, latestOdometer],
+	([$intervals, $events, $odo]): Map<string, ComponentHealth> => {
+		const map = new Map<string, ComponentHealth>();
+		const odoKm = $odo.km;
+		const now = Date.now();
+
+		for (const interval of $intervals) {
+			const lastEvent = findLastServiceForInterval($events, interval);
+			const lastKm = lastEvent?.km ?? null;
+			const lastDate = lastEvent?.date ?? '';
+
+			let health: ComponentHealth = 'good';
+			if (!lastEvent) {
+				health = 'overdue';
+			} else {
+				let kmOverdue = false;
+				let timeOverdue = false;
+				let kmWarning = false;
+				let timeWarning = false;
+
+				if (interval.intervalKm && lastKm !== null && odoKm > 0) {
+					const remaining = lastKm + interval.intervalKm - odoKm;
+					const usedPct = Math.min(1, Math.max(0, (odoKm - lastKm) / interval.intervalKm));
+					kmOverdue = remaining < 0;
+					kmWarning = usedPct >= WARNING_THRESHOLD && remaining >= 0;
+				}
+
+				if (interval.intervalMonths && lastDate) {
+					const lastMs = new Date(lastDate + 'T00:00:00').getTime();
+					const intervalMs = interval.intervalMonths * 30.44 * 86400000;
+					const nextDueMs = lastMs + intervalMs;
+					const remainingDays = Math.round((nextDueMs - now) / 86400000);
+					const usedTimePct = Math.min(1, Math.max(0, (now - lastMs) / intervalMs));
+					timeOverdue = remainingDays < 0;
+					timeWarning = usedTimePct >= WARNING_THRESHOLD && remainingDays >= 0;
+				}
+
+				if (kmOverdue || timeOverdue) health = 'overdue';
+				else if (kmWarning || timeWarning) health = 'warning';
+			}
+
+			for (const match of interval.taskMatches) {
+				map.set(match.toLowerCase(), health);
+			}
+		}
+		return map;
+	}
+);
+
+function findLastServiceForInterval(evts: CarEvent[], interval: HealthInterval): CarEvent | null {
+	const matches = evts.filter((e) => {
+		if (!e.completed) return false;
+		const tasks = e.tasks ?? [e.event];
+		return tasks.some((t) =>
+			interval.taskMatches.some((m) => t.toLowerCase().includes(m.toLowerCase()))
+		);
+	});
+	matches.sort((a, b) => {
+		const aKm = a.km ?? 0;
+		const bKm = b.km ?? 0;
+		if (aKm !== bKm) return bKm - aKm;
+		return (b.date || '').localeCompare(a.date || '');
+	});
+	return matches[0] ?? null;
+}

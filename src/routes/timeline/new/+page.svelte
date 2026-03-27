@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
-	import { events, latestOdometer } from '$lib/stores';
-	import { saveEvents, loadEvents } from '$lib/github';
-	import { generateId, formatDateISO, allCategories, eventCategory, getEventTasks, buildEventString, computeMfrMilestones, computeRecMilestones, milestoneTaskStatuses } from '$lib/utils';
-	import type { TaskStatus } from '$lib/utils';
+	import { events, latestOdometer, healthIntervals, componentHealthMap } from '$lib/stores';
+	import type { ComponentHealth } from '$lib/stores';
+	import { saveEvents, loadEvents, loadHealthConfig } from '$lib/github';
+	import { generateId, formatDateISO, allCategories, eventCategory, getEventTasks, buildEventString } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent, EventCategory } from '$lib/types';
 
@@ -38,28 +39,25 @@
 		}
 	});
 
+	onMount(async () => {
+		if ($healthIntervals.length === 0) {
+			try {
+				const config = await loadHealthConfig();
+				$healthIntervals = config.intervals;
+			} catch { /* health data optional here */ }
+		}
+	});
+
 	let selectedCategory = $state<EventCategory | ''>('');
 	let costInput = $state('');
 
-	const overdueTaskMap = $derived.by(() => {
-		const map = new Map<string, TaskStatus>();
-		const odoKm = $latestOdometer.km;
-		if (odoKm <= 0) return map;
-		const allMs = [...computeMfrMilestones($events), ...computeRecMilestones($events)];
-		for (const ms of allMs) {
-			if (ms.km > odoKm) continue;
-			const stats = milestoneTaskStatuses(ms, $events, odoKm);
-			for (const ts of stats) {
-				if (ts.status === 'amber' || ts.status === 'red') {
-					const existing = map.get(ts.task);
-					if (!existing || ts.status === 'red') {
-						map.set(ts.task, ts.status);
-					}
-				}
-			}
+	function taskHealth(task: string): ComponentHealth | undefined {
+		const key = task.toLowerCase().trim();
+		for (const [match, health] of $componentHealthMap) {
+			if (key.includes(match)) return health;
 		}
-		return map;
-	});
+		return undefined;
+	}
 
 	const SERVICE_CATEGORIES: EventCategory[] = ['official-service', 'other-service'];
 
@@ -77,22 +75,30 @@
 			}
 		}
 
-		for (const [task] of overdueTaskMap) {
-			tasks.add(task);
+		for (const [match, health] of $componentHealthMap) {
+			if (health === 'warning' || health === 'overdue') {
+				tasks.add(match);
+			}
 		}
 
-		const overdue = [...tasks].filter((t) => overdueTaskMap.has(t));
-		const normal = [...tasks].filter((t) => !overdueTaskMap.has(t));
+		const needsAttention = [...tasks].filter((t) => {
+			const h = taskHealth(t);
+			return h === 'warning' || h === 'overdue';
+		});
+		const rest = [...tasks].filter((t) => {
+			const h = taskHealth(t);
+			return h !== 'warning' && h !== 'overdue';
+		});
 
-		overdue.sort((a, b) => {
-			const sa = overdueTaskMap.get(a) === 'red' ? 0 : 1;
-			const sb = overdueTaskMap.get(b) === 'red' ? 0 : 1;
+		needsAttention.sort((a, b) => {
+			const sa = taskHealth(a) === 'overdue' ? 0 : 1;
+			const sb = taskHealth(b) === 'overdue' ? 0 : 1;
 			if (sa !== sb) return sa - sb;
 			return a.localeCompare(b, undefined, { sensitivity: 'base' });
 		});
-		normal.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+		rest.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 
-		return [...overdue, ...normal];
+		return [...needsAttention, ...rest];
 	});
 
 	const providers = $derived.by(() => {
@@ -187,13 +193,13 @@
 			{#if selectedCategory && taskSuggestions.length > 0}
 				<div class="task-chips">
 					{#each taskSuggestions as task}
-						{@const overdue = overdueTaskMap.get(task)}
+						{@const health = taskHealth(task)}
 						<button
 							type="button"
 							class="task-chip"
 							class:selected={selectedTasks.includes(task)}
-							class:chip-amber={overdue === 'amber' && !selectedTasks.includes(task)}
-							class:chip-red={overdue === 'red' && !selectedTasks.includes(task)}
+							class:chip-amber={health === 'warning' && !selectedTasks.includes(task)}
+							class:chip-red={health === 'overdue' && !selectedTasks.includes(task)}
 							onclick={() => toggleTask(task)}
 						>
 							{task}

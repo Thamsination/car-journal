@@ -2,14 +2,13 @@
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { token, events, latestOdometer } from '$lib/stores';
+	import { token, events, latestOdometer, healthIntervals } from '$lib/stores';
 	import { loadEvents, loadHealthConfig, saveHealthConfig } from '$lib/github';
 	import { formatDate } from '$lib/utils';
-	import type { ServiceInterval, HealthConfig, CarEvent } from '$lib/types';
+	import type { HealthConfig, CarEvent } from '$lib/types';
 
 	let loading = $state(true);
 	let loadError = $state('');
-	let intervals = $state<ServiceInterval[]>([]);
 	let editingId = $state<string | null>(null);
 	let editKm = $state('');
 	let editMonths = $state('');
@@ -24,8 +23,10 @@
 			if ($events.length === 0) {
 				$events = await loadEvents();
 			}
-			const config = await loadHealthConfig();
-			intervals = config.intervals;
+			if ($healthIntervals.length === 0) {
+				const config = await loadHealthConfig();
+				$healthIntervals = config.intervals;
+			}
 		} catch (e: unknown) {
 			loadError = e instanceof Error ? e.message : 'Failed to load';
 		} finally {
@@ -53,7 +54,7 @@
 
 		const healthOrder = { overdue: 0, warning: 1, good: 2 };
 
-		return intervals.map((interval) => {
+		return $healthIntervals.map((interval) => {
 			const lastEvent = findLastService(interval);
 			const lastKm = lastEvent?.km ?? null;
 			const lastDate = lastEvent?.date ?? '';
@@ -136,7 +137,7 @@
 	}
 
 	function startEdit(id: string) {
-		const interval = intervals.find((i) => i.id === id);
+		const interval = $healthIntervals.find((i) => i.id === id);
 		if (!interval) return;
 		editingId = id;
 		editKm = interval.intervalKm?.toString() ?? '';
@@ -147,7 +148,7 @@
 		if (!editingId) return;
 		saving = true;
 		try {
-			const updated = intervals.map((i) => {
+			const updated = $healthIntervals.map((i) => {
 				if (i.id !== editingId) return i;
 				return {
 					...i,
@@ -157,7 +158,7 @@
 			});
 			const config: HealthConfig = { intervals: updated };
 			await saveHealthConfig(config, `Update interval: ${editingId}`);
-			intervals = updated;
+			$healthIntervals = updated;
 			editingId = null;
 		} catch {
 			alert('Failed to save');

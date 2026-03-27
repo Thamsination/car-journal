@@ -72,6 +72,60 @@
       ],
       "intervalKm": 30000,
       "intervalMonths": 24
+    },
+    {
+      "id": "zf8-gearbox",
+      "name": "ZF8 Gearbox Fluid",
+      "taskMatches": [
+        "zf8 gearbox fluid"
+      ],
+      "intervalKm": 100000,
+      "intervalMonths": null
+    },
+    {
+      "id": "xdrive-transfer",
+      "name": "xDrive Transfer Case Fluid",
+      "taskMatches": [
+        "xdrive transfer case fluid"
+      ],
+      "intervalKm": 80000,
+      "intervalMonths": null
+    },
+    {
+      "id": "differential",
+      "name": "Differential Fluids",
+      "taskMatches": [
+        "differential fluids"
+      ],
+      "intervalKm": 80000,
+      "intervalMonths": null
+    },
+    {
+      "id": "timing-chain",
+      "name": "Timing Chain",
+      "taskMatches": [
+        "timing chain"
+      ],
+      "intervalKm": 200000,
+      "intervalMonths": null
+    },
+    {
+      "id": "coolant",
+      "name": "Coolant Flush",
+      "taskMatches": [
+        "coolant flush"
+      ],
+      "intervalKm": 120000,
+      "intervalMonths": null
+    },
+    {
+      "id": "carbon-clean",
+      "name": "Intake Carbon Clean",
+      "taskMatches": [
+        "intake carbon clean"
+      ],
+      "intervalKm": 120000,
+      "intervalMonths": null
     }
   ]
 }
