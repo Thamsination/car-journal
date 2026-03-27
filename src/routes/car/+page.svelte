@@ -157,9 +157,9 @@
 				remainingKm, remainingDays, usedKmPct, usedTimePct, health
 			};
 		}).sort((a, b) => {
-			const aUsed = Math.max(a.usedKmPct, a.usedTimePct);
-			const bUsed = Math.max(b.usedKmPct, b.usedTimePct);
-			return bUsed - aUsed;
+			const aKm = a.remainingKm ?? Infinity;
+			const bKm = b.remainingKm ?? Infinity;
+			return aKm - bKm;
 		});
 	});
 
