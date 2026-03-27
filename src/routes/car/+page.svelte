@@ -522,49 +522,55 @@
 								{#if tireDisplayDot(tire.profile)} · {tireDisplayDot(tire.profile)}{/if}
 							</span>
 						{/if}
-						<div class="tire-stats">
-							<div class="tire-stat">
-								<span class="tire-stat-label">Km driven</span>
-								<span class="tire-stat-value">{tire.kmDriven.toLocaleString()} km</span>
-								<div class="progress-bar">
-									<div class="progress-fill" style="width: {Math.min(100, tire.kmPct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.kmPct))}"></div>
-								</div>
-								{#if tire.remainingKm !== null}
-									<span class="tire-stat-remaining" style="color: {tire.remainingKm < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
-										{#if tire.remainingKm < 0}
-											{Math.abs(tire.remainingKm).toLocaleString()} km overdue
-										{:else}
-											{tire.remainingKm.toLocaleString()} km remaining
-										{/if}
-									</span>
-								{/if}
-							</div>
-							<div class="tire-stat">
-								<span class="tire-stat-label">Age{#if tire.profile?.frontDot} (DOT){/if}</span>
-								<span class="tire-stat-value">
-									{#if tire.ageDays > 365}
-										{Math.floor(tire.ageDays / 365)}y {Math.round((tire.ageDays % 365) / 30)}m
-									{:else if tire.ageDays > 30}
-										{Math.round(tire.ageDays / 30)} months
-									{:else}
-										{tire.ageDays} days
+						{@const kmOverdue = tire.kmPct >= 1}
+						{@const ageOverdue = tire.agePct >= 1}
+						<div class="tire-stats" class:tire-stats-single={kmOverdue !== ageOverdue}>
+							{#if !(ageOverdue && !kmOverdue)}
+								<div class="tire-stat">
+									<span class="tire-stat-label">Km driven</span>
+									<span class="tire-stat-value">{tire.kmDriven.toLocaleString()} km</span>
+									<div class="progress-bar">
+										<div class="progress-fill" style="width: {Math.min(100, tire.kmPct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.kmPct))}"></div>
+									</div>
+									{#if tire.remainingKm !== null}
+										<span class="tire-stat-remaining" style="color: {tire.remainingKm < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
+											{#if tire.remainingKm < 0}
+												{Math.abs(tire.remainingKm).toLocaleString()} km overdue
+											{:else}
+												{tire.remainingKm.toLocaleString()} km remaining
+											{/if}
+										</span>
 									{/if}
-								</span>
-								<div class="progress-bar">
-									<div class="progress-fill" style="width: {Math.min(100, tire.agePct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.agePct))}"></div>
 								</div>
-								{#if tire.remainingDays !== null}
-									<span class="tire-stat-remaining" style="color: {tire.remainingDays < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
-										{#if tire.remainingDays < 0}
-											{Math.abs(tire.remainingDays)} days overdue
-										{:else if tire.remainingDays > 365}
-											{Math.round(tire.remainingDays / 30)} months remaining
+							{/if}
+							{#if !(kmOverdue && !ageOverdue)}
+								<div class="tire-stat">
+									<span class="tire-stat-label">Age{#if tire.profile?.frontDot} (DOT){/if}</span>
+									<span class="tire-stat-value">
+										{#if tire.ageDays > 365}
+											{Math.floor(tire.ageDays / 365)}y {Math.round((tire.ageDays % 365) / 30)}m
+										{:else if tire.ageDays > 30}
+											{Math.round(tire.ageDays / 30)} months
 										{:else}
-											{tire.remainingDays} days remaining
+											{tire.ageDays} days
 										{/if}
 									</span>
-								{/if}
-							</div>
+									<div class="progress-bar">
+										<div class="progress-fill" style="width: {Math.min(100, tire.agePct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.agePct))}"></div>
+									</div>
+									{#if tire.remainingDays !== null}
+										<span class="tire-stat-remaining" style="color: {tire.remainingDays < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
+											{#if tire.remainingDays < 0}
+												{Math.abs(tire.remainingDays)} days overdue
+											{:else if tire.remainingDays > 365}
+												{Math.round(tire.remainingDays / 30)} months remaining
+											{:else}
+												{tire.remainingDays} days remaining
+											{/if}
+										</span>
+									{/if}
+								</div>
+							{/if}
 						</div>
 						{#if tire.swapEvent}
 							<span class="tire-swap-date">Mounted: {formatDate(tire.swapEvent.date)} · {(tire.swapEvent.km ?? 0).toLocaleString()} km</span>
@@ -1024,6 +1030,10 @@
 		grid-template-columns: 1fr 1fr;
 		gap: 12px;
 		margin-bottom: 10px;
+	}
+
+	.tire-stats-single {
+		grid-template-columns: 1fr;
 	}
 
 	.tire-stat {
