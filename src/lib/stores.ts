@@ -1,5 +1,5 @@
 import { writable, derived } from 'svelte/store';
-import type { CarEvent, Part, DerivedStatus, ServiceInterval as HealthInterval } from './types';
+import type { CarEvent, Part, DerivedStatus, ServiceInterval as HealthInterval, VehicleConfig, TireConfig, TireProfile } from './types';
 import { deriveStatus, eventCategory } from './utils';
 
 function persistedWritable<T>(key: string, initial: T) {
@@ -70,7 +70,8 @@ const dashboardCategoryMap: Record<string, string> = {
 	'replacement': 'Replacement',
 	'official-service': 'Service',
 	'other-service': 'Service',
-	'inspection': 'Service'
+	'inspection': 'Service',
+	'tire-swap': 'Purchases'
 };
 
 const dashboardCategoryOrder = ['Car', 'Purchases', 'Service', 'Replacement', 'Warranty'];
@@ -236,3 +237,77 @@ function findLastServiceForInterval(evts: CarEvent[], interval: HealthInterval):
 	});
 	return matches[0] ?? null;
 }
+
+export const vehicleConfig = writable<VehicleConfig | null>(null);
+export const tireConfig = writable<TireConfig | null>(null);
+
+export type TireHealth = 'good' | 'warning' | 'overdue';
+
+export interface TireStatus {
+	currentSet: 'summer' | 'winter' | null;
+	profile: TireProfile | null;
+	swapEvent: CarEvent | null;
+	kmDriven: number;
+	ageDays: number;
+	kmPct: number;
+	agePct: number;
+	health: TireHealth;
+	remainingKm: number | null;
+	remainingDays: number | null;
+}
+
+export const tireStatus = derived(
+	[events, latestOdometer, tireConfig],
+	([$events, $odo, $tireCfg]): TireStatus => {
+		const empty: TireStatus = {
+			currentSet: null, profile: null, swapEvent: null,
+			kmDriven: 0, ageDays: 0, kmPct: 0, agePct: 0,
+			health: 'good', remainingKm: null, remainingDays: null
+		};
+
+		const swapEvents = $events
+			.filter((e) => e.completed && e.category === 'tire-swap' && e.km !== null)
+			.sort((a, b) => {
+				const diff = (b.km ?? 0) - (a.km ?? 0);
+				if (diff !== 0) return diff;
+				return (b.date || '').localeCompare(a.date || '');
+			});
+
+		if (swapEvents.length === 0) return empty;
+
+		const latest = swapEvents[0];
+		const tasks = latest.tasks ?? [latest.event];
+		const taskStr = tasks.join(' ').toLowerCase();
+		const currentSet: 'summer' | 'winter' | null =
+			taskStr.includes('winter') ? 'winter' :
+			taskStr.includes('summer') ? 'summer' : null;
+
+		if (!currentSet || !$tireCfg) return { ...empty, currentSet, swapEvent: latest };
+
+		const profile = $tireCfg.profiles[currentSet] ?? null;
+		if (!profile) return { ...empty, currentSet, swapEvent: latest };
+
+		const swapKm = latest.km ?? 0;
+		const kmDriven = Math.max(0, $odo.km - swapKm);
+		const swapDate = latest.date ? new Date(latest.date + 'T00:00:00').getTime() : Date.now();
+		const ageDays = Math.max(0, Math.round((Date.now() - swapDate) / 86400000));
+
+		const kmPct = profile.maxKm > 0 ? Math.min(1, kmDriven / profile.maxKm) : 0;
+		const maxDays = profile.maxMonths * 30.44;
+		const agePct = maxDays > 0 ? Math.min(1, ageDays / maxDays) : 0;
+
+		const remainingKm = profile.maxKm - kmDriven;
+		const remainingDays = Math.round(maxDays - ageDays);
+
+		const warnPct = $tireCfg.warningPct;
+		let health: TireHealth = 'good';
+		if (kmPct >= 1 || agePct >= 1) health = 'overdue';
+		else if (kmPct >= warnPct || agePct >= warnPct) health = 'warning';
+
+		return {
+			currentSet, profile, swapEvent: latest,
+			kmDriven, ageDays, kmPct, agePct,
+			health, remainingKm, remainingDays
+		};
+	}
+);

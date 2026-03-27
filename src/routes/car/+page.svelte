@@ -2,10 +2,13 @@
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { token, events, latestOdometer, healthIntervals } from '$lib/stores';
-	import { loadEvents, loadHealthConfig, saveHealthConfig } from '$lib/github';
+	import {
+		token, events, latestOdometer, healthIntervals, dailyAverageKm,
+		vehicleConfig, tireConfig, tireStatus
+	} from '$lib/stores';
+	import { loadEvents, loadHealthConfig, saveHealthConfig, loadVehicleConfig, loadTireConfig } from '$lib/github';
 	import { formatDate } from '$lib/utils';
-	import type { HealthConfig, CarEvent } from '$lib/types';
+	import type { HealthConfig, CarEvent, ServiceInterval } from '$lib/types';
 
 	let loading = $state(true);
 	let loadError = $state('');
@@ -20,13 +23,20 @@
 			return;
 		}
 		try {
+			const promises: Promise<void>[] = [];
 			if ($events.length === 0) {
-				$events = await loadEvents();
+				promises.push(loadEvents().then((e) => { $events = e; }));
 			}
 			if ($healthIntervals.length === 0) {
-				const config = await loadHealthConfig();
-				$healthIntervals = config.intervals;
+				promises.push(loadHealthConfig().then((c) => { $healthIntervals = c.intervals; }));
 			}
+			if (!$vehicleConfig) {
+				promises.push(loadVehicleConfig().then((v) => { $vehicleConfig = v; }));
+			}
+			if (!$tireConfig) {
+				promises.push(loadTireConfig().then((t) => { $tireConfig = t; }));
+			}
+			await Promise.all(promises);
 		} catch (e: unknown) {
 			loadError = e instanceof Error ? e.message : 'Failed to load';
 		} finally {
@@ -51,7 +61,6 @@
 	const componentStatuses = $derived.by((): ComponentStatus[] => {
 		const odoKm = $latestOdometer.km;
 		const now = Date.now();
-
 		const healthOrder = { overdue: 0, warning: 1, good: 2 };
 
 		return $healthIntervals.map((interval) => {
@@ -96,15 +105,8 @@
 			}
 
 			return {
-				interval,
-				lastEvent,
-				lastKm,
-				lastDate,
-				remainingKm,
-				remainingDays,
-				usedKmPct,
-				usedTimePct,
-				health
+				interval, lastEvent, lastKm, lastDate,
+				remainingKm, remainingDays, usedKmPct, usedTimePct, health
 			};
 		}).sort((a, b) => {
 			const diff = healthOrder[a.health] - healthOrder[b.health];
@@ -113,16 +115,39 @@
 		});
 	});
 
+	const overdueCount = $derived(componentStatuses.filter((c) => c.health === 'overdue').length);
+	const warningCount = $derived(componentStatuses.filter((c) => c.health === 'warning').length);
+
 	const overallHealth = $derived.by(() => {
+		const tireIsOverdue = $tireStatus.health === 'overdue';
+		const tireIsWarning = $tireStatus.health === 'warning';
+		const compOverdue = overdueCount > 0;
+		const compWarning = warningCount > 0;
+
+		if (compOverdue || tireIsOverdue) return 'bad' as const;
+		if (compWarning || tireIsWarning) return 'okay' as const;
 		if (componentStatuses.length === 0) return 'good' as const;
-		if (componentStatuses.some((c) => c.health === 'overdue')) return 'bad' as const;
-		if (componentStatuses.some((c) => c.health === 'warning')) return 'okay' as const;
 		return 'good' as const;
 	});
 
-	const overallLabels = { good: 'Good', okay: 'Attention Needed', bad: 'Service Overdue' };
+	const healthSummary = $derived.by(() => {
+		const tireH = $tireStatus.health;
+		const hasOverdue = overdueCount > 0 || tireH === 'overdue';
+		const hasWarning = warningCount > 0 || tireH === 'warning';
+
+		if (hasOverdue && hasWarning) return 'Your car has overdue service items and other components need attention soon.';
+		if (hasOverdue) return 'Your car has overdue service items that need attention.';
+		if (hasWarning) return 'Your car is in good condition but needs attention soon.';
+		return 'Your car is in good condition.';
+	});
+
 	const overallColors = { good: '#34c759', okay: '#ff9500', bad: '#ff3b30' };
 	const overallIcons = { good: '✓', okay: '!', bad: '✕' };
+
+	function vehicleTitle(v: typeof $vehicleConfig): string {
+		if (!v) return 'Vehicle';
+		return `${v.year} ${v.make} ${v.chassis} ${v.model}`;
+	}
 
 	function findLastService(interval: ServiceInterval): CarEvent | null {
 		const matches = $events.filter((e) => {
@@ -191,34 +216,133 @@
 		if (remainPct <= (1 - WARNING_THRESHOLD)) return '#ff9500';
 		return '#34c759';
 	}
+
+	function tireHealthColor(h: string): string {
+		if (h === 'overdue') return '#ff3b30';
+		if (h === 'warning') return '#ff9500';
+		return '#34c759';
+	}
 </script>
 
 <svelte:head>
-	<title>Car Health — G31 Journal</title>
+	<title>Car — G31 Journal</title>
 </svelte:head>
 
-<div class="container health-container">
+<div class="container car-container">
 	{#if loading}
-		<div class="loading">Loading health data...</div>
+		<div class="loading">Loading car data...</div>
 	{:else if loadError}
 		<div class="error-state">{loadError}</div>
 	{:else}
-		<div class="overall-card" style="border-color: {overallColors[overallHealth]}">
-			<div class="overall-icon" style="background: {overallColors[overallHealth]}">
-				{overallIcons[overallHealth]}
+		<!-- Vehicle Info -->
+		<div class="vehicle-card">
+			<div class="vehicle-identity">
+				<h2 class="vehicle-name">{vehicleTitle($vehicleConfig)}</h2>
+				{#if $vehicleConfig}
+					<span class="vehicle-detail">{$vehicleConfig.engine} · {$vehicleConfig.drivetrain}</span>
+				{/if}
 			</div>
-			<div class="overall-text">
-				<h2 style="color: {overallColors[overallHealth]}">{overallLabels[overallHealth]}</h2>
-				<p class="overall-sub">
-					{#if $latestOdometer.km > 0}
-						{$latestOdometer.km.toLocaleString()} km{$latestOdometer.approximate ? ' (est.)' : ''}
-					{:else}
-						Odometer not set
-					{/if}
-				</p>
+			<div class="vehicle-odo">
+				<span class="odo-value">
+					{$latestOdometer.source === 'estimated' ? '~' : ''}{$latestOdometer.km.toLocaleString()}{$latestOdometer.source === 'event' ? '+' : ''}
+				</span>
+				<span class="odo-unit">km</span>
 			</div>
+			{#if $latestOdometer.source === 'estimated' && $dailyAverageKm > 0}
+				<span class="odo-source">Estimated · {$dailyAverageKm} km/day avg</span>
+			{:else if $latestOdometer.source === 'manual'}
+				<span class="odo-source">Manually set</span>
+			{:else if $latestOdometer.source === 'event'}
+				<span class="odo-source">Based on last completed event</span>
+			{/if}
 		</div>
 
+		<!-- Health Summary -->
+		<div class="summary-card" style="border-color: {overallColors[overallHealth]}">
+			<div class="summary-icon" style="background: {overallColors[overallHealth]}">
+				{overallIcons[overallHealth]}
+			</div>
+			<p class="summary-text">{healthSummary}</p>
+		</div>
+
+		<!-- Tire Status -->
+		{#if $tireStatus.currentSet}
+			{@const tire = $tireStatus}
+			<h3 class="section-title">Tires</h3>
+			<div
+				class="tire-card"
+				class:tire-overdue={tire.health === 'overdue'}
+				class:tire-warning={tire.health === 'warning'}
+			>
+				<div class="tire-header">
+					<span class="tire-set">{tire.profile?.label ?? tire.currentSet} tires</span>
+					<span class="tire-health-badge" style="color: {tireHealthColor(tire.health)}">
+						{tire.health === 'good' ? 'Good' : tire.health === 'warning' ? 'Wear soon' : 'Replace'}
+					</span>
+				</div>
+				{#if tire.profile}
+					<span class="tire-detail">{tire.profile.brand} {tire.profile.model} · {tire.profile.size}</span>
+				{/if}
+
+				<div class="tire-stats">
+					<div class="tire-stat">
+						<span class="tire-stat-label">Km driven</span>
+						<span class="tire-stat-value">{tire.kmDriven.toLocaleString()} km</span>
+						<div class="progress-bar">
+							<div
+								class="progress-fill"
+								style="width: {Math.min(100, tire.kmPct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.kmPct))}"
+							></div>
+						</div>
+						{#if tire.remainingKm !== null}
+							<span class="tire-stat-remaining" style="color: {tire.remainingKm < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
+								{#if tire.remainingKm < 0}
+									{Math.abs(tire.remainingKm).toLocaleString()} km overdue
+								{:else}
+									{tire.remainingKm.toLocaleString()} km remaining
+								{/if}
+							</span>
+						{/if}
+					</div>
+
+					<div class="tire-stat">
+						<span class="tire-stat-label">Age</span>
+						<span class="tire-stat-value">
+							{#if tire.ageDays > 365}
+								{Math.floor(tire.ageDays / 365)}y {Math.round((tire.ageDays % 365) / 30)}m
+							{:else if tire.ageDays > 30}
+								{Math.round(tire.ageDays / 30)} months
+							{:else}
+								{tire.ageDays} days
+							{/if}
+						</span>
+						<div class="progress-bar">
+							<div
+								class="progress-fill"
+								style="width: {Math.min(100, tire.agePct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.agePct))}"
+							></div>
+						</div>
+						{#if tire.remainingDays !== null}
+							<span class="tire-stat-remaining" style="color: {tire.remainingDays < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
+								{#if tire.remainingDays < 0}
+									{Math.abs(tire.remainingDays)} days overdue
+								{:else if tire.remainingDays > 365}
+									{Math.round(tire.remainingDays / 30)} months remaining
+								{:else}
+									{tire.remainingDays} days remaining
+								{/if}
+							</span>
+						{/if}
+					</div>
+				</div>
+
+				{#if tire.swapEvent}
+					<span class="tire-swap-date">Mounted: {formatDate(tire.swapEvent.date)} · {(tire.swapEvent.km ?? 0).toLocaleString()} km</span>
+				{/if}
+			</div>
+		{/if}
+
+		<!-- Component Status -->
 		<h3 class="section-title">Component Status</h3>
 
 		<div class="component-list">
@@ -330,45 +454,95 @@
 </div>
 
 <style>
-	.health-container {
+	.car-container {
 		padding-bottom: 80px;
 	}
 
-	.overall-card {
+	/* Vehicle card */
+	.vehicle-card {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: 20px 16px 16px;
+		margin-bottom: 12px;
+		text-align: center;
+	}
+
+	.vehicle-identity {
+		margin-bottom: 12px;
+	}
+
+	.vehicle-name {
+		font-size: 18px;
+		font-weight: 700;
+		letter-spacing: -0.3px;
+		margin-bottom: 2px;
+	}
+
+	.vehicle-detail {
+		font-size: 13px;
+		color: var(--color-text-secondary);
+	}
+
+	.vehicle-odo {
+		display: flex;
+		align-items: baseline;
+		justify-content: center;
+		gap: 6px;
+	}
+
+	.odo-value {
+		font-size: 32px;
+		font-weight: 800;
+		letter-spacing: -1px;
+	}
+
+	.odo-unit {
+		font-size: 15px;
+		font-weight: 500;
+		color: var(--color-text-secondary);
+	}
+
+	.odo-source {
+		display: block;
+		margin-top: 4px;
+		font-size: 11px;
+		color: var(--color-text-secondary);
+		text-align: center;
+	}
+
+	/* Health summary */
+	.summary-card {
 		display: flex;
 		align-items: center;
-		gap: 16px;
-		padding: 20px;
+		gap: 14px;
+		padding: 16px;
 		background: var(--color-surface);
 		border: 2px solid;
 		border-radius: var(--radius-lg);
 		margin-bottom: 24px;
 	}
 
-	.overall-icon {
-		width: 48px;
-		height: 48px;
+	.summary-icon {
+		width: 40px;
+		height: 40px;
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		color: white;
-		font-size: 24px;
+		font-size: 20px;
 		font-weight: 800;
 		flex-shrink: 0;
 	}
 
-	.overall-text h2 {
-		font-size: 20px;
-		font-weight: 700;
-		margin-bottom: 2px;
+	.summary-text {
+		font-size: 14px;
+		line-height: 1.4;
+		color: var(--color-text);
 	}
 
-	.overall-sub {
-		font-size: 13px;
-		color: var(--color-text-secondary);
-	}
-
+	/* Section title */
 	.section-title {
 		font-size: 14px;
 		font-weight: 700;
@@ -378,6 +552,86 @@
 		margin-bottom: 12px;
 	}
 
+	/* Tire card */
+	.tire-card {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		padding: 14px 16px;
+		margin-bottom: 24px;
+	}
+
+	.tire-card.tire-overdue {
+		border-left: 4px solid #ff3b30;
+	}
+
+	.tire-card.tire-warning {
+		border-left: 4px solid #ff9500;
+	}
+
+	.tire-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 4px;
+	}
+
+	.tire-set {
+		font-size: 15px;
+		font-weight: 600;
+		text-transform: capitalize;
+	}
+
+	.tire-health-badge {
+		font-size: 12px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
+	}
+
+	.tire-detail {
+		font-size: 12px;
+		color: var(--color-text-secondary);
+		display: block;
+		margin-bottom: 12px;
+	}
+
+	.tire-stats {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 12px;
+		margin-bottom: 10px;
+	}
+
+	.tire-stat {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.tire-stat-label {
+		font-size: 11px;
+		font-weight: 600;
+		color: var(--color-text-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
+	}
+
+	.tire-stat-value {
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.tire-stat-remaining {
+		font-size: 11px;
+	}
+
+	.tire-swap-date {
+		font-size: 11px;
+		color: var(--color-text-secondary);
+	}
+
+	/* Component list */
 	.component-list {
 		display: flex;
 		flex-direction: column;

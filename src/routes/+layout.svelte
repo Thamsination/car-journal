@@ -51,7 +51,7 @@
 	const navItems = [
 		{ href: `${base}/`, label: 'Dashboard', icon: '◎' },
 		{ href: `${base}/timeline`, label: 'Timeline', icon: '⏱' },
-		{ href: `${base}/health`, label: 'Health', icon: '♥' }
+		{ href: `${base}/car`, label: 'Car', icon: '🚘' }
 	];
 
 	function isActive(href: string, currentPath: string): boolean {

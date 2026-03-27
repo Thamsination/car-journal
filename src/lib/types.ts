@@ -1,6 +1,6 @@
 export type DerivedStatus = 'completed' | 'scheduled' | 'overdue';
 
-export type EventCategory = 'purchase' | 'warranty' | 'replacement' | 'official-service' | 'other-service' | 'inspection';
+export type EventCategory = 'purchase' | 'warranty' | 'replacement' | 'official-service' | 'other-service' | 'inspection' | 'tire-swap';
 
 export interface CarEvent {
 	id: string;
@@ -58,4 +58,31 @@ export interface ServiceMilestone {
 	km: number;
 	tasks: string[];
 	kind: MilestoneKind;
+}
+
+export interface ServiceSchedule {
+	milestones: ServiceMilestone[];
+}
+
+export interface VehicleConfig {
+	year: number;
+	make: string;
+	model: string;
+	chassis: string;
+	engine: string;
+	drivetrain: string;
+}
+
+export interface TireProfile {
+	label: string;
+	brand: string;
+	model: string;
+	size: string;
+	maxKm: number;
+	maxMonths: number;
+}
+
+export interface TireConfig {
+	profiles: Record<string, TireProfile>;
+	warningPct: number;
 }

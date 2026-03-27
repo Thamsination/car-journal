@@ -96,6 +96,7 @@ export async function validateToken(): Promise<{ ok: boolean; error?: string }> 
 let eventsSha = '';
 let partsSha = '';
 let healthSha = '';
+let tireSha = '';
 
 const DATA_PATH = 'static/data';
 
@@ -148,6 +149,26 @@ export async function saveHealthConfig(
 	message: string
 ): Promise<void> {
 	healthSha = await writeJsonFile(`${DATA_PATH}/health-config.json`, config, healthSha, message);
+}
+
+export async function loadVehicleConfig(): Promise<import('./types').VehicleConfig | null> {
+	const { content } = await getFile(`${DATA_PATH}/vehicle-config.json`);
+	if (!content) return null;
+	return JSON.parse(content) as import('./types').VehicleConfig;
+}
+
+export async function loadTireConfig(): Promise<import('./types').TireConfig | null> {
+	const { content, sha } = await getFile(`${DATA_PATH}/tire-config.json`);
+	tireSha = sha;
+	if (!content) return null;
+	return JSON.parse(content) as import('./types').TireConfig;
+}
+
+export async function saveTireConfig(
+	config: import('./types').TireConfig,
+	message: string
+): Promise<void> {
+	tireSha = await writeJsonFile(`${DATA_PATH}/tire-config.json`, config, tireSha, message);
 }
 
 const RECEIPTS_PATH = `${DATA_PATH}/receipts`;

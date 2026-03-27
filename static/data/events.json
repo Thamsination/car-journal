@@ -243,7 +243,7 @@
       "notes": "SSH-biler replaced worn summer tires. Tire type - Aplus A610 100Y",
       "invoiceNr": "-",
       "completed": true,
-      "category": "warranty",
+      "category": "tire-swap",
       "tasks": [
         "summer tires"
       ],
@@ -288,16 +288,16 @@
       "id": "evt_008",
       "km": 177220,
       "date": "2025-11-01",
-      "event": "Winter wheels",
+      "event": "Winter tires",
       "cost": 5900,
       "currency": "DKK",
       "provider": "SH Däck&Fälg",
       "notes": "17\" rims, spiked tires, bought in Sweden",
       "invoiceNr": "1804283037399417",
       "completed": true,
-      "category": "purchase",
+      "category": "tire-swap",
       "tasks": [
-        "winter wheels"
+        "winter tires"
       ],
       "kmEstimated": true,
       "receipts": [

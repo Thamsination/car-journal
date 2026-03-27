@@ -62,7 +62,7 @@ export function statusColor(status: DerivedStatus): string {
 	return statusColors[status] || '#8e8e93';
 }
 
-const ALL_CATEGORIES: EventCategory[] = ['purchase', 'warranty', 'replacement', 'official-service', 'other-service', 'inspection'];
+const ALL_CATEGORIES: EventCategory[] = ['purchase', 'warranty', 'replacement', 'official-service', 'other-service', 'inspection', 'tire-swap'];
 
 export function allCategories(): { value: EventCategory; label: string }[] {
 	return ALL_CATEGORIES.map((c) => ({ value: c, label: categoryLabels[c] }));
@@ -89,7 +89,8 @@ const categoryLabels: Record<EventCategory, string> = {
 	replacement: 'Replacement',
 	'official-service': 'Official Service',
 	'other-service': 'Other Service',
-	inspection: 'Inspection'
+	inspection: 'Inspection',
+	'tire-swap': 'Tire Swap'
 };
 
 const categoryColors: Record<EventCategory, string> = {
@@ -98,7 +99,8 @@ const categoryColors: Record<EventCategory, string> = {
 	replacement: '#ff9500',
 	'official-service': '#007aff',
 	'other-service': '#34c759',
-	inspection: '#5ac8fa'
+	inspection: '#5ac8fa',
+	'tire-swap': '#a78bfa'
 };
 
 export function categoryLabel(cat: EventCategory): string {
