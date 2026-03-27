@@ -99,6 +99,25 @@
 		return all[0] ?? null;
 	});
 
+	const outstandingTasks = $derived.by(() => {
+		const odoKm = $latestOdometer.km;
+		if (odoKm <= 0) return [];
+		const seen = new Set<string>();
+		const result: string[] = [];
+		const allMs = [...mfrMilestones, ...recMilestones];
+		for (const ms of allMs) {
+			if (ms.km > odoKm) continue;
+			const stats = milestoneTaskStatuses(ms, $events, odoKm);
+			for (const ts of stats) {
+				if (ts.status === 'red' && !seen.has(ts.task)) {
+					seen.add(ts.task);
+					result.push(ts.task);
+				}
+			}
+		}
+		return result;
+	});
+
 	const PX_PER_KM = 0.004;
 	const MIN_GAP = 12;
 	const MAX_GAP = 120;
@@ -259,6 +278,16 @@
 							{/if}
 						{:else}
 							<span class="odo-label">You are here</span>
+						{/if}
+						{#if outstandingTasks.length > 0}
+							<div class="odo-attention">
+								<span class="odo-attention-title">Needs attention</span>
+								<ul class="odo-attention-list">
+									{#each outstandingTasks as task}
+										<li>{task}</li>
+									{/each}
+								</ul>
+							</div>
 						{/if}
 					</div>
 					</div>
@@ -524,6 +553,24 @@
 		font-size: 12px;
 		color: var(--color-text-secondary);
 		line-height: 1.4;
+	}
+
+	.odo-attention {
+		margin-top: 8px;
+	}
+
+	.odo-attention-title {
+		font-size: 12px;
+		font-weight: 700;
+		color: #ff3b30;
+	}
+
+	.odo-attention-list {
+		margin: 4px 0 0;
+		padding: 0 0 0 16px;
+		font-size: 12px;
+		color: #ff3b30;
+		line-height: 1.5;
 	}
 
 	.odo-overdue {
