@@ -417,13 +417,18 @@
 	{:else if loadError}
 		<div class="error-state">{loadError}</div>
 	{:else}
-		<!-- Vehicle Info -->
+		<!-- Vehicle Info + Health -->
 		<div class="vehicle-card">
-			<div class="vehicle-identity">
-				<h2 class="vehicle-name">{vehicleTitle($vehicleConfig)}</h2>
-				{#if $vehicleConfig}
-					<span class="vehicle-detail">{$vehicleConfig.engine} · {$vehicleConfig.drivetrain}</span>
-				{/if}
+			<div class="vehicle-header">
+				<div class="vehicle-identity">
+					<h2 class="vehicle-name">{vehicleTitle($vehicleConfig)}</h2>
+					{#if $vehicleConfig}
+						<span class="vehicle-detail">{$vehicleConfig.engine} · {$vehicleConfig.drivetrain}</span>
+					{/if}
+				</div>
+				<span class="health-badge" style="background: {overallColors[overallHealth]}">
+					{overallHealth === 'good' ? 'Good' : overallHealth === 'okay' ? 'Attention' : 'Overdue'}
+				</span>
 			</div>
 			<div class="vehicle-odo">
 				<span class="odo-value">
@@ -438,14 +443,7 @@
 			{:else if $latestOdometer.source === 'event'}
 				<span class="odo-source">Based on last completed event</span>
 			{/if}
-		</div>
-
-		<!-- Health Summary -->
-		<div class="summary-card" style="border-color: {overallColors[overallHealth]}">
-			<div class="summary-icon" style="background: {overallColors[overallHealth]}">
-				{overallIcons[overallHealth]}
-			</div>
-			<p class="summary-text">{healthSummary}</p>
+			<p class="health-summary">{healthSummary}</p>
 		</div>
 
 		<!-- Tires -->
@@ -789,8 +787,15 @@
 		text-align: center;
 	}
 
-	.vehicle-identity {
+	.vehicle-header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
 		margin-bottom: 12px;
+	}
+
+	.vehicle-identity {
+		text-align: left;
 	}
 
 	.vehicle-name {
@@ -832,35 +837,23 @@
 		text-align: center;
 	}
 
-	/* Health summary */
-	.summary-card {
-		display: flex;
-		align-items: center;
-		gap: 14px;
-		padding: 16px;
-		background: var(--color-surface);
-		border: 2px solid;
-		border-radius: var(--radius-lg);
-		margin-bottom: 24px;
-	}
-
-	.summary-icon {
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	.health-badge {
+		font-size: 11px;
+		font-weight: 700;
 		color: white;
-		font-size: 20px;
-		font-weight: 800;
+		padding: 3px 10px;
+		border-radius: 12px;
+		white-space: nowrap;
 		flex-shrink: 0;
+		margin-top: 2px;
 	}
 
-	.summary-text {
-		font-size: 14px;
+	.health-summary {
+		margin-top: 10px;
+		font-size: 13px;
 		line-height: 1.4;
-		color: var(--color-text);
+		color: var(--color-text-secondary);
+		text-align: center;
 	}
 
 	/* Section title */
