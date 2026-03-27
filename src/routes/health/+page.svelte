@@ -79,7 +79,12 @@
 
 			let health: 'good' | 'warning' | 'overdue' = 'good';
 			if (!lastEvent) {
-				health = 'overdue';
+				const firstDueKm = interval.intervalKm ?? Infinity;
+				if (odoKm > 0 && odoKm >= firstDueKm) {
+					health = 'overdue';
+				} else if (odoKm > 0 && interval.intervalKm && odoKm >= firstDueKm * WARNING_THRESHOLD) {
+					health = 'warning';
+				}
 			} else {
 				const kmOverdue = remainingKm !== null && remainingKm < 0;
 				const timeOverdue = remainingDays !== null && remainingDays < 0;

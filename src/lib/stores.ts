@@ -179,7 +179,12 @@ export const componentHealthMap = derived(
 
 			let health: ComponentHealth = 'good';
 			if (!lastEvent) {
-				health = 'overdue';
+				const firstDueKm = interval.intervalKm ?? Infinity;
+				if (odoKm > 0 && odoKm >= firstDueKm) {
+					health = 'overdue';
+				} else if (odoKm > 0 && interval.intervalKm && odoKm >= firstDueKm * WARNING_THRESHOLD) {
+					health = 'warning';
+				}
 			} else {
 				let kmOverdue = false;
 				let timeOverdue = false;
