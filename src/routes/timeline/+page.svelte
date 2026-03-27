@@ -96,6 +96,7 @@
 		kind: 'event' | 'odometer' | 'milestone';
 		evt?: CarEvent;
 		milestone?: ServiceMilestone;
+		coveredMilestones?: ServiceMilestone[];
 		km: number;
 		sortDate: string;
 	}
@@ -165,28 +166,51 @@
 		return all;
 	});
 
+	const ATTACH_TOLERANCE_KM = 1000;
+
 	const timelineEntries = $derived.by(() => {
 		const entries: TimelineEntry[] = [];
 		const odoKm = $latestOdometer.km;
 
-		const combined: TimelineEntry[] = [];
-		for (const evt of sortedEvents) {
-			combined.push({ kind: 'event', evt, km: evt.km ?? 0, sortDate: evt.date || '' });
-		}
-		if (showMfr) {
-			for (const ms of mfrMilestones) {
-				combined.push({ kind: 'milestone', milestone: ms, km: ms.km, sortDate: '' });
-			}
-		}
+		const allMilestones: ServiceMilestone[] = [];
+		if (showMfr) allMilestones.push(...mfrMilestones);
 		if (showRec) {
 			for (const ms of recMilestones) {
 				const stats = milestoneTaskStatuses(ms, $events, odoKm);
 				const card = milestoneCardStatus(stats);
 				if (card === 'covered' || card === 'amber' || card === 'red' || ms.km > odoKm) {
-					combined.push({ kind: 'milestone', milestone: ms, km: ms.km, sortDate: '' });
+					allMilestones.push(ms);
 				}
 			}
 		}
+
+		const attachedMsIds = new Set<string>();
+		const eventEntries: TimelineEntry[] = sortedEvents.map((evt) => {
+			const evtKm = evt.km ?? 0;
+			const matched: ServiceMilestone[] = [];
+			if (evt.completed && evtKm > 0) {
+				for (const ms of allMilestones) {
+					const stats = milestoneTaskStatuses(ms, $events, odoKm);
+					const card = milestoneCardStatus(stats);
+					if (card === 'covered' && Math.abs(ms.km - evtKm) <= ATTACH_TOLERANCE_KM) {
+						matched.push(ms);
+						attachedMsIds.add(`${ms.kind}-${ms.km}`);
+					}
+				}
+			}
+			return {
+				kind: 'event' as const, evt, km: evtKm, sortDate: evt.date || '',
+				coveredMilestones: matched.length > 0 ? matched : undefined
+			};
+		});
+
+		const combined: TimelineEntry[] = [...eventEntries];
+		for (const ms of allMilestones) {
+			if (!attachedMsIds.has(`${ms.kind}-${ms.km}`)) {
+				combined.push({ kind: 'milestone', milestone: ms, km: ms.km, sortDate: '' });
+			}
+		}
+
 		combined.sort((a, b) => {
 			if (a.km !== b.km) return a.km - b.km;
 			if (a.kind === 'milestone' && b.kind !== 'milestone') return 1;
@@ -397,6 +421,18 @@
 									<span class="meta-cost">{formatCost(evt.cost)}</span>
 								{/if}
 							</div>
+							{#if entry.coveredMilestones && entry.coveredMilestones.length > 0}
+								<div class="covered-milestones">
+									{#each entry.coveredMilestones as cms}
+										<a href="{base}/timeline/service?kind={cms.kind}&km={cms.km}" class="covered-ms-row">
+											<span class="covered-ms-label">
+												{cms.kind === 'mfr' ? 'Manufacturer Service' : 'Recommended Service'} · {cms.km.toLocaleString()} km
+											</span>
+											<span class="covered-ms-check">✓</span>
+										</a>
+									{/each}
+								</div>
+							{/if}
 						</div>
 						{#if isExpanded}
 							<div class="tl-detail">
@@ -824,6 +860,37 @@
 		align-items: center;
 		font-size: 12px;
 		color: var(--color-text-secondary);
+	}
+
+	.covered-milestones {
+		margin-top: 8px;
+		padding-top: 8px;
+		border-top: 1px dashed var(--color-border);
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.covered-ms-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.covered-ms-label {
+		font-size: 11px;
+		font-weight: 600;
+		color: var(--color-text-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
+	}
+
+	.covered-ms-check {
+		font-size: 12px;
+		font-weight: 700;
+		color: #34c759;
 	}
 
 	.meta-item::after {
