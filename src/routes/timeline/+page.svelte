@@ -5,7 +5,7 @@
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent } from '$lib/stores';
 	import { loadEvents } from '$lib/github';
-	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus } from '$lib/utils';
+	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText } from '$lib/utils';
 	import type { TaskWithStatus } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
 
@@ -89,6 +89,15 @@
 
 	const mfrMilestones = $derived(computeMfrMilestones($events));
 	const recMilestones = $derived(computeRecMilestones($events));
+
+	const nextMilestone = $derived.by(() => {
+		const odoKm = $latestOdometer.km;
+		if (odoKm <= 0) return null;
+		const all = [...mfrMilestones, ...recMilestones]
+			.filter((ms) => ms.km > odoKm)
+			.sort((a, b) => a.km - b.km);
+		return all[0] ?? null;
+	});
 
 	const PX_PER_KM = 0.004;
 	const MIN_GAP = 12;
@@ -239,17 +248,19 @@
 							<div class="odo-dot"></div>
 							<div class="ruler-line"></div>
 						</div>
-						<div class="odo-marker">
-							<span class="odo-label">You are here</span>
-							{#if $nextScheduledEvent?.km && $latestOdometer.km > 0}
-								{@const remaining = $nextScheduledEvent.km - $latestOdometer.km}
-								{#if remaining > 0}
-									<span class="odo-remaining">{remaining.toLocaleString()} km to next service</span>
-								{:else}
-									<span class="odo-overdue">Overdue by {Math.abs(remaining).toLocaleString()} km</span>
-								{/if}
+					<div class="odo-marker">
+						{#if nextMilestone}
+							{@const remaining = nextMilestone.km - $latestOdometer.km}
+							{#if remaining > 0}
+								<span class="odo-label">In {remaining.toLocaleString()} km</span>
+								<span class="odo-action">{milestoneActionText(nextMilestone.tasks)}</span>
+							{:else}
+								<span class="odo-overdue">Overdue by {Math.abs(remaining).toLocaleString()} km</span>
 							{/if}
-						</div>
+						{:else}
+							<span class="odo-label">You are here</span>
+						{/if}
+					</div>
 					</div>
 		{:else if entry.kind === 'milestone' && entry.milestone}
 			{@const ms = entry.milestone}
@@ -507,6 +518,12 @@
 	.odo-remaining {
 		font-size: 12px;
 		color: var(--color-text-secondary);
+	}
+
+	.odo-action {
+		font-size: 12px;
+		color: var(--color-text-secondary);
+		line-height: 1.4;
 	}
 
 	.odo-overdue {

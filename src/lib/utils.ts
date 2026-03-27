@@ -168,6 +168,61 @@ export const SERVICE_NOTES: Record<string, string> = {
 	'fuel system cleanse (additive)': 'A diesel fuel additive cleans injectors, the fuel pump, and combustion chambers. Best used before an oil change so any loosened deposits are captured by the oil filter being replaced.',
 };
 
+interface TaskAction {
+	verb: string;
+	summary: string;
+	why: string;
+}
+
+const TASK_ACTIONS: Record<string, TaskAction> = {
+	'fuel system cleanse (additive)': { verb: 'add', summary: 'fuel additive', why: 'to prepare for oil change' },
+	'engine oil': { verb: 'change', summary: 'engine oil', why: 'to protect engine internals' },
+	'micro filter': { verb: 'replace', summary: 'micro filter', why: 'for cabin air quality' },
+	'air cleaner element': { verb: 'replace', summary: 'air cleaner element', why: 'for clean combustion air' },
+	'fuel filter': { verb: 'replace', summary: 'fuel filter', why: 'to protect the injection system' },
+	'vehicle check': { verb: 'perform', summary: 'vehicle check', why: 'to inspect braking and diagnostics' },
+	'check front brake pads': { verb: 'inspect', summary: 'front brake pads', why: 'for safe braking' },
+	'check rear brake pads': { verb: 'inspect', summary: 'rear brake pads', why: 'for safe braking' },
+	'ZF8 gearbox fluid': { verb: 'change', summary: 'gearbox fluid', why: 'for smooth shifting' },
+	'xDrive transfer case fluid': { verb: 'change', summary: 'transfer case fluid', why: 'to protect the xDrive system' },
+	'differential fluids': { verb: 'change', summary: 'differential fluids', why: 'to prevent gear wear' },
+	'timing chain': { verb: 'replace', summary: 'timing chain', why: 'to prevent engine failure' },
+	'coolant flush': { verb: 'flush', summary: 'coolant', why: 'to protect the cooling system' },
+	'intake carbon clean': { verb: 'clean', summary: 'intake valves', why: 'to restore engine performance' },
+};
+
+export function milestoneActionText(tasks: string[]): string {
+	if (tasks.length === 0) return '';
+
+	const actions = tasks.map((t) => TASK_ACTIONS[t]).filter(Boolean);
+	if (actions.length === 0) return tasks.join(', ');
+
+	if (actions.length === 1) {
+		const a = actions[0];
+		return `${a.verb} ${a.summary} ${a.why}`;
+	}
+
+	const grouped = new Map<string, TaskAction[]>();
+	for (const a of actions) {
+		if (!grouped.has(a.verb)) grouped.set(a.verb, []);
+		grouped.get(a.verb)!.push(a);
+	}
+
+	const parts: string[] = [];
+	const whys: string[] = [];
+
+	for (const [verb, group] of grouped) {
+		const summaries = group.map((a) => a.summary).join(', ');
+		parts.push(`${verb} ${summaries}`);
+		for (const a of group) {
+			if (!whys.includes(a.why)) whys.push(a.why);
+		}
+	}
+
+	const uniqueWhys = whys.length <= 2 ? whys.join(' and ') : whys.slice(0, 2).join(' and ');
+	return `${parts.join(', ')} ${uniqueWhys}`;
+}
+
 const COVER_TOLERANCE_KM = 1000;
 
 const WEAR_BASED_TASKS = new Set(['check front brake pads', 'check rear brake pads']);
