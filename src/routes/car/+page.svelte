@@ -2,9 +2,10 @@
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
+	import { tick } from 'svelte';
 	import {
 		token, events, latestOdometer, healthIntervals, dailyAverageKm,
-		vehicleConfig, tireConfig, tireStatus, tireSwapEvents
+		vehicleConfig, tireConfig, tireStatus, tireSwapEvents, manualOdometer
 	} from '$lib/stores';
 	import { loadEvents, saveEvents, loadHealthConfig, saveHealthConfig, loadVehicleConfig, loadTireConfig, saveTireConfig } from '$lib/github';
 	import { formatDate, formatDateISO } from '$lib/utils';
@@ -32,6 +33,9 @@
 	let swapSaving = $state(false);
 	let showArchived = $state(false);
 	let tireExpanded = $state(false);
+	let editingOdo = $state(false);
+	let odoInput = $state('');
+	let odoInputEl = $state<HTMLInputElement | null>(null);
 
 	const activeProfiles = $derived($tireConfig?.profiles.filter((p) => !p.archived) ?? []);
 	const archivedProfiles = $derived($tireConfig?.profiles.filter((p) => p.archived) ?? []);
@@ -62,6 +66,31 @@
 			loading = false;
 		}
 	});
+
+	async function startOdoEdit() {
+		odoInput = $latestOdometer.km > 0 ? $latestOdometer.km.toString() : '';
+		editingOdo = true;
+		await tick();
+		odoInputEl?.focus();
+		odoInputEl?.select();
+	}
+
+	function saveOdo() {
+		const val = parseInt(odoInput, 10);
+		if (!isNaN(val) && val > 0) {
+			$manualOdometer = val;
+		}
+		editingOdo = false;
+	}
+
+	function cancelOdo() {
+		editingOdo = false;
+	}
+
+	function handleOdoKey(e: KeyboardEvent) {
+		if (e.key === 'Enter') saveOdo();
+		else if (e.key === 'Escape') cancelOdo();
+	}
 
 	interface ComponentStatus {
 		interval: ServiceInterval;
@@ -430,15 +459,33 @@
 					{overallHealth === 'good' ? 'Good' : overallHealth === 'okay' ? 'Attention' : 'Overdue'}
 				</span>
 			</div>
-			<div class="vehicle-odo">
-				<span class="odo-value">
-					{$latestOdometer.source === 'estimated' ? '~' : ''}{$latestOdometer.km.toLocaleString()}{$latestOdometer.source === 'event' ? '+' : ''}
-				</span>
-				<span class="odo-unit">km</span>
-			</div>
+			{#if editingOdo}
+				<div class="odo-edit">
+					<input
+						type="number"
+						inputmode="numeric"
+						class="odo-input"
+						bind:value={odoInput}
+						bind:this={odoInputEl}
+						onkeydown={handleOdoKey}
+						onblur={saveOdo}
+						placeholder="Enter km"
+					/>
+					<span class="odo-unit">km</span>
+				</div>
+			{:else}
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<div class="odometer" onclick={startOdoEdit}>
+					<span class="odo-value">
+						{$latestOdometer.source === 'estimated' ? '~' : ''}{$latestOdometer.km.toLocaleString()}{$latestOdometer.source === 'event' ? '+' : ''}
+					</span>
+					<span class="odo-unit">km</span>
+				</div>
+			{/if}
 			{#if $latestOdometer.source === 'estimated' && $dailyAverageKm > 0}
 				<span class="odo-source">Estimated · {$dailyAverageKm} km/day avg</span>
-			{:else if $latestOdometer.source === 'manual'}
+			{:else if $latestOdometer.source === 'manual' || $latestOdometer.source === 'none'}
 				<span class="odo-source">Tap to set km</span>
 			{:else if $latestOdometer.source === 'event'}
 				<span class="odo-source">Based on last completed event</span>
@@ -810,17 +857,50 @@
 		color: var(--color-text-secondary);
 	}
 
-	.vehicle-odo {
+	.odometer {
 		display: flex;
 		align-items: baseline;
 		justify-content: center;
 		gap: 6px;
+		cursor: pointer;
+	}
+
+	.odometer:active {
+		opacity: 0.7;
 	}
 
 	.odo-value {
 		font-size: 32px;
 		font-weight: 800;
 		letter-spacing: -1px;
+	}
+
+	.odo-edit {
+		display: flex;
+		align-items: baseline;
+		justify-content: center;
+		gap: 6px;
+	}
+
+	.odo-input {
+		width: 140px;
+		font-size: 28px;
+		font-weight: 800;
+		letter-spacing: -1px;
+		text-align: center;
+		border: none;
+		border-bottom: 2px solid var(--color-primary);
+		background: transparent;
+		color: var(--color-text);
+		outline: none;
+		padding: 2px 0;
+		-moz-appearance: textfield;
+	}
+
+	.odo-input::-webkit-inner-spin-button,
+	.odo-input::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
 	}
 
 	.odo-unit {
