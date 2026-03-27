@@ -275,6 +275,22 @@ export const tireSwapEvents = derived(events, ($events) => {
 		});
 });
 
+function parseDotCode(dot: string): number | null {
+	if (!dot || dot.length !== 4) return null;
+	const week = parseInt(dot.slice(0, 2), 10);
+	const year = 2000 + parseInt(dot.slice(2, 4), 10);
+	if (isNaN(week) || isNaN(year) || week < 1 || week > 53) return null;
+	const jan1 = new Date(year, 0, 1).getTime();
+	return jan1 + (week - 1) * 7 * 86400000;
+}
+
+function oldestDotDate(profile: TireProfile): number | null {
+	const front = parseDotCode(profile.frontDot);
+	const rear = parseDotCode(profile.rearDot ?? '');
+	if (front !== null && rear !== null) return Math.min(front, rear);
+	return front ?? rear;
+}
+
 export const tireStatus = derived(
 	[tireSwapEvents, latestOdometer, tireConfig],
 	([$swapEvents, $odo, $tireCfg]): TireStatus => {
@@ -298,8 +314,10 @@ export const tireStatus = derived(
 
 		const swapKm = latest.km ?? 0;
 		const kmDriven = Math.max(0, $odo.km - swapKm);
-		const swapDate = latest.date ? new Date(latest.date + 'T00:00:00').getTime() : Date.now();
-		const ageDays = Math.max(0, Math.round((Date.now() - swapDate) / 86400000));
+		const dotDate = oldestDotDate(profile);
+		const fallbackDate = latest.date ? new Date(latest.date + 'T00:00:00').getTime() : Date.now();
+		const ageOrigin = dotDate ?? fallbackDate;
+		const ageDays = Math.max(0, Math.round((Date.now() - ageOrigin) / 86400000));
 
 		const kmPct = profile.maxKm > 0 ? Math.min(1, kmDriven / profile.maxKm) : 0;
 		const maxDays = profile.maxMonths * 30.44;

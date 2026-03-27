@@ -490,17 +490,17 @@
 							{/if}
 						</div>
 
-						<div class="tire-stat">
-							<span class="tire-stat-label">Age</span>
-							<span class="tire-stat-value">
-								{#if tire.ageDays > 365}
-									{Math.floor(tire.ageDays / 365)}y {Math.round((tire.ageDays % 365) / 30)}m
-								{:else if tire.ageDays > 30}
-									{Math.round(tire.ageDays / 30)} months
-								{:else}
-									{tire.ageDays} days
-								{/if}
-							</span>
+					<div class="tire-stat">
+						<span class="tire-stat-label">Age{#if tire.profile?.frontDot} (DOT){/if}</span>
+						<span class="tire-stat-value">
+							{#if tire.ageDays > 365}
+								{Math.floor(tire.ageDays / 365)}y {Math.round((tire.ageDays % 365) / 30)}m
+							{:else if tire.ageDays > 30}
+								{Math.round(tire.ageDays / 30)} months
+							{:else}
+								{tire.ageDays} days
+							{/if}
+						</span>
 							<div class="progress-bar">
 								<div
 									class="progress-fill"
