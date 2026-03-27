@@ -4,11 +4,11 @@
 	import { goto } from '$app/navigation';
 	import {
 		token, events, latestOdometer, healthIntervals, dailyAverageKm,
-		vehicleConfig, tireConfig, tireStatus
+		vehicleConfig, tireConfig, tireStatus, tireSwapEvents
 	} from '$lib/stores';
-	import { loadEvents, loadHealthConfig, saveHealthConfig, loadVehicleConfig, loadTireConfig } from '$lib/github';
+	import { loadEvents, loadHealthConfig, saveHealthConfig, loadVehicleConfig, loadTireConfig, saveTireConfig } from '$lib/github';
 	import { formatDate } from '$lib/utils';
-	import type { HealthConfig, CarEvent, ServiceInterval } from '$lib/types';
+	import type { HealthConfig, CarEvent, ServiceInterval, TireProfile, TireSeason, TireConfig } from '$lib/types';
 
 	let loading = $state(true);
 	let loadError = $state('');
@@ -16,6 +16,19 @@
 	let editKm = $state('');
 	let editMonths = $state('');
 	let saving = $state(false);
+
+	let tireEditOpen = $state(false);
+	let tireSaving = $state(false);
+	let tireEditBrand = $state('');
+	let tireEditModel = $state('');
+	let tireEditFrontSize = $state('');
+	let tireEditRearSize = $state('');
+	let tireEditStaggered = $state(false);
+	let tireEditSeason = $state<TireSeason>('summer');
+	let tireEditFrontDot = $state('');
+	let tireEditRearDot = $state('');
+	let tireEditPerAxleDot = $state(false);
+	let tireEditProfileId = $state<string | null>(null);
 
 	onMount(async () => {
 		if (!$token) {
@@ -217,6 +230,94 @@
 		return '#34c759';
 	}
 
+	function openTireEdit() {
+		const profile = $tireStatus.profile;
+		if (profile) {
+			tireEditProfileId = profile.id;
+			tireEditBrand = profile.brand;
+			tireEditModel = profile.model;
+			tireEditFrontSize = profile.frontSize;
+			tireEditRearSize = profile.rearSize ?? '';
+			tireEditStaggered = !!profile.rearSize;
+			tireEditSeason = profile.season;
+			tireEditFrontDot = profile.frontDot;
+			tireEditRearDot = profile.rearDot ?? '';
+			tireEditPerAxleDot = !!profile.rearDot;
+		} else {
+			tireEditProfileId = null;
+			tireEditBrand = '';
+			tireEditModel = '';
+			tireEditFrontSize = '';
+			tireEditRearSize = '';
+			tireEditStaggered = false;
+			tireEditSeason = ($tireStatus.currentSet as TireSeason) ?? 'summer';
+			tireEditFrontDot = '';
+			tireEditRearDot = '';
+			tireEditPerAxleDot = false;
+		}
+		tireEditOpen = true;
+	}
+
+	function closeTireEdit() {
+		tireEditOpen = false;
+	}
+
+	async function saveTireEdit() {
+		if (!$tireConfig) return;
+		tireSaving = true;
+		try {
+			const newProfile: TireProfile = {
+				id: tireEditProfileId ?? `${tireEditSeason}-${Date.now().toString(36)}`,
+				season: tireEditSeason,
+				brand: tireEditBrand.trim(),
+				model: tireEditModel.trim(),
+				frontSize: tireEditFrontSize.trim(),
+				rearSize: tireEditStaggered && tireEditRearSize.trim() ? tireEditRearSize.trim() : null,
+				frontDot: tireEditFrontDot.trim(),
+				rearDot: tireEditPerAxleDot && tireEditRearDot.trim() ? tireEditRearDot.trim() : null,
+				maxKm: $tireStatus.profile?.maxKm ?? 40000,
+				maxMonths: $tireStatus.profile?.maxMonths ?? 60
+			};
+
+			let updatedProfiles: TireProfile[];
+			if (tireEditProfileId) {
+				updatedProfiles = $tireConfig.profiles.map((p) =>
+					p.id === tireEditProfileId ? newProfile : p
+				);
+			} else {
+				updatedProfiles = [...$tireConfig.profiles, newProfile];
+			}
+
+			const updatedConfig: TireConfig = { profiles: updatedProfiles, warningPct: $tireConfig.warningPct };
+			await saveTireConfig(updatedConfig, `Update tire profile: ${newProfile.id}`);
+			$tireConfig = updatedConfig;
+			tireEditOpen = false;
+		} catch {
+			alert('Failed to save tire spec');
+		} finally {
+			tireSaving = false;
+		}
+	}
+
+	function tireDisplaySize(profile: TireProfile): string {
+		if (profile.rearSize) return `${profile.frontSize} / ${profile.rearSize}`;
+		return profile.frontSize;
+	}
+
+	function tireDisplayDot(profile: TireProfile): string {
+		if (!profile.frontDot) return '';
+		if (profile.rearDot && profile.rearDot !== profile.frontDot) {
+			return `DOT ${profile.frontDot} / ${profile.rearDot}`;
+		}
+		return `DOT ${profile.frontDot}`;
+	}
+
+	const seasonLabels: Record<TireSeason, string> = {
+		summer: 'Summer',
+		winter: 'Winter',
+		'all-year': 'All-year'
+	};
+
 	function tireHealthColor(h: string): string {
 		if (h === 'overdue') return '#ff3b30';
 		if (h === 'warning') return '#ff9500';
@@ -273,71 +374,156 @@
 				class="tire-card"
 				class:tire-overdue={tire.health === 'overdue'}
 				class:tire-warning={tire.health === 'warning'}
+				class:tire-tappable={!tireEditOpen}
+				onclick={() => { if (!tireEditOpen) openTireEdit(); }}
+				role={!tireEditOpen ? 'button' : undefined}
+				tabindex={!tireEditOpen ? 0 : undefined}
 			>
 				<div class="tire-header">
-					<span class="tire-set">{tire.profile?.label ?? tire.currentSet} tires</span>
+					<span class="tire-set">{tire.profile ? seasonLabels[tire.profile.season] : tire.currentSet} tires</span>
 					<span class="tire-health-badge" style="color: {tireHealthColor(tire.health)}">
 						{tire.health === 'good' ? 'Good' : tire.health === 'warning' ? 'Wear soon' : 'Replace'}
 					</span>
 				</div>
 				{#if tire.profile}
-					<span class="tire-detail">{tire.profile.brand} {tire.profile.model} · {tire.profile.size}</span>
+					<span class="tire-detail">
+						{tire.profile.brand} {tire.profile.model} · {tireDisplaySize(tire.profile)}
+						{#if tireDisplayDot(tire.profile)}
+							 · {tireDisplayDot(tire.profile)}
+						{/if}
+					</span>
 				{/if}
 
-				<div class="tire-stats">
-					<div class="tire-stat">
-						<span class="tire-stat-label">Km driven</span>
-						<span class="tire-stat-value">{tire.kmDriven.toLocaleString()} km</span>
-						<div class="progress-bar">
-							<div
-								class="progress-fill"
-								style="width: {Math.min(100, tire.kmPct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.kmPct))}"
-							></div>
+				{#if tireEditOpen}
+					<!-- Inline tire spec edit form -->
+					<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+					<div class="tire-edit-panel" onclick={(e) => e.stopPropagation()}>
+						<div class="edit-row">
+							<div class="edit-field">
+								<label for="tire-brand">Make</label>
+								<input id="tire-brand" type="text" bind:value={tireEditBrand} placeholder="e.g. Aplus" />
+							</div>
+							<div class="edit-field">
+								<label for="tire-model">Model</label>
+								<input id="tire-model" type="text" bind:value={tireEditModel} placeholder="e.g. A610 100Y" />
+							</div>
 						</div>
-						{#if tire.remainingKm !== null}
-							<span class="tire-stat-remaining" style="color: {tire.remainingKm < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
-								{#if tire.remainingKm < 0}
-									{Math.abs(tire.remainingKm).toLocaleString()} km overdue
-								{:else}
-									{tire.remainingKm.toLocaleString()} km remaining
-								{/if}
-							</span>
+
+						<div class="edit-field">
+							<label for="tire-front-size">Front size</label>
+							<input id="tire-front-size" type="text" bind:value={tireEditFrontSize} placeholder="e.g. 225/55R17" />
+						</div>
+
+						<label class="toggle-row">
+							<input type="checkbox" bind:checked={tireEditStaggered} />
+							<span>Staggered (different rear size)</span>
+						</label>
+						{#if tireEditStaggered}
+							<div class="edit-field">
+								<label for="tire-rear-size">Rear size</label>
+								<input id="tire-rear-size" type="text" bind:value={tireEditRearSize} placeholder="e.g. 255/45R17" />
+							</div>
 						{/if}
+
+						<div class="edit-field">
+							<label for="tire-season">Season</label>
+							<select id="tire-season" bind:value={tireEditSeason}>
+								<option value="summer">Summer</option>
+								<option value="winter">Winter</option>
+								<option value="all-year">All-year</option>
+							</select>
+						</div>
+
+						<div class="edit-field">
+							<label for="tire-front-dot">DOT code (last 4 digits)</label>
+							<input id="tire-front-dot" type="text" bind:value={tireEditFrontDot} placeholder="e.g. 2523" maxlength="4" inputmode="numeric" />
+						</div>
+
+						<label class="toggle-row">
+							<input type="checkbox" bind:checked={tireEditPerAxleDot} />
+							<span>Different rear DOT</span>
+						</label>
+						{#if tireEditPerAxleDot}
+							<div class="edit-field">
+								<label for="tire-rear-dot">Rear DOT code</label>
+								<input id="tire-rear-dot" type="text" bind:value={tireEditRearDot} placeholder="e.g. 2420" maxlength="4" inputmode="numeric" />
+							</div>
+						{/if}
+
+						<div class="edit-actions">
+							<button class="edit-cancel" onclick={closeTireEdit}>Cancel</button>
+							<button class="edit-save" onclick={saveTireEdit} disabled={tireSaving}>{tireSaving ? 'Saving...' : 'Save'}</button>
+						</div>
 					</div>
 
-					<div class="tire-stat">
-						<span class="tire-stat-label">Age</span>
-						<span class="tire-stat-value">
-							{#if tire.ageDays > 365}
-								{Math.floor(tire.ageDays / 365)}y {Math.round((tire.ageDays % 365) / 30)}m
-							{:else if tire.ageDays > 30}
-								{Math.round(tire.ageDays / 30)} months
-							{:else}
-								{tire.ageDays} days
+					<!-- Tire swap history -->
+					{#if $tireSwapEvents.length > 0}
+						<div class="tire-history">
+							<span class="tire-history-title">Tire history</span>
+							{#each $tireSwapEvents as swapEvt}
+								<a href="{base}/timeline/{swapEvt.id}" class="tire-history-item" onclick={(e) => e.stopPropagation()}>
+									<span class="tire-history-name">{swapEvt.event}</span>
+									<span class="tire-history-meta">{formatDate(swapEvt.date)} · {(swapEvt.km ?? 0).toLocaleString()} km</span>
+								</a>
+							{/each}
+						</div>
+					{/if}
+				{:else}
+					<div class="tire-stats">
+						<div class="tire-stat">
+							<span class="tire-stat-label">Km driven</span>
+							<span class="tire-stat-value">{tire.kmDriven.toLocaleString()} km</span>
+							<div class="progress-bar">
+								<div
+									class="progress-fill"
+									style="width: {Math.min(100, tire.kmPct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.kmPct))}"
+								></div>
+							</div>
+							{#if tire.remainingKm !== null}
+								<span class="tire-stat-remaining" style="color: {tire.remainingKm < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
+									{#if tire.remainingKm < 0}
+										{Math.abs(tire.remainingKm).toLocaleString()} km overdue
+									{:else}
+										{tire.remainingKm.toLocaleString()} km remaining
+									{/if}
+								</span>
 							{/if}
-						</span>
-						<div class="progress-bar">
-							<div
-								class="progress-fill"
-								style="width: {Math.min(100, tire.agePct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.agePct))}"
-							></div>
 						</div>
-						{#if tire.remainingDays !== null}
-							<span class="tire-stat-remaining" style="color: {tire.remainingDays < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
-								{#if tire.remainingDays < 0}
-									{Math.abs(tire.remainingDays)} days overdue
-								{:else if tire.remainingDays > 365}
-									{Math.round(tire.remainingDays / 30)} months remaining
+
+						<div class="tire-stat">
+							<span class="tire-stat-label">Age</span>
+							<span class="tire-stat-value">
+								{#if tire.ageDays > 365}
+									{Math.floor(tire.ageDays / 365)}y {Math.round((tire.ageDays % 365) / 30)}m
+								{:else if tire.ageDays > 30}
+									{Math.round(tire.ageDays / 30)} months
 								{:else}
-									{tire.remainingDays} days remaining
+									{tire.ageDays} days
 								{/if}
 							</span>
-						{/if}
+							<div class="progress-bar">
+								<div
+									class="progress-fill"
+									style="width: {Math.min(100, tire.agePct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.agePct))}"
+								></div>
+							</div>
+							{#if tire.remainingDays !== null}
+								<span class="tire-stat-remaining" style="color: {tire.remainingDays < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
+									{#if tire.remainingDays < 0}
+										{Math.abs(tire.remainingDays)} days overdue
+									{:else if tire.remainingDays > 365}
+										{Math.round(tire.remainingDays / 30)} months remaining
+									{:else}
+										{tire.remainingDays} days remaining
+									{/if}
+								</span>
+							{/if}
+						</div>
 					</div>
-				</div>
 
-				{#if tire.swapEvent}
-					<span class="tire-swap-date">Mounted: {formatDate(tire.swapEvent.date)} · {(tire.swapEvent.km ?? 0).toLocaleString()} km</span>
+					{#if tire.swapEvent}
+						<span class="tire-swap-date">Mounted: {formatDate(tire.swapEvent.date)} · {(tire.swapEvent.km ?? 0).toLocaleString()} km</span>
+					{/if}
 				{/if}
 			</div>
 		{/if}
@@ -626,9 +812,89 @@
 		font-size: 11px;
 	}
 
+	.tire-tappable {
+		cursor: pointer;
+	}
+
+	.tire-tappable:active {
+		opacity: 0.85;
+	}
+
 	.tire-swap-date {
 		font-size: 11px;
 		color: var(--color-text-secondary);
+	}
+
+	/* Tire edit panel */
+	.tire-edit-panel {
+		margin-top: 12px;
+		padding-top: 12px;
+		border-top: 1px solid var(--color-border);
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.toggle-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 13px;
+		color: var(--color-text-secondary);
+		cursor: pointer;
+	}
+
+	.toggle-row input[type="checkbox"] {
+		width: 18px;
+		height: 18px;
+		flex-shrink: 0;
+		accent-color: var(--color-accent);
+	}
+
+	/* Tire history */
+	.tire-history {
+		margin-top: 12px;
+		padding-top: 12px;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.tire-history-title {
+		display: block;
+		font-size: 11px;
+		font-weight: 700;
+		color: var(--color-text-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
+		margin-bottom: 8px;
+	}
+
+	.tire-history-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 8px 0;
+		border-bottom: 1px solid var(--color-border);
+		text-decoration: none;
+		color: var(--color-text);
+	}
+
+	.tire-history-item:last-child {
+		border-bottom: none;
+	}
+
+	.tire-history-item:active {
+		opacity: 0.7;
+	}
+
+	.tire-history-name {
+		font-size: 13px;
+		font-weight: 500;
+	}
+
+	.tire-history-meta {
+		font-size: 11px;
+		color: var(--color-text-secondary);
+		white-space: nowrap;
 	}
 
 	/* Component list */

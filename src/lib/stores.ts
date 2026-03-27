@@ -244,7 +244,7 @@ export const tireConfig = writable<TireConfig | null>(null);
 export type TireHealth = 'good' | 'warning' | 'overdue';
 
 export interface TireStatus {
-	currentSet: 'summer' | 'winter' | null;
+	currentSet: 'summer' | 'winter' | 'all-year' | null;
 	profile: TireProfile | null;
 	swapEvent: CarEvent | null;
 	kmDriven: number;
@@ -256,35 +256,44 @@ export interface TireStatus {
 	remainingDays: number | null;
 }
 
+function detectSeason(evt: CarEvent): 'summer' | 'winter' | 'all-year' | null {
+	const tasks = evt.tasks ?? [evt.event];
+	const taskStr = tasks.join(' ').toLowerCase();
+	if (taskStr.includes('winter')) return 'winter';
+	if (taskStr.includes('summer')) return 'summer';
+	if (taskStr.includes('all-year') || taskStr.includes('all year')) return 'all-year';
+	return null;
+}
+
+export const tireSwapEvents = derived(events, ($events) => {
+	return $events
+		.filter((e) => e.completed && e.category === 'tire-swap' && e.km !== null)
+		.sort((a, b) => {
+			const diff = (b.km ?? 0) - (a.km ?? 0);
+			if (diff !== 0) return diff;
+			return (b.date || '').localeCompare(a.date || '');
+		});
+});
+
 export const tireStatus = derived(
-	[events, latestOdometer, tireConfig],
-	([$events, $odo, $tireCfg]): TireStatus => {
+	[tireSwapEvents, latestOdometer, tireConfig],
+	([$swapEvents, $odo, $tireCfg]): TireStatus => {
 		const empty: TireStatus = {
 			currentSet: null, profile: null, swapEvent: null,
 			kmDriven: 0, ageDays: 0, kmPct: 0, agePct: 0,
 			health: 'good', remainingKm: null, remainingDays: null
 		};
 
-		const swapEvents = $events
-			.filter((e) => e.completed && e.category === 'tire-swap' && e.km !== null)
-			.sort((a, b) => {
-				const diff = (b.km ?? 0) - (a.km ?? 0);
-				if (diff !== 0) return diff;
-				return (b.date || '').localeCompare(a.date || '');
-			});
+		if ($swapEvents.length === 0) return empty;
 
-		if (swapEvents.length === 0) return empty;
-
-		const latest = swapEvents[0];
-		const tasks = latest.tasks ?? [latest.event];
-		const taskStr = tasks.join(' ').toLowerCase();
-		const currentSet: 'summer' | 'winter' | null =
-			taskStr.includes('winter') ? 'winter' :
-			taskStr.includes('summer') ? 'summer' : null;
+		const latest = $swapEvents[0];
+		const currentSet = detectSeason(latest);
 
 		if (!currentSet || !$tireCfg) return { ...empty, currentSet, swapEvent: latest };
 
-		const profile = $tireCfg.profiles[currentSet] ?? null;
+		const profile = $tireCfg.profiles
+			.filter((p) => p.season === currentSet)
+			.sort((a, b) => b.id.localeCompare(a.id))[0] ?? null;
 		if (!profile) return { ...empty, currentSet, swapEvent: latest };
 
 		const swapKm = latest.km ?? 0;

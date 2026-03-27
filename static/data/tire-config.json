@@ -1,21 +1,29 @@
 {
-  "profiles": {
-    "summer": {
-      "label": "Summer",
+  "profiles": [
+    {
+      "id": "summer-01",
+      "season": "summer",
       "brand": "Aplus",
       "model": "A610 100Y",
-      "size": "225/55R17",
+      "frontSize": "225/55R17",
+      "rearSize": null,
+      "frontDot": "",
+      "rearDot": null,
       "maxKm": 40000,
       "maxMonths": 60
     },
-    "winter": {
-      "label": "Winter",
+    {
+      "id": "winter-01",
+      "season": "winter",
       "brand": "SH Däck&Fälg",
       "model": "Spiked",
-      "size": "225/55R17",
+      "frontSize": "225/55R17",
+      "rearSize": null,
+      "frontDot": "",
+      "rearDot": null,
       "maxKm": 30000,
       "maxMonths": 48
     }
-  },
+  ],
   "warningPct": 0.8
 }

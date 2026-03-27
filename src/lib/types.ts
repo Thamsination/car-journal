@@ -73,16 +73,22 @@ export interface VehicleConfig {
 	drivetrain: string;
 }
 
+export type TireSeason = 'summer' | 'winter' | 'all-year';
+
 export interface TireProfile {
-	label: string;
+	id: string;
+	season: TireSeason;
 	brand: string;
 	model: string;
-	size: string;
+	frontSize: string;
+	rearSize: string | null;
+	frontDot: string;
+	rearDot: string | null;
 	maxKm: number;
 	maxMonths: number;
 }
 
 export interface TireConfig {
-	profiles: Record<string, TireProfile>;
+	profiles: TireProfile[];
 	warningPct: number;
 }
