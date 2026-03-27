@@ -364,7 +364,7 @@
 					</div>
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<!-- svelte-ignore a11y_click_events_have_key_events -->
-					<div class="tl-card-wrapper" onclick={() => toggleExpand(evt.id)}>
+					<div class="tl-card-wrapper" onclick={(e) => { if (e.target instanceof HTMLElement && e.target.closest('.tl-detail')) return; toggleExpand(evt.id); }}>
 						<div class="tl-card" class:tl-card-next={isNext} class:tl-card-expanded={isExpanded}>
 							<div class="tl-card-header">
 								<span
@@ -396,9 +396,7 @@
 							</div>
 						</div>
 						{#if isExpanded}
-							<!-- svelte-ignore a11y_click_events_have_key_events -->
-							<!-- svelte-ignore a11y_no_static_element_interactions -->
-							<div class="tl-detail" onclick={(e) => e.stopPropagation()}>
+							<div class="tl-detail">
 								{#if evt.notes}
 									<div class="detail-section">
 										<span class="detail-label">Notes</span>
