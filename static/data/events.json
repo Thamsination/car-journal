@@ -379,6 +379,23 @@
         "summer tires"
       ],
       "kmEstimated": false
+    },
+    {
+      "id": "evt_swap_mn8wht2t",
+      "km": 187179,
+      "date": "2026-03-27",
+      "event": "Winter tires",
+      "cost": 0,
+      "currency": "DKK",
+      "provider": "",
+      "notes": "Profile: winter-01",
+      "invoiceNr": "",
+      "completed": true,
+      "category": "tire-swap",
+      "tasks": [
+        "winter tires"
+      ],
+      "kmEstimated": false
     }
   ]
 }
