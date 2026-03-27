@@ -324,8 +324,17 @@ export const tireStatus = derived(
 		}
 		if (!profile) return { ...empty, currentSet, swapEvent: latest };
 
-		const swapKm = latest.km ?? 0;
-		const kmDriven = Math.max(0, $odo.km - swapKm);
+		// Sum km across all periods when this tire set was mounted
+		const swapsByKm = [...$swapEvents].reverse(); // ascending by km
+		let kmDriven = 0;
+		for (let i = 0; i < swapsByKm.length; i++) {
+			const season = detectSeason(swapsByKm[i]);
+			if (season !== currentSet) continue;
+			const mountKm = swapsByKm[i].km ?? 0;
+			const endKm = (i + 1 < swapsByKm.length) ? (swapsByKm[i + 1].km ?? 0) : $odo.km;
+			kmDriven += Math.max(0, endKm - mountKm);
+		}
+
 		const dotDate = oldestDotDate(profile);
 		const fallbackDate = latest.date ? new Date(latest.date + 'T00:00:00').getTime() : Date.now();
 		const ageOrigin = dotDate ?? fallbackDate;
