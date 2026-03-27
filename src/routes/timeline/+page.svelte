@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { token, events, statusFilter, latestOdometer, nextScheduledEvent } from '$lib/stores';
+	import { token, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm } from '$lib/stores';
 	import { loadEvents, receiptUrl } from '$lib/github';
 	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask } from '$lib/utils';
 	import type { TaskWithStatus } from '$lib/utils';
@@ -371,6 +371,11 @@
 							<span class="ms-task-item ms-task-{ts.status}">{ts.task}</span>
 						{/each}
 					</div>
+					{#if ms.km > $latestOdometer.km && $dailyAverageKm > 0}
+						{@const daysAway = (ms.km - $latestOdometer.km) / $dailyAverageKm}
+						{@const est = new Date(Date.now() + daysAway * 86400000)}
+						<span class="ms-estimate">~{est.getFullYear()} {est.toLocaleString('en', { month: 'long' })}</span>
+					{/if}
 				</a>
 			</div>
 			{:else if entry.evt}
@@ -1033,6 +1038,14 @@
 
 	.ms-task-covered { color: var(--color-text-secondary); }
 	.ms-task-scheduled { color: var(--color-text); }
+
+	.ms-estimate {
+		display: block;
+		margin-top: 4px;
+		font-size: 12px;
+		color: var(--color-text-secondary);
+		font-style: italic;
+	}
 	.ms-task-amber { color: #f59e0b; }
 	.ms-task-red { color: #ff3b30; }
 

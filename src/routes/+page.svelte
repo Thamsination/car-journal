@@ -320,6 +320,11 @@
 						<span class="ms-task-item ms-task-{ts.status}">{ts.task}</span>
 					{/each}
 				</div>
+				{#if ms.km > $latestOdometer.km && $dailyAverageKm > 0}
+					{@const daysAway = (ms.km - $latestOdometer.km) / $dailyAverageKm}
+					{@const est = new Date(Date.now() + daysAway * 86400000)}
+					<span class="ms-estimate">~{est.getFullYear()} {est.toLocaleString('en', { month: 'long' })}</span>
+				{/if}
 			</a>
 		{/if}
 
@@ -703,6 +708,14 @@
 	.ms-task-scheduled { color: var(--color-text); }
 	.ms-task-amber { color: #f59e0b; }
 	.ms-task-red { color: #ff3b30; }
+
+	.ms-estimate {
+		display: block;
+		margin-top: 4px;
+		font-size: 12px;
+		color: var(--color-text-secondary);
+		font-style: italic;
+	}
 
 	.ms-overdue-amber { color: #f59e0b; }
 	.ms-overdue-red { color: #ff3b30; }
