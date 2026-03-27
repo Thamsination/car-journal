@@ -274,13 +274,9 @@
 			<p class="summary-text">{healthSummary}</p>
 		</div>
 
-		<!-- 3. You Are Here -->
+		<!-- 3. Next Milestone -->
+		<h3 class="section-title">Next Milestone</h3>
 		<a href="{base}/timeline/new?km={$latestOdometer.km}" class="here-card">
-			<div class="here-header">
-				<span class="here-km">
-					{$latestOdometer.source === 'estimated' ? '~' : ''}{$latestOdometer.km.toLocaleString()}{$latestOdometer.source === 'event' ? '+' : ''} km
-				</span>
-			</div>
 			{#if nextMilestone}
 				{@const remaining = nextMilestone.km - $latestOdometer.km}
 				{#if remaining > 0}
@@ -295,7 +291,8 @@
 			<span class="here-tap-hint">Tap to add entry</span>
 		</a>
 
-		<!-- 4. Next Milestone -->
+		<!-- 4. Upcoming Milestone -->
+		<h3 class="section-title">Upcoming Milestone</h3>
 		{#if nextMilestoneCard}
 			{@const { ms, stats, cardStatus } = nextMilestoneCard}
 			<a
