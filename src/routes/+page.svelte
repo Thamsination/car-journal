@@ -190,8 +190,8 @@
 		const all = [...mfrMilestones, ...recMilestones]
 			.filter((ms) => ms.km > odoKm)
 			.sort((a, b) => a.km - b.km);
-		if (all.length === 0) return null;
-		const ms = all[0];
+		if (all.length < 2) return null;
+		const ms = all[1];
 		const stats = milestoneTaskStatuses(ms, $events, odoKm);
 		const cardStatus = milestoneCardStatus(stats);
 		return { ms, stats, cardStatus };
