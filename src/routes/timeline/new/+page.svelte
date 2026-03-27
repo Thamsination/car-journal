@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { events } from '$lib/stores';
+	import { page } from '$app/stores';
+	import { events, latestOdometer } from '$lib/stores';
 	import { saveEvents, loadEvents } from '$lib/github';
-	import { generateId, formatDateISO, allCategories, eventCategory, getEventTasks, buildEventString } from '$lib/utils';
+	import { generateId, formatDateISO, allCategories, eventCategory, getEventTasks, buildEventString, computeMfrMilestones, computeRecMilestones, milestoneTaskStatuses } from '$lib/utils';
+	import type { TaskStatus } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent, EventCategory } from '$lib/types';
+
+	const prefillKm = $derived(Number($page.url.searchParams.get('km')) || null);
 
 	let saving = $state(false);
 	let saveError = $state('');
@@ -28,8 +32,34 @@
 		invoiceNr: ''
 	});
 
+	$effect(() => {
+		if (prefillKm !== null && form.km === null) {
+			form.km = prefillKm;
+		}
+	});
+
 	let selectedCategory = $state<EventCategory | ''>('');
 	let costInput = $state('');
+
+	const overdueTaskMap = $derived.by(() => {
+		const map = new Map<string, TaskStatus>();
+		const odoKm = $latestOdometer.km;
+		if (odoKm <= 0) return map;
+		const allMs = [...computeMfrMilestones($events), ...computeRecMilestones($events)];
+		for (const ms of allMs) {
+			if (ms.km > odoKm) continue;
+			const stats = milestoneTaskStatuses(ms, $events, odoKm);
+			for (const ts of stats) {
+				if (ts.status === 'amber' || ts.status === 'red') {
+					const existing = map.get(ts.task);
+					if (!existing || ts.status === 'red') {
+						map.set(ts.task, ts.status);
+					}
+				}
+			}
+		}
+		return map;
+	});
 
 	const SERVICE_CATEGORIES: EventCategory[] = ['official-service', 'other-service'];
 
@@ -47,7 +77,22 @@
 			}
 		}
 
-		return [...tasks].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+		for (const [task] of overdueTaskMap) {
+			tasks.add(task);
+		}
+
+		const overdue = [...tasks].filter((t) => overdueTaskMap.has(t));
+		const normal = [...tasks].filter((t) => !overdueTaskMap.has(t));
+
+		overdue.sort((a, b) => {
+			const sa = overdueTaskMap.get(a) === 'red' ? 0 : 1;
+			const sb = overdueTaskMap.get(b) === 'red' ? 0 : 1;
+			if (sa !== sb) return sa - sb;
+			return a.localeCompare(b, undefined, { sensitivity: 'base' });
+		});
+		normal.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+		return [...overdue, ...normal];
 	});
 
 	const providers = $derived.by(() => {
@@ -142,10 +187,13 @@
 			{#if selectedCategory && taskSuggestions.length > 0}
 				<div class="task-chips">
 					{#each taskSuggestions as task}
+						{@const overdue = overdueTaskMap.get(task)}
 						<button
 							type="button"
 							class="task-chip"
 							class:selected={selectedTasks.includes(task)}
+							class:chip-amber={overdue === 'amber' && !selectedTasks.includes(task)}
+							class:chip-red={overdue === 'red' && !selectedTasks.includes(task)}
 							onclick={() => toggleTask(task)}
 						>
 							{task}
@@ -293,6 +341,18 @@
 		background: var(--color-accent);
 		color: white;
 		border-color: var(--color-accent);
+	}
+
+	.task-chip.chip-amber {
+		border-color: #f59e0b;
+		background: rgba(245, 158, 11, 0.12);
+		color: #b45309;
+	}
+
+	.task-chip.chip-red {
+		border-color: #ef4444;
+		background: rgba(239, 68, 68, 0.12);
+		color: #b91c1c;
 	}
 
 	.task-chip:active {

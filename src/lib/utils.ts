@@ -191,15 +191,25 @@ const TASK_ACTIONS: Record<string, TaskAction> = {
 	'intake carbon clean': { verb: 'clean', summary: 'intake valves', why: 'to restore engine performance' },
 };
 
+const PRESERVE_CASE = new Set(['xDrive', 'ZF8', 'EGR', 'OEM', 'CarPlay']);
+
+export function capitalizeTask(text: string): string {
+	for (const word of PRESERVE_CASE) {
+		if (text.startsWith(word.toLowerCase()) || text.startsWith(word)) return text;
+	}
+	return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 export function milestoneActionText(tasks: string[]): string {
 	if (tasks.length === 0) return '';
 
 	const actions = tasks.map((t) => TASK_ACTIONS[t]).filter(Boolean);
-	if (actions.length === 0) return tasks.join(', ');
+	if (actions.length === 0) return capitalizeTask(tasks.join(', '));
 
 	if (actions.length === 1) {
 		const a = actions[0];
-		return `${a.verb} ${a.summary} ${a.why}`;
+		const text = `${a.verb} ${a.summary} ${a.why}`;
+		return text.charAt(0).toUpperCase() + text.slice(1);
 	}
 
 	const grouped = new Map<string, TaskAction[]>();
@@ -220,7 +230,8 @@ export function milestoneActionText(tasks: string[]): string {
 	}
 
 	const uniqueWhys = whys.length <= 2 ? whys.join(' and ') : whys.slice(0, 2).join(' and ');
-	return `${parts.join(', ')} ${uniqueWhys}`;
+	const text = `${parts.join(', ')} ${uniqueWhys}`;
+	return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 const COVER_TOLERANCE_KM = 1000;

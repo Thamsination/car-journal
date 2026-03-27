@@ -5,7 +5,7 @@
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent } from '$lib/stores';
 	import { loadEvents } from '$lib/github';
-	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText } from '$lib/utils';
+	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask } from '$lib/utils';
 	import type { TaskWithStatus } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
 
@@ -267,7 +267,7 @@
 							<div class="odo-dot"></div>
 							<div class="ruler-line"></div>
 						</div>
-					<div class="odo-marker">
+					<a class="odo-marker" href="{base}/timeline/new?km={$latestOdometer.km}">
 						{#if nextMilestone}
 							{@const remaining = nextMilestone.km - $latestOdometer.km}
 							{#if remaining > 0}
@@ -284,12 +284,13 @@
 								<span class="odo-attention-title">Needs attention</span>
 								<ul class="odo-attention-list">
 									{#each outstandingTasks as task}
-										<li>{task}</li>
+										<li>{capitalizeTask(task)}</li>
 									{/each}
 								</ul>
 							</div>
 						{/if}
-					</div>
+						<span class="odo-tap-hint">Tap to add entry</span>
+					</a>
 					</div>
 		{:else if entry.kind === 'milestone' && entry.milestone}
 			{@const ms = entry.milestone}
@@ -549,10 +550,23 @@
 		color: var(--color-text-secondary);
 	}
 
+	a.odo-marker {
+		text-decoration: none;
+		color: inherit;
+	}
+
 	.odo-action {
 		font-size: 12px;
 		color: var(--color-text-secondary);
 		line-height: 1.4;
+	}
+
+	.odo-tap-hint {
+		display: block;
+		margin-top: 8px;
+		font-size: 11px;
+		color: var(--color-accent);
+		opacity: 0.7;
 	}
 
 	.odo-attention {
