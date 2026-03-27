@@ -447,7 +447,7 @@ export type CompletionQuality = 'green' | 'amber' | 'red';
 export function completionQuality(evt: CarEvent): CompletionQuality {
 	const cat = evt.category || eventCategory(evt.event);
 
-	if (cat === 'official-service') return 'green';
+	if (cat === 'official-service' || cat === 'tire-swap') return 'green';
 
 	const hasCategory = !!cat;
 	const hasDate = !!evt.date;
