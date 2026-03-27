@@ -24,7 +24,7 @@
       "taskMatches": [
         "air cleaner element"
       ],
-      "intervalKm": 10000,
+      "intervalKm": 60000,
       "intervalMonths": 12
     },
     {
