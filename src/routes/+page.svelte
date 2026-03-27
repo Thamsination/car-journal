@@ -274,7 +274,7 @@
 
 		<!-- 3. Next Milestone -->
 		<h3 class="section-title">Next Milestone</h3>
-		<a href="{base}/timeline/new?km={$latestOdometer.km}" class="here-card">
+		<a href="{base}/timeline" class="here-card">
 			{#if nextMilestone}
 				{@const remaining = nextMilestone.km - $latestOdometer.km}
 				{#if remaining > 0}
@@ -286,7 +286,6 @@
 			{:else}
 				<span class="here-label">You are here</span>
 			{/if}
-			<span class="here-tap-hint">Tap to add entry</span>
 		</a>
 
 		<!-- 4. Upcoming Milestone -->
