@@ -4,7 +4,7 @@
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent } from '$lib/stores';
-	import { loadEvents } from '$lib/github';
+	import { loadEvents, receiptUrl } from '$lib/github';
 	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask } from '$lib/utils';
 	import type { TaskWithStatus } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
@@ -16,6 +16,19 @@
 	let focusId = $state<string | null>(null);
 	let showMfr = $state(true);
 	let showRec = $state(true);
+	let expandedIds = $state(new Set<string>());
+
+	function toggleExpand(id: string) {
+		const next = new Set(expandedIds);
+		if (next.has(id)) next.delete(id);
+		else next.add(id);
+		expandedIds = next;
+	}
+
+	function receiptName(path: string): string {
+		const parts = path.split('/');
+		return parts[parts.length - 1];
+	}
 
 	$effect(() => {
 		const params = $page.url.searchParams;
@@ -324,31 +337,35 @@
 					{/if}
 				</a>
 			</div>
-				{:else if entry.evt}
-					{@const evt = entry.evt}
-					{@const status = deriveStatus(evt, $latestOdometer.km)}
-					{@const isNext = evt.id === nextId}
-					{@const isFocus = focusId ? evt.id === focusId : false}
-					<div
-						class="tl-row"
-						class:next-scheduled={isNext}
-						class:focused-row={isFocus}
-						style="margin-top: {gap}px"
-						use:anchorAction={isFocus || (!focusId && isNext)}
-					>
-						<div class="tl-ruler">
-							<div class="ruler-line" class:completed-line={evt.completed}></div>
-							{#if evt.km}
-								<div class="ruler-km" class:completed-km={evt.completed}>
-									{evt.kmEstimated ? '~' : ''}{evt.km.toLocaleString()}
-								</div>
-							{:else}
-								<div class="ruler-km no-km">—</div>
-							{/if}
-							<div class="ruler-dot" class:completed-dot={evt.completed} class:next-dot={isNext}></div>
-							<div class="ruler-line" class:completed-line={evt.completed}></div>
-						</div>
-						<a href="{base}/timeline/{evt.id}" class="tl-card" class:tl-card-next={isNext}>
+			{:else if entry.evt}
+				{@const evt = entry.evt}
+				{@const status = deriveStatus(evt, $latestOdometer.km)}
+				{@const isNext = evt.id === nextId}
+				{@const isFocus = focusId ? evt.id === focusId : false}
+				{@const isExpanded = expandedIds.has(evt.id)}
+				<div
+					class="tl-row"
+					class:next-scheduled={isNext}
+					class:focused-row={isFocus}
+					style="margin-top: {gap}px"
+					use:anchorAction={isFocus || (!focusId && isNext)}
+				>
+					<div class="tl-ruler">
+						<div class="ruler-line" class:completed-line={evt.completed}></div>
+						{#if evt.km}
+							<div class="ruler-km" class:completed-km={evt.completed}>
+								{evt.kmEstimated ? '~' : ''}{evt.km.toLocaleString()}
+							</div>
+						{:else}
+							<div class="ruler-km no-km">—</div>
+						{/if}
+						<div class="ruler-dot" class:completed-dot={evt.completed} class:next-dot={isNext}></div>
+						<div class="ruler-line" class:completed-line={evt.completed}></div>
+					</div>
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<div class="tl-card-wrapper" onclick={() => toggleExpand(evt.id)}>
+						<div class="tl-card" class:tl-card-next={isNext} class:tl-card-expanded={isExpanded}>
 							<div class="tl-card-header">
 								<span
 									class="category-badge"
@@ -377,9 +394,56 @@
 									<span class="meta-cost">{formatCost(evt.cost)}</span>
 								{/if}
 							</div>
-						</a>
+						</div>
+						{#if isExpanded}
+							<!-- svelte-ignore a11y_click_events_have_key_events -->
+							<!-- svelte-ignore a11y_no_static_element_interactions -->
+							<div class="tl-detail" onclick={(e) => e.stopPropagation()}>
+								{#if evt.notes}
+									<div class="detail-section">
+										<span class="detail-label">Notes</span>
+										<p class="detail-text">{evt.notes}</p>
+									</div>
+								{/if}
+								{#if evt.tasks && evt.tasks.length > 0}
+									<div class="detail-section">
+										<span class="detail-label">Tasks</span>
+										<ul class="detail-tasks">
+											{#each evt.tasks as task}
+												<li>{capitalizeTask(task)}</li>
+											{/each}
+										</ul>
+									</div>
+								{/if}
+								{#if evt.invoiceNr}
+									<div class="detail-section">
+										<span class="detail-label">Invoice</span>
+										<span class="detail-value">{evt.invoiceNr}</span>
+									</div>
+								{/if}
+								{#if evt.receipts && evt.receipts.length > 0}
+									<div class="detail-section">
+										<span class="detail-label">Receipts</span>
+										<div class="detail-receipts">
+											{#each evt.receipts as r}
+												<a href={receiptUrl(r)} target="_blank" rel="noopener noreferrer" class="receipt-link">
+													{receiptName(r)}
+												</a>
+											{/each}
+										</div>
+									</div>
+								{/if}
+								<div class="detail-actions">
+									<a href="{base}/timeline/{evt.id}" class="detail-btn detail-btn-edit">Edit</a>
+									{#if !evt.receipts || evt.receipts.length === 0}
+										<a href="{base}/timeline/{evt.id}" class="detail-btn detail-btn-receipt">Add Receipt</a>
+									{/if}
+								</div>
+							</div>
+						{/if}
 					</div>
-				{/if}
+				</div>
+			{/if}
 			{/each}
 		</div>
 	{/if}
@@ -598,21 +662,31 @@
 	}
 
 	/* ---- Event cards ---- */
-	.tl-card {
+	.tl-card-wrapper {
 		flex: 1;
+		margin-left: 8px;
+		cursor: pointer;
+	}
+
+	.tl-card {
 		display: block;
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-md);
 		padding: 12px 14px;
-		margin-left: 8px;
 		text-decoration: none;
 		color: var(--color-text);
-		transition: box-shadow 0.2s;
+		transition: box-shadow 0.2s, border-radius 0.2s;
 	}
 
 	.tl-card:active {
 		box-shadow: var(--shadow-md);
+	}
+
+	.tl-card-expanded {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		border-bottom-color: transparent;
 	}
 
 	.tl-card-next {
@@ -620,6 +694,107 @@
 		border-width: 2px;
 		padding: 14px 16px;
 		box-shadow: 0 2px 12px rgba(0, 113, 227, 0.15);
+	}
+
+	.tl-card-next.tl-card-expanded {
+		border-bottom-color: transparent;
+	}
+
+	/* ---- Accordion detail panel ---- */
+	.tl-detail {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-top: none;
+		border-radius: 0 0 var(--radius-md) var(--radius-md);
+		padding: 12px 14px;
+		cursor: default;
+	}
+
+	.detail-section {
+		margin-bottom: 10px;
+	}
+
+	.detail-section:last-of-type {
+		margin-bottom: 12px;
+	}
+
+	.detail-label {
+		display: block;
+		font-size: 11px;
+		font-weight: 600;
+		color: var(--color-text-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
+		margin-bottom: 3px;
+	}
+
+	.detail-text {
+		font-size: 13px;
+		color: var(--color-text);
+		line-height: 1.5;
+		margin: 0;
+		white-space: pre-wrap;
+	}
+
+	.detail-value {
+		font-size: 13px;
+		color: var(--color-text);
+	}
+
+	.detail-tasks {
+		margin: 0;
+		padding: 0 0 0 18px;
+		font-size: 13px;
+		line-height: 1.6;
+		color: var(--color-text);
+	}
+
+	.detail-receipts {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.receipt-link {
+		font-size: 13px;
+		color: var(--color-accent);
+		text-decoration: none;
+		word-break: break-all;
+	}
+
+	.receipt-link:hover {
+		text-decoration: underline;
+	}
+
+	.detail-actions {
+		display: flex;
+		gap: 8px;
+		padding-top: 4px;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.detail-btn {
+		font-size: 13px;
+		font-weight: 600;
+		padding: 6px 16px;
+		border-radius: 8px;
+		text-decoration: none;
+		transition: opacity 0.15s;
+	}
+
+	.detail-btn:active {
+		opacity: 0.7;
+	}
+
+	.detail-btn-edit {
+		background: var(--color-accent);
+		color: white;
+	}
+
+	.detail-btn-receipt {
+		background: var(--color-surface);
+		color: var(--color-accent);
+		border: 1px solid var(--color-accent);
 	}
 
 	.tl-card-header {
