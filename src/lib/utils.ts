@@ -361,7 +361,8 @@ export function milestoneTaskStatuses(
 		}
 
 		const overdueKm = currentOdometer - earliestUncovered;
-		if (overdueKm <= 10000) {
+		const hasLaterService = doneKms.some((dkm) => dkm > ms.km);
+		if (hasLaterService || overdueKm <= 10000) {
 			return { task, status: 'amber' as TaskStatus, overdueKm };
 		}
 		return { task, status: 'red' as TaskStatus, overdueKm };
