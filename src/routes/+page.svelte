@@ -301,7 +301,7 @@
 			>
 				<div class="ms-card-header">
 					<span class="ms-category-label">
-						{ms.kind === 'mfr' ? 'Manufacturer Service' : 'Recommended Service'}
+						{ms.kind === 'mfr' ? 'OEM Service' : 'Recommended'}
 					</span>
 					{#if cardStatus === 'covered'}
 						<span class="ms-status-label" style="color: #34c759">OK</span>

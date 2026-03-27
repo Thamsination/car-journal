@@ -17,7 +17,7 @@
 		return all.find((ms) => ms.km === km) ?? null;
 	});
 
-	const kindLabel = $derived(kind === 'mfr' ? 'Manufacturer' : 'Recommended');
+	const kindLabel = $derived(kind === 'mfr' ? 'OEM' : 'Recommended');
 	const kindBadge = $derived(kind === 'mfr' ? 'MFR' : 'REC');
 
 	function taskInterval(task: string, taskKind: 'mfr' | 'rec'): string | null {

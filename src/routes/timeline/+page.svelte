@@ -355,7 +355,7 @@
 				>
 					<div class="ms-card-header">
 						<span class="ms-category-label">
-							{ms.kind === 'mfr' ? 'Manufacturer Service' : 'Recommended Service'}
+							{ms.kind === 'mfr' ? 'OEM Service' : 'Recommended'}
 						</span>
 						{#if cardStatus === 'covered'}
 							<span class="ms-status-label" style="color: #34c759">OK</span>
@@ -432,7 +432,7 @@
 									{#each entry.coveredMilestones as cms}
 										<a href="{base}/timeline/service?kind={cms.kind}&km={cms.km}" class="covered-ms-row">
 											<span class="covered-ms-label">
-												{cms.kind === 'mfr' ? 'Manufacturer Service' : 'Recommended Service'} · {cms.km.toLocaleString()} km
+												{cms.kind === 'mfr' ? 'OEM Service' : 'Recommended'} · {cms.km.toLocaleString()} km
 											</span>
 										</a>
 									{/each}
