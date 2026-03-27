@@ -432,7 +432,7 @@
 									{#each entry.coveredMilestones as cms}
 										<a href="{base}/timeline/service?kind={cms.kind}&km={cms.km}" class="covered-ms-row">
 											<span class="covered-ms-label">
-												{cms.kind === 'mfr' ? 'OEM Service' : 'Recommended'} · {cms.km.toLocaleString()} km
+												{cms.kind === 'mfr' ? 'OEM Service' : 'Recommended'}
 											</span>
 										</a>
 									{/each}
