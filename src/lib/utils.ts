@@ -296,6 +296,17 @@ function buildRollingChain(
 	return milestones;
 }
 
+function mergedDoneKms(completed: Map<string, number[]>, task: string): number[] {
+	const matchKey = task.replace('check ', '');
+	const exact = completed.get(task) ?? [];
+	const alt = task !== matchKey ? (completed.get(matchKey) ?? []) : [];
+	if (alt.length === 0) return exact;
+	if (exact.length === 0) return alt;
+	const merged = [...new Set([...exact, ...alt])];
+	merged.sort((a, b) => a - b);
+	return merged;
+}
+
 function computeIntervalMilestones(
 	intervals: ServiceInterval[],
 	events: CarEvent[],
@@ -306,8 +317,7 @@ function computeIntervalMilestones(
 
 	const allRolling: RollingMilestone[] = [];
 	for (const interval of filtered) {
-		const matchKey = interval.task.replace('check ', '');
-		const doneKms = completed.get(interval.task) ?? completed.get(matchKey) ?? [];
+		const doneKms = mergedDoneKms(completed, interval.task);
 		allRolling.push(...buildRollingChain(interval.task, interval.km, doneKms));
 	}
 
@@ -354,8 +364,7 @@ export function milestoneTaskStatuses(
 			return { task, status: 'scheduled' as TaskStatus, overdueKm: 0 };
 		}
 
-		const matchKey = task.replace('check ', '');
-		const doneKms = completed.get(task) ?? completed.get(matchKey) ?? [];
+		const doneKms = mergedDoneKms(completed, task);
 
 		const interval = allIntervals.find((i) => i.task === task);
 		if (!interval) {
