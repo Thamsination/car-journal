@@ -434,7 +434,7 @@
 			{#if $latestOdometer.source === 'estimated' && $dailyAverageKm > 0}
 				<span class="odo-source">Estimated · {$dailyAverageKm} km/day avg</span>
 			{:else if $latestOdometer.source === 'manual'}
-				<span class="odo-source">Manually set</span>
+				<span class="odo-source">Tap to set km</span>
 			{:else if $latestOdometer.source === 'event'}
 				<span class="odo-source">Based on last completed event</span>
 			{/if}

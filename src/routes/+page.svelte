@@ -1,20 +1,26 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import {
 		token, events, totalSpent, totalPlanned, costByCategory,
 		nextBatchEvents, latestOdometer, lastCompletedKm, dailyAverageKm,
-		nextScheduledEvent
+		nextScheduledEvent, manualOdometer,
+		vehicleConfig, healthIntervals, tireConfig, tireStatus
 	} from '$lib/stores';
-	import { loadEvents } from '$lib/github';
+	import { loadEvents, loadVehicleConfig, loadHealthConfig, loadTireConfig } from '$lib/github';
 	import {
 		formatCost, formatDateISO, deriveStatus, statusColor,
-		eventCategory, categoryLabel, categoryColor
+		eventCategory, categoryLabel, categoryColor,
+		computeMfrMilestones, computeRecMilestones,
+		milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask
 	} from '$lib/utils';
-	import type { CarEvent, DerivedStatus } from '$lib/types';
+	import type { CarEvent, DerivedStatus, ServiceInterval, ServiceMilestone } from '$lib/types';
 
 	let loading = $state(true);
+	let editingOdo = $state(false);
+	let odoInput = $state('');
+	let odoInputEl = $state<HTMLInputElement | null>(null);
 
 	onMount(async () => {
 		if (!$token) {
@@ -22,7 +28,18 @@
 			return;
 		}
 		try {
-			$events = await loadEvents();
+			const promises: Promise<void>[] = [];
+			promises.push(loadEvents().then((e) => { $events = e; }));
+			if (!$vehicleConfig) {
+				promises.push(loadVehicleConfig().then((v) => { $vehicleConfig = v; }));
+			}
+			if ($healthIntervals.length === 0) {
+				promises.push(loadHealthConfig().then((c) => { $healthIntervals = c.intervals; }));
+			}
+			if (!$tireConfig) {
+				promises.push(loadTireConfig().then((t) => { $tireConfig = t; }));
+			}
+			await Promise.all(promises);
 		} catch {
 			// data may not exist yet
 		} finally {
@@ -30,16 +47,155 @@
 		}
 	});
 
-	const completedCount = $derived($events.filter((e) => e.completed).length);
-	const upcomingCount = $derived($events.filter((e) => !e.completed).length);
-
-	function goCompleted() {
-		goto(`${base}/timeline`);
+	function vehicleTitle(v: typeof $vehicleConfig): string {
+		if (!v) return 'Vehicle';
+		return `${v.year} ${v.make} ${v.chassis} ${v.model}`;
 	}
 
-	function goUpcoming() {
-		goto(`${base}/timeline`);
+	async function startOdoEdit() {
+		odoInput = $latestOdometer.km > 0 ? $latestOdometer.km.toString() : '';
+		editingOdo = true;
+		await tick();
+		odoInputEl?.focus();
+		odoInputEl?.select();
 	}
+
+	function saveOdo() {
+		const val = parseInt(odoInput, 10);
+		if (!isNaN(val) && val > 0) {
+			$manualOdometer = val;
+		}
+		editingOdo = false;
+	}
+
+	function cancelOdo() {
+		editingOdo = false;
+	}
+
+	function handleOdoKey(e: KeyboardEvent) {
+		if (e.key === 'Enter') saveOdo();
+		else if (e.key === 'Escape') cancelOdo();
+	}
+
+	// Health summary
+	const WARNING_THRESHOLD = 0.8;
+
+	function findLastService(interval: ServiceInterval): CarEvent | null {
+		const matches = $events.filter((e) => {
+			if (!e.completed) return false;
+			const tasks = e.tasks ?? [e.event];
+			return tasks.some((t) =>
+				interval.taskMatches.some((m) => t.toLowerCase().includes(m.toLowerCase()))
+			);
+		});
+		matches.sort((a, b) => (b.km ?? 0) - (a.km ?? 0));
+		return matches[0] ?? null;
+	}
+
+	const overdueCount = $derived.by(() => {
+		const odoKm = $latestOdometer.km;
+		const now = Date.now();
+		let count = 0;
+		for (const interval of $healthIntervals) {
+			const lastEvent = findLastService(interval);
+			if (!lastEvent) {
+				const firstDueKm = interval.intervalKm ?? Infinity;
+				if (odoKm > 0 && odoKm >= firstDueKm) count++;
+				continue;
+			}
+			const lastKm = lastEvent.km ?? null;
+			const lastDate = lastEvent.date ?? '';
+			if (interval.intervalKm && lastKm !== null && odoKm > 0) {
+				if (lastKm + interval.intervalKm - odoKm < 0) { count++; continue; }
+			}
+			if (interval.intervalMonths && lastDate) {
+				const lastMs = new Date(lastDate + 'T00:00:00').getTime();
+				const intervalMs = interval.intervalMonths * 30.44 * 86400000;
+				if (Math.round((lastMs + intervalMs - now) / 86400000) < 0) { count++; continue; }
+			}
+		}
+		return count;
+	});
+
+	const warningCount = $derived.by(() => {
+		const odoKm = $latestOdometer.km;
+		const now = Date.now();
+		let count = 0;
+		for (const interval of $healthIntervals) {
+			const lastEvent = findLastService(interval);
+			if (!lastEvent) {
+				const firstDueKm = interval.intervalKm ?? Infinity;
+				if (odoKm > 0 && odoKm >= firstDueKm) continue; // already overdue
+				if (odoKm > 0 && interval.intervalKm && odoKm >= firstDueKm * WARNING_THRESHOLD) count++;
+				continue;
+			}
+			const lastKm = lastEvent.km ?? null;
+			const lastDate = lastEvent.date ?? '';
+			let isOverdue = false;
+			let isWarning = false;
+			if (interval.intervalKm && lastKm !== null && odoKm > 0) {
+				const remaining = lastKm + interval.intervalKm - odoKm;
+				const usedPct = Math.min(1, Math.max(0, (odoKm - lastKm) / interval.intervalKm));
+				if (remaining < 0) isOverdue = true;
+				else if (usedPct >= WARNING_THRESHOLD) isWarning = true;
+			}
+			if (interval.intervalMonths && lastDate) {
+				const lastMs = new Date(lastDate + 'T00:00:00').getTime();
+				const intervalMs = interval.intervalMonths * 30.44 * 86400000;
+				const remainingDays = Math.round((lastMs + intervalMs - now) / 86400000);
+				const usedTimePct = Math.min(1, Math.max(0, (now - lastMs) / intervalMs));
+				if (remainingDays < 0) isOverdue = true;
+				else if (usedTimePct >= WARNING_THRESHOLD) isWarning = true;
+			}
+			if (!isOverdue && isWarning) count++;
+		}
+		return count;
+	});
+
+	const overallHealth = $derived.by(() => {
+		if (overdueCount > 0 || $tireStatus.health === 'overdue') return 'bad' as const;
+		if (warningCount > 0 || $tireStatus.health === 'warning') return 'okay' as const;
+		return 'good' as const;
+	});
+
+	const healthSummary = $derived.by(() => {
+		const tireH = $tireStatus.health;
+		const hasOverdue = overdueCount > 0 || tireH === 'overdue';
+		const hasWarning = warningCount > 0 || tireH === 'warning';
+		if (hasOverdue && hasWarning) return 'Your car has overdue service items and other components need attention soon.';
+		if (hasOverdue) return 'Your car has overdue service items that need attention.';
+		if (hasWarning) return 'Your car is in good condition but needs attention soon.';
+		return 'Your car is in good condition.';
+	});
+
+	const overallColors = { good: '#34c759', okay: '#ff9500', bad: '#ff3b30' };
+	const overallIcons = { good: '✓', okay: '!', bad: '✕' };
+
+	// Milestones
+	const mfrMilestones = $derived(computeMfrMilestones($events));
+	const recMilestones = $derived(computeRecMilestones($events));
+
+	const nextMilestone = $derived.by(() => {
+		const odoKm = $latestOdometer.km;
+		if (odoKm <= 0) return null;
+		const all = [...mfrMilestones, ...recMilestones]
+			.filter((ms) => ms.km > odoKm)
+			.sort((a, b) => a.km - b.km);
+		return all[0] ?? null;
+	});
+
+	const nextMilestoneCard = $derived.by(() => {
+		const odoKm = $latestOdometer.km;
+		if (odoKm <= 0) return null;
+		const all = [...mfrMilestones, ...recMilestones]
+			.filter((ms) => ms.km > odoKm)
+			.sort((a, b) => a.km - b.km);
+		if (all.length === 0) return null;
+		const ms = all[0];
+		const stats = milestoneTaskStatuses(ms, $events, odoKm);
+		const cardStatus = milestoneCardStatus(stats);
+		return { ms, stats, cardStatus };
+	});
 
 	function smartStatusText(evt: CarEvent, status: DerivedStatus, odoKm: number): string {
 		if (status === 'overdue' && evt.km !== null && odoKm > 0) {
@@ -67,37 +223,107 @@
 	{#if loading}
 		<div class="loading">Loading dashboard...</div>
 	{:else}
-		<!-- 1. Odometer -->
+		<!-- 1. Vehicle Info + Odometer -->
 		<div class="hero-card">
-			<div class="odometer">
-				<span class="odo-value">
-					{$latestOdometer.source === 'estimated' ? '~' : ''}{$latestOdometer.km.toLocaleString()}{$latestOdometer.source === 'event' ? '+' : ''}
-				</span>
-				<span class="odo-unit">km</span>
+			<div class="vehicle-identity">
+				<h2 class="vehicle-name">{vehicleTitle($vehicleConfig)}</h2>
+				{#if $vehicleConfig}
+					<span class="vehicle-detail">{$vehicleConfig.engine} · {$vehicleConfig.drivetrain}</span>
+				{/if}
 			</div>
+			{#if editingOdo}
+				<div class="odo-edit">
+					<input
+						type="number"
+						inputmode="numeric"
+						class="odo-input"
+						bind:value={odoInput}
+						bind:this={odoInputEl}
+						onkeydown={handleOdoKey}
+						onblur={saveOdo}
+						placeholder="Enter km"
+					/>
+					<span class="odo-unit">km</span>
+				</div>
+			{:else}
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<div class="odometer" onclick={startOdoEdit}>
+					<span class="odo-value">
+						{$latestOdometer.source === 'estimated' ? '~' : ''}{$latestOdometer.km.toLocaleString()}{$latestOdometer.source === 'event' ? '+' : ''}
+					</span>
+					<span class="odo-unit">km</span>
+				</div>
+			{/if}
 			{#if $latestOdometer.source === 'manual'}
-				<span class="odo-source">Manually set</span>
-			{:else if $latestOdometer.source === 'estimated'}
+				<span class="odo-source">Tap to set km</span>
+			{:else if $latestOdometer.source === 'estimated' && $dailyAverageKm > 0}
 				<span class="odo-source">Estimated · {$dailyAverageKm} km/day avg</span>
 			{:else if $latestOdometer.source === 'event'}
 				<span class="odo-source">Based on last completed event</span>
+			{:else}
+				<span class="odo-source">Tap to set km</span>
 			{/if}
 		</div>
 
-		<!-- 2. Completed / Upcoming counters -->
-		<div class="stats-grid">
-			<button class="stat-card tappable" onclick={goCompleted}>
-				<span class="stat-value">{completedCount}</span>
-				<span class="stat-label">Completed</span>
-			</button>
-
-			<button class="stat-card tappable" onclick={goUpcoming}>
-				<span class="stat-value">{upcomingCount}</span>
-				<span class="stat-label">Upcoming</span>
-			</button>
+		<!-- 2. Health Summary -->
+		<div class="summary-card" style="border-color: {overallColors[overallHealth]}">
+			<div class="summary-icon" style="background: {overallColors[overallHealth]}">
+				{overallIcons[overallHealth]}
+			</div>
+			<p class="summary-text">{healthSummary}</p>
 		</div>
 
-		<!-- 3. Next Scheduled (single card, schedule-style) -->
+		<!-- 3. You Are Here -->
+		<a href="{base}/timeline/new?km={$latestOdometer.km}" class="here-card">
+			<div class="here-header">
+				<span class="here-km">
+					{$latestOdometer.source === 'estimated' ? '~' : ''}{$latestOdometer.km.toLocaleString()}{$latestOdometer.source === 'event' ? '+' : ''} km
+				</span>
+			</div>
+			{#if nextMilestone}
+				{@const remaining = nextMilestone.km - $latestOdometer.km}
+				{#if remaining > 0}
+					<span class="here-label">In {remaining.toLocaleString()} km</span>
+					<span class="here-action">{milestoneActionText(nextMilestone.tasks)}</span>
+				{:else}
+					<span class="here-overdue">Overdue by {Math.abs(remaining).toLocaleString()} km</span>
+				{/if}
+			{:else}
+				<span class="here-label">You are here</span>
+			{/if}
+			<span class="here-tap-hint">Tap to add entry</span>
+		</a>
+
+		<!-- 4. Next Milestone -->
+		{#if nextMilestoneCard}
+			{@const { ms, stats, cardStatus } = nextMilestoneCard}
+			<a
+				href="{base}/timeline/service?kind={ms.kind}&km={ms.km}"
+				class="ms-card ms-card-{ms.kind}"
+				class:ms-card-covered={cardStatus === 'covered'}
+				class:ms-card-amber={cardStatus === 'amber'}
+				class:ms-card-red={cardStatus === 'red'}
+			>
+				<span class="ms-badge ms-badge-{ms.kind}">{ms.kind === 'mfr' ? 'MFR' : 'REC'}</span>
+				<div class="ms-info">
+					<span class="ms-km-label">{ms.km.toLocaleString()} km</span>
+					<span class="ms-task-list">
+						{#each stats as ts}
+							<span class="ms-task-item ms-task-{ts.status}">{ts.task}</span>
+						{/each}
+					</span>
+				</div>
+				{#if cardStatus === 'covered'}
+					<span class="ms-covered-mark">✓</span>
+				{:else if cardStatus === 'amber' || cardStatus === 'red'}
+					{@const worst = stats.reduce((a, b) => b.overdueKm > a.overdueKm ? b : a)}
+					<span class="ms-overdue-label ms-overdue-{cardStatus}">Overdue {worst.overdueKm.toLocaleString()} km</span>
+				{/if}
+			</a>
+		{/if}
+
+		<!-- 5. Next Scheduled -->
 		{#if $nextScheduledEvent}
 			{@const nse = $nextScheduledEvent}
 			{@const nseStatus = deriveStatus(nse, $latestOdometer.km)}
@@ -150,7 +376,7 @@
 			</section>
 		{/if}
 
-		<!-- 4. Upcoming Services batch (schedule-style cards with KM tracker) -->
+		<!-- 6. Upcoming Services batch -->
 		{#if $nextBatchEvents.length > 0}
 			<section class="section">
 				<h3 class="section-title">Upcoming Services — {$nextBatchEvents[0].km?.toLocaleString()} km</h3>
@@ -206,7 +432,7 @@
 			</section>
 		{/if}
 
-		<!-- 5. Cost Breakdown -->
+		<!-- 7. Cost Breakdown -->
 		{#if $costByCategory.length > 0 || $totalPlanned > 0}
 			<section class="section">
 				<h3 class="section-title">Cost Breakdown</h3>
@@ -234,13 +460,30 @@
 </div>
 
 <style>
+	/* Vehicle hero card */
 	.hero-card {
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-lg);
-		padding: 24px 16px 16px;
+		padding: 20px 16px 16px;
 		text-align: center;
 		margin-bottom: 12px;
+	}
+
+	.vehicle-identity {
+		margin-bottom: 12px;
+	}
+
+	.vehicle-name {
+		font-size: 18px;
+		font-weight: 700;
+		letter-spacing: -0.3px;
+		margin-bottom: 2px;
+	}
+
+	.vehicle-detail {
+		font-size: 13px;
+		color: var(--color-text-secondary);
 	}
 
 	.odometer {
@@ -248,16 +491,21 @@
 		align-items: baseline;
 		justify-content: center;
 		gap: 6px;
+		cursor: pointer;
+	}
+
+	.odometer:active {
+		opacity: 0.7;
 	}
 
 	.odo-value {
-		font-size: 36px;
+		font-size: 32px;
 		font-weight: 800;
 		letter-spacing: -1px;
 	}
 
 	.odo-unit {
-		font-size: 16px;
+		font-size: 15px;
 		font-weight: 500;
 		color: var(--color-text-secondary);
 	}
@@ -267,47 +515,225 @@
 		margin-top: 4px;
 		font-size: 11px;
 		color: var(--color-text-secondary);
-	}
-
-	.stats-grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 10px;
-		margin-bottom: 24px;
-	}
-
-	.stat-card {
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: 16px;
 		text-align: center;
+	}
+
+	.odo-edit {
+		display: flex;
+		align-items: baseline;
+		justify-content: center;
+		gap: 6px;
+	}
+
+	.odo-input {
+		width: 140px;
+		font-size: 28px;
+		font-weight: 800;
+		letter-spacing: -1px;
+		text-align: center;
+		border: none;
+		border-bottom: 2px solid var(--color-accent);
+		background: transparent;
+		color: var(--color-text);
+		outline: none;
+		padding: 2px 0;
+		-moz-appearance: textfield;
+	}
+
+	.odo-input::-webkit-inner-spin-button,
+	.odo-input::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	/* Health summary */
+	.summary-card {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		padding: 16px;
+		background: var(--color-surface);
+		border: 2px solid;
+		border-radius: var(--radius-lg);
+		margin-bottom: 12px;
+	}
+
+	.summary-icon {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		font-size: 20px;
+		font-weight: 800;
+		flex-shrink: 0;
+	}
+
+	.summary-text {
+		font-size: 14px;
+		line-height: 1.4;
 		color: var(--color-text);
 	}
 
-	.stat-card.tappable {
-		cursor: pointer;
-		transition: box-shadow 0.2s;
+	/* You are here card */
+	.here-card {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: 12px 14px;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		margin-bottom: 12px;
+		text-decoration: none;
+		color: inherit;
 	}
 
-	.stat-card.tappable:active {
-		box-shadow: var(--shadow-md);
-	}
-
-	.stat-value {
-		display: block;
-		font-size: 22px;
-		font-weight: 700;
+	.here-header {
 		margin-bottom: 2px;
 	}
 
-	.stat-label {
-		font-size: 12px;
+	.here-km {
+		font-size: 13px;
+		font-weight: 700;
 		color: var(--color-text-secondary);
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
 	}
 
+	.here-label {
+		font-size: 14px;
+		font-weight: 700;
+		color: var(--color-text);
+	}
+
+	.here-action {
+		font-size: 12px;
+		color: var(--color-text-secondary);
+		line-height: 1.4;
+	}
+
+	.here-overdue {
+		font-size: 12px;
+		color: var(--color-danger);
+		font-weight: 600;
+	}
+
+	.here-tap-hint {
+		display: block;
+		margin-top: 8px;
+		font-size: 11px;
+		color: var(--color-accent);
+		opacity: 0.7;
+	}
+
+	/* Milestone card */
+	.ms-card {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		background: var(--color-surface);
+		border: 1px dashed var(--color-border);
+		border-radius: var(--radius-md);
+		padding: 10px 14px;
+		margin-bottom: 24px;
+		text-decoration: none;
+		color: inherit;
+		transition: background 0.15s;
+	}
+
+	.ms-card:active {
+		background: rgba(142, 142, 147, 0.1);
+	}
+
+	.ms-card-rec {
+		border-color: #d97706;
+	}
+
+	.ms-card-covered {
+		border-color: #8e8e93;
+		opacity: 0.6;
+	}
+
+	.ms-card-amber {
+		border-color: #f59e0b;
+		border-style: solid;
+	}
+
+	.ms-card-red {
+		border-color: #ff3b30;
+		border-style: solid;
+	}
+
+	.ms-badge {
+		font-size: 9px;
+		font-weight: 700;
+		padding: 2px 6px;
+		border-radius: 6px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		flex-shrink: 0;
+		background: var(--color-surface);
+	}
+
+	.ms-badge-mfr {
+		color: #8e8e93;
+		border: 1px solid #c7c7cc;
+	}
+
+	.ms-badge-rec {
+		color: #92400e;
+		border: 1px solid #d97706;
+	}
+
+	.ms-info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.ms-km-label {
+		font-size: 11px;
+		font-weight: 600;
+		color: var(--color-text-secondary);
+	}
+
+	.ms-task-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2px 6px;
+		font-size: 12px;
+		line-height: 1.3;
+	}
+
+	.ms-task-item {
+		white-space: nowrap;
+	}
+
+	.ms-task-covered { color: #8e8e93; }
+	.ms-task-scheduled { color: #8e8e93; }
+	.ms-task-amber { color: #f59e0b; }
+	.ms-task-red { color: #ff3b30; }
+
+	.ms-covered-mark {
+		color: #8e8e93;
+		font-size: 14px;
+		font-weight: 700;
+		flex-shrink: 0;
+	}
+
+	.ms-overdue-label {
+		font-size: 10px;
+		font-weight: 600;
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	.ms-overdue-amber { color: #f59e0b; }
+	.ms-overdue-red { color: #ff3b30; }
+
+	/* Sections */
 	.section {
 		margin-bottom: 24px;
 	}
@@ -321,7 +747,6 @@
 		letter-spacing: 0.5px;
 	}
 
-	/* Shared card styles matching Schedule page */
 	.event-card {
 		display: block;
 		background: var(--color-surface);
