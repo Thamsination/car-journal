@@ -232,9 +232,13 @@
 						<span class="vehicle-detail">{$vehicleConfig.engine} · {$vehicleConfig.drivetrain}</span>
 					{/if}
 				</div>
-			<span class="health-badge" style="color: {overallColors[overallHealth]}">
-				{overallHealth === 'good' ? 'Good' : overallHealth === 'okay' ? 'Attention' : 'Overdue'}
-			</span>
+			{#if overallHealth === 'good'}
+				<span class="health-badge" style="color: {overallColors[overallHealth]}">Good</span>
+			{:else}
+				<a href="{base}/car" class="health-badge health-badge-link" style="color: {overallColors[overallHealth]}">
+					{overallHealth === 'okay' ? 'Attention' : 'Overdue'}
+				</a>
+			{/if}
 			</div>
 			{#if editingOdo}
 				<div class="odo-edit">
@@ -495,6 +499,7 @@
 		font-size: 12px;
 		font-weight: 700;
 		white-space: nowrap;
+		text-decoration: none;
 		flex-shrink: 0;
 		text-transform: uppercase;
 		letter-spacing: 0.3px;
