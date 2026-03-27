@@ -278,7 +278,7 @@
 			const seasonName = seasonLabels[profile.season].toLowerCase();
 			const newEvt: CarEvent = {
 				id: `evt_swap_${Date.now().toString(36)}`,
-				km: $latestOdometer.km,
+				km: Math.max(0, $latestOdometer.km - 1),
 				date: formatDateISO(new Date()),
 				event: `${seasonLabels[profile.season]} tires`,
 				cost: 0,
