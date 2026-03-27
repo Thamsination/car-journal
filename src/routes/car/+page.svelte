@@ -118,10 +118,11 @@
 
 			let remainingKm: number | null = null;
 			let usedKmPct = 0;
-			if (interval.intervalKm && lastKm !== null && odoKm > 0) {
-				const nextDueKm = lastKm + interval.intervalKm;
+			if (interval.intervalKm && odoKm > 0) {
+				const baseKm = lastKm ?? 0;
+				const nextDueKm = baseKm + interval.intervalKm;
 				remainingKm = nextDueKm - odoKm;
-				usedKmPct = Math.min(1, Math.max(0, (odoKm - lastKm) / interval.intervalKm));
+				usedKmPct = Math.min(1, Math.max(0, (odoKm - baseKm) / interval.intervalKm));
 			}
 
 			let remainingDays: number | null = null;
