@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { token, repoOwner, repoName } from './stores';
+import { token, repoOwner, repoName, activeVehicleId } from './stores';
 
 const API_BASE = 'https://api.github.com';
 
@@ -93,16 +93,52 @@ export async function validateToken(): Promise<{ ok: boolean; error?: string }> 
 	}
 }
 
-let eventsSha = '';
-let partsSha = '';
-let healthSha = '';
-let tireSha = '';
+const ROOT_DATA = 'static/data';
 
-const DATA_PATH = 'static/data';
+function vehiclePath(): string {
+	return `${ROOT_DATA}/vehicles/${get(activeVehicleId)}`;
+}
+
+const shaCache = new Map<string, string>();
+
+function sha(key: string): string {
+	return shaCache.get(key) ?? '';
+}
+
+function setSha(key: string, value: string) {
+	shaCache.set(key, value);
+}
+
+// --- Vehicle Registry ---
+
+export async function loadVehiclesRegistry(): Promise<import('./types').VehiclesRegistry> {
+	const { data, sha: s } = await readJsonFile<import('./types').VehiclesRegistry>(`${ROOT_DATA}/vehicles.json`);
+	setSha('vehicles-registry', s);
+	return data;
+}
+
+export async function saveVehiclesRegistry(
+	registry: import('./types').VehiclesRegistry,
+	message: string
+): Promise<void> {
+	const newSha = await writeJsonFile(`${ROOT_DATA}/vehicles.json`, registry, sha('vehicles-registry'), message);
+	setSha('vehicles-registry', newSha);
+}
+
+// --- Platform ---
+
+export async function loadPlatform(platformId: string): Promise<import('./types').PlatformConfig | null> {
+	const { content } = await getFile(`${ROOT_DATA}/platforms/${platformId}.json`);
+	if (!content) return null;
+	return JSON.parse(content) as import('./types').PlatformConfig;
+}
+
+// --- Per-Vehicle Data ---
 
 export async function loadEvents(): Promise<import('./types').CarEvent[]> {
-	const { data, sha } = await readJsonFile<import('./types').EventsData>(`${DATA_PATH}/events.json`);
-	eventsSha = sha;
+	const path = `${vehiclePath()}/events.json`;
+	const { data, sha: s } = await readJsonFile<import('./types').EventsData>(path);
+	setSha('events', s);
 	return data.events;
 }
 
@@ -110,13 +146,16 @@ export async function saveEvents(
 	events: import('./types').CarEvent[],
 	message: string
 ): Promise<void> {
+	const path = `${vehiclePath()}/events.json`;
 	const data: import('./types').EventsData = { events };
-	eventsSha = await writeJsonFile(`${DATA_PATH}/events.json`, data, eventsSha, message);
+	const newSha = await writeJsonFile(path, data, sha('events'), message);
+	setSha('events', newSha);
 }
 
 export async function loadParts(): Promise<import('./types').Part[]> {
-	const { data, sha } = await readJsonFile<import('./types').PartsData>(`${DATA_PATH}/parts.json`);
-	partsSha = sha;
+	const path = `${vehiclePath()}/parts.json`;
+	const { data, sha: s } = await readJsonFile<import('./types').PartsData>(path);
+	setSha('parts', s);
 	return data.parts;
 }
 
@@ -124,20 +163,24 @@ export async function saveParts(
 	parts: import('./types').Part[],
 	message: string
 ): Promise<void> {
+	const path = `${vehiclePath()}/parts.json`;
 	const data: import('./types').PartsData = { parts };
-	partsSha = await writeJsonFile(`${DATA_PATH}/parts.json`, data, partsSha, message);
+	const newSha = await writeJsonFile(path, data, sha('parts'), message);
+	setSha('parts', newSha);
 }
 
 export async function loadServiceSchedule(): Promise<import('./types').ServiceMilestone[]> {
-	const { content } = await getFile(`${DATA_PATH}/service-schedule.json`);
+	const path = `${vehiclePath()}/../../service-schedule.json`;
+	const { content } = await getFile(path);
 	if (!content) return [];
 	const data = JSON.parse(content) as import('./types').ServiceSchedule;
 	return data.milestones;
 }
 
 export async function loadHealthConfig(): Promise<import('./types').HealthConfig> {
-	const { content, sha } = await getFile(`${DATA_PATH}/health-config.json`);
-	healthSha = sha;
+	const path = `${vehiclePath()}/health-config.json`;
+	const { content, sha: s } = await getFile(path);
+	setSha('health', s);
 	if (!content) {
 		return { intervals: [] };
 	}
@@ -148,18 +191,32 @@ export async function saveHealthConfig(
 	config: import('./types').HealthConfig,
 	message: string
 ): Promise<void> {
-	healthSha = await writeJsonFile(`${DATA_PATH}/health-config.json`, config, healthSha, message);
+	const path = `${vehiclePath()}/health-config.json`;
+	const newSha = await writeJsonFile(path, config, sha('health'), message);
+	setSha('health', newSha);
 }
 
 export async function loadVehicleConfig(): Promise<import('./types').VehicleConfig | null> {
-	const { content } = await getFile(`${DATA_PATH}/vehicle-config.json`);
+	const path = `${vehiclePath()}/vehicle-config.json`;
+	const { content, sha: s } = await getFile(path);
+	setSha('vehicle-config', s);
 	if (!content) return null;
 	return JSON.parse(content) as import('./types').VehicleConfig;
 }
 
+export async function saveVehicleConfig(
+	config: import('./types').VehicleConfig,
+	message: string
+): Promise<void> {
+	const path = `${vehiclePath()}/vehicle-config.json`;
+	const newSha = await writeJsonFile(path, config, sha('vehicle-config'), message);
+	setSha('vehicle-config', newSha);
+}
+
 export async function loadTireConfig(): Promise<import('./types').TireConfig | null> {
-	const { content, sha } = await getFile(`${DATA_PATH}/tire-config.json`);
-	tireSha = sha;
+	const path = `${vehiclePath()}/tire-config.json`;
+	const { content, sha: s } = await getFile(path);
+	setSha('tire', s);
 	if (!content) return null;
 	return JSON.parse(content) as import('./types').TireConfig;
 }
@@ -168,17 +225,19 @@ export async function saveTireConfig(
 	config: import('./types').TireConfig,
 	message: string
 ): Promise<void> {
-	tireSha = await writeJsonFile(`${DATA_PATH}/tire-config.json`, config, tireSha, message);
+	const path = `${vehiclePath()}/tire-config.json`;
+	const newSha = await writeJsonFile(path, config, sha('tire'), message);
+	setSha('tire', newSha);
 }
 
-const RECEIPTS_PATH = `${DATA_PATH}/receipts`;
+const receiptsDir = () => `${vehiclePath()}/receipts`;
 
 export async function uploadReceipt(
 	filename: string,
 	base64Content: string,
 	message: string
 ): Promise<string> {
-	const path = `${RECEIPTS_PATH}/${filename}`;
+	const path = `${receiptsDir()}/${filename}`;
 	const { sha: existingSha } = await getFile(path).catch(() => ({ sha: '' }));
 	const body: Record<string, string> = { message, content: base64Content };
 	if (existingSha) body.sha = existingSha;
@@ -200,7 +259,7 @@ export async function deleteReceipt(
 	filename: string,
 	message: string
 ): Promise<void> {
-	const path = `${RECEIPTS_PATH}/${filename}`;
+	const path = `${receiptsDir()}/${filename}`;
 	const res = await fetch(`${repoPath()}/contents/${path}`, { headers: headers() });
 	if (!res.ok) return;
 	const fileData = await res.json();
@@ -217,6 +276,10 @@ export async function deleteReceipt(
 }
 
 export function receiptUrl(filename: string): string {
-	return `https://${get(repoOwner)}.github.io/${get(repoName)}/data/receipts/${filename}`;
+	const vid = get(activeVehicleId);
+	return `https://${get(repoOwner)}.github.io/${get(repoName)}/data/vehicles/${vid}/receipts/${filename}`;
 }
 
+export function clearShaCache(): void {
+	shaCache.clear();
+}

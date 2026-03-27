@@ -65,6 +65,10 @@ export interface ServiceSchedule {
 }
 
 export interface VehicleConfig {
+	name: string;
+	licensePlate: string;
+	vin: string;
+	platform: string;
 	year: number;
 	make: string;
 	model: string;
@@ -92,4 +96,30 @@ export interface TireProfile {
 export interface TireConfig {
 	profiles: TireProfile[];
 	warningPct: number;
+}
+
+export interface VehicleRegistryEntry {
+	id: string;
+	label: string;
+}
+
+export interface VehiclesRegistry {
+	vehicles: VehicleRegistryEntry[];
+	activeVehicle: string;
+}
+
+export interface PlatformServiceInterval {
+	task: string;
+	km: number;
+	kind: MilestoneKind;
+}
+
+export interface PlatformConfig {
+	id: string;
+	name: string;
+	years: string;
+	chassisCodes: string[];
+	serviceIntervals: PlatformServiceInterval[];
+	serviceNotes: Record<string, string>;
+	milestones: { km: number; tasks: string[] }[];
 }

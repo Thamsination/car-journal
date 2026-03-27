@@ -6,49 +6,34 @@
 		token, events, totalSpent, totalPlanned, costByCategory,
 		nextBatchEvents, latestOdometer, lastCompletedKm, dailyAverageKm,
 		nextScheduledEvent, manualOdometer,
-		vehicleConfig, healthIntervals, tireConfig, tireStatus
+		vehicleConfig, healthIntervals, tireConfig, tireStatus, platformConfig
 	} from '$lib/stores';
-	import { loadEvents, loadVehicleConfig, loadHealthConfig, loadTireConfig } from '$lib/github';
 	import {
 		formatCost, formatDateISO, deriveStatus, statusColor,
 		eventCategory, categoryLabel, categoryColor,
 		computeMfrMilestones, computeRecMilestones,
-		milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask
+		milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask,
+		getServiceIntervals
 	} from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceInterval, ServiceMilestone } from '$lib/types';
 
-	let loading = $state(true);
 	let editingOdo = $state(false);
 	let odoInput = $state('');
 	let odoInputEl = $state<HTMLInputElement | null>(null);
 
-	onMount(async () => {
+	const loading = $derived(!$token || ($events.length === 0 && !$vehicleConfig));
+
+	onMount(() => {
 		if (!$token) {
 			goto(`${base}/setup`);
-			return;
-		}
-		try {
-			const promises: Promise<void>[] = [];
-			promises.push(loadEvents().then((e) => { $events = e; }));
-			if (!$vehicleConfig) {
-				promises.push(loadVehicleConfig().then((v) => { $vehicleConfig = v; }));
-			}
-			if ($healthIntervals.length === 0) {
-				promises.push(loadHealthConfig().then((c) => { $healthIntervals = c.intervals; }));
-			}
-			if (!$tireConfig) {
-				promises.push(loadTireConfig().then((t) => { $tireConfig = t; }));
-			}
-			await Promise.all(promises);
-		} catch {
-			// data may not exist yet
-		} finally {
-			loading = false;
 		}
 	});
 
+	const serviceIntervals = $derived(getServiceIntervals($platformConfig));
+
 	function vehicleTitle(v: typeof $vehicleConfig): string {
 		if (!v) return 'Vehicle';
+		if (v.name) return `${v.year} ${v.make} ${v.chassis} ${v.name}`;
 		return `${v.year} ${v.make} ${v.chassis} ${v.model}`;
 	}
 
@@ -172,8 +157,8 @@
 	const overallIcons = { good: '✓', okay: '!', bad: '✕' };
 
 	// Milestones
-	const mfrMilestones = $derived(computeMfrMilestones($events));
-	const recMilestones = $derived(computeRecMilestones($events));
+	const mfrMilestones = $derived(computeMfrMilestones($events, serviceIntervals));
+	const recMilestones = $derived(computeRecMilestones($events, serviceIntervals));
 
 	const nextMilestone = $derived.by(() => {
 		const odoKm = $latestOdometer.km;
@@ -192,7 +177,7 @@
 			.sort((a, b) => a.km - b.km);
 		if (all.length < 2) return null;
 		const ms = all[1];
-		const stats = milestoneTaskStatuses(ms, $events, odoKm);
+		const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
 		const cardStatus = milestoneCardStatus(stats);
 		return { ms, stats, cardStatus };
 	});
@@ -216,7 +201,7 @@
 </script>
 
 <svelte:head>
-	<title>Dashboard — G31 Journal</title>
+	<title>Dashboard — Car Journal</title>
 </svelte:head>
 
 <div class="container">

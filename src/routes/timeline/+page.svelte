@@ -3,9 +3,9 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { token, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm } from '$lib/stores';
-	import { loadEvents, receiptUrl } from '$lib/github';
-	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask } from '$lib/utils';
+	import { token, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm, platformConfig } from '$lib/stores';
+	import { receiptUrl } from '$lib/github';
+	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask, getServiceIntervals } from '$lib/utils';
 	import type { TaskWithStatus } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
 
@@ -69,27 +69,21 @@
 		{ value: 'overdue', label: 'Overdue' }
 	];
 
+	const serviceIntervals = $derived(getServiceIntervals($platformConfig));
+
 	onMount(async () => {
 		if (!$token) {
 			goto(`${base}/setup`);
 			return;
 		}
-		try {
-			if ($events.length === 0) {
-				$events = await loadEvents();
+		loading = false;
+		await tick();
+		await tick();
+		requestAnimationFrame(() => {
+			if (anchorEl) {
+				anchorEl.scrollIntoView({ block: 'center', behavior: 'instant' });
 			}
-		} catch (e: unknown) {
-			loadError = e instanceof Error ? e.message : 'Failed to load';
-		} finally {
-			loading = false;
-			await tick();
-			await tick();
-			requestAnimationFrame(() => {
-				if (anchorEl) {
-					anchorEl.scrollIntoView({ block: 'center', behavior: 'instant' });
-				}
-			});
-		}
+		});
 	});
 
 	interface TimelineEntry {
@@ -101,8 +95,8 @@
 		sortDate: string;
 	}
 
-	const mfrMilestones = $derived(computeMfrMilestones($events));
-	const recMilestones = $derived(computeRecMilestones($events));
+	const mfrMilestones = $derived(computeMfrMilestones($events, serviceIntervals));
+	const recMilestones = $derived(computeRecMilestones($events, serviceIntervals));
 
 	const nextMilestone = $derived.by(() => {
 		const odoKm = $latestOdometer.km;
@@ -121,7 +115,7 @@
 		const allMs = [...mfrMilestones, ...recMilestones];
 		for (const ms of allMs) {
 			if (ms.km > odoKm) continue;
-			const stats = milestoneTaskStatuses(ms, $events, odoKm);
+			const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
 			for (const ts of stats) {
 				if (ts.status === 'red' && !seen.has(ts.task)) {
 					seen.add(ts.task);
@@ -176,7 +170,7 @@
 		if (showMfr) allMilestones.push(...mfrMilestones);
 		if (showRec) {
 			for (const ms of recMilestones) {
-				const stats = milestoneTaskStatuses(ms, $events, odoKm);
+				const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
 				const card = milestoneCardStatus(stats);
 				if (card === 'covered' || card === 'amber' || card === 'red' || ms.km > odoKm) {
 					allMilestones.push(ms);
@@ -196,7 +190,7 @@
 					...rawEvtTasks.map((t) => 'check ' + t)
 				]);
 				for (const ms of allMilestones) {
-					const stats = milestoneTaskStatuses(ms, $events, odoKm);
+					const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
 					const card = milestoneCardStatus(stats);
 					if (card !== 'covered' || Math.abs(ms.km - evtKm) > ATTACH_TOLERANCE_KM) continue;
 					const hasOverlap = ms.tasks.some((t) => evtTasks.has(t.toLowerCase().trim()));
@@ -339,7 +333,7 @@
 					</div>
 		{:else if entry.kind === 'milestone' && entry.milestone}
 			{@const ms = entry.milestone}
-			{@const taskStats = milestoneTaskStatuses(ms, $events, $latestOdometer.km)}
+			{@const taskStats = milestoneTaskStatuses(ms, $events, $latestOdometer.km, serviceIntervals)}
 			{@const cardStatus = milestoneCardStatus(taskStats)}
 			<div class="tl-row" style="margin-top: {gap}px">
 				<div class="tl-ruler">

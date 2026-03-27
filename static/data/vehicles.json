@@ -1,0 +1,6 @@
+{
+  "vehicles": [
+    { "id": "EJ39063", "label": "520d xDrive" }
+  ],
+  "activeVehicle": "EJ39063"
+}

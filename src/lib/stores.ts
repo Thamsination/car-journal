@@ -1,5 +1,5 @@
 import { writable, derived } from 'svelte/store';
-import type { CarEvent, Part, DerivedStatus, ServiceInterval as HealthInterval, VehicleConfig, TireConfig, TireProfile } from './types';
+import type { CarEvent, Part, DerivedStatus, ServiceInterval as HealthInterval, VehicleConfig, TireConfig, TireProfile, VehicleRegistryEntry, PlatformConfig } from './types';
 import { deriveStatus, eventCategory } from './utils';
 
 function persistedWritable<T>(key: string, initial: T) {
@@ -19,9 +19,13 @@ export const repoOwner = persistedWritable<string>('repo_owner', 'Thamsination')
 export const repoName = persistedWritable<string>('repo_name', 'car-journal');
 export const manualOdometer = persistedWritable<number | null>('manual_odometer', null);
 
+export const activeVehicleId = persistedWritable<string>('active_vehicle', '');
+export const vehicleList = writable<VehicleRegistryEntry[]>([]);
+
 export const events = writable<CarEvent[]>([]);
 export const parts = writable<Part[]>([]);
 export const healthIntervals = writable<HealthInterval[]>([]);
+export const platformConfig = writable<PlatformConfig | null>(null);
 
 export const isLoading = writable(false);
 export const error = writable<string | null>(null);
@@ -324,8 +328,7 @@ export const tireStatus = derived(
 		}
 		if (!profile) return { ...empty, currentSet, swapEvent: latest };
 
-		// Sum km across all periods when this tire set was mounted
-		const swapsByKm = [...$swapEvents].reverse(); // ascending by km
+		const swapsByKm = [...$swapEvents].reverse();
 		let kmDriven = 0;
 		for (let i = 0; i < swapsByKm.length; i++) {
 			const season = detectSeason(swapsByKm[i]);

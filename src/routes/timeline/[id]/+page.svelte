@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import { events, latestOdometer } from '$lib/stores';
-	import { saveEvents, loadEvents, uploadReceipt, deleteReceipt, receiptUrl } from '$lib/github';
+	import { saveEvents, uploadReceipt, deleteReceipt, receiptUrl } from '$lib/github';
 	import { formatCost, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, allCategories, getEventTasks, buildEventString } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent, EventCategory } from '$lib/types';

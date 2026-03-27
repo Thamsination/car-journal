@@ -7,7 +7,7 @@
 		token, events, latestOdometer, healthIntervals, dailyAverageKm,
 		vehicleConfig, tireConfig, tireStatus, tireSwapEvents, manualOdometer
 	} from '$lib/stores';
-	import { loadEvents, saveEvents, loadHealthConfig, saveHealthConfig, loadVehicleConfig, loadTireConfig, saveTireConfig } from '$lib/github';
+	import { saveEvents, saveHealthConfig, saveTireConfig } from '$lib/github';
 	import { formatDate, formatDateISO } from '$lib/utils';
 	import type { HealthConfig, CarEvent, ServiceInterval, TireProfile, TireSeason, TireConfig } from '$lib/types';
 
@@ -47,18 +47,6 @@
 		}
 		try {
 			const promises: Promise<void>[] = [];
-			if ($events.length === 0) {
-				promises.push(loadEvents().then((e) => { $events = e; }));
-			}
-			if ($healthIntervals.length === 0) {
-				promises.push(loadHealthConfig().then((c) => { $healthIntervals = c.intervals; }));
-			}
-			if (!$vehicleConfig) {
-				promises.push(loadVehicleConfig().then((v) => { $vehicleConfig = v; }));
-			}
-			if (!$tireConfig) {
-				promises.push(loadTireConfig().then((t) => { $tireConfig = t; }));
-			}
 			await Promise.all(promises);
 		} catch (e: unknown) {
 			loadError = e instanceof Error ? e.message : 'Failed to load';
@@ -195,6 +183,7 @@
 
 	function vehicleTitle(v: typeof $vehicleConfig): string {
 		if (!v) return 'Vehicle';
+		if (v.name) return `${v.year} ${v.make} ${v.chassis} ${v.name}`;
 		return `${v.year} ${v.make} ${v.chassis} ${v.model}`;
 	}
 

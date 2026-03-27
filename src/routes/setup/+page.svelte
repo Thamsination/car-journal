@@ -35,7 +35,7 @@
 </script>
 
 <svelte:head>
-	<title>Setup — G31 Journal</title>
+	<title>Setup — Car Journal</title>
 </svelte:head>
 
 <div class="container setup-page">

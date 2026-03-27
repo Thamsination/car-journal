@@ -54,7 +54,7 @@
 </script>
 
 <svelte:head>
-	<title>Settings — G31 Journal</title>
+	<title>Settings — Car Journal</title>
 </svelte:head>
 
 <div class="container">
@@ -113,7 +113,7 @@
 		</button>
 	</div>
 
-	<p class="version-info">BMW G31 520d xDrive · EJ39063</p>
+	<p class="version-info">Car Journal</p>
 </div>
 
 <style>

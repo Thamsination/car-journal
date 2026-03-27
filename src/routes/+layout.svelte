@@ -3,12 +3,15 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
-	import { token } from '$lib/stores';
+	import { token, activeVehicleId, vehicleList, events, parts, healthIntervals, vehicleConfig, tireConfig, platformConfig } from '$lib/stores';
 	import { getPendingWrites, flushPendingWrites } from '$lib/offline';
+	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache } from '$lib/github';
 
 	let { children } = $props();
 	let pendingCount = $state(0);
 	let syncing = $state(false);
+	let dropdownOpen = $state(false);
+	let switching = $state(false);
 
 	async function checkPending() {
 		try {
@@ -29,7 +32,54 @@
 		}
 	}
 
-	onMount(() => {
+	async function loadVehicleData() {
+		if (!$activeVehicleId || !$token) return;
+		clearShaCache();
+		try {
+			const [evts, vc, hc, tc] = await Promise.all([
+				loadEvents(),
+				loadVehicleConfig(),
+				loadHealthConfig(),
+				loadTireConfig()
+			]);
+			$events = evts;
+			$vehicleConfig = vc;
+			$healthIntervals = hc.intervals;
+			$tireConfig = tc;
+
+			if (vc?.platform) {
+				const pc = await loadPlatform(vc.platform);
+				$platformConfig = pc;
+			} else {
+				$platformConfig = null;
+			}
+		} catch {
+			// vehicle data may not exist yet
+		}
+	}
+
+	async function switchVehicle(id: string) {
+		if (id === $activeVehicleId) {
+			dropdownOpen = false;
+			return;
+		}
+		switching = true;
+		$activeVehicleId = id;
+		$events = [];
+		$parts = [];
+		$healthIntervals = [];
+		$vehicleConfig = null;
+		$tireConfig = null;
+		$platformConfig = null;
+		try {
+			await loadVehicleData();
+		} finally {
+			switching = false;
+			dropdownOpen = false;
+		}
+	}
+
+	onMount(async () => {
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.register(`${base}/sw.js`).catch(() => {});
 		}
@@ -42,11 +92,39 @@
 		};
 		window.addEventListener('online', handleOnline);
 
+		if ($token) {
+			try {
+				const registry = await loadVehiclesRegistry();
+				$vehicleList = registry.vehicles;
+				if (!$activeVehicleId && registry.activeVehicle) {
+					$activeVehicleId = registry.activeVehicle;
+				}
+				if ($activeVehicleId) {
+					await loadVehicleData();
+				}
+			} catch {
+				// registry may not exist yet
+			}
+		}
+
 		return () => {
 			clearInterval(interval);
 			window.removeEventListener('online', handleOnline);
 		};
 	});
+
+	function handleDropdownClick(e: MouseEvent) {
+		e.stopPropagation();
+		dropdownOpen = !dropdownOpen;
+	}
+
+	function closeDropdown() {
+		dropdownOpen = false;
+	}
+
+	const activeLabel = $derived(
+		$vehicleList.find((v) => v.id === $activeVehicleId)?.label || $activeVehicleId || 'Select Vehicle'
+	);
 
 	const navItems = [
 		{ href: `${base}/`, label: 'Dashboard', icon: '◎' },
@@ -62,15 +140,58 @@
 	}
 </script>
 
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+{#if dropdownOpen}
+	<div class="dropdown-backdrop" onclick={closeDropdown}></div>
+{/if}
+
 <div class="app-shell">
 	<header class="top-bar">
 		<div class="container top-bar-inner">
-			<h1 class="app-title">G31 Journal</h1>
+			<div class="vehicle-selector">
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<div class="selector-trigger" onclick={handleDropdownClick}>
+					<span class="selector-plate">{$activeVehicleId || 'Vehicle'}</span>
+					<span class="selector-label">{activeLabel}</span>
+					<span class="selector-arrow">{dropdownOpen ? '▲' : '▼'}</span>
+				</div>
+				{#if dropdownOpen}
+					<div class="selector-dropdown">
+						{#each $vehicleList as v}
+							<!-- svelte-ignore a11y_click_events_have_key_events -->
+							<!-- svelte-ignore a11y_no_static_element_interactions -->
+							<div
+								class="dropdown-item"
+								class:dropdown-item-active={v.id === $activeVehicleId}
+								onclick={() => switchVehicle(v.id)}
+							>
+								<span class="dropdown-plate">{v.id}</span>
+								<span class="dropdown-label">{v.label}</span>
+							</div>
+						{/each}
+						<div class="dropdown-divider"></div>
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<div class="dropdown-item dropdown-item-add" onclick={() => { dropdownOpen = false; alert('Add vehicle coming soon'); }}>
+							<span class="dropdown-add-icon">+</span>
+							<span class="dropdown-label">Add Vehicle</span>
+						</div>
+					</div>
+				{/if}
+			</div>
 			{#if $token}
 				<a href="{base}/settings" class="settings-btn" aria-label="Settings">⚙︎</a>
 			{/if}
 		</div>
 	</header>
+
+	{#if switching}
+		<div class="sync-banner">
+			<span>Switching vehicle...</span>
+		</div>
+	{/if}
 
 	{#if pendingCount > 0}
 		<div class="sync-banner">
@@ -126,10 +247,110 @@
 		height: var(--nav-height);
 	}
 
-	.app-title {
+	.vehicle-selector {
+		position: relative;
+	}
+
+	.selector-trigger {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		cursor: pointer;
+		padding: 4px 8px;
+		border-radius: var(--radius-sm);
+		transition: background 0.15s;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	.selector-trigger:active {
+		background: rgba(142, 142, 147, 0.12);
+	}
+
+	.selector-plate {
+		font-size: 15px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+	}
+
+	.selector-label {
+		font-size: 13px;
+		color: var(--color-text-secondary);
+		font-weight: 500;
+	}
+
+	.selector-arrow {
+		font-size: 8px;
+		color: var(--color-text-secondary);
+		margin-left: 2px;
+	}
+
+	.selector-dropdown {
+		position: absolute;
+		top: calc(100% + 6px);
+		left: 0;
+		min-width: 220px;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-lg, 0 8px 24px rgba(0,0,0,0.15));
+		z-index: 200;
+		overflow: hidden;
+	}
+
+	.dropdown-item {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 12px 14px;
+		cursor: pointer;
+		transition: background 0.1s;
+	}
+
+	.dropdown-item:active {
+		background: rgba(142, 142, 147, 0.12);
+	}
+
+	.dropdown-item-active {
+		background: rgba(0, 122, 255, 0.08);
+	}
+
+	.dropdown-plate {
+		font-size: 14px;
+		font-weight: 700;
+		letter-spacing: 0.3px;
+		min-width: 70px;
+	}
+
+	.dropdown-label {
+		font-size: 13px;
+		color: var(--color-text-secondary);
+	}
+
+	.dropdown-divider {
+		height: 1px;
+		background: var(--color-border);
+	}
+
+	.dropdown-item-add {
+		color: var(--color-accent);
+	}
+
+	.dropdown-item-add .dropdown-label {
+		color: var(--color-accent);
+		font-weight: 600;
+	}
+
+	.dropdown-add-icon {
 		font-size: 18px;
 		font-weight: 700;
-		letter-spacing: -0.3px;
+		min-width: 70px;
+		text-align: center;
+	}
+
+	.dropdown-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 99;
 	}
 
 	.settings-btn {

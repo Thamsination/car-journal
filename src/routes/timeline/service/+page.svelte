@@ -2,18 +2,21 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
-	import { events } from '$lib/stores';
-	import { computeMfrMilestones, computeRecMilestones, SERVICE_NOTES, SERVICE_INTERVALS } from '$lib/utils';
+	import { events, platformConfig } from '$lib/stores';
+	import { computeMfrMilestones, computeRecMilestones, getServiceNotes, getServiceIntervals } from '$lib/utils';
 	import type { ServiceMilestone } from '$lib/types';
 
 	const kind = $derived($page.url.searchParams.get('kind') as 'mfr' | 'rec' | null);
 	const km = $derived(Number($page.url.searchParams.get('km')) || 0);
 
+	const serviceIntervals = $derived(getServiceIntervals($platformConfig));
+	const serviceNotes = $derived(getServiceNotes($platformConfig));
+
 	const milestone = $derived.by(() => {
 		if (!kind || !km) return null;
 		const all = kind === 'mfr'
-			? computeMfrMilestones($events)
-			: computeRecMilestones($events);
+			? computeMfrMilestones($events, serviceIntervals)
+			: computeRecMilestones($events, serviceIntervals);
 		return all.find((ms) => ms.km === km) ?? null;
 	});
 
@@ -21,7 +24,7 @@
 	const kindBadge = $derived(kind === 'mfr' ? 'MFR' : 'REC');
 
 	function taskInterval(task: string, taskKind: 'mfr' | 'rec'): string | null {
-		const entry = SERVICE_INTERVALS.find((si) => si.task === task && si.kind === taskKind);
+		const entry = serviceIntervals.find((si) => si.task === task && si.kind === taskKind);
 		if (!entry) return null;
 		return `Every ${entry.km.toLocaleString()} km`;
 	}
@@ -52,8 +55,8 @@
 					{#if taskInterval(task, kind ?? 'mfr')}
 						<span class="task-interval">{taskInterval(task, kind ?? 'mfr')}</span>
 					{/if}
-					{#if SERVICE_NOTES[task]}
-						<p class="task-note">{SERVICE_NOTES[task]}</p>
+					{#if serviceNotes[task]}
+						<p class="task-note">{serviceNotes[task]}</p>
 					{/if}
 				</div>
 			{/each}
