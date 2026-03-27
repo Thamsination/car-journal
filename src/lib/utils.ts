@@ -240,6 +240,8 @@ const COVER_TOLERANCE_KM = 1000;
 
 const WEAR_BASED_TASKS = new Set(['check front brake pads', 'check rear brake pads']);
 
+const VEHICLE_CHECK_IMPLIES = ['check front brake pads', 'check rear brake pads'];
+
 function completedByTaskMap(events: CarEvent[]): Map<string, number[]> {
 	const map = new Map<string, number[]>();
 	for (const evt of events) {
@@ -249,6 +251,12 @@ function completedByTaskMap(events: CarEvent[]): Map<string, number[]> {
 			const key = t.toLowerCase().trim();
 			if (!map.has(key)) map.set(key, []);
 			map.get(key)!.push(evt.km);
+			if (key === 'vehicle check') {
+				for (const implied of VEHICLE_CHECK_IMPLIES) {
+					if (!map.has(implied)) map.set(implied, []);
+					map.get(implied)!.push(evt.km);
+				}
+			}
 		}
 	}
 	for (const [, kms] of map) kms.sort((a, b) => a - b);
