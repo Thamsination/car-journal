@@ -1,0 +1,214 @@
+{
+  "id": "Fiat-500-312",
+  "name": "Fiat 500 / 500 Hybrid (Type 312 facelift+)",
+  "years": "2015\u2013",
+  "chassisCodes": [
+    "312"
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 15000,
+      "kind": "mfr"
+    },
+    {
+      "task": "cabin filter",
+      "km": 15000,
+      "kind": "mfr"
+    },
+    {
+      "task": "air filter",
+      "km": 30000,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "kind": "rec"
+    },
+    {
+      "task": "timing belt",
+      "km": 120000,
+      "kind": "rec"
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "kind": "rec"
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "Fiat\u2019s EU service schedule for 500 TwinAir / Fire / Hybrid petrol engines specifies maintenance including oil and filter at 15,000 km or 12 months (whichever first) in the owner\u2019s service booklet for European markets.",
+    "cabin filter": "Pollen filter is replaced at the periodic maintenance interval alongside other routine checks.",
+    "air filter": "Engine air filter replacement typically follows every second oil service on many Fiat small-car EU programmes (~30,000 km)\u2014confirm in your maintenance plan.",
+    "spark plugs": "Petrol engines list spark plug renewal at extended intervals in Fiat maintenance tables; 60,000 km is typical for four-valve Fire/TwinAir families\u2014verify engine code.",
+    "timing belt": "Where a timing belt is fitted (some variants), specialist mechanics often plan replacement near 120,000 km or earlier by age\u2014chain-equipped engines do not apply.",
+    "coolant flush": "Long-life coolant still ages; exchange around 120,000 km protects the small turbo cooling circuit on newer variants."
+  },
+  "milestones": [
+    {
+      "km": 15000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 30000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 45000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 75000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 90000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 105000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "coolant flush",
+        "engine oil",
+        "spark plugs",
+        "timing belt"
+      ]
+    },
+    {
+      "km": 135000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 150000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 165000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 195000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 210000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 225000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "coolant flush",
+        "engine oil",
+        "spark plugs",
+        "timing belt"
+      ]
+    },
+    {
+      "km": 255000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 270000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 285000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "spark plugs"
+      ]
+    }
+  ]
+}

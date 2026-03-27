@@ -1,0 +1,213 @@
+{
+  "id": "Skoda-OCTAVIA-3",
+  "name": "\u0160koda Octavia III (MQB)",
+  "years": "2012\u20132020",
+  "chassisCodes": [
+    "5E"
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 15000,
+      "kind": "mfr"
+    },
+    {
+      "task": "cabin filter",
+      "km": 30000,
+      "kind": "mfr"
+    },
+    {
+      "task": "air filter",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "fuel filter",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "kind": "rec"
+    },
+    {
+      "task": "DSG gearbox fluid",
+      "km": 60000,
+      "kind": "rec"
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "kind": "rec"
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "\u0160koda EU service schedules mirror VW Group fixed inspection intervals: engine oil and filter at 15,000 km or annually (whichever first) on Inspection Service / time-and-distance plans in the owner\u2019s service programme.",
+    "cabin filter": "Dust and pollen filter replacement is part of the manufacturer\u2019s periodic maintenance (typically every second fixed inspection, around 30,000 km).",
+    "air filter": "Air filter change is specified at the extended maintenance interval in Octavia III booklets (60,000 km is typical for petrol; diesels may differ).",
+    "spark plugs": "Petrol TSI models specify spark plug replacement per the maintenance table\u201460,000 km is a common EU interval for four-cylinder engines.",
+    "fuel filter": "TDI models require fuel filter replacement on the long-interval maintenance items; \u0160koda/VW diesel schedules commonly use 60,000 km\u2014omit on pure petrol cars.",
+    "DSG gearbox fluid": "Specialists recommend DSG fluid and filter around 60,000 km for long-term reliability of the dual-clutch unit.",
+    "coolant flush": "Cooling system protection fades with age; exchange around 120,000 km is a sensible preventive step."
+  },
+  "milestones": [
+    {
+      "km": 15000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 30000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 45000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "DSG gearbox fluid",
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "fuel filter",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 75000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 90000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 105000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "DSG gearbox fluid",
+        "air filter",
+        "cabin filter",
+        "coolant flush",
+        "engine oil",
+        "fuel filter",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 135000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 150000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 165000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "DSG gearbox fluid",
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "fuel filter",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 195000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 210000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 225000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "DSG gearbox fluid",
+        "air filter",
+        "cabin filter",
+        "coolant flush",
+        "engine oil",
+        "fuel filter",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 255000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 270000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 285000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "DSG gearbox fluid",
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "fuel filter",
+        "spark plugs"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "id": "VW-MK7",
+  "name": "Volkswagen Golf Mk7 / Mk7.5 (MQB)",
+  "years": "2012\u20132020",
+  "chassisCodes": [
+    "5G"
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 15000,
+      "kind": "mfr"
+    },
+    {
+      "task": "cabin filter",
+      "km": 30000,
+      "kind": "mfr"
+    },
+    {
+      "task": "air filter",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "kind": "rec"
+    },
+    {
+      "task": "DSG gearbox fluid",
+      "km": 60000,
+      "kind": "rec"
+    },
+    {
+      "task": "manual gearbox fluid",
+      "km": 50000,
+      "kind": "rec"
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "kind": "rec"
+    },
+    {
+      "task": "intake carbon clean",
+      "km": 120000,
+      "kind": "rec"
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "Under VW\u2019s fixed (time and distance) service regime for Europe, the maintenance booklet schedules an inspection service including engine oil and filter replacement at 15,000 km or 12 months, whichever comes first. LongLife/flexible regimes differ; this entry reflects the common fixed-interval EU schedule documented in VW warranty and maintenance booklets.",
+    "cabin filter": "VW specifies replacement on a time-based cycle in the owner\u2019s literature; many EU schedules align pollen/cabin filter replacement with the major inspection (commonly every 30,000 km or 24 months on fixed plans).",
+    "air filter": "Engine air filter replacement is typically tied to longer inspection intervals on VW fixed schedules (often every 60,000 km or 48 months in maintenance tables for MQB petrol models).",
+    "spark plugs": "For TSI petrol engines, VW maintenance tables specify spark plug renewal at extended mileage/time intervals; 60,000 km is a commonly quoted inspection point for MQB four-cylinder petrol in EU booklets\u2014verify for your exact engine code.",
+    "DSG gearbox fluid": "VW lists DSG fluid as lifetime in some markets; independent specialists and DSG rebuilders recommend fluid and filter service around 60,000 km for long-term clutch and mechatronics health.",
+    "manual gearbox fluid": "Gear oil is often treated as fill-for-life officially; replacing around 50,000 km is a common enthusiast and specialist recommendation for MQB manual boxes.",
+    "coolant flush": "Manufacturer uses a long-life coolant with time-based change; a full exchange around 120,000 km restores additive protection for the water pump and cylinder head.",
+    "intake carbon clean": "TSI direct-injection engines can accumulate intake valve deposits; walnut or chemical cleaning around 120,000 km restores airflow and idle quality."
+  },
+  "milestones": [
+    {
+      "km": 15000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 30000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 45000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 50000,
+      "tasks": [
+        "manual gearbox fluid"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "DSG gearbox fluid",
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 75000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 90000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 100000,
+      "tasks": [
+        "manual gearbox fluid"
+      ]
+    },
+    {
+      "km": 105000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "DSG gearbox fluid",
+        "air filter",
+        "cabin filter",
+        "coolant flush",
+        "engine oil",
+        "intake carbon clean",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 135000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 150000,
+      "tasks": [
+        "cabin filter",
+        "engine oil",
+        "manual gearbox fluid"
+      ]
+    },
+    {
+      "km": 165000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "DSG gearbox fluid",
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 195000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 200000,
+      "tasks": [
+        "manual gearbox fluid"
+      ]
+    },
+    {
+      "km": 210000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 225000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "DSG gearbox fluid",
+        "air filter",
+        "cabin filter",
+        "coolant flush",
+        "engine oil",
+        "intake carbon clean",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 250000,
+      "tasks": [
+        "manual gearbox fluid"
+      ]
+    },
+    {
+      "km": 255000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 270000,
+      "tasks": [
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 285000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "DSG gearbox fluid",
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "manual gearbox fluid",
+        "spark plugs"
+      ]
+    }
+  ]
+}

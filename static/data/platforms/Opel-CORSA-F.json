@@ -1,0 +1,187 @@
+{
+  "id": "Opel-CORSA-F",
+  "name": "Opel / Vauxhall Corsa F (CMP)",
+  "years": "2019\u2013",
+  "chassisCodes": [
+    "F"
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 20000,
+      "kind": "mfr"
+    },
+    {
+      "task": "cabin filter",
+      "km": 20000,
+      "kind": "mfr"
+    },
+    {
+      "task": "air filter",
+      "km": 20000,
+      "kind": "mfr"
+    },
+    {
+      "task": "fuel filter",
+      "km": 40000,
+      "kind": "mfr"
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "kind": "rec"
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "kind": "rec"
+    },
+    {
+      "task": "wet belt inspection",
+      "km": 100000,
+      "kind": "rec"
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "Corsa F shares Stellantis CMP service logic: Opel\u2019s EU maintenance plan schedules routine servicing including oil and filter at 20,000 km or 12 months on standard programmes (see owner\u2019s manual / myOpel service schedule).",
+    "cabin filter": "Interior ventilation filter replacement follows the same periodic maintenance interval as other filter items.",
+    "air filter": "Engine air filter is serviced at the standard maintenance visit for petrol and diesel ICE models.",
+    "fuel filter": "Diesel models include fuel filter replacement on the extended maintenance interval (~40,000 km); not applicable to petrol.",
+    "coolant flush": "Preventive coolant exchange around 120,000 km maintains corrosion protection for turbocharged CMP engines.",
+    "wet belt inspection": "Where fitted (PureTech-related engines), wet belt systems need specialist inspection around 100,000 km; confirm engine variant."
+  },
+  "milestones": [
+    {
+      "km": 20000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 40000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "fuel filter"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 80000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "fuel filter"
+      ]
+    },
+    {
+      "km": 100000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "wet belt inspection"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "coolant flush",
+        "engine oil",
+        "fuel filter"
+      ]
+    },
+    {
+      "km": 140000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 160000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "fuel filter"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 200000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "fuel filter",
+        "wet belt inspection"
+      ]
+    },
+    {
+      "km": 220000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "coolant flush",
+        "engine oil",
+        "fuel filter"
+      ]
+    },
+    {
+      "km": 260000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 280000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "fuel filter"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "air filter",
+        "cabin filter",
+        "engine oil",
+        "wet belt inspection"
+      ]
+    }
+  ]
+}
