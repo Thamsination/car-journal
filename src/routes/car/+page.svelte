@@ -529,9 +529,9 @@
 								<div class="tire-stat">
 									<span class="tire-stat-label">Km driven</span>
 									<span class="tire-stat-value">{tire.kmDriven.toLocaleString()} km</span>
-									<div class="progress-bar">
-										<div class="progress-fill" style="width: {Math.min(100, tire.kmPct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.kmPct))}"></div>
-									</div>
+								<div class="progress-bar">
+									<div class="progress-fill" style="width: {Math.max(0, (1 - tire.kmPct) * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.kmPct))}"></div>
+								</div>
 									{#if tire.remainingKm !== null}
 										<span class="tire-stat-remaining" style="color: {tire.remainingKm < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
 											{#if tire.remainingKm < 0}
@@ -555,9 +555,9 @@
 											{tire.ageDays} days
 										{/if}
 									</span>
-									<div class="progress-bar">
-										<div class="progress-fill" style="width: {Math.min(100, tire.agePct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.agePct))}"></div>
-									</div>
+								<div class="progress-bar">
+									<div class="progress-fill" style="width: {Math.max(0, (1 - tire.agePct) * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.agePct))}"></div>
+								</div>
 									{#if tire.remainingDays !== null}
 										<span class="tire-stat-remaining" style="color: {tire.remainingDays < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
 											{#if tire.remainingDays < 0}
@@ -1218,7 +1218,6 @@
 		height: 100%;
 		border-radius: 4px;
 		transition: width 0.3s ease;
-		margin-left: auto;
 	}
 
 	.progress-label {

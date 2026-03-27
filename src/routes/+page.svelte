@@ -354,11 +354,12 @@
 						{@const totalWindow = nse.km - $lastCompletedKm}
 						{@const driven = $latestOdometer.km - $lastCompletedKm}
 						{#if remaining > 0}
+							{@const remainPct = totalWindow > 0 ? Math.max(0, 1 - driven / totalWindow) : 0.95}
 							<div class="km-remaining">
 								<div class="progress-bar">
 									<div
 										class="progress-fill"
-										style="width: {totalWindow > 0 ? Math.min(100, Math.max(3, (driven / totalWindow) * 100)) : 5}%"
+										style="width: {remainPct * 100}%; background: {remainPct > 0.3 ? '#34c759' : remainPct > 0.1 ? '#ff9500' : '#ff3b30'}"
 									></div>
 								</div>
 								<span class="remaining-text">{remaining.toLocaleString()} km remaining</span>
@@ -408,11 +409,12 @@
 								{@const totalWindow = evt.km - $lastCompletedKm}
 								{@const driven = $latestOdometer.km - $lastCompletedKm}
 								{#if remaining > 0}
+									{@const remainPct = totalWindow > 0 ? Math.max(0, 1 - driven / totalWindow) : 0.95}
 									<div class="km-remaining">
 										<div class="progress-bar">
 											<div
 												class="progress-fill"
-												style="width: {totalWindow > 0 ? Math.min(100, Math.max(3, (driven / totalWindow) * 100)) : 5}%"
+												style="width: {remainPct * 100}%; background: {remainPct > 0.3 ? '#34c759' : remainPct > 0.1 ? '#ff9500' : '#ff3b30'}"
 											></div>
 										</div>
 										<span class="remaining-text">{remaining.toLocaleString()} km remaining</span>
@@ -814,7 +816,6 @@
 
 	.progress-fill {
 		height: 100%;
-		background: var(--color-accent);
 		border-radius: 2px;
 		transition: width 0.3s;
 	}
