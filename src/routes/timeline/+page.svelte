@@ -189,10 +189,12 @@
 			const evtKm = evt.km ?? 0;
 			const matched: ServiceMilestone[] = [];
 			if (evt.completed && evtKm > 0) {
-				const evtTasks = new Set(
-					(evt.tasks && evt.tasks.length > 0 ? evt.tasks : [evt.event])
-						.map((t) => t.toLowerCase().trim())
-				);
+				const rawEvtTasks = (evt.tasks && evt.tasks.length > 0 ? evt.tasks : [evt.event])
+					.map((t) => t.toLowerCase().trim());
+				const evtTasks = new Set([
+					...rawEvtTasks,
+					...rawEvtTasks.map((t) => 'check ' + t)
+				]);
 				for (const ms of allMilestones) {
 					const stats = milestoneTaskStatuses(ms, $events, odoKm);
 					const card = milestoneCardStatus(stats);
