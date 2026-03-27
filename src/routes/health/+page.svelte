@@ -260,8 +260,10 @@
 						<div class="comp-meta">
 							{#if comp.lastEvent}
 								<span class="meta-last">Last: {formatDate(comp.lastDate)}{comp.lastKm ? ` · ${comp.lastKm.toLocaleString()} km` : ''}</span>
-							{:else}
+							{:else if comp.health === 'overdue'}
 								<span class="meta-last meta-unknown">No service record found</span>
+							{:else}
+								<span class="meta-last">First service at {(comp.interval.intervalKm ?? 0).toLocaleString()} km</span>
 							{/if}
 						</div>
 
@@ -285,6 +287,29 @@
 									<span class="remaining-overdue">{formatRemaining(comp.remainingKm, comp.remainingDays)}</span>
 								{:else}
 									<span class="remaining-ok">{formatRemaining(comp.remainingKm, comp.remainingDays)} remaining</span>
+								{/if}
+							</div>
+						{:else if comp.interval.intervalKm && $latestOdometer.km > 0}
+							{@const usedPct = Math.min(1, Math.max(0, $latestOdometer.km / comp.interval.intervalKm))}
+							{@const remainPct = Math.max(0, 1 - usedPct)}
+							{@const remainingKm = comp.interval.intervalKm - $latestOdometer.km}
+							<div class="progress-row">
+								<span class="progress-label" style="color: {remainingColor(remainPct)}">
+									{Math.round(remainPct * 100)}%
+								</span>
+								<div class="progress-bar">
+									<div
+										class="progress-fill"
+										style="width: {remainPct * 100}%; background: {remainingColor(remainPct)}"
+									></div>
+								</div>
+							</div>
+
+							<div class="comp-remaining">
+								{#if remainingKm > 0}
+									<span class="remaining-ok">{remainingKm.toLocaleString()} km remaining</span>
+								{:else}
+									<span class="remaining-overdue">{Math.abs(remainingKm).toLocaleString()} km overdue</span>
 								{/if}
 							</div>
 						{/if}
