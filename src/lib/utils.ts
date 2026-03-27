@@ -128,13 +128,13 @@ export function buildEventString(tasks: string[]): string {
 
 import type { ServiceMilestone, MilestoneKind } from './types';
 
-interface ServiceInterval {
+export interface ServiceInterval {
 	task: string;
 	km: number;
 	kind: MilestoneKind;
 }
 
-const SERVICE_INTERVALS: ServiceInterval[] = [
+export const SERVICE_INTERVALS: ServiceInterval[] = [
 	{ task: 'engine oil', km: 30000, kind: 'mfr' },
 	{ task: 'micro filter', km: 30000, kind: 'mfr' },
 	{ task: 'air cleaner element', km: 60000, kind: 'mfr' },
