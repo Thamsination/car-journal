@@ -6,8 +6,8 @@
 		token, events, latestOdometer, healthIntervals, dailyAverageKm,
 		vehicleConfig, tireConfig, tireStatus, tireSwapEvents
 	} from '$lib/stores';
-	import { loadEvents, loadHealthConfig, saveHealthConfig, loadVehicleConfig, loadTireConfig, saveTireConfig } from '$lib/github';
-	import { formatDate } from '$lib/utils';
+	import { loadEvents, saveEvents, loadHealthConfig, saveHealthConfig, loadVehicleConfig, loadTireConfig, saveTireConfig } from '$lib/github';
+	import { formatDate, formatDateISO } from '$lib/utils';
 	import type { HealthConfig, CarEvent, ServiceInterval, TireProfile, TireSeason, TireConfig } from '$lib/types';
 
 	let loading = $state(true);
@@ -29,6 +29,11 @@
 	let tireEditRearDot = $state('');
 	let tireEditPerAxleDot = $state(false);
 	let tireEditProfileId = $state<string | null>(null);
+	let swapSaving = $state(false);
+	let showArchived = $state(false);
+
+	const activeProfiles = $derived($tireConfig?.profiles.filter((p) => !p.archived) ?? []);
+	const archivedProfiles = $derived($tireConfig?.profiles.filter((p) => p.archived) ?? []);
 
 	onMount(async () => {
 		if (!$token) {
@@ -230,36 +235,112 @@
 		return '#34c759';
 	}
 
-	function openTireEdit() {
-		const profile = $tireStatus.profile;
-		if (profile) {
-			tireEditProfileId = profile.id;
-			tireEditBrand = profile.brand;
-			tireEditModel = profile.model;
-			tireEditFrontSize = profile.frontSize;
-			tireEditRearSize = profile.rearSize ?? '';
-			tireEditStaggered = !!profile.rearSize;
-			tireEditSeason = profile.season;
-			tireEditFrontDot = profile.frontDot;
-			tireEditRearDot = profile.rearDot ?? '';
-			tireEditPerAxleDot = !!profile.rearDot;
-		} else {
-			tireEditProfileId = null;
-			tireEditBrand = '';
-			tireEditModel = '';
-			tireEditFrontSize = '';
-			tireEditRearSize = '';
-			tireEditStaggered = false;
-			tireEditSeason = ($tireStatus.currentSet as TireSeason) ?? 'summer';
-			tireEditFrontDot = '';
-			tireEditRearDot = '';
-			tireEditPerAxleDot = false;
-		}
+	function startTireEdit(profile: TireProfile) {
+		tireEditProfileId = profile.id;
+		tireEditBrand = profile.brand;
+		tireEditModel = profile.model;
+		tireEditFrontSize = profile.frontSize;
+		tireEditRearSize = profile.rearSize ?? '';
+		tireEditStaggered = !!profile.rearSize;
+		tireEditSeason = profile.season;
+		tireEditFrontDot = profile.frontDot;
+		tireEditRearDot = profile.rearDot ?? '';
+		tireEditPerAxleDot = !!profile.rearDot;
+		tireEditOpen = true;
+	}
+
+	function startNewTireEdit() {
+		tireEditProfileId = null;
+		tireEditBrand = '';
+		tireEditModel = '';
+		tireEditFrontSize = '';
+		tireEditRearSize = '';
+		tireEditStaggered = false;
+		tireEditSeason = 'summer';
+		tireEditFrontDot = '';
+		tireEditRearDot = '';
+		tireEditPerAxleDot = false;
 		tireEditOpen = true;
 	}
 
 	function closeTireEdit() {
 		tireEditOpen = false;
+	}
+
+	async function handleTireSwap(profile: TireProfile) {
+		if (swapSaving) return;
+		const label = `${seasonLabels[profile.season]} · ${profile.brand} ${profile.model}`;
+		if (!confirm(`Switch to ${label}?\n\nThis will create a tire-swap event.`)) return;
+
+		swapSaving = true;
+		try {
+			const seasonName = seasonLabels[profile.season].toLowerCase();
+			const newEvt: CarEvent = {
+				id: `evt_swap_${Date.now().toString(36)}`,
+				km: $latestOdometer.km,
+				date: formatDateISO(new Date()),
+				event: `${seasonLabels[profile.season]} tires`,
+				cost: 0,
+				currency: 'DKK',
+				provider: '',
+				notes: `Profile: ${profile.id}`,
+				invoiceNr: '',
+				completed: true,
+				category: 'tire-swap',
+				tasks: [`${seasonName} tires`],
+				kmEstimated: $latestOdometer.source !== 'manual'
+			};
+
+			const updatedEvents = [...$events, newEvt];
+			await saveEvents(updatedEvents, `Tire swap: ${seasonLabels[profile.season]} tires`);
+			$events = updatedEvents;
+		} catch {
+			alert('Failed to create tire swap event');
+		} finally {
+			swapSaving = false;
+		}
+	}
+
+	async function archiveProfile(profile: TireProfile) {
+		if (!$tireConfig) return;
+		if (!confirm(`Archive "${profile.brand} ${profile.model}"?`)) return;
+		const updated = $tireConfig.profiles.map((p) =>
+			p.id === profile.id ? { ...p, archived: true } : p
+		);
+		const cfg: TireConfig = { profiles: updated, warningPct: $tireConfig.warningPct };
+		try {
+			await saveTireConfig(cfg, `Archive tire profile: ${profile.id}`);
+			$tireConfig = cfg;
+		} catch {
+			alert('Failed to archive profile');
+		}
+	}
+
+	async function restoreProfile(profile: TireProfile) {
+		if (!$tireConfig) return;
+		const updated = $tireConfig.profiles.map((p) =>
+			p.id === profile.id ? { ...p, archived: false } : p
+		);
+		const cfg: TireConfig = { profiles: updated, warningPct: $tireConfig.warningPct };
+		try {
+			await saveTireConfig(cfg, `Restore tire profile: ${profile.id}`);
+			$tireConfig = cfg;
+		} catch {
+			alert('Failed to restore profile');
+		}
+	}
+
+	async function deleteProfile(profile: TireProfile) {
+		if (!$tireConfig) return;
+		if (!confirm(`Permanently delete "${profile.brand} ${profile.model}"?\n\nThis cannot be undone.`)) return;
+		const updated = $tireConfig.profiles.filter((p) => p.id !== profile.id);
+		const cfg: TireConfig = { profiles: updated, warningPct: $tireConfig.warningPct };
+		try {
+			await saveTireConfig(cfg, `Delete tire profile: ${profile.id}`);
+			$tireConfig = cfg;
+		} catch {
+			alert('Failed to delete profile');
+		}
 	}
 
 	async function saveTireEdit() {
@@ -370,15 +451,7 @@
 		{#if $tireStatus.currentSet}
 			{@const tire = $tireStatus}
 			<h3 class="section-title">Tires</h3>
-			<div
-				class="tire-card"
-				class:tire-overdue={tire.health === 'overdue'}
-				class:tire-warning={tire.health === 'warning'}
-				class:tire-tappable={!tireEditOpen}
-				onclick={() => { if (!tireEditOpen) openTireEdit(); }}
-				role={!tireEditOpen ? 'button' : undefined}
-				tabindex={!tireEditOpen ? 0 : undefined}
-			>
+			<div class="tire-card" class:tire-overdue={tire.health === 'overdue'} class:tire-warning={tire.health === 'warning'}>
 				<div class="tire-header">
 					<span class="tire-set">{tire.profile ? seasonLabels[tire.profile.season] : tire.currentSet} tires</span>
 					<span class="tire-health-badge" style="color: {tireHealthColor(tire.health)}">
@@ -388,108 +461,26 @@
 				{#if tire.profile}
 					<span class="tire-detail">
 						{tire.profile.brand} {tire.profile.model} · {tireDisplaySize(tire.profile)}
-						{#if tireDisplayDot(tire.profile)}
-							 · {tireDisplayDot(tire.profile)}
-						{/if}
+						{#if tireDisplayDot(tire.profile)} · {tireDisplayDot(tire.profile)}{/if}
 					</span>
 				{/if}
-
-				{#if tireEditOpen}
-					<!-- Inline tire spec edit form -->
-					<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-					<div class="tire-edit-panel" onclick={(e) => e.stopPropagation()}>
-						<div class="edit-row">
-							<div class="edit-field">
-								<label for="tire-brand">Make</label>
-								<input id="tire-brand" type="text" bind:value={tireEditBrand} placeholder="e.g. Aplus" />
-							</div>
-							<div class="edit-field">
-								<label for="tire-model">Model</label>
-								<input id="tire-model" type="text" bind:value={tireEditModel} placeholder="e.g. A610 100Y" />
-							</div>
+				<div class="tire-stats">
+					<div class="tire-stat">
+						<span class="tire-stat-label">Km driven</span>
+						<span class="tire-stat-value">{tire.kmDriven.toLocaleString()} km</span>
+						<div class="progress-bar">
+							<div class="progress-fill" style="width: {Math.min(100, tire.kmPct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.kmPct))}"></div>
 						</div>
-
-						<div class="edit-field">
-							<label for="tire-front-size">Front size</label>
-							<input id="tire-front-size" type="text" bind:value={tireEditFrontSize} placeholder="e.g. 225/55R17" />
-						</div>
-
-						<label class="toggle-row">
-							<input type="checkbox" bind:checked={tireEditStaggered} />
-							<span>Staggered (different rear size)</span>
-						</label>
-						{#if tireEditStaggered}
-							<div class="edit-field">
-								<label for="tire-rear-size">Rear size</label>
-								<input id="tire-rear-size" type="text" bind:value={tireEditRearSize} placeholder="e.g. 255/45R17" />
-							</div>
+						{#if tire.remainingKm !== null}
+							<span class="tire-stat-remaining" style="color: {tire.remainingKm < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
+								{#if tire.remainingKm < 0}
+									{Math.abs(tire.remainingKm).toLocaleString()} km overdue
+								{:else}
+									{tire.remainingKm.toLocaleString()} km remaining
+								{/if}
+							</span>
 						{/if}
-
-						<div class="edit-field">
-							<label for="tire-season">Season</label>
-							<select id="tire-season" bind:value={tireEditSeason}>
-								<option value="summer">Summer</option>
-								<option value="winter">Winter</option>
-								<option value="all-year">All-year</option>
-							</select>
-						</div>
-
-						<div class="edit-field">
-							<label for="tire-front-dot">DOT code (last 4 digits)</label>
-							<input id="tire-front-dot" type="text" bind:value={tireEditFrontDot} placeholder="e.g. 2523" maxlength="4" inputmode="numeric" />
-						</div>
-
-						<label class="toggle-row">
-							<input type="checkbox" bind:checked={tireEditPerAxleDot} />
-							<span>Different rear DOT</span>
-						</label>
-						{#if tireEditPerAxleDot}
-							<div class="edit-field">
-								<label for="tire-rear-dot">Rear DOT code</label>
-								<input id="tire-rear-dot" type="text" bind:value={tireEditRearDot} placeholder="e.g. 2420" maxlength="4" inputmode="numeric" />
-							</div>
-						{/if}
-
-						<div class="edit-actions">
-							<button class="edit-cancel" onclick={closeTireEdit}>Cancel</button>
-							<button class="edit-save" onclick={saveTireEdit} disabled={tireSaving}>{tireSaving ? 'Saving...' : 'Save'}</button>
-						</div>
 					</div>
-
-					<!-- Tire swap history -->
-					{#if $tireSwapEvents.length > 0}
-						<div class="tire-history">
-							<span class="tire-history-title">Tire history</span>
-							{#each $tireSwapEvents as swapEvt}
-								<a href="{base}/timeline/{swapEvt.id}" class="tire-history-item" onclick={(e) => e.stopPropagation()}>
-									<span class="tire-history-name">{swapEvt.event}</span>
-									<span class="tire-history-meta">{formatDate(swapEvt.date)} · {(swapEvt.km ?? 0).toLocaleString()} km</span>
-								</a>
-							{/each}
-						</div>
-					{/if}
-				{:else}
-					<div class="tire-stats">
-						<div class="tire-stat">
-							<span class="tire-stat-label">Km driven</span>
-							<span class="tire-stat-value">{tire.kmDriven.toLocaleString()} km</span>
-							<div class="progress-bar">
-								<div
-									class="progress-fill"
-									style="width: {Math.min(100, tire.kmPct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.kmPct))}"
-								></div>
-							</div>
-							{#if tire.remainingKm !== null}
-								<span class="tire-stat-remaining" style="color: {tire.remainingKm < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
-									{#if tire.remainingKm < 0}
-										{Math.abs(tire.remainingKm).toLocaleString()} km overdue
-									{:else}
-										{tire.remainingKm.toLocaleString()} km remaining
-									{/if}
-								</span>
-							{/if}
-						</div>
-
 					<div class="tire-stat">
 						<span class="tire-stat-label">Age{#if tire.profile?.frontDot} (DOT){/if}</span>
 						<span class="tire-stat-value">
@@ -501,30 +492,150 @@
 								{tire.ageDays} days
 							{/if}
 						</span>
-							<div class="progress-bar">
-								<div
-									class="progress-fill"
-									style="width: {Math.min(100, tire.agePct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.agePct))}"
-								></div>
-							</div>
-							{#if tire.remainingDays !== null}
-								<span class="tire-stat-remaining" style="color: {tire.remainingDays < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
-									{#if tire.remainingDays < 0}
-										{Math.abs(tire.remainingDays)} days overdue
-									{:else if tire.remainingDays > 365}
-										{Math.round(tire.remainingDays / 30)} months remaining
-									{:else}
-										{tire.remainingDays} days remaining
-									{/if}
-								</span>
-							{/if}
+						<div class="progress-bar">
+							<div class="progress-fill" style="width: {Math.min(100, tire.agePct * 100)}%; background: {remainingColor(Math.max(0, 1 - tire.agePct))}"></div>
+						</div>
+						{#if tire.remainingDays !== null}
+							<span class="tire-stat-remaining" style="color: {tire.remainingDays < 0 ? '#ff3b30' : 'var(--color-text-secondary)'}">
+								{#if tire.remainingDays < 0}
+									{Math.abs(tire.remainingDays)} days overdue
+								{:else if tire.remainingDays > 365}
+									{Math.round(tire.remainingDays / 30)} months remaining
+								{:else}
+									{tire.remainingDays} days remaining
+								{/if}
+							</span>
+						{/if}
+					</div>
+				</div>
+				{#if tire.swapEvent}
+					<span class="tire-swap-date">Mounted: {formatDate(tire.swapEvent.date)} · {(tire.swapEvent.km ?? 0).toLocaleString()} km</span>
+				{/if}
+			</div>
+		{/if}
+
+		<!-- My Tires -->
+		<h3 class="section-title">My Tires</h3>
+		<div class="my-tires-list">
+			{#each activeProfiles as profile (profile.id)}
+				{@const isActive = $tireStatus.profile?.id === profile.id}
+				<div class="tire-profile-row" class:profile-active={isActive}>
+					<button
+						class="tire-radio"
+						class:tire-radio-active={isActive}
+						onclick={() => handleTireSwap(profile)}
+						disabled={isActive || swapSaving}
+						aria-label="Switch to {profile.brand} {profile.model}"
+					>
+						<span class="radio-dot"></span>
+					</button>
+					<div class="tire-profile-info">
+						<span class="tire-profile-name">{seasonLabels[profile.season]} · {profile.brand} {profile.model}</span>
+						<span class="tire-profile-spec">
+							{tireDisplaySize(profile)}{#if tireDisplayDot(profile)} · {tireDisplayDot(profile)}{/if}
+						</span>
+					</div>
+					<div class="tire-profile-actions">
+						<button class="tire-action-btn" onclick={() => startTireEdit(profile)} aria-label="Edit profile">✎</button>
+						<button class="tire-action-btn tire-action-archive" onclick={() => archiveProfile(profile)} aria-label="Archive profile">▼</button>
+					</div>
+				</div>
+			{/each}
+
+			{#if tireEditOpen}
+				<div class="tire-edit-panel">
+					<span class="edit-panel-title">{tireEditProfileId ? 'Edit tire set' : 'New tire set'}</span>
+					<div class="edit-row">
+						<div class="edit-field">
+							<label for="tire-brand">Make</label>
+							<input id="tire-brand" type="text" bind:value={tireEditBrand} placeholder="e.g. Aplus" />
+						</div>
+						<div class="edit-field">
+							<label for="tire-model">Model</label>
+							<input id="tire-model" type="text" bind:value={tireEditModel} placeholder="e.g. A610 100Y" />
 						</div>
 					</div>
-
-					{#if tire.swapEvent}
-						<span class="tire-swap-date">Mounted: {formatDate(tire.swapEvent.date)} · {(tire.swapEvent.km ?? 0).toLocaleString()} km</span>
+					<div class="edit-field">
+						<label for="tire-front-size">Front size</label>
+						<input id="tire-front-size" type="text" bind:value={tireEditFrontSize} placeholder="e.g. 225/55R17" />
+					</div>
+					<label class="toggle-row">
+						<input type="checkbox" bind:checked={tireEditStaggered} />
+						<span>Staggered (different rear size)</span>
+					</label>
+					{#if tireEditStaggered}
+						<div class="edit-field">
+							<label for="tire-rear-size">Rear size</label>
+							<input id="tire-rear-size" type="text" bind:value={tireEditRearSize} placeholder="e.g. 255/45R17" />
+						</div>
 					{/if}
-				{/if}
+					<div class="edit-field">
+						<label for="tire-season">Season</label>
+						<select id="tire-season" bind:value={tireEditSeason}>
+							<option value="summer">Summer</option>
+							<option value="winter">Winter</option>
+							<option value="all-year">All-year</option>
+						</select>
+					</div>
+					<div class="edit-field">
+						<label for="tire-front-dot">DOT code (last 4 digits)</label>
+						<input id="tire-front-dot" type="text" bind:value={tireEditFrontDot} placeholder="e.g. 2523" maxlength="4" inputmode="numeric" />
+					</div>
+					<label class="toggle-row">
+						<input type="checkbox" bind:checked={tireEditPerAxleDot} />
+						<span>Different rear DOT</span>
+					</label>
+					{#if tireEditPerAxleDot}
+						<div class="edit-field">
+							<label for="tire-rear-dot">Rear DOT code</label>
+							<input id="tire-rear-dot" type="text" bind:value={tireEditRearDot} placeholder="e.g. 2420" maxlength="4" inputmode="numeric" />
+						</div>
+					{/if}
+					<div class="edit-actions">
+						<button class="edit-cancel" onclick={closeTireEdit}>Cancel</button>
+						<button class="edit-save" onclick={saveTireEdit} disabled={tireSaving}>{tireSaving ? 'Saving...' : 'Save'}</button>
+					</div>
+				</div>
+			{:else}
+				<button class="tire-add-btn" onclick={startNewTireEdit}>+ Add tire set</button>
+			{/if}
+		</div>
+
+		<!-- Archived Tires -->
+		{#if archivedProfiles.length > 0}
+			<button class="archived-toggle" onclick={() => (showArchived = !showArchived)}>
+				Archived ({archivedProfiles.length}) {showArchived ? '▾' : '▸'}
+			</button>
+			{#if showArchived}
+				<div class="my-tires-list archived-list">
+					{#each archivedProfiles as profile (profile.id)}
+						<div class="tire-profile-row">
+							<div class="tire-profile-info">
+								<span class="tire-profile-name">{seasonLabels[profile.season]} · {profile.brand} {profile.model}</span>
+								<span class="tire-profile-spec">
+									{tireDisplaySize(profile)}{#if tireDisplayDot(profile)} · {tireDisplayDot(profile)}{/if}
+								</span>
+							</div>
+							<div class="tire-profile-actions">
+								<button class="tire-action-btn tire-action-restore" onclick={() => restoreProfile(profile)} aria-label="Restore profile">↑</button>
+								<button class="tire-action-btn tire-action-delete" onclick={() => deleteProfile(profile)} aria-label="Delete profile">✕</button>
+							</div>
+						</div>
+					{/each}
+				</div>
+			{/if}
+		{/if}
+
+		<!-- Tire History -->
+		{#if $tireSwapEvents.length > 0}
+			<h3 class="section-title">Tire History</h3>
+			<div class="tire-history">
+				{#each $tireSwapEvents as swapEvt}
+					<a href="{base}/timeline/{swapEvt.id}" class="tire-history-item">
+						<span class="tire-history-name">{swapEvt.event}</span>
+						<span class="tire-history-meta">{formatDate(swapEvt.date)} · {(swapEvt.km ?? 0).toLocaleString()} km</span>
+					</a>
+				{/each}
 			</div>
 		{/if}
 
@@ -812,14 +923,6 @@
 		font-size: 11px;
 	}
 
-	.tire-tappable {
-		cursor: pointer;
-	}
-
-	.tire-tappable:active {
-		opacity: 0.85;
-	}
-
 	.tire-swap-date {
 		font-size: 11px;
 		color: var(--color-text-secondary);
@@ -827,8 +930,7 @@
 
 	/* Tire edit panel */
 	.tire-edit-panel {
-		margin-top: 12px;
-		padding-top: 12px;
+		padding: 14px;
 		border-top: 1px solid var(--color-border);
 		display: flex;
 		flex-direction: column;
@@ -1058,6 +1160,165 @@
 
 	.edit-save:disabled {
 		opacity: 0.6;
+	}
+
+	/* My Tires list */
+	.my-tires-list {
+		display: flex;
+		flex-direction: column;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		margin-bottom: 16px;
+	}
+
+	.tire-profile-row {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 12px 14px;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.tire-profile-row:last-child {
+		border-bottom: none;
+	}
+
+	.profile-active {
+		background: rgba(0, 113, 227, 0.05);
+	}
+
+	.tire-radio {
+		width: 22px;
+		height: 22px;
+		border-radius: 50%;
+		border: 2px solid var(--color-border);
+		background: transparent;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		cursor: pointer;
+		padding: 0;
+		transition: border-color 0.15s;
+	}
+
+	.tire-radio-active {
+		border-color: var(--color-accent);
+	}
+
+	.radio-dot {
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+		background: transparent;
+		transition: background 0.15s;
+	}
+
+	.tire-radio-active .radio-dot {
+		background: var(--color-accent);
+	}
+
+	.tire-radio:disabled {
+		cursor: default;
+	}
+
+	.tire-profile-info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 0;
+	}
+
+	.tire-profile-name {
+		font-size: 13px;
+		font-weight: 600;
+	}
+
+	.tire-profile-spec {
+		font-size: 11px;
+		color: var(--color-text-secondary);
+	}
+
+	.tire-profile-actions {
+		display: flex;
+		gap: 2px;
+		flex-shrink: 0;
+	}
+
+	.tire-action-btn {
+		font-size: 14px;
+		color: var(--color-text-secondary);
+		background: none;
+		border: none;
+		padding: 4px 6px;
+		cursor: pointer;
+		border-radius: 4px;
+		transition: background 0.15s;
+	}
+
+	.tire-action-btn:active {
+		background: var(--color-border);
+	}
+
+	.tire-action-archive {
+		font-size: 12px;
+	}
+
+	.tire-action-restore {
+		color: var(--color-accent);
+	}
+
+	.tire-action-delete {
+		color: #ff3b30;
+	}
+
+	.tire-add-btn {
+		display: block;
+		width: 100%;
+		padding: 12px;
+		background: none;
+		border: none;
+		border-top: 1px solid var(--color-border);
+		color: var(--color-accent);
+		font-size: 13px;
+		font-weight: 600;
+		cursor: pointer;
+		text-align: center;
+		transition: background 0.15s;
+	}
+
+	.tire-add-btn:active {
+		background: rgba(0, 113, 227, 0.05);
+	}
+
+	.edit-panel-title {
+		font-size: 13px;
+		font-weight: 700;
+		display: block;
+		margin-bottom: 4px;
+	}
+
+	.archived-toggle {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		background: none;
+		border: none;
+		color: var(--color-text-secondary);
+		font-size: 12px;
+		font-weight: 600;
+		cursor: pointer;
+		padding: 8px 0;
+		text-transform: uppercase;
+		letter-spacing: 0.3px;
+		margin-bottom: 8px;
+	}
+
+	.archived-list {
+		opacity: 0.7;
 	}
 
 	.loading, .error-state {

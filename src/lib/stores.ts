@@ -291,6 +291,11 @@ function oldestDotDate(profile: TireProfile): number | null {
 	return front ?? rear;
 }
 
+function extractProfileId(evt: CarEvent): string | null {
+	const match = evt.notes.match(/\bProfile:\s*(\S+)/);
+	return match ? match[1] : null;
+}
+
 export const tireStatus = derived(
 	[tireSwapEvents, latestOdometer, tireConfig],
 	([$swapEvents, $odo, $tireCfg]): TireStatus => {
@@ -307,9 +312,16 @@ export const tireStatus = derived(
 
 		if (!currentSet || !$tireCfg) return { ...empty, currentSet, swapEvent: latest };
 
-		const profile = $tireCfg.profiles
-			.filter((p) => p.season === currentSet)
-			.sort((a, b) => b.id.localeCompare(a.id))[0] ?? null;
+		const profileId = extractProfileId(latest);
+		let profile: TireProfile | null = null;
+		if (profileId) {
+			profile = $tireCfg.profiles.find((p) => p.id === profileId && !p.archived) ?? null;
+		}
+		if (!profile) {
+			profile = $tireCfg.profiles
+				.filter((p) => p.season === currentSet && !p.archived)
+				.sort((a, b) => b.id.localeCompare(a.id))[0] ?? null;
+		}
 		if (!profile) return { ...empty, currentSet, swapEvent: latest };
 
 		const swapKm = latest.km ?? 0;

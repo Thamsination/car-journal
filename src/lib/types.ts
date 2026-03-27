@@ -86,6 +86,7 @@ export interface TireProfile {
 	rearDot: string | null;
 	maxKm: number;
 	maxMonths: number;
+	archived?: boolean;
 }
 
 export interface TireConfig {
