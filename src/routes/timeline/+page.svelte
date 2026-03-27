@@ -402,13 +402,7 @@
 										<p class="detail-text">{evt.notes}</p>
 									</div>
 								{/if}
-							{#if evt.invoiceNr}
-									<div class="detail-section">
-										<span class="detail-label">Invoice</span>
-										<span class="detail-value">{evt.invoiceNr}</span>
-									</div>
-								{/if}
-								{#if evt.receipts && evt.receipts.length > 0}
+							{#if evt.receipts && evt.receipts.length > 0}
 									<div class="detail-section">
 										<span class="detail-label">Receipts</span>
 										<div class="detail-receipts">

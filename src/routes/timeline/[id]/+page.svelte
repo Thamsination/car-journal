@@ -424,11 +424,6 @@
 				<textarea id="notes" bind:value={form.notes} rows="3"></textarea>
 			</div>
 
-			<div class="field">
-				<label for="invoice">Invoice nr / ID</label>
-				<input id="invoice" type="text" bind:value={form.invoiceNr} />
-			</div>
-
 			{#if saveError}
 				<p class="error-msg">{saveError}</p>
 			{/if}
@@ -480,12 +475,6 @@
 				<div class="detail-row">
 					<span class="detail-label">Notes</span>
 					<span class="detail-value">{event.notes}</span>
-				</div>
-			{/if}
-			{#if event.invoiceNr}
-				<div class="detail-row">
-					<span class="detail-label">Invoice</span>
-					<span class="detail-value">{event.invoiceNr}</span>
 				</div>
 			{/if}
 			<div class="detail-row">
