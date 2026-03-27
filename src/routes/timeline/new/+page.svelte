@@ -173,7 +173,7 @@
 
 <div class="container">
 	<div class="page-header">
-		<a href="{base}/timeline" class="back-btn">← Back</a>
+		<button class="back-btn" onclick={() => history.back()}>← Back</button>
 		<h2>New Entry</h2>
 	</div>
 
@@ -301,7 +301,10 @@
 	.back-btn {
 		font-size: 14px;
 		color: var(--color-accent);
-		text-decoration: none;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0;
 	}
 
 	.event-form {
