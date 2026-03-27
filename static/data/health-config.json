@@ -16,7 +16,7 @@
         "micro filter"
       ],
       "intervalKm": 30000,
-      "intervalMonths": 24
+      "intervalMonths": 12
     },
     {
       "id": "air-filter",
