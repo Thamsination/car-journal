@@ -1,10 +1,21 @@
 {
   "id": "BMW-F30-N55",
-  "name": "BMW F30/F31/F34 3 Series (3.0L 6-cyl turbo petrol, N55)",
+  "name": "BMW F30/F31/F34 3 Series (3.0L 6-cyl turbo petrol)",
   "years": "2012–2015",
-  "chassisCodes": ["F30", "F31", "F34", "F35"],
-  "drivetrains": ["RWD", "AWD"],
-  "transmissions": ["manual", "automatic"],
+  "chassisCodes": [
+    "F30",
+    "F31",
+    "F34",
+    "F35"
+  ],
+  "drivetrains": [
+    "RWD",
+    "AWD"
+  ],
+  "transmissions": [
+    "manual",
+    "automatic"
+  ],
   "displacement": "3.0L",
   "cylinders": 6,
   "fuelType": "petrol",
@@ -24,21 +35,96 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
-    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
-    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "ZF8 gearbox fluid", "km": 100000, "kind": "rec", "months": null },
-    { "task": "gearbox fluid", "km": 100000, "kind": "rec", "months": null },
-    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
-    { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
-    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null },
-    { "task": "intake carbon clean", "km": 120000, "kind": "rec", "months": null }
+    {
+      "task": "engine oil",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "micro filter",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "kind": "mfr",
+      "months": 24
+    },
+    {
+      "task": "air cleaner element",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "spark plugs",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "check front brake pads",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "check rear brake pads",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "vehicle check",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "ZF8 gearbox fluid",
+      "km": 100000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "gearbox fluid",
+      "km": 100000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "xDrive transfer case fluid",
+      "km": 80000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "differential fluids",
+      "km": 80000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "intake carbon clean",
+      "km": 120000,
+      "kind": "rec",
+      "months": null
+    }
   ],
   "serviceNotes": {
     "engine oil": "N55 twin-scroll turbo I6: CBS oil service; 30,000 km typical EU maximum. Higher thermal load—many owners use 10,000 km oil changes (rec row).",

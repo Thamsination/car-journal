@@ -1,10 +1,18 @@
 {
   "id": "BMW-F30-330e",
-  "name": "BMW F30/F31 3 Series plug-in hybrid (2.0L 4-cyl petrol + electric, 330e)",
+  "name": "BMW F30/F31 3 Series plug-in hybrid (2.0L 4-cyl petrol + electric)",
   "years": "2016–2019",
-  "chassisCodes": ["F30", "F31"],
-  "drivetrains": ["RWD", "AWD"],
-  "transmissions": ["automatic"],
+  "chassisCodes": [
+    "F30",
+    "F31"
+  ],
+  "drivetrains": [
+    "RWD",
+    "AWD"
+  ],
+  "transmissions": [
+    "automatic"
+  ],
   "displacement": "2.0L",
   "cylinders": 4,
   "fuelType": "hybrid",
@@ -22,21 +30,96 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": 12 },
-    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
-    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
-    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
-    { "task": "check front brake pads", "km": 50000, "kind": "mfr", "months": null },
-    { "task": "check rear brake pads", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "high-voltage battery coolant", "km": 120000, "kind": "mfr", "months": null },
-    { "task": "ZF8 gearbox fluid", "km": 100000, "kind": "rec", "months": null },
-    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
-    { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
-    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null },
-    { "task": "intake carbon clean", "km": 120000, "kind": "rec", "months": null }
+    {
+      "task": "engine oil",
+      "km": 30000,
+      "kind": "mfr",
+      "months": 12
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "micro filter",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "kind": "mfr",
+      "months": 24
+    },
+    {
+      "task": "air cleaner element",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "spark plugs",
+      "km": 90000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "check front brake pads",
+      "km": 50000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "check rear brake pads",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "vehicle check",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "high-voltage battery coolant",
+      "km": 120000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "ZF8 gearbox fluid",
+      "km": 100000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "xDrive transfer case fluid",
+      "km": 80000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "differential fluids",
+      "km": 80000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "intake carbon clean",
+      "km": 120000,
+      "kind": "rec",
+      "months": null
+    }
   ],
   "serviceNotes": {
     "engine oil": "330e combines a turbo four-cylinder with an electric motor; petrol engine oil still follows CBS but hybrid use lowers engine km—follow months and the service display. Sources: BMW 330e owner’s manual / PHEV service supplement.",

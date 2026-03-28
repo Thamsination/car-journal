@@ -87,8 +87,10 @@
     "platformId": "BMW-E46-M54-22",
     "make": "BMW",
     "models": [
-      "320Ci Convertible",
-      "320Ci Coupé"
+      "320i",
+      "320i Touring",
+      "320Ci Coupé",
+      "320Ci Convertible"
     ],
     "yearFrom": 1999,
     "yearTo": 2006
@@ -156,6 +158,7 @@
     "models": [
       "316i",
       "316i Touring",
+      "316ti",
       "316Ci Coupé"
     ],
     "yearFrom": 2001,

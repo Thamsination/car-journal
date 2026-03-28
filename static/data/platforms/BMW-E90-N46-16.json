@@ -1,10 +1,21 @@
 {
   "id": "BMW-E90-N46-16",
-  "name": "BMW E90/E91/E92/E93 3 Series (1.6L 4-cyl petrol, N45/N46)",
+  "name": "BMW E90/E91/E92/E93 3 Series (1.6L 4-cyl petrol)",
   "years": "2005–2013",
-  "chassisCodes": ["E90", "E91", "E92", "E93"],
-  "drivetrains": ["RWD", "AWD"],
-  "transmissions": ["manual", "automatic"],
+  "chassisCodes": [
+    "E90",
+    "E91",
+    "E92",
+    "E93"
+  ],
+  "drivetrains": [
+    "RWD",
+    "AWD"
+  ],
+  "transmissions": [
+    "manual",
+    "automatic"
+  ],
   "displacement": "1.6L",
   "cylinders": 4,
   "fuelType": "petrol",
@@ -26,19 +37,84 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
-    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
-    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
-    { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "gearbox fluid", "km": 100000, "kind": "rec", "months": null },
-    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
-    { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
-    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null }
+    {
+      "task": "engine oil",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "micro filter",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "kind": "mfr",
+      "months": 24
+    },
+    {
+      "task": "air cleaner element",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "spark plugs",
+      "km": 90000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "check front brake pads",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "check rear brake pads",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "vehicle check",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "gearbox fluid",
+      "km": 100000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "xDrive transfer case fluid",
+      "km": 80000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "differential fluids",
+      "km": 80000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "kind": "rec",
+      "months": null
+    }
   ],
   "serviceNotes": {
     "engine oil": "E90 four-cylinder petrol with CBS on later cars; 30,000 km typical EU maximum between oil services. Sources: BMW E90 maintenance booklet, garage.wiki.",

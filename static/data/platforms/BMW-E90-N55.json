@@ -1,10 +1,21 @@
 {
   "id": "BMW-E90-N55",
-  "name": "BMW E90/E91/E92/E93 3 Series (3.0L 6-cyl twin-scroll turbo petrol, N55)",
+  "name": "BMW E90/E91/E92/E93 3 Series (3.0L 6-cyl twin-scroll turbo petrol)",
   "years": "2010–2013",
-  "chassisCodes": ["E90", "E91", "E92", "E93"],
-  "drivetrains": ["RWD", "AWD"],
-  "transmissions": ["manual", "automatic"],
+  "chassisCodes": [
+    "E90",
+    "E91",
+    "E92",
+    "E93"
+  ],
+  "drivetrains": [
+    "RWD",
+    "AWD"
+  ],
+  "transmissions": [
+    "manual",
+    "automatic"
+  ],
   "displacement": "3.0L",
   "cylinders": 6,
   "fuelType": "petrol",
@@ -26,20 +37,90 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
-    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
-    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "gearbox fluid", "km": 100000, "kind": "rec", "months": null },
-    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
-    { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
-    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null },
-    { "task": "intake carbon clean", "km": 120000, "kind": "rec", "months": null }
+    {
+      "task": "engine oil",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "micro filter",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "kind": "mfr",
+      "months": 24
+    },
+    {
+      "task": "air cleaner element",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "spark plugs",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "check front brake pads",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "check rear brake pads",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "vehicle check",
+      "km": 60000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "gearbox fluid",
+      "km": 100000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "xDrive transfer case fluid",
+      "km": 80000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "differential fluids",
+      "km": 80000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "kind": "rec",
+      "months": null
+    },
+    {
+      "task": "intake carbon clean",
+      "km": 120000,
+      "kind": "rec",
+      "months": null
+    }
   ],
   "serviceNotes": {
     "engine oil": "N55 replaced N54 from 2010 model year for 335i in most markets; CBS oil service with 10,000 km rec for enthusiastic use. Sources: BMW technical documentation, garage.wiki.",
