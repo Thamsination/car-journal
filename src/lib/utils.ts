@@ -492,14 +492,16 @@ export function computeTimeMilestones(
 			: currentOdometer;
 
 		let status: TimeMilestone['status'] = 'scheduled';
-		if (daysUntilDue < 0) status = 'overdue';
-		else {
-			const lastEventKm = matchingEvents[0]?.km;
-			if (lastEventKm != null && doneKms.length > 0) {
-				const intervalMs = months * 30.44 * 86400000;
-				const elapsed = now.getTime() - lastMs.getTime();
-				if (elapsed < intervalMs * 0.5) status = 'covered';
+		const COVER_WINDOW_MS = 30 * 86400000;
+		if (matchingEvents.length > 0) {
+			const lastServiceMs = new Date(matchingEvents[0].date + 'T00:00:00').getTime();
+			if (Math.abs(lastServiceMs - dueMs.getTime()) <= COVER_WINDOW_MS) {
+				status = 'covered';
+			} else if (daysUntilDue < 0) {
+				status = 'overdue';
 			}
+		} else if (daysUntilDue < 0) {
+			status = 'overdue';
 		}
 
 		results.push({
