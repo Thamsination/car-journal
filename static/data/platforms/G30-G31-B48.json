@@ -1,0 +1,259 @@
+{
+  "id": "G30-G31-B48",
+  "name": "BMW G30/G31 5 Series (B48 2.0i)",
+  "years": "2017\u20132020",
+  "chassisCodes": [
+    "G30",
+    "G31"
+  ],
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "520i",
+        "530i",
+        "530i xDrive",
+        "530e",
+        "530e xDrive"
+      ],
+      "yearFrom": 2017,
+      "yearTo": 2020
+    }
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 30000,
+      "kind": "mfr"
+    },
+    {
+      "task": "micro filter",
+      "km": 30000,
+      "kind": "mfr"
+    },
+    {
+      "task": "brake fluid",
+      "km": 30000,
+      "kind": "mfr"
+    },
+    {
+      "task": "air cleaner element",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 90000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check front brake pads",
+      "km": 50000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check rear brake pads",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "vehicle check",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "kind": "rec"
+    },
+    {
+      "task": "ZF8 gearbox fluid",
+      "km": 100000,
+      "kind": "rec"
+    },
+    {
+      "task": "xDrive transfer case fluid",
+      "km": 80000,
+      "kind": "rec"
+    },
+    {
+      "task": "differential fluids",
+      "km": 80000,
+      "kind": "rec"
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "kind": "rec"
+    },
+    {
+      "task": "intake carbon clean",
+      "km": 120000,
+      "kind": "rec"
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "BMW CBS scheduled service. The B48 turbocharged direct-injection engine is sensitive to oil quality. CBS calculates the interval based on driving conditions; 30,000 km is the maximum distance between services.",
+    "micro filter": "BMW CBS scheduled service. The cabin micro filter traps pollen, dust and pollutants. A clogged filter reduces airflow and cabin air quality.",
+    "brake fluid": "BMW specifies brake fluid replacement every 2 years (first change at 3 years on some models). 30,000 km is a distance planning proxy; always respect the time limit.",
+    "air cleaner element": "BMW CBS scheduled service. The engine air filter ensures clean air enters the combustion chamber. A dirty filter reduces performance and fuel efficiency on the turbocharged B48.",
+    "spark plugs": "BMW CBS scheduled service (approximately every 6th oil service). The B48 uses iridium-tipped spark plugs. Replacement at ~90,000 km (60,000 miles) per CBS SIB documentation for standard petrol engines.",
+    "check front brake pads": "BMW CBS wear-based reminder. Brake pad thickness should be inspected to ensure safe braking performance.",
+    "check rear brake pads": "BMW CBS wear-based reminder. Rear brake pads typically last longer than fronts but still require periodic inspection.",
+    "vehicle check": "BMW CBS scheduled inspection. A comprehensive inspection covering braking systems, vehicle diagnostics, and technical components.",
+    "ZF8 gearbox fluid": "ZF recommends fluid replacement every 100,000 km despite BMW classifying it as a \"lifetime fill.\" Fresh fluid maintains smooth shifting and extends gearbox life.",
+    "xDrive transfer case fluid": "The xDrive transfer case distributes torque between front and rear axles. Fluid degrades under load and heat. Applies to xDrive models only.",
+    "differential fluids": "Differential fluids lubricate the gears that transfer power to the wheels. Regular replacement prevents excessive wear, especially under heavy load.",
+    "coolant flush": "Engine coolant loses its anti-corrosion properties over time. A flush removes deposits and replenishes protection for the cooling system, water pump, and turbocharger.",
+    "intake carbon clean": "The B48 direct-injection engine accumulates carbon deposits on intake valves since fuel is not sprayed over them. Walnut blasting or chemical cleaning around 120,000 km restores airflow and idle quality."
+  },
+  "milestones": [
+    {
+      "km": 30000,
+      "tasks": [
+        "brake fluid",
+        "engine oil",
+        "micro filter"
+      ]
+    },
+    {
+      "km": 50000,
+      "tasks": [
+        "check front brake pads"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "air cleaner element",
+        "brake fluid",
+        "check rear brake pads",
+        "engine oil",
+        "micro filter",
+        "vehicle check"
+      ]
+    },
+    {
+      "km": 80000,
+      "tasks": [
+        "differential fluids",
+        "xDrive transfer case fluid"
+      ]
+    },
+    {
+      "km": 90000,
+      "tasks": [
+        "brake fluid",
+        "engine oil",
+        "micro filter",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 100000,
+      "tasks": [
+        "ZF8 gearbox fluid",
+        "check front brake pads"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "air cleaner element",
+        "brake fluid",
+        "check rear brake pads",
+        "coolant flush",
+        "engine oil",
+        "intake carbon clean",
+        "micro filter",
+        "vehicle check"
+      ]
+    },
+    {
+      "km": 150000,
+      "tasks": [
+        "brake fluid",
+        "check front brake pads",
+        "engine oil",
+        "micro filter"
+      ]
+    },
+    {
+      "km": 160000,
+      "tasks": [
+        "differential fluids",
+        "xDrive transfer case fluid"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "air cleaner element",
+        "brake fluid",
+        "check rear brake pads",
+        "engine oil",
+        "micro filter",
+        "spark plugs",
+        "vehicle check"
+      ]
+    },
+    {
+      "km": 200000,
+      "tasks": [
+        "ZF8 gearbox fluid",
+        "check front brake pads"
+      ]
+    },
+    {
+      "km": 210000,
+      "tasks": [
+        "brake fluid",
+        "engine oil",
+        "micro filter"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "air cleaner element",
+        "brake fluid",
+        "check rear brake pads",
+        "coolant flush",
+        "differential fluids",
+        "engine oil",
+        "intake carbon clean",
+        "micro filter",
+        "vehicle check",
+        "xDrive transfer case fluid"
+      ]
+    },
+    {
+      "km": 250000,
+      "tasks": [
+        "check front brake pads"
+      ]
+    },
+    {
+      "km": 270000,
+      "tasks": [
+        "brake fluid",
+        "engine oil",
+        "micro filter",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "ZF8 gearbox fluid",
+        "air cleaner element",
+        "brake fluid",
+        "check front brake pads",
+        "check rear brake pads",
+        "engine oil",
+        "micro filter",
+        "vehicle check"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
-  "id": "G30-G31",
-  "name": "BMW G30/G31 5 Series (B47 Diesel)",
-  "years": "2017–2020",
+  "id": "G30-G31-B58",
+  "name": "BMW G30/G31 5 Series (B58 3.0i)",
+  "years": "2017\u20132020",
   "chassisCodes": [
     "G30",
     "G31"
@@ -10,13 +10,9 @@
     {
       "make": "BMW",
       "models": [
-        "520d",
-        "520d xDrive",
-        "525d",
-        "525d xDrive",
-        "530d",
-        "530d xDrive",
-        "M550d xDrive"
+        "540i",
+        "540i xDrive",
+        "M550i xDrive"
       ],
       "yearFrom": 2017,
       "yearTo": 2020
@@ -44,8 +40,8 @@
       "kind": "mfr"
     },
     {
-      "task": "fuel filter",
-      "km": 60000,
+      "task": "spark plugs",
+      "km": 90000,
       "kind": "mfr"
     },
     {
@@ -84,11 +80,6 @@
       "kind": "rec"
     },
     {
-      "task": "timing chain",
-      "km": 200000,
-      "kind": "rec"
-    },
-    {
       "task": "coolant flush",
       "km": 120000,
       "kind": "rec"
@@ -100,21 +91,19 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "BMW CBS scheduled service. Engine oil degrades with mileage and time, losing its lubricating and cooling properties. Regular replacement protects engine internals from premature wear.",
-    "micro filter": "BMW CBS scheduled service. The cabin micro filter traps pollen, dust and pollutants. A clogged filter reduces airflow and cabin air quality.",
-    "brake fluid": "BMW specifies brake fluid replacement every 2 years (first change at 3 years on some models). A 30,000 km mfr row is a distance planning proxy; always respect the time limit. See BMW operating fluids documentation (brake fluid change interval every 2 years).",
-    "air cleaner element": "BMW CBS scheduled service (every 4th oil service). The engine air filter ensures clean air enters the combustion chamber. A dirty filter reduces performance and fuel efficiency.",
-    "fuel filter": "BMW CBS scheduled service (every 4th oil service). The fuel filter removes contaminants from diesel fuel before it reaches the injectors, preventing damage to the high-pressure fuel system.",
-    "check front brake pads": "BMW CBS wear-based reminder. Brake pad thickness should be inspected to ensure safe braking performance. The B47 520d xDrive is heavier than RWD variants, increasing front brake wear.",
-    "check rear brake pads": "BMW CBS wear-based reminder. Rear brake pads typically last longer than fronts but still require periodic inspection for safe operation.",
-    "ZF8 gearbox fluid": "ZF recommends fluid replacement every 100,000 km despite BMW classifying it as a \"lifetime fill.\" The ZF 8HP transmission fluid degrades over time, and fresh fluid maintains smooth shifting and extends gearbox life.",
-    "xDrive transfer case fluid": "The xDrive transfer case distributes torque between front and rear axles. Fluid degrades under load and heat, and replacement prevents premature wear of internal components.",
-    "differential fluids": "Front and rear differential fluids lubricate the gears that transfer power to the wheels. Regular replacement prevents excessive wear and ensures smooth operation, especially under heavy load.",
-    "timing chain": "The B47 diesel timing chain is located at the rear of the engine. While more reliable than the earlier N47, preventive replacement around 200,000 km avoids the risk of catastrophic engine failure from a stretched or broken chain.",
-    "coolant flush": "Engine coolant loses its anti-corrosion properties over time. A flush removes deposits and replenishes protection for the cooling system, water pump, and heater core.",
-    "intake carbon clean": "Direct injection diesel engines accumulate carbon deposits on intake valves since fuel is not sprayed over them. Carbon buildup restricts airflow, reducing power and efficiency. Walnut blasting or chemical cleaning restores performance.",
-    "vehicle check": "BMW CBS scheduled inspection (typically every 2nd oil service). A comprehensive inspection covering braking systems, vehicle diagnostics, and technical components. The exact interval is determined by the car's CBS computer based on driving style and conditions.",
-    "fuel system cleanse (additive)": "A diesel fuel additive cleans injectors, the fuel pump, and combustion chambers. Best used before an oil change so any loosened deposits are captured by the oil filter being replaced."
+    "engine oil": "BMW CBS scheduled service. The B58 inline-6 turbo petrol engine is BMW's flagship six-cylinder. CBS calculates the interval based on driving conditions; 30,000 km is the maximum distance between services.",
+    "micro filter": "BMW CBS scheduled service. The cabin micro filter traps pollen, dust and pollutants.",
+    "brake fluid": "BMW specifies brake fluid replacement every 2 years. 30,000 km is a distance planning proxy; always respect the time limit.",
+    "air cleaner element": "BMW CBS scheduled service. Clean air is critical for the B58 turbocharged engine. A dirty filter reduces performance and can increase turbo wear.",
+    "spark plugs": "BMW CBS scheduled service (approximately every 6th oil service). The B58 uses 6 iridium-tipped spark plugs. Replacement at ~90,000 km (60,000 miles) per CBS SIB documentation.",
+    "check front brake pads": "BMW CBS wear-based reminder. The 540i/M550i are heavier performance variants with increased front brake wear.",
+    "check rear brake pads": "BMW CBS wear-based reminder. Rear brake pads typically last longer than fronts but require periodic inspection.",
+    "vehicle check": "BMW CBS scheduled inspection. A comprehensive inspection covering braking systems, vehicle diagnostics, and technical components.",
+    "ZF8 gearbox fluid": "ZF recommends fluid replacement every 100,000 km despite BMW classifying it as a \"lifetime fill.\" The B58's torque output and M550i performance use make fluid service especially beneficial.",
+    "xDrive transfer case fluid": "The xDrive transfer case distributes torque between front and rear axles. Applies to xDrive models only.",
+    "differential fluids": "Differential fluids lubricate the gears that transfer power to the wheels. The M550i's sport differential benefits particularly from fresh fluid.",
+    "coolant flush": "Engine coolant loses its anti-corrosion properties over time. A flush removes deposits and replenishes protection for the cooling system, water pump, and turbo intercooler circuit.",
+    "intake carbon clean": "The B58 direct-injection engine accumulates carbon deposits on intake valves. Walnut blasting or chemical cleaning around 120,000 km restores airflow and idle quality. The B58 tends to be less affected than the B48 due to higher combustion temperatures."
   },
   "milestones": [
     {
@@ -138,7 +127,6 @@
         "brake fluid",
         "check rear brake pads",
         "engine oil",
-        "fuel filter",
         "micro filter",
         "vehicle check"
       ]
@@ -155,7 +143,8 @@
       "tasks": [
         "brake fluid",
         "engine oil",
-        "micro filter"
+        "micro filter",
+        "spark plugs"
       ]
     },
     {
@@ -173,7 +162,6 @@
         "check rear brake pads",
         "coolant flush",
         "engine oil",
-        "fuel filter",
         "intake carbon clean",
         "micro filter",
         "vehicle check"
@@ -202,8 +190,8 @@
         "brake fluid",
         "check rear brake pads",
         "engine oil",
-        "fuel filter",
         "micro filter",
+        "spark plugs",
         "vehicle check"
       ]
     },
@@ -211,8 +199,7 @@
       "km": 200000,
       "tasks": [
         "ZF8 gearbox fluid",
-        "check front brake pads",
-        "timing chain"
+        "check front brake pads"
       ]
     },
     {
@@ -232,7 +219,6 @@
         "coolant flush",
         "differential fluids",
         "engine oil",
-        "fuel filter",
         "intake carbon clean",
         "micro filter",
         "vehicle check",
@@ -250,7 +236,8 @@
       "tasks": [
         "brake fluid",
         "engine oil",
-        "micro filter"
+        "micro filter",
+        "spark plugs"
       ]
     },
     {
@@ -262,7 +249,6 @@
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
-        "fuel filter",
         "micro filter",
         "vehicle check"
       ]

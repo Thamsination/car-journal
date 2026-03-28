@@ -18,11 +18,17 @@ Your task is to generate platform service schedule JSON files for specific car m
 
 Before generating anything, read these files to understand the exact schema and quality bar:
 
-1. `static/data/platforms/G30-G31.json` — the original hand-crafted reference (BMW diesel)
+1. `static/data/platforms/G30-G31-B47.json` — the original hand-crafted reference (BMW B47 diesel)
 2. `static/data/platforms/VW-MK7.json` — a corrected batch-1 example
 3. `static/data/platforms/Dacia-SANDERO-3.json` — another corrected example (Renault Group)
 4. `scripts/build_platform_milestones.py` — the milestone builder script
 5. `scripts/build_platform_index.py` — the index builder script
+
+Also compare the engine-family variants for the G30/G31 5 Series to see how diesel vs petrol files differ:
+6. `static/data/platforms/G30-G31-B47.json` — B47 I4 diesel (has fuel filter + timing chain, no spark plugs)
+7. `static/data/platforms/G30-G31-B48.json` — B48 I4 petrol (has spark plugs, no fuel filter)
+8. `static/data/platforms/G30-G31-B57.json` — B57 I6 diesel (has fuel filter + timing chain, no spark plugs)
+9. `static/data/platforms/G30-G31-B58.json` — B58 I6 petrol (has spark plugs, no fuel filter)
 
 Study these files carefully. Your output must match the same level of completeness.
 
@@ -46,7 +52,17 @@ Each platform file must be **specific to an engine family / fuel type**. The sam
 
 When a facelifted generation (LCI, FL, Phase 2, etc.) has **different service intervals or CBS calibrations**, create a separate platform file for it.
 
-**Platform ID format:** `<MAKE>-<CHASSIS>-<ENGINE/FUEL>` e.g., `BMW-F30-N20`, `VW-MK7-TSI`, `Renault-CLIO-5-TCe`
+**Platform ID format:** `<MAKE>-<CHASSIS>-<ENGINE/FUEL>`
+
+Examples by brand:
+- BMW: `BMW-F30-N20`, `BMW-F30-B47`, `BMW-G20-B48` (use engine code)
+- VW Group: `VW-MK7-TSI`, `VW-MK7-TDI`, `Skoda-OCTAVIA-3-TSI` (use engine family)
+- Toyota: `Toyota-YARIS-XP210-Hybrid`, `Toyota-COROLLA-E210-2.0Hybrid` (use drivetrain)
+- Renault/Dacia: `Renault-CLIO-5-TCe`, `Dacia-SANDERO-3-dCi` (use engine brand)
+- Stellantis: `Peugeot-208-II-PureTech`, `Opel-CORSA-F-Diesel` (use engine brand or fuel)
+- Ford: `Ford-FOCUS-4-EcoBoost`, `Ford-FOCUS-4-EcoBlue` (use engine brand)
+
+Use whichever identifier is most recognizable for that brand's owners. BMW owners know engine codes (B47, N55). VW owners know TSI/TDI. Toyota owners know Hybrid vs non-hybrid.
 
 ### Step 2: Research BEFORE writing
 
