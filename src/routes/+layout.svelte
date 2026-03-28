@@ -36,9 +36,27 @@
 	let editVehicleId = $state('');
 	let editName = $state('');
 	let editPlate = $state('');
+	let editMake = $state('');
+	let editModel = $state('');
+	let editYear = $state('');
+	let editChassis = $state('');
+	let editEngine = $state('');
 	let editOdometer = $state('');
 	let editTransmission = $state<TransmissionType | ''>('');
 	let editDrivetrain = $state<DrivetrainType | ''>('');
+	const editDetectedDrivetrain = $derived.by((): DrivetrainType | '' => {
+		const dts = $platformConfig?.drivetrains;
+		if (!dts || dts.length === 0) return '';
+		if (dts.length === 1) return dts[0];
+		const isAwd = detectAwdFromModel(editMake, editModel);
+		if (dts.includes('AWD') && isAwd) return 'AWD';
+		if (!isAwd) {
+			const nonAwd = dts.filter(d => d !== 'AWD');
+			if (nonAwd.length === 1) return nonAwd[0];
+		}
+		return '';
+	});
+	let editDrivetrainDetected = $derived(editDetectedDrivetrain !== '');
 	let editSaving = $state(false);
 	let editError = $state('');
 	let confirmDelete = $state(false);
@@ -79,6 +97,12 @@
 		const dts = $platformConfig?.drivetrains;
 		if (!dts || dts.length === 0) return allDrivetrainOptions;
 		return allDrivetrainOptions.filter((o) => dts.includes(o.value));
+	});
+
+	$effect(() => {
+		if (editDetectedDrivetrain) {
+			editDrivetrain = editDetectedDrivetrain;
+		}
 	});
 
 	const availableMakes = $derived(
@@ -277,6 +301,11 @@
 		const entry = $vehicleList.find((v) => v.id === id);
 		editName = entry?.label ?? '';
 		editPlate = id;
+		editMake = '';
+		editModel = '';
+		editYear = '';
+		editChassis = '';
+		editEngine = '';
 		editOdometer = '';
 		editTransmission = '';
 		editDrivetrain = '';
@@ -287,6 +316,11 @@
 		if (id === $activeVehicleId && $vehicleConfig) {
 			editName = $vehicleConfig.name;
 			editPlate = $vehicleConfig.licensePlate;
+			editMake = $vehicleConfig.make ?? '';
+			editModel = $vehicleConfig.model ?? '';
+			editYear = $vehicleConfig.year ? String($vehicleConfig.year) : '';
+			editChassis = $vehicleConfig.chassis ?? '';
+			editEngine = $vehicleConfig.engine ?? '';
 			editOdometer = $vehicleConfig.odometer ? String($vehicleConfig.odometer) : '';
 			editTransmission = $vehicleConfig.transmission ?? '';
 			editDrivetrain = (['FWD', 'RWD', 'AWD'].includes($vehicleConfig.drivetrain) ? $vehicleConfig.drivetrain : '') as DrivetrainType | '';
@@ -306,11 +340,17 @@
 			if ($vehicleConfig) {
 				const odoVal = parseInt(editOdometer, 10);
 				const trans = editTransmission || null;
+				const yearVal = parseInt(editYear, 10);
 				const updated = {
 					...$vehicleConfig,
 					name: editName.trim() || $vehicleConfig.name,
 					licensePlate: editPlate.trim().toUpperCase(),
-					drivetrain: editDrivetrain || $vehicleConfig.drivetrain,
+					make: editMake.trim() || $vehicleConfig.make,
+					model: editModel.trim() || $vehicleConfig.model,
+					year: (!isNaN(yearVal) && yearVal > 1900) ? yearVal : $vehicleConfig.year,
+					chassis: editChassis.trim() || $vehicleConfig.chassis,
+					engine: editEngine.trim() || $vehicleConfig.engine,
+					drivetrain: editDrivetrainDetected ? editDetectedDrivetrain : (editDrivetrain || $vehicleConfig.drivetrain),
 					transmission: trans as TransmissionType | null,
 					odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
 				};
@@ -615,6 +655,21 @@
 				<label class="field-label">License plate</label>
 				<input class="field-input" type="text" bind:value={editPlate} disabled />
 
+				<label class="field-label">Make</label>
+				<input class="field-input" type="text" bind:value={editMake} />
+
+				<label class="field-label">Model</label>
+				<input class="field-input" type="text" bind:value={editModel} />
+
+				<label class="field-label">Year</label>
+				<input class="field-input" type="number" inputmode="numeric" bind:value={editYear} />
+
+				<label class="field-label">Chassis</label>
+				<input class="field-input" type="text" bind:value={editChassis} />
+
+				<label class="field-label">Engine</label>
+				<input class="field-input" type="text" bind:value={editEngine} />
+
 				<label class="field-label">Odometer (km)</label>
 				<input class="field-input" type="number" inputmode="numeric" placeholder="Tap to set km" bind:value={editOdometer} />
 
@@ -631,7 +686,10 @@
 					<input class="field-input" type="text" value={editTransmissionOptions[0].label} disabled />
 				{/if}
 
-				{#if editDrivetrainOptions.length > 1}
+				{#if editDrivetrainDetected}
+					<label class="field-label">Drivetrain</label>
+					<input class="field-input" type="text" value={allDrivetrainOptions.find(o => o.value === editDetectedDrivetrain)?.label ?? editDetectedDrivetrain} disabled />
+				{:else if editDrivetrainOptions.length > 1}
 					<label class="field-label">Drivetrain</label>
 					<select class="field-input" bind:value={editDrivetrain}>
 						<option value="">Unknown</option>
