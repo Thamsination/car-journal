@@ -140,5 +140,21 @@
     "timing chain": "The B57 diesel timing chain is rear-mounted. While more reliable than the earlier N57, preventive replacement around 200,000 km avoids the risk of catastrophic engine failure from a stretched or broken chain. Chain stretch symptoms include rattling at cold start.",
     "coolant flush": "Engine coolant loses its anti-corrosion properties over time. A flush removes deposits and replenishes protection for the cooling system, water pump, and twin-turbo intercooler circuit.",
     "intake carbon clean": "Direct injection diesel engines accumulate carbon deposits on intake valves. The B57 twin-turbo setup can accelerate buildup. Walnut blasting or chemical cleaning restores performance."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals). NOTE: 30,000 km is the B47 CBS ceiling — the B57 (higher output 530d/540d/M550d) may have a lower CBS-calculated ceiling. User reports and online sources suggest CBS typically calculates 10-12,000 km for these models. Needs Tier 1 verification.",
+    "micro filter": "BMW SIB B000214 Attachment 2 (CBS intervals); every oil service",
+    "brake fluid": "BMW owner's manual G30 — 2-year interval (industry standard, DOT 4)",
+    "air cleaner element": "BMW SIB B000214 Attachment 2 (CBS intervals); every 4th oil service",
+    "fuel filter": "BMW SIB B000214 Attachment 2 (CBS intervals); every 4th oil service for diesel models",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS wear-based); interval approximate",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS wear-based); interval approximate",
+    "vehicle check": "BMW SIB B000214 Attachment 2 (CBS intervals); every 2nd oil service",
+    "ZF8 gearbox fluid": "ZF Aftermarket technical recommendation — 100,000 km (BMW classifies as lifetime fill)",
+    "xDrive transfer case fluid": "BMW specialist consensus (Bimmerpost); BMW classifies as lifetime fill",
+    "differential fluids": "BMW specialist consensus (Bimmerpost); BMW classifies as lifetime fill",
+    "timing chain": "https://www.auto-abc.eu/bmw-5-serija/v17649-2017/service — 200,000 km manufacturer, ~120,000 km real-world check recommended",
+    "coolant flush": "BMW specialist consensus; BMW does not specify a fixed replacement interval",
+    "intake carbon clean": "BMW specialist consensus; documented carbon buildup on B57 direct-injection diesel intake valves"
   }
 }

@@ -86,7 +86,31 @@ Examples by brand:
 
 Use whichever identifier is most recognizable for that brand's owners. BMW owners know engine codes (B47, N55). VW owners know TSI/TDI. Toyota owners know Hybrid vs non-hybrid.
 
-### Step 2: Research BEFORE writing
+### Step 2: Research BEFORE writing — citation-first workflow
+
+#### MFR vs REC: definitions
+
+Before researching, understand what these labels mean in this app:
+
+- **MFR** (Manufacturer) = the manufacturer's published maximum service interval from the owner's manual, official service schedule, or dynamic service system ceiling. For CBS/ASSYST/Flexible Service systems, use the **maximum interval the system can display** — not the typical calculated result for average driving. Example: BMW CBS may display up to 30,000 km for engine oil on a 520d under ideal conditions; that is the MFR value.
+- **REC** (Recommended) = the specialist-consensus interval, typically shorter than MFR, based on documented engineering reasons. Example: independent BMW specialists recommend 10,000 km oil changes despite CBS allowing 30,000 km.
+
+This distinction matters. MFR must reflect what the manufacturer officially publishes. REC reflects real-world best practice. Users see both cards and can decide for themselves.
+
+#### Source tier system
+
+Every MFR interval must be traceable to a specific source. Sources are ranked by reliability:
+
+| Tier | Description | Acceptable for |
+|------|-------------|----------------|
+| **1** | Owner's manual PDF, manufacturer service portal (bmwtechinfo, ELSA, Renault Clip, Toyota TIS), official service bulletins (SIB/TSB) | MFR (preferred) |
+| **2** | Structured interval databases with editorial oversight that cite OEM documentation: garage.wiki, auto-abc.eu | MFR (acceptable) |
+| **3** | Specialist documentation (Haynes, Bentley manuals), well-established marque forums with documented consensus (Bimmerpost, TDIClub, NASIOC) | REC only |
+| **Reject** | Generic blog posts, YouTube videos, AI-generated "maintenance guides", undated articles without OEM references, forum posts without citations | Never use |
+
+**Rule: MFR intervals require a Tier 1 or Tier 2 source.** If you can only find Tier 3, the task should either be REC, or the interval should be inherited from a verified related platform (same engine family, different chassis) with a note in `serviceNotes`.
+
+#### Web searches
 
 For each platform, perform **at least 5 separate web searches**:
 
@@ -100,14 +124,45 @@ Search #3 is critical for engine-family files — it tells you whether the engin
 
 Search #5 is critical for platforms covering AWD models — it tells you which models are available with AWD, and what the transfer case / differential fluid service intervals are. Many manufacturers specify these at 60,000–100,000 km.
 
-Good sources:
-- garage.wiki (structured interval tables per model year — excellent)
-- stefanosgarage.com (detailed VW Group schedules)
+**When evaluating search results**, prefer structured interval tables (garage.wiki) and official documentation over prose descriptions. If a source says "every 30,000 km" but another official source says "every 15,000 km", investigate the discrepancy — it often means different markets, different service regimes (long-life vs. fixed), or different engine outputs on the same platform.
+
+Tier 1 sources:
 - bmwtechinfo.bmwgroup.com (BMW CBS and SIB documents)
 - Official manufacturer user-manual sites (user-manual.renault.com, etc.)
+- Manufacturer service portals (ELSA, Toyota TIS, etc.)
+
+Tier 2 sources:
+- garage.wiki (structured interval tables per model year — excellent)
 - auto-abc.eu (service interval databases)
+
+Tier 3 sources (REC only):
 - Haynes / official dealer documentation
+- Well-established marque-specific forums (Bimmerpost, TDIClub, NASIOC, etc.)
 - Wikipedia (for model variants, production years, and market names — verify elsewhere)
+
+### Step 2b: Source table — show your work
+
+**Before writing any JSON**, output a markdown source table for the platform. This is mandatory. It documents where every interval came from and makes errors visible before they are buried in JSON.
+
+Format:
+
+```markdown
+#### Source table: [Platform ID]
+
+| Task | Kind | km | months | Source | Tier |
+|------|------|----|--------|--------|------|
+| engine oil | mfr | 30000 | 24 | garage.wiki/BMW/G30/520d | 2 |
+| engine oil | rec | 10000 | 12 | BMW specialist consensus (Bimmerpost) | 3 |
+| micro filter | mfr | 30000 | null | garage.wiki/BMW/G30/520d | 2 |
+| brake fluid | mfr | null | 24 | BMW owner's manual (industry standard) | 1 |
+| ... | ... | ... | ... | ... | ... |
+```
+
+Rules for the source table:
+- **Every MFR row must have a Tier 1 or Tier 2 source.** If you write "training knowledge" or leave the source blank, the row is invalid.
+- **Every REC row must have at least a Tier 3 source.** If no source exists, the task does not belong in the file.
+- If you cannot find a source for an MFR interval after thorough searching, note it as `"Inherited: [related platform ID]"` and explain in serviceNotes. Do NOT guess from the typical-range table.
+- The source column should contain a URL or a specific document reference (e.g., "BMW owner's manual G30, p.247"), not vague descriptions like "various sources" or "commonly known".
 
 ### Step 3: Task naming — use OEM language
 
@@ -137,19 +192,26 @@ When in doubt about OEM terminology, default to the most common English term fou
 
 ### Step 4: Mandatory minimum tasks
 
-**Every ICE platform MUST include ALL of the following as `mfr` tasks** (with the correct manufacturer-specified km interval). If you genuinely cannot find a verified interval after thorough searching, use the most common European interval for that vehicle class — but you must note "interval estimated" in the serviceNotes.
+**Every ICE platform MUST include ALL of the following as `mfr` tasks.** The km/months values must come from the source table you built in Step 2b — never from a generic range.
 
-| Category | Typical range | Notes |
+| Category | How to find the interval | Notes |
 |---|---|---|
-| Engine oil + filter | 10,000–30,000 km | Every manufacturer specifies this |
-| Cabin / pollen filter | 15,000–60,000 km | Every manufacturer specifies this |
-| Air filter | 30,000–90,000 km | Every manufacturer specifies this |
-| Brake fluid | Time-based: 24 months (default) | Always time-based, not km. Use `"km": null, "months": 24`. Only deviate if you find a verified OEM document specifying a different period — 24 months is the industry standard. |
-| Brake pad inspection | 15,000–30,000 km | Every manufacturer includes brake inspection |
-| Spark plugs | 30,000–120,000 km | All petrol engines require this |
-| Coolant | 80,000–200,000 km or time-based | Every engine has coolant — if the OEM specifies a replacement interval, use MFR. If "lifetime" or unspecified, add as REC at ~120,000 km. Never omit coolant. |
+| Engine oil + filter | Owner's manual or service schedule. For CBS/ASSYST systems, use the system's maximum ceiling. | Every manufacturer specifies this. If you found a number in Step 2b, use it. If not, inherit from a verified related platform and note it. |
+| Cabin / pollen filter | Owner's manual or service schedule | Every manufacturer specifies this |
+| Air filter | Owner's manual or service schedule | Every manufacturer specifies this |
+| Brake fluid | Default: `"km": null, "months": 24` (industry standard). | Always time-based, not km. Only deviate if a verified Tier 1 OEM document explicitly states a different period. |
+| Brake pad inspection | Owner's manual or service schedule | Every manufacturer includes brake inspection |
+| Spark plugs | Owner's manual or service schedule (petrol engines only) | Interval varies significantly by engine — do NOT copy from another engine family without verifying |
+| Coolant | Owner's manual or service schedule | If the OEM specifies a replacement interval, use MFR. If "lifetime" or unspecified, add as REC at ~120,000 km. Never omit coolant. |
 
 Use the **OEM task name** for each (see Step 3), not the generic category name in this table.
+
+**If you cannot find a verified interval for a mandatory MFR task:**
+- Do NOT invent a number from a "typical range"
+- Inherit the interval from the closest verified related platform (same engine family on a different chassis, or same chassis with a closely related engine)
+- Add a serviceNotes entry: `"Interval inherited from [platform ID] — not independently verified for this model"`
+- Set the task's source in `serviceSources` to `"Inherited: [platform ID]"`
+- This is traceable and auditable — a wrong guess is not
 
 **Additional tasks to include when applicable:**
 
@@ -195,10 +257,20 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
     { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec", "transmission": ["dct"] }
   ],
   "serviceNotes": {
-    "<OEM task name>": "<Why this matters + platform/engine-specific context + source>"
+    "<OEM task name>": "<Why this matters + platform/engine-specific context>"
+  },
+  "serviceSources": {
+    "<OEM task name>": "<URL or document reference where the interval was verified>"
   }
 }
 ```
+
+**`serviceSources` rules:**
+
+- Every MFR task must have a corresponding entry in `serviceSources` with a URL or specific document reference
+- REC tasks should also have sources where possible, but are not required
+- Acceptable formats: `"https://garage.wiki/BMW/G30/520d#service-schedule"`, `"BMW owner's manual G30 (2017), p.247"`, `"Inherited: G30-G31-B47"`
+- The app ignores this field at runtime — it exists for audit and regeneration only
 
 **Important schema changes (no `engines`, no `milestones`):**
 
@@ -338,8 +410,8 @@ When a platform has only one transmission, the app auto-selects it. When multipl
 
 #### `serviceIntervals` field rules
 
-- `kind: "mfr"` = interval comes from the manufacturer's official schedule
-- `kind: "rec"` = specialist recommendation for a **documented wear item** not in the official schedule (see qualifying criteria below)
+- `kind: "mfr"` = interval comes from the manufacturer's official schedule. Must have a Tier 1 or Tier 2 source in `serviceSources`.
+- `kind: "rec"` = specialist recommendation for a **documented wear item** not in the official schedule (see qualifying criteria below). Should have at least a Tier 3 source in `serviceSources`.
 - **`km`**: distance-based interval in kilometres. Set to `null` for time-only tasks (e.g., brake fluid)
 - **`months`**: time-based interval in months. Set to `null` for distance-only tasks
 - **Every entry MUST have both `km` and `months` fields** — one or both can be null, but both keys must be present
@@ -418,14 +490,22 @@ BMW (ZF8 automatic only on modern platforms — no tag needed):
 { "task": "gearbox fluid", "km": 100000, "months": null, "kind": "rec" }
 ```
 
-### Step 6: Build index
+### Step 6: Build index and validate sources
 
-After completing a batch, rebuild the platform index:
+After completing a batch, rebuild the platform index and validate source coverage:
 
 ```bash
 cd /home/thamsination/car-journal
-python3 scripts/build_platform_index.py
+node scripts/generate-platform-index.js
+node scripts/validate-platform-sources.js
 ```
+
+The validation script will flag:
+- **RED**: MFR interval with no entry in `serviceSources`
+- **YELLOW**: MFR interval with an inherited or Tier 3 source
+- **GREEN**: MFR interval with a Tier 1/2 source
+
+Fix all RED issues before committing. YELLOW issues are acceptable for initial generation but should be upgraded over time.
 
 **Do NOT include a `milestones` array in the JSON files.** Milestones are computed at runtime from `serviceIntervals`.
 
@@ -460,6 +540,10 @@ Before moving to the next platform, verify your output:
 25. **Check per-entry `chassisCodes` on vehicles entries** — if the platform spans multiple chassis generations (e.g., different chassis codes for different year ranges), each `vehicles` entry must have per-entry `chassisCodes` arrays scoped to that entry's year range. A 2016 WRX STI user should only see chassis `VA`, not all codes from 2000–2021. Per-entry arrays must be subsets of the platform-level arrays.
 26. **No `engines` field** — verify there is no `engines` field at platform level or in any `vehicles` entry. This field has been replaced by `displacement`/`cylinders`/`fuelType`.
 27. **No `milestones` field** — verify there is no `milestones` array. Milestones are computed at runtime.
+28. **Check `serviceSources` exists** — the file must have a `serviceSources` object. Every MFR task in `serviceIntervals` must have a matching key in `serviceSources` with a non-empty value (URL or document reference).
+29. **Check source quality** — every MFR source must be Tier 1 or Tier 2 (official documentation or structured interval database). If any MFR source says "Inherited: ...", verify the inherited platform actually exists and is itself verified. No MFR source may be blank, "training knowledge", "commonly known", or a generic blog URL.
+30. **Cross-check intervals against the source table** — the km/months values in the JSON must exactly match the values in the source table from Step 2b. If they differ, something was changed without updating the source.
+31. **Check for missing sources** — every REC task should ideally have a source too. If a REC task has no source entry in `serviceSources`, add one or remove the task.
 
 If any check fails, go back and fix it before proceeding.
 
@@ -479,7 +563,11 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 
 ### Do NOT:
 
-- Use your training knowledge as a primary source — always web search first
+- Use your training knowledge as a primary source for MFR intervals — every MFR value must come from a Tier 1 or Tier 2 source found via web search
+- Guess MFR intervals from "typical range" tables — if you cannot find a verified source, inherit from a related verified platform and document it
+- Omit the source table (Step 2b) — it is mandatory for every platform and must be output before the JSON
+- Omit `serviceSources` from the JSON — every platform file must include this field
+- Use vague sources like "various online sources", "commonly known", or "standard practice" — cite specific URLs or documents
 - Omit brake fluid or brake pad inspection — every manufacturer requires these
 - Copy intervals from one engine family to another — a diesel and petrol on the same chassis have different schedules
 - Copy intervals from one chassis generation to another without verifying — a G20 may differ from an F30

@@ -149,4 +149,5 @@ export interface PlatformConfig {
 	vehicles?: PlatformVehicleEntry[];
 	serviceIntervals: PlatformServiceInterval[];
 	serviceNotes: Record<string, string>;
+	serviceSources?: Record<string, string>;
 }

@@ -151,7 +151,7 @@ Follow the patterns from `AGENT_PROMPT_GENERATE_PLATFORMS.md`:
 
 ---
 
-## Research requirements
+## Research requirements — citation-first workflow
 
 For every new file, perform web searches to verify:
 
@@ -162,6 +162,57 @@ For every new file, perform web searches to verify:
 5. **AWD variants** — ensure xDrive/quattro/4MATIC model names are listed if they exist for that engine
 
 Do NOT copy the generic catch-all intervals into the new files. Each engine file must have researched, engine-specific intervals.
+
+### MFR vs REC definitions
+
+- **MFR** = the manufacturer's published maximum interval from the owner's manual or official service schedule. For CBS/ASSYST/Flexible Service systems, use the **maximum interval the system can display**, not the typical calculated result.
+- **REC** = the specialist-consensus interval, typically shorter than MFR, based on documented engineering reasons.
+
+### Source tier system
+
+Every MFR interval must be traceable to a specific source:
+
+| Tier | Description | Acceptable for |
+|------|-------------|----------------|
+| **1** | Owner's manual PDF, manufacturer service portal (bmwtechinfo, ELSA, etc.), official SIB/TSB | MFR (preferred) |
+| **2** | Structured interval databases with editorial oversight: garage.wiki, auto-abc.eu | MFR (acceptable) |
+| **3** | Specialist documentation (Haynes, Bentley), well-established marque forums with documented consensus | REC only |
+| **Reject** | Generic blog posts, YouTube, AI-generated guides, undated articles without OEM references | Never use |
+
+**Rule: MFR intervals require a Tier 1 or Tier 2 source.** If you can only find Tier 3, the task should be REC, or the interval should be inherited from a verified related platform with a note in `serviceNotes`.
+
+### Mandatory: Source table before JSON
+
+**Before writing JSON for each new file**, output a markdown source table:
+
+```markdown
+#### Source table: [Platform ID]
+
+| Task | Kind | km | months | Source | Tier |
+|------|------|----|--------|--------|------|
+| engine oil | mfr | 30000 | 24 | garage.wiki/BMW/F30/320i | 2 |
+| engine oil | rec | 10000 | 12 | BMW specialist consensus | 3 |
+| micro filter | mfr | 30000 | null | garage.wiki/BMW/F30/320i | 2 |
+| ... | ... | ... | ... | ... | ... |
+```
+
+Rules:
+- Every MFR row must have a Tier 1 or Tier 2 source. "Training knowledge" or blank sources are invalid.
+- If no source is found for an MFR interval, use `"Inherited: [related platform ID]"` and note it in serviceNotes.
+
+### Mandatory: `serviceSources` in output JSON
+
+Every new file must include a `serviceSources` dict mapping task names to source URLs or document references:
+
+```json
+"serviceSources": {
+  "engine oil": "https://garage.wiki/BMW/F30/320i#service-schedule",
+  "micro filter": "https://garage.wiki/BMW/F30/320i#service-schedule",
+  "brake fluid": "BMW owner's manual F30, p.XXX (2-year interval)"
+}
+```
+
+This field is used for audit and validation — the app ignores it at runtime.
 
 ---
 
@@ -177,6 +228,9 @@ Run the full checklist from `AGENT_PROMPT_GENERATE_PLATFORMS.md` Step 7, plus:
 6. Petrol files have spark plugs + no fuel filter (unless applicable)
 7. PHEV files have `fuelType: "hybrid"` and include HV battery coolant if applicable
 8. BEV files have `displacement: null`, `cylinders: 0`, `fuelType: "electric"`
+9. **`serviceSources` exists** — every MFR task has a matching key with a Tier 1 or Tier 2 source URL/reference
+10. **Source table was output** — the markdown source table was written before the JSON for this file
+11. **Intervals match the source table** — km/months values in the JSON exactly match the source table. If they differ, something was changed without updating the source
 
 ---
 
@@ -186,10 +240,12 @@ Run the full checklist from `AGENT_PROMPT_GENERATE_PLATFORMS.md` Step 7, plus:
 
 1. Delete the original catch-all file(s)
 2. Rebuild the index: `node scripts/generate-platform-index.js`
-3. Run self-validation on every new file
-4. Verify the app still builds: `npm run build`
-5. Commit with a message like: `Split BMW-F30 into 8 engine-specific platform files`
-6. Push
+3. Run source validation: `node scripts/validate-platform-sources.js`
+4. Fix all RED issues (MFR intervals without sources) before proceeding
+5. Run self-validation on every new file
+6. Verify the app still builds: `npm run build`
+7. Commit with a message like: `Split BMW-F30 into 8 engine-specific platform files`
+8. Push
 
 Start with the platforms most likely to be used (highest model count), working down:
 
@@ -242,4 +298,8 @@ Start with the platforms most likely to be used (highest model count), working d
 - Include an `engines` or `milestones` field in any file
 - Include bare series names like "3 Series" — every model name must identify the engine variant
 - Guess engine assignments — verify via web search which models used which engine in which years
+- Guess MFR intervals from "typical range" tables — if you cannot find a verified Tier 1/2 source, inherit from a related verified platform and document it
+- Omit the source table before writing JSON — it is mandatory for every new file
+- Omit `serviceSources` from the output JSON — every new file must include this field
+- Use vague sources like "various online sources", "commonly known", or "standard practice" — cite specific URLs or documents
 - Rush — quality over speed. A wrong engine-to-model mapping is worse than not splitting at all

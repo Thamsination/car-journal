@@ -119,5 +119,19 @@
     "xDrive transfer case fluid": "The xDrive transfer case distributes torque between front and rear axles. The M550i is xDrive-only.",
     "differential fluids": "Differential fluids lubricate the gears that transfer power to the wheels. The M550i's sport differential benefits from fresh fluid.",
     "coolant flush": "Engine coolant loses anti-corrosion properties over time. The N63's hot-vee layout puts greater thermal stress on the cooling system — flush interval is shorter than I6 variants."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals); N63 hot-vee V8 CBS maximum 15,000 km / 12 months. Shorter than I6 due to higher thermal load.",
+    "micro filter": "BMW SIB B000214 Attachment 2 (CBS intervals); every oil service",
+    "brake fluid": "BMW owner's manual G30 — 2-year interval (industry standard, DOT 4)",
+    "air cleaner element": "BMW SIB B000214 Attachment 2 (CBS intervals); every 4th oil service",
+    "spark plugs": "BMW SIB B000217 Attachment 3 (maintenance requirements); N63 V8 spark plug interval ~60,000 km",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS wear-based); shorter interval due to M550i weight",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS wear-based); interval approximate",
+    "vehicle check": "BMW SIB B000214 Attachment 2 (CBS intervals); every 2nd oil service",
+    "ZF8 gearbox fluid": "ZF Aftermarket technical recommendation — 100,000 km (BMW classifies as lifetime fill)",
+    "xDrive transfer case fluid": "BMW specialist consensus (Bimmerpost); M550i is xDrive-only, BMW classifies as lifetime fill",
+    "differential fluids": "BMW specialist consensus (Bimmerpost); M550i sport differential benefits from fresh fluid",
+    "coolant flush": "BMW specialist consensus; N63 hot-vee layout puts greater thermal stress on the cooling system"
   }
 }
