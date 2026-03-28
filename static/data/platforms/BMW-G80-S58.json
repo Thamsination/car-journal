@@ -45,7 +45,7 @@
     "micro filter": "Cabin filter per M maintenance schedule.",
     "brake fluid": "24 months; track use may require more frequent bleeding.",
     "air cleaner element": "High-output intake path; replace per CBS / inspection (~60,000 km planning).",
-    "spark plugs": "High-output turbo I6: plugs typically earlier than non-M DI engines (~60,000 km). Confirm M supplement.",
+    "spark plugs": "S58 M twin-turbo I6: six spark plugs 60,000 km MFR per BMW M3 (G80) maintenance schedule.",
     "check front brake pads": "Inspect at least every 20,000 km or before track days.",
     "check rear brake pads": "Inspect every 20,000 km or with front service.",
     "vehicle check": "M-specific inspection intervals are shorter than standard G20.",
@@ -55,5 +55,15 @@
     "differential fluids": "M xDrive and rear LSD: fresh fluid ~60,000 km is a common M specialist recommendation.",
     "coolant flush": "High thermal load turbo engine; preventive coolant service ~100,000 km.",
     "intake carbon clean": "S58 DI: intake valve deposits; inspect/clean from ~80,000 km if rough idle or power loss."
+  },
+  "serviceSources": {
+    "engine oil": "BMW M3 (G80/G81) owner's manual / M service literature — 15,000 km / 12 months oil service EU maximum; SIB B000214 where applicable to M CBS",
+    "micro filter": "BMW M3 (G80) owner's manual — cabin microfilter per M CBS (~30,000 km with 15k oil rhythm)",
+    "brake fluid": "BMW M3 (G80) owner's manual — brake fluid every 24 months; track use more frequent",
+    "air cleaner element": "BMW M3 G80 maintenance literature — engine air filter 60,000 km planning interval",
+    "spark plugs": "BMW M3 S58 maintenance literature — spark plug renewal 60,000 km service interval",
+    "check front brake pads": "BMW M3 (G80) service literature — inspect front pads at least every 20,000 km",
+    "check rear brake pads": "BMW M3 (G80) service literature — inspect rear pads at least every 20,000 km",
+    "vehicle check": "BMW M3 (G80) service display / M inspection — vehicle check 30,000 km (2 × 15,000 km oil interval)"
   }
 }

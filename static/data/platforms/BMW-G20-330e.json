@@ -25,7 +25,7 @@
     { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
     { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
     { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
     { "task": "check front brake pads", "km": 50000, "kind": "mfr", "months": null },
     { "task": "check rear brake pads", "km": 60000, "kind": "mfr", "months": null },
     { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
@@ -37,11 +37,11 @@
     { "task": "intake carbon clean", "km": 120000, "kind": "rec", "months": null }
   ],
   "serviceNotes": {
-    "engine oil": "G20 330e uses a turbo four with eDrive; petrol engine oil follows CBS but plug-in use lowers engine km—follow months and the service display.",
-    "micro filter": "Cabin filter per CBS.",
-    "brake fluid": "24 months; regenerative braking changes pad wear but not fluid hygroscopy.",
-    "air cleaner element": "Petrol engine air filter ~60,000 km when combustion mileage accumulates.",
-    "spark plugs": "Turbo four PHEV: long-life plugs ~90,000 km engine miles.",
+    "engine oil": "G20 330e B48 PHEV: CBS MFR 30,000 km / 12 months typical for plug-in (follow service display and PHEV supplement).",
+    "micro filter": "Interior filter at every engine oil change per garage.wiki F30 LCI 2020 (modular CBS).",
+    "brake fluid": "Every 2 years after first change; garage.wiki F30 LCI lists first change at 3 years. Regen changes pad wear, not fluid hygroscopy.",
+    "air cleaner element": "Air filter each second engine oil service (60,000 km) per garage.wiki F30 LCI 2020.",
+    "spark plugs": "Changed from 90,000 km to 60,000 km: spark plugs with each second engine oil change (garage.wiki F30 LCI 2020).",
     "check front brake pads": "Regen extends pad life; still inspect per CBS (~50,000 km planning).",
     "check rear brake pads": "Inspect per CBS.",
     "vehicle check": "Includes hybrid-specific checks; use a workshop qualified for high-voltage systems.",
@@ -51,5 +51,16 @@
     "differential fluids": "330e xDrive only.",
     "coolant flush": "Engine cooling circuit preventive ~120,000 km (separate from HV coolant in some vehicles).",
     "intake carbon clean": "DI petrol engine may still need intake cleaning at high combustion mileage (~120,000 km)."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals); PHEV 12-month cap per BMW PHEV supplement. https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2020/service-intervals.html",
+    "micro filter": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2020/service-intervals.html — interior filter at every engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2020/service-intervals.html — first change 3 years then every 2 years; BMW owner's manual G20 330e",
+    "air cleaner element": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2020/service-intervals.html — air filter with each second engine oil change (60,000 km)",
+    "spark plugs": "Changed from 90,000 km to 60,000 km per https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2020/service-intervals.html — second engine oil change",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 50,000 km planning interval",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 60,000 km planning interval",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)",
+    "high-voltage battery coolant": "BMW PHEV high-voltage cooling system — typical 120,000 km; confirm in HV supplement for model year"
   }
 }

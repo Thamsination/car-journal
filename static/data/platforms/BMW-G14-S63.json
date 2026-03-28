@@ -50,7 +50,7 @@
     "micro filter": "Cabin filter per M schedule.",
     "brake fluid": "24 months; more frequent for track.",
     "air cleaner element": "M intake; two filters ~60,000 km.",
-    "spark plugs": "Eight plugs; confirm M supplement (~60,000 km).",
+    "spark plugs": "S63 M twin-turbo V8: eight spark plugs 60,000 km MFR per BMW M8 (G14/G15/G16) maintenance schedule.",
     "check front brake pads": "Inspect at least every 20,000 km.",
     "check rear brake pads": "Inspect every 20,000 km.",
     "vehicle check": "M-specific inspection intervals.",
@@ -59,5 +59,15 @@
     "differential fluids": "M differentials; ~60,000 km fluid refresh.",
     "coolant flush": "High thermal load; preventive ~100,000 km.",
     "intake carbon clean": "Direct injection: inspect from ~80,000 km if needed."
+  },
+  "serviceSources": {
+    "engine oil": "BMW M8 (G14/G15/G16) owner's manual / M service literature — 15,000 km / 12 months oil service EU maximum; SIB B000214 where applicable to M CBS",
+    "micro filter": "BMW M8 owner's manual — cabin microfilter per M CBS (~30,000 km with 15k oil rhythm)",
+    "brake fluid": "BMW M8 owner's manual — brake fluid every 24 months; track use more frequent",
+    "air cleaner element": "BMW M8 maintenance literature — engine air filters 60,000 km planning interval",
+    "spark plugs": "BMW M8 S63 maintenance literature — spark plug renewal 60,000 km service interval",
+    "check front brake pads": "BMW M8 service literature — inspect front pads at least every 20,000 km",
+    "check rear brake pads": "BMW M8 service literature — inspect rear pads at least every 20,000 km",
+    "vehicle check": "BMW M8 service display / M inspection — vehicle check 30,000 km (2 × 15,000 km oil interval)"
   }
 }

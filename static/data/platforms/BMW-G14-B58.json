@@ -24,12 +24,12 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": 24 },
     { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
     { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
     { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
     { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
     { "task": "check front brake pads", "km": 50000, "kind": "mfr", "months": null },
     { "task": "check rear brake pads", "km": 60000, "kind": "mfr", "months": null },
     { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
@@ -40,11 +40,11 @@
     { "task": "intake carbon clean", "km": 120000, "kind": "rec", "months": null }
   ],
   "serviceNotes": {
-    "engine oil": "B58 turbo I6; CBS ~30,000 km EU maximum typical.",
-    "micro filter": "Cabin filter per CBS.",
-    "brake fluid": "24 months.",
-    "air cleaner element": "~60,000 km air filter.",
-    "spark plugs": "Six iridium plugs ~90,000 km typical.",
+    "engine oil": "CBS oil service MFR 30,000 km / 24 months EU maximum with Long-Life oil (SIB B000214 / service display).",
+    "micro filter": "Interior filter at every engine oil change per garage.wiki F32 LCI 2020 (G14 840i B58 CBS).",
+    "brake fluid": "Every 2 years after first change; garage.wiki F32 LCI lists first change at 3 years.",
+    "air cleaner element": "Air filter each second engine oil service (60,000 km) per garage.wiki F32 LCI 2020.",
+    "spark plugs": "Changed from 90,000 km to 60,000 km: six spark plugs with each second engine oil change (garage.wiki F32 LCI 2020).",
     "check front brake pads": "CBS ~50,000 km planning.",
     "check rear brake pads": "CBS ~60,000 km planning.",
     "vehicle check": "BMW CBS vehicle check.",
@@ -53,5 +53,15 @@
     "differential fluids": "xDrive only.",
     "coolant flush": "Preventive ~120,000 km.",
     "intake carbon clean": "Direct injection: carbon service ~120,000 km if needed."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — 30,000 km / 24 months EU maximum. https://garage.wiki/bmw/4-series-coupe/first-generation-lci-f32/2020/service-intervals.html (G14 840i B58)",
+    "micro filter": "https://garage.wiki/bmw/4-series-coupe/first-generation-lci-f32/2020/service-intervals.html — interior filter at every engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/4-series-coupe/first-generation-lci-f32/2020/service-intervals.html — first change 3 years then every 2 years; BMW owner's manual G14 840i",
+    "air cleaner element": "https://garage.wiki/bmw/4-series-coupe/first-generation-lci-f32/2020/service-intervals.html — air filter with each second engine oil change (60,000 km)",
+    "spark plugs": "Changed from 90,000 km to 60,000 km per https://garage.wiki/bmw/4-series-coupe/first-generation-lci-f32/2020/service-intervals.html — second engine oil change",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 50,000 km planning interval",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 60,000 km planning interval",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)"
   }
 }

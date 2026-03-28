@@ -34,7 +34,7 @@
       "task": "engine oil",
       "km": 30000,
       "kind": "mfr",
-      "months": null
+      "months": 24
     },
     {
       "task": "micro filter",
@@ -56,7 +56,7 @@
     },
     {
       "task": "spark plugs",
-      "km": 90000,
+      "km": 60000,
       "kind": "mfr",
       "months": null
     },
@@ -116,18 +116,28 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "BMW CBS scheduled service. The B58 inline-6 turbo petrol engine is BMW's flagship six-cylinder. CBS calculates the interval based on driving conditions; 30,000 km is the maximum distance between services.",
-    "micro filter": "BMW CBS scheduled service. The cabin micro filter traps pollen, dust and pollutants.",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
-    "air cleaner element": "BMW CBS scheduled service. Clean air is critical for the B58 turbocharged engine. A dirty filter reduces performance and can increase turbo wear.",
-    "spark plugs": "BMW CBS scheduled service (approximately every 6th oil service). The B58 uses 6 iridium-tipped spark plugs. Replacement at ~90,000 km (60,000 miles) per CBS SIB documentation.",
-    "check front brake pads": "BMW CBS wear-based reminder. The 540i/M550i are heavier performance variants with increased front brake wear.",
+    "engine oil": "CBS oil service MFR 30,000 km / 24 months EU maximum with Long-Life oil (SIB B000214 / service display).",
+    "micro filter": "Interior filter at every engine oil change per modular CBS (garage.wiki F30 LCI 2020; G30 B58 aligned).",
+    "brake fluid": "Every 2 years after first change; garage.wiki F30 LCI lists first brake fluid change at 3 years—confirm in manual for market.",
+    "air cleaner element": "Air filter each second engine oil service (60,000 km) per garage.wiki F30 LCI 2020 second-oil rule.",
+    "spark plugs": "Changed from 90,000 km to 60,000 km: six spark plugs with each second engine oil change (garage.wiki F30 LCI 2020 / modular CBS).",
+    "check front brake pads": "BMW CBS wear-based reminder. The 540i is a heavier six-cylinder variant; inspect per CBS (~50,000 km planning).",
     "check rear brake pads": "BMW CBS wear-based reminder. Rear brake pads typically last longer than fronts but require periodic inspection.",
     "vehicle check": "BMW CBS scheduled inspection. A comprehensive inspection covering braking systems, vehicle diagnostics, and technical components.",
-    "ZF8 gearbox fluid": "ZF recommends fluid replacement every 100,000 km despite BMW classifying it as a \"lifetime fill.\" The B58's torque output and M550i performance use make fluid service especially beneficial.",
+    "ZF8 gearbox fluid": "ZF recommends fluid replacement every 100,000 km despite BMW classifying it as a \"lifetime fill.\" The B58's torque makes fluid service especially beneficial.",
     "xDrive transfer case fluid": "The xDrive transfer case distributes torque between front and rear axles. Applies to xDrive models only.",
-    "differential fluids": "Differential fluids lubricate the gears that transfer power to the wheels. The M550i's sport differential benefits particularly from fresh fluid.",
+    "differential fluids": "Differential fluids lubricate the gears that transfer power to the wheels. xDrive models benefit from periodic fluid refresh.",
     "coolant flush": "Engine coolant loses its anti-corrosion properties over time. A flush removes deposits and replenishes protection for the cooling system, water pump, and turbo intercooler circuit.",
     "intake carbon clean": "The B58 direct-injection engine accumulates carbon deposits on intake valves. Walnut blasting or chemical cleaning around 120,000 km restores airflow and idle quality. The B58 tends to be less affected than the B48 due to higher combustion temperatures."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — 30,000 km / 24 months EU maximum. https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2020/service-intervals.html (G30 B58); https://www.auto-abc.eu/bmw-5-serija/v17649-2017/service",
+    "micro filter": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2020/service-intervals.html — interior filter at every engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2020/service-intervals.html — first change 3 years then every 2 years; BMW owner's manual G30 540i",
+    "air cleaner element": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2020/service-intervals.html — air filter with each second engine oil change (60,000 km)",
+    "spark plugs": "Changed from 90,000 km to 60,000 km per https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2020/service-intervals.html — second engine oil change",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 50,000 km planning interval",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 60,000 km planning interval",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)"
   }
 }
