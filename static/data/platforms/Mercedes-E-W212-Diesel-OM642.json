@@ -1,0 +1,61 @@
+{
+  "id": "Mercedes-E-W212-Diesel-OM642",
+  "name": "Mercedes-Benz E-Class W212/S212, C207/A207 (3.0L V6 diesel)",
+  "years": "2009–2016",
+  "chassisCodes": ["W212", "S212", "C207", "A207"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["automatic"],
+  "displacement": "3.0L",
+  "cylinders": 6,
+  "fuelType": "diesel",
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 350 CDI",
+        "E 350 CDI Estate",
+        "E 350 CDI Coupé",
+        "E 350 CDI Cabriolet",
+        "E 350 BlueTEC",
+        "E 350 BlueTEC Estate",
+        "E 350 BlueTEC Coupé",
+        "E 350 BlueTEC Cabriolet",
+        "E 350 BlueTEC 4MATIC",
+        "E 350 BlueTEC 4MATIC Estate"
+      ],
+      "yearFrom": 2009,
+      "yearTo": 2016
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 25000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 15000, "months": null, "kind": "rec" },
+    { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
+    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
+    { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
+    { "task": "fuel filter", "km": 60000, "months": null, "kind": "mfr" },
+    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
+    { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
+    { "task": "poly-V belt", "km": 100000, "months": null, "kind": "rec" }
+  ],
+  "serviceNotes": {
+    "engine oil": "OM642 V6 diesel: ASSYST flexible limits up to 25,000 km or 12 months; rec 15,000 km severe use.",
+    "dust filter": "Dust filter per Mercedes EU booklet.",
+    "engine air filter": "Inspection intervals (commonly 60,000 km / 48 months).",
+    "brake fluid": "24 months.",
+    "check brake pad thickness": "Inspect each visit.",
+    "fuel filter": "Diesel fuel filter ~60,000 km on OM642—confirm ASSYST.",
+    "coolant": "Long-life coolant (often near 150,000 km).",
+    "automatic transmission fluid": "7G/9G preventive ATF ~60,000 km.",
+    "transfer case oil": "4MATIC only; ~60,000 km.",
+    "front axle differential oil": "4MATIC only.",
+    "rear axle differential oil": "AWD preventive ~60,000 km.",
+    "coolant flush": "Supplementary exchange ~120,000 km.",
+    "poly-V belt": "Accessory belt ~100,000 km."
+  }
+}

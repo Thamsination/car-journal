@@ -1,0 +1,58 @@
+{
+  "id": "Mercedes-E-W211-Diesel-OM648",
+  "name": "Mercedes-Benz E-Class W211/S211 (3.2L inline-6 diesel)",
+  "years": "2002–2005",
+  "chassisCodes": ["W211", "S211"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["automatic"],
+  "displacement": "3.2L",
+  "cylinders": 6,
+  "fuelType": "diesel",
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 280 CDI",
+        "E 280 CDI Estate",
+        "E 320 CDI",
+        "E 320 CDI Estate",
+        "E 320 CDI 4MATIC",
+        "E 320 CDI 4MATIC Estate"
+      ],
+      "yearFrom": 2002,
+      "yearTo": 2005
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 25000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 15000, "months": null, "kind": "rec" },
+    { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
+    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
+    { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
+    { "task": "fuel filter", "km": 60000, "months": null, "kind": "mfr" },
+    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
+    { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
+    { "task": "poly-V belt", "km": 100000, "months": null, "kind": "rec" }
+  ],
+  "serviceNotes": {
+    "engine oil": "OM648 3.2L inline-six diesel: flexible ASSYST up to 25,000 km / 12 months; rec 15,000 km severe use.",
+    "dust filter": "Dust filter per Mercedes EU booklet.",
+    "engine air filter": "Inspection intervals (often 60,000 km / 48 months).",
+    "brake fluid": "24 months.",
+    "check brake pad thickness": "Inspect each visit.",
+    "fuel filter": "Diesel fuel filter ~60,000 km—confirm booklet.",
+    "coolant": "Long-life coolant (often near 150,000 km).",
+    "automatic transmission fluid": "722.6 preventive ATF ~60,000 km.",
+    "transfer case oil": "4MATIC only; ~60,000 km.",
+    "front axle differential oil": "4MATIC only.",
+    "rear axle differential oil": "AWD preventive ~60,000 km.",
+    "coolant flush": "Supplementary exchange ~120,000 km.",
+    "poly-V belt": "Accessory belt ~100,000 km. From ~2006 many E 280 / E 320 CDI use OM642 V6—see Mercedes-E-W211-Diesel-OM642 for 2006–2009."
+  }
+}
+

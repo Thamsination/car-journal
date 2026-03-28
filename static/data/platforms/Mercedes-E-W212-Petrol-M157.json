@@ -1,0 +1,57 @@
+{
+  "id": "Mercedes-E-W212-Petrol-M157",
+  "name": "Mercedes-Benz E-Class W212/S212, C207/A207 (5.5L V8 biturbo AMG)",
+  "years": "2012–2016",
+  "chassisCodes": ["W212", "S212", "C207", "A207"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["automatic"],
+  "displacement": "5.5L",
+  "cylinders": 8,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 63 AMG",
+        "E 63 AMG Estate",
+        "E 63 AMG Coupé",
+        "E 63 AMG Cabriolet"
+      ],
+      "yearFrom": 2012,
+      "yearTo": 2016
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 10000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 8000, "months": null, "kind": "rec" },
+    { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
+    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
+    { "task": "check brake pad thickness", "km": 20000, "months": null, "kind": "mfr" },
+    { "task": "spark plugs", "km": 45000, "months": 36, "kind": "mfr" },
+    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
+    { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "coolant flush", "km": 100000, "months": null, "kind": "rec" },
+    { "task": "poly-V belt", "km": 80000, "months": null, "kind": "rec" },
+    { "task": "intake carbon clean", "km": 80000, "months": null, "kind": "rec" }
+  ],
+  "serviceNotes": {
+    "engine oil": "M157 5.5L biturbo AMG: shorter oil intervals (commonly 10,000 km / 12 months EU; track ~8,000 km).",
+    "dust filter": "Dust filter per AMG maintenance schedule.",
+    "engine air filter": "Twin-turbo V8: follow ASSYST.",
+    "brake fluid": "24 months.",
+    "check brake pad thickness": "Inspect at least every 20,000 km.",
+    "spark plugs": "AMG biturbo V8: ~45,000 km / 36 months orientation—verify ASSYST.",
+    "coolant": "Long-life coolant per Mercedes tables.",
+    "automatic transmission fluid": "AMG SPEEDSHIFT MCT: preventive ~60,000 km specialist practice.",
+    "transfer case oil": "4MATIC+ models only; ~60,000 km preventive.",
+    "front axle differential oil": "AWD only.",
+    "rear axle differential oil": "AWD / LSD ~60,000 km preventive.",
+    "coolant flush": "~100,000 km under hard use.",
+    "poly-V belt": "~80,000 km.",
+    "intake carbon clean": "Direct injection twin-turbo: monitor from ~80,000 km."
+  }
+}

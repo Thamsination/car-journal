@@ -1,0 +1,53 @@
+{
+  "id": "Mercedes-E-W211-Petrol-M112-26",
+  "name": "Mercedes-Benz E-Class W211/S211 (2.6L V6 petrol)",
+  "years": "2002–2009",
+  "chassisCodes": ["W211", "S211"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "2.6L",
+  "cylinders": 6,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 240",
+        "E 240 Estate"
+      ],
+      "yearFrom": 2002,
+      "yearTo": 2009
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 10000, "months": null, "kind": "rec" },
+    { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
+    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
+    { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
+    { "task": "spark plugs", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
+    { "task": "manual transmission oil", "km": 100000, "months": null, "kind": "rec", "transmission": ["manual"] },
+    { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
+    { "task": "poly-V belt", "km": 100000, "months": null, "kind": "rec" },
+    { "task": "intake carbon clean", "km": 120000, "months": null, "kind": "rec" }
+  ],
+  "serviceNotes": {
+    "engine oil": "M112 2.6L V6: 15,000 km or 12 months typical EU plan.",
+    "dust filter": "Dust filter per Mercedes EU booklet.",
+    "engine air filter": "Inspection intervals (often 60,000 km / 48 months).",
+    "brake fluid": "24 months.",
+    "check brake pad thickness": "Inspect each service.",
+    "spark plugs": "Six-cylinder: 60,000 km / 48 months orientation.",
+    "coolant": "Long-life coolant (often near 150,000 km).",
+    "automatic transmission fluid": "722.6 preventive ATF ~60,000 km.",
+    "manual transmission oil": "Manual gear oil ~100,000 km preventive.",
+    "rear axle differential oil": "Preventive ~60,000 km.",
+    "coolant flush": "Supplementary exchange ~120,000 km.",
+    "poly-V belt": "Accessory belt ~100,000 km.",
+    "intake carbon clean": "Port-injection V6; carbon rarely an issue."
+  }
+}

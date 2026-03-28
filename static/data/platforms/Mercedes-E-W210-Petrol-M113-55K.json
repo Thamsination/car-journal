@@ -1,0 +1,49 @@
+{
+  "id": "Mercedes-E-W210-Petrol-M113-55K",
+  "name": "Mercedes-Benz E-Class W210/S210 (5.4L V8 supercharged AMG)",
+  "years": "2000–2002",
+  "chassisCodes": ["W210", "S210"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["automatic"],
+  "displacement": "5.4L",
+  "cylinders": 8,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 55 AMG",
+        "E 55 AMG Estate"
+      ],
+      "yearFrom": 2000,
+      "yearTo": 2002
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 10000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 8000, "months": null, "kind": "rec" },
+    { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
+    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
+    { "task": "check brake pad thickness", "km": 20000, "months": null, "kind": "mfr" },
+    { "task": "spark plugs", "km": 45000, "months": 36, "kind": "mfr" },
+    { "task": "coolant", "km": 160000, "months": null, "kind": "mfr" },
+    { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
+    { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "coolant flush", "km": 100000, "months": null, "kind": "rec" },
+    { "task": "poly-V belt", "km": 80000, "months": null, "kind": "rec" }
+  ],
+  "serviceNotes": {
+    "engine oil": "M113 5.4L Kompressor AMG: shorter oil intervals (commonly 10,000 km / 12 months; hard use ~8,000 km).",
+    "dust filter": "Dust filter per AMG schedule.",
+    "engine air filter": "Supercharged V8; follow ASSYST.",
+    "brake fluid": "24 months.",
+    "check brake pad thickness": "Inspect at least every 20,000 km.",
+    "spark plugs": "AMG supercharged V8: ~45,000 km / 36 months orientation—verify booklet.",
+    "coolant": "Long-life coolant per Mercedes tables.",
+    "automatic transmission fluid": "722.6 preventive ATF ~60,000 km.",
+    "rear axle differential oil": "LSD rear ~60,000 km preventive.",
+    "coolant flush": "~100,000 km under hard use.",
+    "poly-V belt": "Supercharger drive ~80,000 km inspection; accessory belt per condition."
+  }
+}

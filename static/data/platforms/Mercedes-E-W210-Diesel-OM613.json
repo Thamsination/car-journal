@@ -1,0 +1,47 @@
+{
+  "id": "Mercedes-E-W210-Diesel-OM613",
+  "name": "Mercedes-Benz E-Class W210/S210 (3.2L inline-6 diesel)",
+  "years": "2000–2002",
+  "chassisCodes": ["W210", "S210"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["automatic"],
+  "displacement": "3.2L",
+  "cylinders": 6,
+  "fuelType": "diesel",
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 320 CDI",
+        "E 320 CDI Estate"
+      ],
+      "yearFrom": 2000,
+      "yearTo": 2002
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 10000, "months": null, "kind": "rec" },
+    { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
+    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
+    { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
+    { "task": "fuel filter", "km": 60000, "months": null, "kind": "mfr" },
+    { "task": "coolant", "km": 160000, "months": null, "kind": "mfr" },
+    { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
+    { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
+    { "task": "poly-V belt", "km": 100000, "months": null, "kind": "rec" }
+  ],
+  "serviceNotes": {
+    "engine oil": "OM613 3.2L inline-six CDI: fixed EU plans commonly 15,000 km or 12 months; rec 10,000 km severe use.",
+    "dust filter": "Dust filter per Mercedes EU booklet.",
+    "engine air filter": "Inspection intervals (often 60,000 km / 48 months).",
+    "brake fluid": "24 months.",
+    "check brake pad thickness": "Inspect each service.",
+    "fuel filter": "Diesel fuel filter ~60,000 km—verify booklet.",
+    "coolant": "Long-life coolant (many W210 booklets ~160,000 km).",
+    "automatic transmission fluid": "722.6 preventive ATF ~60,000 km.",
+    "coolant flush": "Supplementary exchange ~120,000 km.",
+    "poly-V belt": "Accessory belt ~100,000 km."
+  }
+}

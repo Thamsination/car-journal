@@ -1990,13 +1990,29 @@
     "yearTo": 2020
   },
   {
-    "platformId": "Mercedes-E-W210-Diesel",
+    "platformId": "Mercedes-E-W210-Diesel-OM611",
     "make": "Mercedes-Benz",
     "models": [
       "E 220 CDI",
-      "E 220 CDI Estate",
+      "E 220 CDI Estate"
+    ],
+    "yearFrom": 2000,
+    "yearTo": 2002
+  },
+  {
+    "platformId": "Mercedes-E-W210-Diesel-OM612",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 270 CDI",
-      "E 270 CDI Estate",
+      "E 270 CDI Estate"
+    ],
+    "yearFrom": 2000,
+    "yearTo": 2002
+  },
+  {
+    "platformId": "Mercedes-E-W210-Diesel-OM613",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 320 CDI",
       "E 320 CDI Estate"
     ],
@@ -2004,23 +2020,63 @@
     "yearTo": 2002
   },
   {
-    "platformId": "Mercedes-E-W210-Petrol",
+    "platformId": "Mercedes-E-W210-Petrol-M111",
     "make": "Mercedes-Benz",
     "models": [
       "E 200",
-      "E 200 Estate",
+      "E 200 Estate"
+    ],
+    "yearFrom": 2000,
+    "yearTo": 2002
+  },
+  {
+    "platformId": "Mercedes-E-W210-Petrol-M112-24",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 240",
-      "E 240 Estate",
+      "E 240 Estate"
+    ],
+    "yearFrom": 2000,
+    "yearTo": 2002
+  },
+  {
+    "platformId": "Mercedes-E-W210-Petrol-M112-28",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 280",
-      "E 280 Estate",
+      "E 280 Estate"
+    ],
+    "yearFrom": 2000,
+    "yearTo": 2002
+  },
+  {
+    "platformId": "Mercedes-E-W210-Petrol-M112-32",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 320",
       "E 320 Estate",
       "E 320 4MATIC",
-      "E 320 4MATIC Estate",
+      "E 320 4MATIC Estate"
+    ],
+    "yearFrom": 2000,
+    "yearTo": 2002
+  },
+  {
+    "platformId": "Mercedes-E-W210-Petrol-M113-43",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 430",
       "E 430 Estate",
       "E 430 4MATIC",
-      "E 430 4MATIC Estate",
+      "E 430 4MATIC Estate"
+    ],
+    "yearFrom": 2000,
+    "yearTo": 2002
+  },
+  {
+    "platformId": "Mercedes-E-W210-Petrol-M113-55K",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 55 AMG",
       "E 55 AMG Estate"
     ],
@@ -2028,59 +2084,173 @@
     "yearTo": 2002
   },
   {
-    "platformId": "Mercedes-E-W211-Diesel",
+    "platformId": "Mercedes-E-W211-Diesel-OM628",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 420 CDI",
+      "E 420 CDI Estate"
+    ],
+    "yearFrom": 2006,
+    "yearTo": 2009
+  },
+  {
+    "platformId": "Mercedes-E-W211-Diesel-OM642",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 280 CDI",
+      "E 280 CDI Estate",
+      "E 320 CDI",
+      "E 320 CDI Estate",
+      "E 320 CDI 4MATIC",
+      "E 320 CDI 4MATIC Estate"
+    ],
+    "yearFrom": 2006,
+    "yearTo": 2009
+  },
+  {
+    "platformId": "Mercedes-E-W211-Diesel-OM646",
     "make": "Mercedes-Benz",
     "models": [
       "E 200 CDI",
       "E 200 CDI Estate",
       "E 220 CDI",
-      "E 220 CDI Estate",
+      "E 220 CDI Estate"
+    ],
+    "yearFrom": 2002,
+    "yearTo": 2009
+  },
+  {
+    "platformId": "Mercedes-E-W211-Diesel-OM647",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 270 CDI",
-      "E 270 CDI Estate",
+      "E 270 CDI Estate"
+    ],
+    "yearFrom": 2002,
+    "yearTo": 2009
+  },
+  {
+    "platformId": "Mercedes-E-W211-Diesel-OM648",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 280 CDI",
       "E 280 CDI Estate",
-      "E 280 CDI 4MATIC",
-      "E 280 CDI 4MATIC Estate",
       "E 320 CDI",
       "E 320 CDI Estate",
       "E 320 CDI 4MATIC",
-      "E 320 CDI 4MATIC Estate",
-      "E 420 CDI",
-      "E 420 CDI Estate"
+      "E 320 CDI 4MATIC Estate"
+    ],
+    "yearFrom": 2002,
+    "yearTo": 2005
+  },
+  {
+    "platformId": "Mercedes-E-W211-Petrol-M112-26",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 240",
+      "E 240 Estate"
     ],
     "yearFrom": 2002,
     "yearTo": 2009
   },
   {
-    "platformId": "Mercedes-E-W211-Petrol",
+    "platformId": "Mercedes-E-W211-Petrol-M113",
     "make": "Mercedes-Benz",
     "models": [
-      "E 200 Kompressor",
-      "E 200 Kompressor Estate",
-      "E 230",
-      "E 230 Estate",
-      "E 240",
-      "E 240 Estate",
-      "E 280",
-      "E 280 Estate",
-      "E 280 4MATIC",
-      "E 280 4MATIC Estate",
-      "E 350",
-      "E 350 Estate",
-      "E 350 4MATIC",
-      "E 350 4MATIC Estate",
       "E 500",
       "E 500 Estate",
       "E 500 4MATIC",
-      "E 500 4MATIC Estate",
+      "E 500 4MATIC Estate"
+    ],
+    "yearFrom": 2002,
+    "yearTo": 2006
+  },
+  {
+    "platformId": "Mercedes-E-W211-Petrol-M156",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 63 AMG",
       "E 63 AMG Estate"
+    ],
+    "yearFrom": 2006,
+    "yearTo": 2009
+  },
+  {
+    "platformId": "Mercedes-E-W211-Petrol-M271",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 200 Kompressor",
+      "E 200 Kompressor Estate"
     ],
     "yearFrom": 2002,
     "yearTo": 2009
   },
   {
-    "platformId": "Mercedes-E-W212-Diesel",
+    "platformId": "Mercedes-E-W211-Petrol-M272-25",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 230",
+      "E 230 Estate"
+    ],
+    "yearFrom": 2002,
+    "yearTo": 2009
+  },
+  {
+    "platformId": "Mercedes-E-W211-Petrol-M272-30",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 280",
+      "E 280 Estate",
+      "E 280 4MATIC",
+      "E 280 4MATIC Estate"
+    ],
+    "yearFrom": 2002,
+    "yearTo": 2009
+  },
+  {
+    "platformId": "Mercedes-E-W211-Petrol-M272-35",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 350",
+      "E 350 Estate",
+      "E 350 4MATIC",
+      "E 350 4MATIC Estate"
+    ],
+    "yearFrom": 2002,
+    "yearTo": 2009
+  },
+  {
+    "platformId": "Mercedes-E-W211-Petrol-M273",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 500",
+      "E 500 Estate",
+      "E 500 4MATIC",
+      "E 500 4MATIC Estate"
+    ],
+    "yearFrom": 2006,
+    "yearTo": 2009
+  },
+  {
+    "platformId": "Mercedes-E-W212-Diesel-OM642",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 350 CDI",
+      "E 350 CDI Estate",
+      "E 350 CDI Coupé",
+      "E 350 CDI Cabriolet",
+      "E 350 BlueTEC",
+      "E 350 BlueTEC Estate",
+      "E 350 BlueTEC Coupé",
+      "E 350 BlueTEC Cabriolet",
+      "E 350 BlueTEC 4MATIC",
+      "E 350 BlueTEC 4MATIC Estate"
+    ],
+    "yearFrom": 2009,
+    "yearTo": 2016
+  },
+  {
+    "platformId": "Mercedes-E-W212-Diesel-OM651",
     "make": "Mercedes-Benz",
     "models": [
       "E 200 CDI",
@@ -2098,23 +2268,37 @@
       "E 250 CDI Coupé",
       "E 250 CDI Cabriolet",
       "E 250 CDI 4MATIC",
-      "E 250 CDI 4MATIC Estate",
-      "E 350 CDI",
-      "E 350 CDI Estate",
-      "E 350 CDI Coupé",
-      "E 350 CDI Cabriolet",
-      "E 350 BlueTEC",
-      "E 350 BlueTEC Estate",
-      "E 350 BlueTEC Coupé",
-      "E 350 BlueTEC Cabriolet",
-      "E 350 BlueTEC 4MATIC",
-      "E 350 BlueTEC 4MATIC Estate"
+      "E 250 CDI 4MATIC Estate"
     ],
     "yearFrom": 2009,
     "yearTo": 2016
   },
   {
-    "platformId": "Mercedes-E-W212-Petrol",
+    "platformId": "Mercedes-E-W212-Petrol-M156",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 63 AMG",
+      "E 63 AMG Estate",
+      "E 63 AMG Coupé",
+      "E 63 AMG Cabriolet"
+    ],
+    "yearFrom": 2009,
+    "yearTo": 2011
+  },
+  {
+    "platformId": "Mercedes-E-W212-Petrol-M157",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 63 AMG",
+      "E 63 AMG Estate",
+      "E 63 AMG Coupé",
+      "E 63 AMG Cabriolet"
+    ],
+    "yearFrom": 2012,
+    "yearTo": 2016
+  },
+  {
+    "platformId": "Mercedes-E-W212-Petrol-M271",
     "make": "Mercedes-Benz",
     "models": [
       "E 200 CGI",
@@ -2124,35 +2308,63 @@
       "E 250 CGI",
       "E 250 CGI Estate",
       "E 250 CGI Coupé",
-      "E 250 CGI Cabriolet",
+      "E 250 CGI Cabriolet"
+    ],
+    "yearFrom": 2009,
+    "yearTo": 2016
+  },
+  {
+    "platformId": "Mercedes-E-W212-Petrol-M272-E300",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 300",
       "E 300 Estate",
       "E 300 Coupé",
-      "E 300 Cabriolet",
+      "E 300 Cabriolet"
+    ],
+    "yearFrom": 2009,
+    "yearTo": 2016
+  },
+  {
+    "platformId": "Mercedes-E-W212-Petrol-M272-M276-E350",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 350",
       "E 350 Estate",
       "E 350 Coupé",
       "E 350 Cabriolet",
       "E 350 4MATIC",
-      "E 350 4MATIC Estate",
-      "E 400",
-      "E 400 Estate",
-      "E 400 Coupé",
-      "E 400 Cabriolet",
-      "E 400 4MATIC",
-      "E 400 4MATIC Estate",
+      "E 350 4MATIC Estate"
+    ],
+    "yearFrom": 2009,
+    "yearTo": 2016
+  },
+  {
+    "platformId": "Mercedes-E-W212-Petrol-M273",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 500",
       "E 500 Estate",
       "E 500 Coupé",
       "E 500 Cabriolet",
       "E 500 4MATIC",
-      "E 500 4MATIC Estate",
-      "E 63 AMG",
-      "E 63 AMG Estate",
-      "E 63 AMG Coupé",
-      "E 63 AMG Cabriolet"
+      "E 500 4MATIC Estate"
     ],
     "yearFrom": 2009,
+    "yearTo": 2016
+  },
+  {
+    "platformId": "Mercedes-E-W212-Petrol-M276-E400",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 400",
+      "E 400 Estate",
+      "E 400 Coupé",
+      "E 400 Cabriolet",
+      "E 400 4MATIC",
+      "E 400 4MATIC Estate"
+    ],
+    "yearFrom": 2013,
     "yearTo": 2016
   },
   {
