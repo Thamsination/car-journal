@@ -13,9 +13,9 @@
   "transmissions": [
     "automatic"
   ],
-  "engines": [
-    "B58"
-  ],
+  "displacement": "3.0L",
+  "cylinders": 6,
+  "fuelType": "petrol",
   "vehicles": [
     {
       "make": "BMW",
@@ -23,9 +23,7 @@
         "540i",
         "540i Touring",
         "540i xDrive",
-        "540i xDrive Touring",
-        "M550i xDrive",
-        "M550i xDrive Touring"
+        "540i xDrive Touring"
       ],
       "yearFrom": 2017,
       "yearTo": 2020

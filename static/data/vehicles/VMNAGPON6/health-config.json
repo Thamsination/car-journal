@@ -7,7 +7,7 @@
         "engine oil"
       ],
       "intervalKm": 10000,
-      "intervalMonths": null
+      "intervalMonths": 12
     },
     {
       "id": "micro-filter",
@@ -42,7 +42,7 @@
       "taskMatches": [
         "spark plugs"
       ],
-      "intervalKm": 90000,
+      "intervalKm": 60000,
       "intervalMonths": null
     },
     {
@@ -51,7 +51,7 @@
       "taskMatches": [
         "check front brake pads"
       ],
-      "intervalKm": 50000,
+      "intervalKm": 40000,
       "intervalMonths": null
     },
     {
@@ -60,7 +60,7 @@
       "taskMatches": [
         "check rear brake pads"
       ],
-      "intervalKm": 60000,
+      "intervalKm": 50000,
       "intervalMonths": null
     },
     {
@@ -74,18 +74,18 @@
     },
     {
       "id": "zf8-gearbox-fluid",
-      "name": "Zf8 Gearbox Fluid",
+      "name": "ZF8 Gearbox Fluid",
       "taskMatches": [
-        "zf8 gearbox fluid"
+        "ZF8 gearbox fluid"
       ],
       "intervalKm": 100000,
       "intervalMonths": null
     },
     {
       "id": "xdrive-transfer-case-fluid",
-      "name": "Xdrive Transfer Case Fluid",
+      "name": "xDrive Transfer Case Fluid",
       "taskMatches": [
-        "xdrive transfer case fluid"
+        "xDrive transfer case fluid"
       ],
       "intervalKm": 80000,
       "intervalMonths": null
@@ -105,16 +105,7 @@
       "taskMatches": [
         "coolant flush"
       ],
-      "intervalKm": 120000,
-      "intervalMonths": null
-    },
-    {
-      "id": "intake-carbon-clean",
-      "name": "Intake Carbon Clean",
-      "taskMatches": [
-        "intake carbon clean"
-      ],
-      "intervalKm": 120000,
+      "intervalKm": 100000,
       "intervalMonths": null
     }
   ]

@@ -40,7 +40,6 @@
 	let editModel = $state('');
 	let editYear = $state('');
 	let editChassis = $state('');
-	let editEngine = $state('');
 	let editOdometer = $state('');
 	let editTransmission = $state<TransmissionType | ''>('');
 	let editDrivetrain = $state<DrivetrainType | ''>('');
@@ -142,10 +141,6 @@
 	const editChassisOptions = $derived(
 		editMatchedEntry?.chassisCodes ?? $platformConfig?.chassisCodes ?? []
 	);
-	const editEngineOptions = $derived(
-		editMatchedEntry?.engines ?? $platformConfig?.engines ?? []
-	);
-
 	$effect(() => {
 		if (editMakeOptions.length === 1 && editMake !== editMakeOptions[0]) {
 			editMake = editMakeOptions[0];
@@ -155,12 +150,6 @@
 	$effect(() => {
 		if (editChassisOptions.length === 1 && editChassis !== editChassisOptions[0]) {
 			editChassis = editChassisOptions[0];
-		}
-	});
-
-	$effect(() => {
-		if (editEngineOptions.length === 1 && editEngine !== editEngineOptions[0]) {
-			editEngine = editEngineOptions[0];
 		}
 	});
 
@@ -321,7 +310,6 @@
 				v.make === addMake && v.models.includes(addModel) && addYear! >= v.yearFrom && addYear! <= v.yearTo
 			);
 			const chassisOpts = matchedEntry?.chassisCodes ?? platform.chassisCodes ?? [];
-			const engineOpts = matchedEntry?.engines ?? platform.engines ?? [];
 
 			const config = {
 				name: label,
@@ -332,7 +320,9 @@
 				make: addMake,
 				model: addModel,
 				chassis: chassisOpts.length === 1 ? chassisOpts[0] : (chassisOpts[0] ?? ''),
-				engine: engineOpts.length === 1 ? engineOpts[0] : '',
+				displacement: platform.displacement,
+				cylinders: platform.cylinders,
+				fuelType: platform.fuelType,
 				drivetrain: addDrivetrain || '',
 				transmission: trans as TransmissionType | null,
 				odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
@@ -376,7 +366,6 @@
 		editModel = '';
 		editYear = '';
 		editChassis = '';
-		editEngine = '';
 		editOdometer = '';
 		editTransmission = '';
 		editDrivetrain = '';
@@ -391,7 +380,6 @@
 			editModel = $vehicleConfig.model ?? '';
 			editYear = $vehicleConfig.year ? String($vehicleConfig.year) : '';
 			editChassis = $vehicleConfig.chassis ?? '';
-			editEngine = $vehicleConfig.engine ?? '';
 			editOdometer = $vehicleConfig.odometer ? String($vehicleConfig.odometer) : '';
 			editTransmission = $vehicleConfig.transmission ?? '';
 			editDrivetrain = (['FWD', 'RWD', 'AWD'].includes($vehicleConfig.drivetrain) ? $vehicleConfig.drivetrain : '') as DrivetrainType | '';
@@ -420,7 +408,9 @@
 					model: editModel.trim() || $vehicleConfig.model,
 					year: (!isNaN(yearVal) && yearVal > 1900) ? yearVal : $vehicleConfig.year,
 					chassis: editChassis.trim() || $vehicleConfig.chassis,
-					engine: editEngine.trim() || $vehicleConfig.engine,
+					displacement: $platformConfig?.displacement ?? $vehicleConfig.displacement,
+					cylinders: $platformConfig?.cylinders ?? $vehicleConfig.cylinders,
+					fuelType: $platformConfig?.fuelType ?? $vehicleConfig.fuelType,
 					drivetrain: editDrivetrainDetected ? editDetectedDrivetrain : (editDrivetrain || $vehicleConfig.drivetrain),
 					transmission: trans as TransmissionType | null,
 					odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
@@ -783,22 +773,6 @@
 				{:else}
 					<label class="field-label">Chassis</label>
 					<input class="field-input" type="text" bind:value={editChassis} />
-				{/if}
-
-				{#if editEngineOptions.length > 1}
-					<label class="field-label">Engine</label>
-					<select class="field-input" bind:value={editEngine}>
-						<option value="">—</option>
-						{#each editEngineOptions as e}
-							<option value={e}>{e}</option>
-						{/each}
-					</select>
-				{:else if editEngineOptions.length === 1}
-					<label class="field-label">Engine</label>
-					<input class="field-input" type="text" value={editEngineOptions[0]} disabled />
-				{:else}
-					<label class="field-label">Engine</label>
-					<input class="field-input" type="text" bind:value={editEngine} />
 				{/if}
 
 				<label class="field-label">Odometer (km)</label>

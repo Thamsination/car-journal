@@ -24,17 +24,16 @@ Your task is to generate platform service schedule JSON files for specific car m
 
 Before generating anything, read these files to understand the exact schema and quality bar:
 
-1. `static/data/platforms/G30-G31-B47.json` — the original hand-crafted reference (BMW B47 diesel)
-2. `static/data/platforms/VW-MK7.json` — a corrected batch-1 example
-3. `static/data/platforms/Dacia-SANDERO-3.json` — another corrected example (Renault Group)
-4. `scripts/build_platform_milestones.py` — the milestone builder script
-5. `scripts/build_platform_index.py` — the index builder script
+1. `static/data/platforms/G30-G31-N63.json` — the primary reference file (new schema with `displacement`/`cylinders`/`fuelType`, no `engines`, no `milestones`)
+2. `static/data/platforms/G30-G31-B58.json` — another example (3.0L 6-cyl petrol, new schema)
+3. `static/data/platforms/VW-MK7.json` — a corrected batch-1 example (may still use old schema — adapt to new)
+4. `scripts/build_platform_index.py` — the index builder script
 
 Also compare the engine-family variants for the G30/G31 5 Series to see how diesel vs petrol files differ:
-6. `static/data/platforms/G30-G31-B47.json` — B47 I4 diesel (has fuel filter + timing chain, no spark plugs)
-7. `static/data/platforms/G30-G31-B48.json` — B48 I4 petrol (has spark plugs, no fuel filter)
-8. `static/data/platforms/G30-G31-B57.json` — B57 I6 diesel (has fuel filter + timing chain, no spark plugs)
-9. `static/data/platforms/G30-G31-B58.json` — B58 I6 petrol (has spark plugs, no fuel filter)
+5. `static/data/platforms/G30-G31-B47.json` — I4 diesel (has fuel filter + timing chain, no spark plugs)
+6. `static/data/platforms/G30-G31-B48.json` — I4 petrol (has spark plugs, no fuel filter)
+7. `static/data/platforms/G30-G31-B57.json` — I6 diesel (has fuel filter + timing chain, no spark plugs)
+8. `static/data/platforms/G30-G31-B58.json` — I6 petrol (has spark plugs, no fuel filter)
 
 Study these files carefully — note that every `serviceIntervals` entry has both a `km` and `months` field (one may be null). Your output must match the same schema and level of completeness.
 
@@ -171,19 +170,21 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
 ```json
 {
   "id": "<MAKE-CHASSIS-ENGINE>",
-  "name": "<Full platform name including engine>",
+  "name": "<Full platform name with mechanical specs, e.g. BMW G30/G31 5 Series (2.0L 4-cyl diesel)>",
   "years": "<production years as text>",
   "chassisCodes": ["<code1>", "<code2>"],
   "drivetrains": ["<FWD|RWD|AWD>"],
   "transmissions": ["<manual|automatic|dct|cvt|ev>"],
+  "displacement": "<e.g. 2.0L, 4.4L, or null for EV>",
+  "cylinders": "<integer, e.g. 4, 6, 8 — use 0 for EV>",
+  "fuelType": "<petrol|diesel|electric|hybrid>",
   "vehicles": [
     {
       "make": "<Make>",
       "models": ["<Model1>", "<Model2>", "<Variant>"],
       "yearFrom": 2019,
       "yearTo": 2026,
-      "chassisCodes": ["<optional: subset of platform chassisCodes for this era>"],
-      "engines": ["<optional: subset of platform engines for this era>"]
+      "chassisCodes": ["<optional: subset of platform chassisCodes for this era>"]
     }
   ],
   "serviceIntervals": [
@@ -195,10 +196,23 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
   ],
   "serviceNotes": {
     "<OEM task name>": "<Why this matters + platform/engine-specific context + source>"
-  },
-  "milestones": []
+  }
 }
 ```
+
+**Important schema changes (no `engines`, no `milestones`):**
+
+- The `engines` field has been removed from both the platform level and from `vehicles` entries. Instead, use `displacement`, `cylinders`, and `fuelType` at the platform level.
+- The `milestones` array has been removed. The app computes milestones at runtime from `serviceIntervals`. Do NOT include a `milestones` field.
+- The `name` field should use human-readable mechanical specs, not engine codes. E.g. `"BMW G30/G31 5 Series (2.0L 4-cyl diesel)"` not `"BMW G30/G31 5 Series (B47 2.0d)"`.
+
+**`displacement`, `cylinders`, `fuelType` rules:**
+
+- `displacement`: Engine displacement as a string, e.g. `"2.0L"`, `"3.0L"`, `"4.4L"`. Use one decimal place. Set to `null` for BEV platforms.
+- `cylinders`: Integer cylinder count: `4`, `6`, `8`, `12`. Use `0` for BEV platforms.
+- `fuelType`: One of `"petrol"`, `"diesel"`, `"electric"`, `"hybrid"`.
+- For PHEV platforms: use the ICE displacement/cylinders and `"fuelType": "hybrid"`.
+- These fields MUST match the specs of every model listed in the `vehicles` array. If models on the platform have different displacements or cylinder counts, the platform file must be split — each displacement/cylinder combination gets its own file.
 
 #### `vehicles` array rules
 
@@ -209,14 +223,13 @@ This array is how the app matches a user's car to a platform. Get it right.
 - **`yearFrom`**: First model year this engine-platform combination was produced (integer).
 - **`yearTo`**: Last model year, or the current year (2026) if still in production (integer).
 - **`chassisCodes`** (optional): If the platform spans multiple chassis generations, list only the chassis codes that apply to this vehicles entry's year range. The app uses this to filter the chassis dropdown. Omit if all platform-level `chassisCodes` apply to this entry.
-- **`engines`** (optional): If the platform spans multiple engine variants, list only the engine codes that apply to this vehicles entry's models and year range. The app uses this to filter the engine dropdown. Omit if all platform-level `engines` apply to this entry.
 - **Multi-brand platforms**: If the same platform is sold under different brands, add a separate entry per brand.
 
-**When to use per-entry `chassisCodes` and `engines`:**
+**When to use per-entry `chassisCodes`:**
 
-Use these when a single platform file covers multiple chassis generations or when different model/year ranges used different engines. This is common on catch-all platforms that span many years (e.g., Subaru WRX 2000–2021 covers GD, GE, and VA chassis with different EJ engine variants). The app matches the user's make + model + year to a specific vehicles entry, then uses that entry's `chassisCodes`/`engines` for dropdowns. If no per-entry arrays exist, it falls back to the platform-level arrays.
+Use these when a single platform file covers multiple chassis generations. This is common on catch-all platforms that span many years (e.g., Subaru WRX 2000–2021 covers GD, GE, and VA chassis). The app matches the user's make + model + year to a specific vehicles entry, then uses that entry's `chassisCodes` for dropdowns. If no per-entry array exists, it falls back to the platform-level array.
 
-**Split vehicles entries by generation** when chassis codes or engine options differ. Don't cram everything into one entry spanning 20 years if the chassis changed halfway through.
+**Split vehicles entries by generation** when chassis codes differ. Don't cram everything into one entry spanning 20 years if the chassis changed halfway through.
 
 **Example — BMW G30/G31 diesel (sedan + Touring, single generation):**
 ```json
@@ -238,26 +251,23 @@ No per-entry `chassisCodes`/`engines` needed — single-engine platform with con
     "make": "Subaru",
     "models": ["Impreza WRX", "Impreza WRX Wagon", "Impreza WRX STI", "Impreza WRX STI Wagon"],
     "yearFrom": 2000, "yearTo": 2007,
-    "chassisCodes": ["GD", "GG"],
-    "engines": ["EJ205", "EJ207", "EJ257"]
+    "chassisCodes": ["GD", "GG"]
   },
   {
     "make": "Subaru",
     "models": ["WRX", "WRX STI"],
     "yearFrom": 2008, "yearTo": 2014,
-    "chassisCodes": ["GE", "GH"],
-    "engines": ["EJ207", "EJ255", "EJ257"]
+    "chassisCodes": ["GE", "GH"]
   },
   {
     "make": "Subaru",
     "models": ["WRX STI"],
     "yearFrom": 2015, "yearTo": 2021,
-    "chassisCodes": ["VA"],
-    "engines": ["EJ207", "EJ257"]
+    "chassisCodes": ["VA"]
   }
 ]
 ```
-Each entry scopes chassis codes and engines to the correct generation, so a 2016 WRX STI user only sees chassis `VA` and engines `EJ207`/`EJ257`.
+Each entry scopes chassis codes to the correct generation, so a 2016 WRX STI user only sees chassis `VA`.
 
 **Example — VW Golf Mk7 TDI:**
 ```json
@@ -337,7 +347,7 @@ When a platform has only one transmission, the app auto-selects it. When multipl
 - **Any task with a manufacturer-specified time interval** should use the `months` field (brake fluid is the most common, but coolant, spark plugs, and timing belts sometimes have time limits too — e.g., "every 5 years or 120,000 km")
 - Tasks with both `km` and `months` will trigger based on whichever comes first
 - Tasks with only `months` (km is null) are excluded from km-based milestones and tracked by date in the app
-- Leave `milestones` as an empty array — the build script will generate them (it skips time-only tasks automatically)
+- Do NOT include a `milestones` field — milestones are computed at runtime from `serviceIntervals`
 - serviceNotes should mention the source (e.g., "per BMW CBS SIB documentation" or "garage.wiki interval table")
 - Each task name must appear **at most once per `kind`** — no duplicate entries
 
@@ -408,14 +418,7 @@ BMW (ZF8 automatic only on modern platforms — no tag needed):
 { "task": "gearbox fluid", "km": 100000, "months": null, "kind": "rec" }
 ```
 
-### Step 6: Build milestones and index
-
-After writing each JSON file, run the milestone builder:
-
-```bash
-cd /home/thamsination/car-journal
-python3 scripts/build_platform_milestones.py < static/data/platforms/<ID>.json > /tmp/p.json && mv /tmp/p.json static/data/platforms/<ID>.json
-```
+### Step 6: Build index
 
 After completing a batch, rebuild the platform index:
 
@@ -423,6 +426,8 @@ After completing a batch, rebuild the platform index:
 cd /home/thamsination/car-journal
 python3 scripts/build_platform_index.py
 ```
+
+**Do NOT include a `milestones` array in the JSON files.** Milestones are computed at runtime from `serviceIntervals`.
 
 ### Step 7: Self-validation
 
@@ -450,19 +455,21 @@ Before moving to the next platform, verify your output:
 20. **Check model names identify the engine variant** — no bare series names like `"3 Series"`, `"5 Series"`, `"Golf"`. Every model entry must include the engine designation (e.g., `"320d"`, `"520i xDrive"`, `"Golf TDI"`). If a user cannot tell from the model name alone which engine it refers to, the entry is invalid.
 21. **Check body style completeness** — if the platform covers multiple body styles (sedan + Touring/wagon, coupé + convertible), verify that every engine/drivetrain model name has a variant for each body style. For example, a G30/G31 platform must list both `"520d"` (sedan) and `"520d Touring"` (wagon), not just `"520d"`.
 22. **Check `transmissions` array** — must be present and contain at least one of `"manual"`, `"automatic"`, `"dct"`, `"cvt"`, `"ev"`. Use `"dct"` for dual-clutch (DSG, PDK), `"cvt"` for CVT, `"ev"` for BEV single-speed, `"automatic"` for conventional torque-converter auto. BEV platforms should be `["ev"]`, not `["automatic"]`.
-23. **Check `engines` array** — must be present and contain at least one engine code. Engine-specific platform files (e.g., `G30-G31-B47`) must list exactly the engine(s) in their scope. Catch-all platforms must list all engine codes offered in the generation (EU market). EV platforms must use `["Electric"]`. PHEV platforms must include both the combustion engine code and `"Electric"`. Entries must be sorted alphabetically with no duplicates. Every code must be verified via web search.
-24. **Check per-entry `chassisCodes`/`engines` on vehicles entries** — if the platform spans multiple chassis generations (e.g., different chassis codes for different year ranges), each `vehicles` entry must have per-entry `chassisCodes` and/or `engines` arrays scoped to that entry's year range. A 2016 WRX STI user should only see chassis `VA` and engines `EJ207`/`EJ257`, not all codes from 2000–2021. Per-entry arrays must be subsets of the platform-level arrays.
+23. **Check `displacement`, `cylinders`, `fuelType`** — all three must be present at the platform level (use `null`/`0` for EV). Verify that the displacement and cylinder count match the specs for ALL models listed in the `vehicles` array. If models have different specs, the file must be split.
+24. **Cross-check displacement/cylinders against models** — if displacement is `"4.4L"` and cylinders is `8`, the platform should NOT contain models known to have I6 engines, and vice versa. If displacement is `"2.0L"` and cylinders is `4`, no V6 or V8 models should be listed.
+25. **Check per-entry `chassisCodes` on vehicles entries** — if the platform spans multiple chassis generations (e.g., different chassis codes for different year ranges), each `vehicles` entry must have per-entry `chassisCodes` arrays scoped to that entry's year range. A 2016 WRX STI user should only see chassis `VA`, not all codes from 2000–2021. Per-entry arrays must be subsets of the platform-level arrays.
+26. **No `engines` field** — verify there is no `engines` field at platform level or in any `vehicles` entry. This field has been replaced by `displacement`/`cylinders`/`fuelType`.
+27. **No `milestones` field** — verify there is no `milestones` array. Milestones are computed at runtime.
 
 If any check fails, go back and fix it before proceeding.
 
 ### Step 8: Work pace
 
 Generate **3 platforms per batch**. After each batch:
-1. Run the milestone builder on all 3
-2. Run the index builder
-3. Do the self-validation checks
-4. Commit with a descriptive message
-5. Push
+1. Run the index builder
+2. Do the self-validation checks
+3. Commit with a descriptive message
+4. Push
 
 Do NOT rush. Quality over quantity. A platform with wrong intervals is worse than no platform at all.
 
@@ -480,7 +487,7 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Create duplicate task entries — each task name appears at most once per `kind`
 - Use bare series names (`"3 Series"`, `"5 Series"`, `"Golf"`, `"Clio"`) as model entries — every model name must identify the specific engine variant (e.g., `"320d"`, `"Golf TDI"`)
 - Omit body style suffixes when the platform covers multiple body styles — if the chassis includes a Touring/wagon (G31, E61, F11), every model sold as a Touring must have a `"... Touring"` entry alongside the sedan entry
-- Leave the `vehicles` array empty or with models that don't match the engine family
+- Leave the `vehicles` array empty or with models that don't match the platform's displacement/cylinders
 - Omit xDrive/quattro/AWD model names from the `vehicles` array when the manufacturer sells them as distinct models — users with AWD cars must be able to find their vehicle
 - Omit transfer case and differential fluid tasks on platforms that cover AWD/4WD models — every AWD vehicle has these components and they need servicing
 - Add AWD model names to the `vehicles` array without also adding drivetrain service tasks to `serviceIntervals` — model names without matching tasks means missing maintenance reminders
@@ -502,6 +509,8 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Use `"RWD"` for FWD-based platforms — BMW F40/F44/F45/F48/F39 are FWD-based (UKL/FAAR), not RWD. VW, Renault, Toyota, etc. are FWD.
 - Add fuel system additives, engine flush, or any consumable product as a `rec` task — these are not wear-item services and do not belong in a maintenance schedule
 - Add `rec` tasks based on generic forum advice without a documented engineering justification specific to the engine/platform — "some people recommend it" is not sufficient
-- Generate milestones manually — always use the Python script
+- Include an `engines` field at platform level or in `vehicles` entries — this field has been replaced by `displacement`/`cylinders`/`fuelType`
+- Include a `milestones` array — milestones are computed at runtime from `serviceIntervals`
+- Mix models with different displacements/cylinder counts in the same file — each displacement/cylinder combination gets its own platform file
 - Modify or rename existing platform files unless explicitly told to
 - Commit without self-validating

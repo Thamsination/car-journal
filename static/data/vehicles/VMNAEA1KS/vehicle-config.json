@@ -7,7 +7,9 @@
   "make": "Subaru",
   "model": "WRX STI",
   "chassis": "VA",
-  "engine": "EJ257",
+  "displacement": "2.5L",
+  "cylinders": 4,
+  "fuelType": "petrol",
   "drivetrain": "AWD",
   "transmission": "manual",
   "odometer": 12586

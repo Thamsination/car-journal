@@ -233,7 +233,13 @@ export async function loadVehicleConfig(): Promise<import('./types').VehicleConf
 	const { content, sha: s } = await getFile(path);
 	setSha('vehicle-config', s);
 	if (!content) return null;
-	return JSON.parse(content) as import('./types').VehicleConfig;
+	const raw = JSON.parse(content) as import('./types').VehicleConfig & { engine?: string };
+	if (raw.engine && !raw.displacement) {
+		delete raw.engine;
+	} else if (raw.displacement) {
+		delete raw.engine;
+	}
+	return raw;
 }
 
 export async function saveVehicleConfig(

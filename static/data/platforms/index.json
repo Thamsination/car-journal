@@ -984,7 +984,15 @@
       "540i",
       "540i Touring",
       "540i xDrive",
-      "540i xDrive Touring",
+      "540i xDrive Touring"
+    ],
+    "yearFrom": 2017,
+    "yearTo": 2020
+  },
+  {
+    "platformId": "G30-G31-N63",
+    "make": "BMW",
+    "models": [
       "M550i xDrive",
       "M550i xDrive Touring"
     ],

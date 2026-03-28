@@ -66,6 +66,8 @@ export interface ServiceSchedule {
 
 export type TransmissionType = 'manual' | 'automatic' | 'cvt' | 'dct' | 'ev';
 
+export type FuelType = 'petrol' | 'diesel' | 'electric' | 'hybrid';
+
 export interface VehicleConfig {
 	name: string;
 	licensePlate: string;
@@ -75,7 +77,10 @@ export interface VehicleConfig {
 	make: string;
 	model: string;
 	chassis: string;
-	engine: string;
+	engine?: string;
+	displacement?: string;
+	cylinders?: number;
+	fuelType?: FuelType;
 	drivetrain: string;
 	transmission?: TransmissionType | null;
 	odometer?: number | null;
@@ -129,7 +134,6 @@ export interface PlatformVehicleEntry {
 	yearFrom: number;
 	yearTo: number;
 	chassisCodes?: string[];
-	engines?: string[];
 }
 
 export interface PlatformConfig {
@@ -139,9 +143,11 @@ export interface PlatformConfig {
 	chassisCodes: string[];
 	drivetrains?: DrivetrainType[];
 	transmissions?: TransmissionType[];
-	engines?: string[];
+	displacement?: string;
+	cylinders?: number;
+	fuelType?: FuelType;
 	vehicles?: PlatformVehicleEntry[];
 	serviceIntervals: PlatformServiceInterval[];
 	serviceNotes: Record<string, string>;
-	milestones: { km: number; tasks: string[] }[];
+	milestones?: { km: number; tasks: string[] }[];
 }

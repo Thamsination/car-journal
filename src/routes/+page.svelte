@@ -55,18 +55,18 @@
 		return '2WD';
 	}
 
+	function engineLabel(v: typeof $vehicleConfig): string {
+		const disp = v?.displacement ?? $platformConfig?.displacement;
+		const cyl = v?.cylinders ?? $platformConfig?.cylinders;
+		if (disp && cyl) return `${disp} ${cyl}-cyl`;
+		if (disp) return disp;
+		return v?.engine ?? '';
+	}
+
 	function vehicleTechLine(v: typeof $vehicleConfig): string {
 		if (!v) return '';
-		let engine = v.engine;
-		if (!engine && $platformConfig) {
-			const entry = $platformConfig.vehicles?.find(e =>
-				e.make === v.make && e.models.includes(v.model) && v.year >= e.yearFrom && v.year <= e.yearTo
-			);
-			const opts = entry?.engines ?? $platformConfig.engines ?? [];
-			if (opts.length === 1) engine = opts[0];
-		}
 		const transLabel = v.transmission ? transmissionLabels[v.transmission] ?? '' : '';
-		return [v.chassis, engine, driveLabel(v.drivetrain), transLabel].filter(Boolean).join(', ');
+		return [v.chassis, engineLabel(v), driveLabel(v.drivetrain), transLabel].filter(Boolean).join(', ');
 	}
 
 	async function startOdoEdit() {
