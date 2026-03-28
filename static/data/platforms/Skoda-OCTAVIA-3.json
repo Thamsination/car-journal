@@ -1,13 +1,16 @@
 {
   "id": "Skoda-OCTAVIA-3",
-  "name": "\u0160koda Octavia III (MQB)",
-  "years": "2012\u20132020",
+  "name": "Škoda Octavia III (MQB)",
+  "years": "2012–2020",
   "chassisCodes": [
     "5E"
   ],
+  "drivetrains": [
+    "FWD"
+  ],
   "vehicles": [
     {
-      "make": "\u0160koda",
+      "make": "Škoda",
       "models": [
         "Octavia",
         "Octavia Combi",
@@ -95,15 +98,15 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "\u0160koda EU service schedules mirror VW Group fixed inspection intervals: engine oil and filter at 15,000 km or annually (whichever first) on Inspection Service / time-and-distance plans in the owner\u2019s service programme.",
-    "cabin filter": "Dust and pollen filter replacement is part of the manufacturer\u2019s periodic maintenance (typically every second fixed inspection, around 30,000 km).",
+    "engine oil": "Škoda EU service schedules mirror VW Group fixed inspection intervals: engine oil and filter at 15,000 km or annually (whichever first) on Inspection Service / time-and-distance plans in the owner’s service programme.",
+    "cabin filter": "Dust and pollen filter replacement is part of the manufacturer’s periodic maintenance (typically every second fixed inspection, around 30,000 km).",
     "air filter": "Air filter change is specified at the extended maintenance interval in Octavia III booklets (60,000 km is typical for petrol; diesels may differ).",
-    "spark plugs": "Petrol TSI models specify spark plug replacement per the maintenance table\u201460,000 km is a common EU interval for four-cylinder engines.",
-    "fuel filter": "TDI models require fuel filter replacement on the long-interval maintenance items; \u0160koda/VW diesel schedules commonly use 60,000 km\u2014omit on pure petrol cars.",
+    "spark plugs": "Petrol TSI models specify spark plug replacement per the maintenance table—60,000 km is a common EU interval for four-cylinder engines.",
+    "fuel filter": "TDI models require fuel filter replacement on the long-interval maintenance items; Škoda/VW diesel schedules commonly use 60,000 km—omit on pure petrol cars.",
     "DSG gearbox fluid": "Specialists recommend DSG fluid and filter around 60,000 km for long-term reliability of the dual-clutch unit.",
     "coolant flush": "Cooling system protection fades with age; exchange around 120,000 km is a sensible preventive step.",
-    "brake fluid": "\u0160koda/VW Group specifies brake fluid replacement every 2 years on EU fixed-interval schedules, approximately every 60,000 km.",
-    "check brake pads": "Brake pad inspection is part of the \u0160koda periodic maintenance programme at each major service."
+    "brake fluid": "Škoda/VW Group specifies brake fluid replacement every 2 years on EU fixed-interval schedules, approximately every 60,000 km.",
+    "check brake pads": "Brake pad inspection is part of the Škoda periodic maintenance programme at each major service."
   },
   "milestones": [
     {

@@ -1,9 +1,12 @@
 {
   "id": "Fiat-500-312",
   "name": "Fiat 500 / 500 Hybrid (Type 312 facelift+)",
-  "years": "2015\u2013",
+  "years": "2015–",
   "chassisCodes": [
     "312"
+  ],
+  "drivetrains": [
+    "FWD"
   ],
   "vehicles": [
     {
@@ -83,13 +86,13 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "Fiat\u2019s EU service schedule for 500 TwinAir / Fire / Hybrid petrol engines specifies maintenance including oil and filter at 15,000 km or 12 months (whichever first) in the owner\u2019s service booklet for European markets.",
+    "engine oil": "Fiat’s EU service schedule for 500 TwinAir / Fire / Hybrid petrol engines specifies maintenance including oil and filter at 15,000 km or 12 months (whichever first) in the owner’s service booklet for European markets.",
     "cabin filter": "Pollen filter is replaced at the periodic maintenance interval alongside other routine checks.",
-    "air filter": "Engine air filter replacement typically follows every second oil service on many Fiat small-car EU programmes (~30,000 km)\u2014confirm in your maintenance plan.",
-    "spark plugs": "Petrol engines list spark plug renewal at extended intervals in Fiat maintenance tables; 60,000 km is typical for four-valve Fire/TwinAir families\u2014verify engine code.",
-    "timing belt": "Where a timing belt is fitted (some variants), specialist mechanics often plan replacement near 120,000 km or earlier by age\u2014chain-equipped engines do not apply.",
+    "air filter": "Engine air filter replacement typically follows every second oil service on many Fiat small-car EU programmes (~30,000 km)—confirm in your maintenance plan.",
+    "spark plugs": "Petrol engines list spark plug renewal at extended intervals in Fiat maintenance tables; 60,000 km is typical for four-valve Fire/TwinAir families—verify engine code.",
+    "timing belt": "Where a timing belt is fitted (some variants), specialist mechanics often plan replacement near 120,000 km or earlier by age—chain-equipped engines do not apply.",
     "coolant flush": "Long-life coolant still ages; exchange around 120,000 km protects the small turbo cooling circuit on newer variants.",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
     "check brake pads": "Brake system inspection is performed at each scheduled service as specified in the Fiat maintenance booklet."
   },
   "milestones": [

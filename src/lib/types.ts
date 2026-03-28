@@ -120,11 +120,14 @@ export interface PlatformServiceInterval {
 	transmission?: TransmissionType[] | null;
 }
 
+export type DrivetrainType = 'FWD' | 'RWD' | 'AWD';
+
 export interface PlatformConfig {
 	id: string;
 	name: string;
 	years: string;
 	chassisCodes: string[];
+	drivetrains?: DrivetrainType[];
 	serviceIntervals: PlatformServiceInterval[];
 	serviceNotes: Record<string, string>;
 	milestones: { km: number; tasks: string[] }[];

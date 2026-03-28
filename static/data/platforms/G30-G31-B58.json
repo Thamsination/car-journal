@@ -1,10 +1,14 @@
 {
   "id": "G30-G31-B58",
   "name": "BMW G30/G31 5 Series (B58 3.0i)",
-  "years": "2017\u20132020",
+  "years": "2017–2020",
   "chassisCodes": [
     "G30",
     "G31"
+  ],
+  "drivetrains": [
+    "RWD",
+    "AWD"
   ],
   "vehicles": [
     {
@@ -107,7 +111,7 @@
   "serviceNotes": {
     "engine oil": "BMW CBS scheduled service. The B58 inline-6 turbo petrol engine is BMW's flagship six-cylinder. CBS calculates the interval based on driving conditions; 30,000 km is the maximum distance between services.",
     "micro filter": "BMW CBS scheduled service. The cabin micro filter traps pollen, dust and pollutants.",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
     "air cleaner element": "BMW CBS scheduled service. Clean air is critical for the B58 turbocharged engine. A dirty filter reduces performance and can increase turbo wear.",
     "spark plugs": "BMW CBS scheduled service (approximately every 6th oil service). The B58 uses 6 iridium-tipped spark plugs. Replacement at ~90,000 km (60,000 miles) per CBS SIB documentation.",
     "check front brake pads": "BMW CBS wear-based reminder. The 540i/M550i are heavier performance variants with increased front brake wear.",

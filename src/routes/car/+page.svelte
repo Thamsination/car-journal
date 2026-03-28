@@ -200,12 +200,18 @@
 		manual: 'Manual', automatic: 'Auto', cvt: 'CVT', dct: 'DCT', ev: 'EV'
 	};
 
+	function driveLabel(dt: string): string {
+		const val = (dt || '').toUpperCase();
+		if (['AWD', 'FWD', 'RWD'].includes(val)) return val;
+		const awd = ['xdrive', 'quattro', '4wd', '4matic', '4motion', 'sh-awd'];
+		if (awd.includes(dt.toLowerCase())) return 'AWD';
+		return '2WD';
+	}
+
 	function vehicleTechLine(v: typeof $vehicleConfig): string {
 		if (!v) return '';
-		const awd = ['xdrive', 'quattro', 'awd', '4wd', '4matic', '4motion', 'sh-awd'];
-		const driveLabel = awd.includes((v.drivetrain || '').toLowerCase()) ? '4WD' : '2WD';
 		const transLabel = v.transmission ? transmissionLabels[v.transmission] ?? '' : '';
-		return [v.chassis, v.engine, driveLabel, transLabel].filter(Boolean).join(', ');
+		return [v.chassis, v.engine, driveLabel(v.drivetrain), transLabel].filter(Boolean).join(', ');
 	}
 
 	function findLastService(interval: ServiceInterval): CarEvent | null {

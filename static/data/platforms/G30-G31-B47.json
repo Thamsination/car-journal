@@ -1,10 +1,14 @@
 {
   "id": "G30-G31-B47",
   "name": "BMW G30/G31 5 Series (B47 2.0d)",
-  "years": "2017\u20132020",
+  "years": "2017–2020",
   "chassisCodes": [
     "G30",
     "G31"
+  ],
+  "drivetrains": [
+    "RWD",
+    "AWD"
   ],
   "vehicles": [
     {
@@ -114,7 +118,7 @@
   "serviceNotes": {
     "engine oil": "BMW CBS scheduled service. Engine oil degrades with mileage and time, losing its lubricating and cooling properties. Regular replacement protects engine internals from premature wear.",
     "micro filter": "BMW CBS scheduled service. The cabin micro filter traps pollen, dust and pollutants. A clogged filter reduces airflow and cabin air quality.",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
     "air cleaner element": "BMW CBS scheduled service (every 4th oil service). The engine air filter ensures clean air enters the combustion chamber. A dirty filter reduces performance and fuel efficiency.",
     "fuel filter": "BMW CBS scheduled service (every 4th oil service). The fuel filter removes contaminants from diesel fuel before it reaches the injectors, preventing damage to the high-pressure fuel system.",
     "check front brake pads": "BMW CBS wear-based reminder. Brake pad thickness should be inspected to ensure safe braking performance. The B47 520d xDrive is heavier than RWD variants, increasing front brake wear.",

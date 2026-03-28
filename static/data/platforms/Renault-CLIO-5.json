@@ -1,9 +1,12 @@
 {
   "id": "Renault-CLIO-5",
   "name": "Renault Clio V (CMF-B)",
-  "years": "2019\u2013",
+  "years": "2019–",
   "chassisCodes": [
     "BF"
+  ],
+  "drivetrains": [
+    "FWD"
   ],
   "vehicles": [
     {
@@ -76,12 +79,12 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "Renault\u2019s European maintenance programme for current Clio models schedules routine maintenance (including oil and filter) at 20,000 km or 12 months, whichever comes first, as documented in the official user manual maintenance section (user-manual.renault.com).",
-    "cabin filter": "Pollen/cabin filter replacement is listed at the same routine maintenance visits as other filter checks in Renault\u2019s periodic maintenance tables.",
-    "air filter": "Engine air filter replacement is specified at longer intervals than routine service, typically every 60,000 km / 4 years in Renault\u2019s maintenance tables.",
-    "CVT fluid": "For EDC / CVT variants, fluid condition is critical; many Renault specialists suggest fluid service near 60,000 km\u2014confirm against the workshop manual for your transmission code.",
+    "engine oil": "Renault’s European maintenance programme for current Clio models schedules routine maintenance (including oil and filter) at 20,000 km or 12 months, whichever comes first, as documented in the official user manual maintenance section (user-manual.renault.com).",
+    "cabin filter": "Pollen/cabin filter replacement is listed at the same routine maintenance visits as other filter checks in Renault’s periodic maintenance tables.",
+    "air filter": "Engine air filter replacement is specified at longer intervals than routine service, typically every 60,000 km / 4 years in Renault’s maintenance tables.",
+    "CVT fluid": "For EDC / CVT variants, fluid condition is critical; many Renault specialists suggest fluid service near 60,000 km—confirm against the workshop manual for your transmission code.",
     "coolant flush": "Long-life coolant still benefits from exchange around 120,000 km to restore inhibitor levels for the turbo and cabin heating circuit.",
-    "brake fluid": "Renault specifies brake fluid replacement every 2\u20133 years per the maintenance programme.",
+    "brake fluid": "Renault specifies brake fluid replacement every 2–3 years per the maintenance programme.",
     "spark plugs": "Petrol engines require spark plug replacement per the Renault maintenance schedule, typically every 60,000 km.",
     "check brake pads": "Brake system inspection is performed at each scheduled maintenance visit."
   },

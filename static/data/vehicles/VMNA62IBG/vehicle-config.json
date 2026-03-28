@@ -8,7 +8,7 @@
   "model": "WRX",
   "chassis": "VA",
   "engine": "",
-  "drivetrain": "",
+  "drivetrain": "AWD",
   "odometer": 5000,
   "transmission": "manual"
 }

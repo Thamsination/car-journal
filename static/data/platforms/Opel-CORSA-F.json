@@ -1,9 +1,12 @@
 {
   "id": "Opel-CORSA-F",
   "name": "Opel / Vauxhall Corsa F (CMP)",
-  "years": "2019\u2013",
+  "years": "2019–",
   "chassisCodes": [
     "F"
+  ],
+  "drivetrains": [
+    "FWD"
   ],
   "vehicles": [
     {
@@ -82,8 +85,8 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "Opel\u2019s EU maintenance schedule for Corsa F specifies service including oil and filter every 30,000 km or 1 year, whichever comes first.",
-    "cabin filter": "Interior ventilation filter replacement is specified at 60,000 km / 2 years in Opel\u2019s maintenance schedule.",
+    "engine oil": "Opel’s EU maintenance schedule for Corsa F specifies service including oil and filter every 30,000 km or 1 year, whichever comes first.",
+    "cabin filter": "Interior ventilation filter replacement is specified at 60,000 km / 2 years in Opel’s maintenance schedule.",
     "air filter": "Engine air filter replacement at 60,000 km / 4 years per the Opel periodic maintenance plan.",
     "fuel filter": "Fuel filter replacement at 60,000 km / 2 years (diesel models) per the Opel service schedule.",
     "coolant flush": "Preventive coolant exchange around 120,000 km maintains corrosion protection for turbocharged CMP engines.",

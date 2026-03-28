@@ -174,6 +174,7 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
   "name": "<Full platform name including engine>",
   "years": "<production years as text>",
   "chassisCodes": ["<code1>", "<code2>"],
+  "drivetrains": ["<FWD|RWD|AWD>"],
   "vehicles": [
     {
       "make": "<Make>",
@@ -229,6 +230,29 @@ This array is how the app matches a user's car to a platform. Get it right.
   }
 ]
 ```
+
+#### `drivetrains` field rules
+
+The `drivetrains` array declares which drivetrain layouts are available on this platform. The app uses this to show a filtered drivetrain picker when adding or editing a vehicle.
+
+**Valid values:** `"FWD"`, `"RWD"`, `"AWD"`
+
+**Rules:**
+- List **all drivetrain types available** on this platform
+- AWD-only platforms (BMW X-series, Subaru WRX): `["AWD"]`
+- RWD-only platforms (BMW E39, E38, E63, E89): `["RWD"]`
+- FWD-only platforms (VW Golf, Renault Clio, Toyota Yaris): `["FWD"]`
+- Mixed platforms (BMW 3 Series with optional xDrive): `["RWD", "AWD"]`
+- FWD-based with optional AWD (BMW F40 1 Series, F48 X1): `["FWD", "AWD"]`
+
+**Examples:**
+```json
+"drivetrains": ["AWD"]
+"drivetrains": ["RWD", "AWD"]
+"drivetrains": ["FWD"]
+```
+
+When a platform has only one drivetrain, the app auto-selects it. When multiple exist, the user picks from a dropdown filtered to only the valid options.
 
 #### `serviceIntervals` field rules
 
@@ -322,6 +346,7 @@ Before moving to the next platform, verify your output:
 15. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
 16. **Check that model names belong to this platform** — no models from other platforms (e.g., i4 belongs to G26, not G20; M5 belongs to F10/G30 M, not the standard chassis file)
 17. **Check transmission-specific tasks** — if the platform covers vehicles with multiple transmission types (manual + automatic, manual + CVT, etc.), verify that each transmission-specific fluid task has a `"transmission"` array tag. If the platform only comes with one transmission type, the tag may be omitted. Never include both `CVT fluid` and `manual transmission oil` without tagging each with the appropriate `transmission` value.
+18. **Check `drivetrains` array** — must be present and contain at least one of `"FWD"`, `"RWD"`, `"AWD"`. If the platform includes AWD models (xDrive, quattro, etc.), `"AWD"` must be in the array. If the platform is exclusively AWD (X-series, Subaru), it should be `["AWD"]` only. FWD-based platforms with optional AWD should be `["FWD", "AWD"]`, not `["RWD", "AWD"]`.
 
 If any check fails, go back and fix it before proceeding.
 
@@ -362,6 +387,8 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Use inconsistent task names across engine variants of the same brand — if Subaru calls it "cabin air filter" on one generation, use the same name on other generations unless the OEM verifiably changed the terminology
 - Include transmission-specific fluid tasks (CVT fluid, DSG fluid, manual gearbox fluid) without a `"transmission"` tag when the platform covers multiple transmission types — a manual-only owner should not see CVT fluid reminders and vice versa
 - Omit the `"transmission"` tag on transmission fluid tasks when the platform covers both manual and automatic/CVT/DCT variants
+- Omit the `drivetrains` array — every platform must declare its available drivetrain layouts
+- Use `"RWD"` for FWD-based platforms — BMW F40/F44/F45/F48/F39 are FWD-based (UKL/FAAR), not RWD. VW, Renault, Toyota, etc. are FWD.
 - Generate milestones manually — always use the Python script
 - Modify or rename existing platform files unless explicitly told to
 - Commit without self-validating

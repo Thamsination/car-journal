@@ -7,7 +7,7 @@
 	import { getPendingWrites, flushPendingWrites } from '$lib/offline';
 	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, type PlatformIndexEntry } from '$lib/github';
 	import { generateHealthConfig } from '$lib/utils';
-	import type { TransmissionType, PlatformConfig } from '$lib/types';
+	import type { TransmissionType, DrivetrainType, PlatformConfig } from '$lib/types';
 
 	let { children } = $props();
 	let pendingCount = $state(0);
@@ -26,6 +26,7 @@
 	let addName = $state('');
 	let addOdometer = $state('');
 	let addTransmission = $state<TransmissionType | ''>('');
+	let addDrivetrain = $state<DrivetrainType | ''>('');
 	let addPlatformData = $state<PlatformConfig | null>(null);
 	let addSaving = $state(false);
 	let addError = $state('');
@@ -36,6 +37,7 @@
 	let editPlate = $state('');
 	let editOdometer = $state('');
 	let editTransmission = $state<TransmissionType | ''>('');
+	let editDrivetrain = $state<DrivetrainType | ''>('');
 	let editSaving = $state(false);
 	let editError = $state('');
 	let confirmDelete = $state(false);
@@ -69,6 +71,24 @@
 		const available = platformTransmissions($platformConfig);
 		if (available.length === 0) return allTransmissionOptions;
 		return allTransmissionOptions.filter((o) => available.includes(o.value));
+	});
+
+	const allDrivetrainOptions: { value: DrivetrainType; label: string }[] = [
+		{ value: 'FWD', label: 'FWD (front-wheel drive)' },
+		{ value: 'RWD', label: 'RWD (rear-wheel drive)' },
+		{ value: 'AWD', label: 'AWD (all-wheel drive)' },
+	];
+
+	const addDrivetrainOptions = $derived.by(() => {
+		const dts = addPlatformData?.drivetrains;
+		if (!dts || dts.length === 0) return allDrivetrainOptions;
+		return allDrivetrainOptions.filter((o) => dts.includes(o.value));
+	});
+
+	const editDrivetrainOptions = $derived.by(() => {
+		const dts = $platformConfig?.drivetrains;
+		if (!dts || dts.length === 0) return allDrivetrainOptions;
+		return allDrivetrainOptions.filter((o) => dts.includes(o.value));
 	});
 
 	const availableMakes = $derived(
@@ -115,6 +135,7 @@
 		addName = '';
 		addOdometer = '';
 		addTransmission = '';
+		addDrivetrain = '';
 		addError = '';
 		addSaving = false;
 	}
@@ -134,25 +155,24 @@
 			if (matches.length === 1) {
 				addPlatformId = matches[0].platformId;
 				addPlatformData = await loadPlatform(addPlatformId);
-				autoSelectTransmission();
+				autoSelectFromPlatform();
 				addStep = 2;
 			} else if (matches.length > 1) {
 				addStep = 1;
 			}
 		} else if (addStep === 1 && addPlatformId) {
 			addPlatformData = await loadPlatform(addPlatformId);
-			autoSelectTransmission();
+			autoSelectFromPlatform();
 			addStep = 2;
 		}
 	}
 
-	function autoSelectTransmission() {
-		const available = platformTransmissions(addPlatformData);
-		if (available.length === 1) {
-			addTransmission = available[0];
-		} else {
-			addTransmission = '';
-		}
+	function autoSelectFromPlatform() {
+		const availableTrans = platformTransmissions(addPlatformData);
+		addTransmission = availableTrans.length === 1 ? availableTrans[0] : '';
+
+		const dts = addPlatformData?.drivetrains;
+		addDrivetrain = (dts && dts.length === 1) ? dts[0] : '';
 	}
 
 	function goBackStep() {
@@ -189,7 +209,7 @@
 				model: addModel,
 				chassis: platform.chassisCodes?.[0] ?? '',
 				engine: '',
-				drivetrain: '',
+				drivetrain: addDrivetrain || '',
 				transmission: trans as TransmissionType | null,
 				odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
 			};
@@ -230,6 +250,7 @@
 		editPlate = id;
 		editOdometer = '';
 		editTransmission = '';
+		editDrivetrain = '';
 		editError = '';
 		editSaving = false;
 		confirmDelete = false;
@@ -239,6 +260,7 @@
 			editPlate = $vehicleConfig.licensePlate;
 			editOdometer = $vehicleConfig.odometer ? String($vehicleConfig.odometer) : '';
 			editTransmission = $vehicleConfig.transmission ?? '';
+			editDrivetrain = (['FWD', 'RWD', 'AWD'].includes($vehicleConfig.drivetrain) ? $vehicleConfig.drivetrain : '') as DrivetrainType | '';
 		}
 		editVehicleOpen = true;
 	}
@@ -259,6 +281,7 @@
 					...$vehicleConfig,
 					name: editName.trim() || $vehicleConfig.name,
 					licensePlate: editPlate.trim().toUpperCase(),
+					drivetrain: editDrivetrain || $vehicleConfig.drivetrain,
 					transmission: trans as TransmissionType | null,
 					odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
 				};
@@ -579,6 +602,19 @@
 					<input class="field-input" type="text" value={editTransmissionOptions[0].label} disabled />
 				{/if}
 
+				{#if editDrivetrainOptions.length > 1}
+					<label class="field-label">Drivetrain</label>
+					<select class="field-input" bind:value={editDrivetrain}>
+						<option value="">Unknown</option>
+						{#each editDrivetrainOptions as opt}
+							<option value={opt.value}>{opt.label}</option>
+						{/each}
+					</select>
+				{:else if editDrivetrainOptions.length === 1}
+					<label class="field-label">Drivetrain</label>
+					<input class="field-input" type="text" value={editDrivetrainOptions[0].label} disabled />
+				{/if}
+
 				{#if editError}
 					<p class="add-error">{editError}</p>
 				{/if}
@@ -703,6 +739,19 @@
 					{:else if addTransmissionOptions.length === 1}
 						<label class="field-label">Transmission</label>
 						<input class="field-input" type="text" value={addTransmissionOptions[0].label} disabled />
+					{/if}
+
+					{#if addDrivetrainOptions.length > 1}
+						<label class="field-label">Drivetrain <span class="optional">(recommended)</span></label>
+						<select class="field-input" bind:value={addDrivetrain}>
+							<option value="">Unknown</option>
+							{#each addDrivetrainOptions as opt}
+								<option value={opt.value}>{opt.label}</option>
+							{/each}
+						</select>
+					{:else if addDrivetrainOptions.length === 1}
+						<label class="field-label">Drivetrain</label>
+						<input class="field-input" type="text" value={addDrivetrainOptions[0].label} disabled />
 					{/if}
 
 					{#if addError}

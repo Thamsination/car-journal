@@ -1,9 +1,12 @@
 {
   "id": "Dacia-SANDERO-3",
   "name": "Dacia Sandero III / Stepway III (CMF-B)",
-  "years": "2020\u2013",
+  "years": "2020–",
   "chassisCodes": [
     "BJI"
+  ],
+  "drivetrains": [
+    "FWD"
   ],
   "vehicles": [
     {
@@ -79,7 +82,7 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "Dacia\u2019s European maintenance programme aligns with Renault Group intervals: routine maintenance including oil and filter at 20,000 km or 12 months (whichever first) per the official Sandero maintenance booklet / myDacia service schedule.",
+    "engine oil": "Dacia’s European maintenance programme aligns with Renault Group intervals: routine maintenance including oil and filter at 20,000 km or 12 months (whichever first) per the official Sandero maintenance booklet / myDacia service schedule.",
     "cabin filter": "Pollen filter replacement is performed at the scheduled maintenance interval for the model.",
     "air filter": "Engine air filter replacement is specified at 60,000 km / 4 years per the official Dacia maintenance schedule.",
     "coolant flush": "Budget models still need coolant inhibitor renewal long-term; 120,000 km is a reasonable preventive exchange interval.",

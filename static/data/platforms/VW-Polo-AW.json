@@ -1,9 +1,12 @@
 {
   "id": "VW-Polo-AW",
   "name": "Volkswagen Polo AW (MQB A0)",
-  "years": "2017\u2013",
+  "years": "2017–",
   "chassisCodes": [
     "AW"
+  ],
+  "drivetrains": [
+    "FWD"
   ],
   "vehicles": [
     {
@@ -79,7 +82,7 @@
     "engine oil": "Polo AW follows the same VW Group fixed servicing logic as other EU VWs: oil and filter at each inspection service, typically 15,000 km or 12 months under the time-and-distance regime in the maintenance booklet.",
     "cabin filter": "Cabin/pollen filter is scheduled on the manufacturer maintenance plan (often 30,000 km / 24 months on fixed-interval schedules).",
     "air filter": "Engine air filter replacement is called for at the longer inspection interval in VW A0 maintenance documentation (commonly 60,000 km for petrol).",
-    "spark plugs": "Petrol engines list spark plug renewal in the official schedule; 60,000 km is representative for MPI/TSI four-cylinders\u2014check your engine code.",
+    "spark plugs": "Petrol engines list spark plug renewal in the official schedule; 60,000 km is representative for MPI/TSI four-cylinders—check your engine code.",
     "DSG gearbox fluid": "DSG-equipped Polos benefit from fluid/filter service around 60,000 km as a longevity measure beyond the factory lifetime claim.",
     "coolant flush": "Coolant additive pack depletes over time; refresh around 120,000 km protects the cooling circuit and cabin heater core.",
     "brake fluid": "VW specifies brake fluid replacement every 2 years on the fixed-interval EU schedule, approximately every 60,000 km.",

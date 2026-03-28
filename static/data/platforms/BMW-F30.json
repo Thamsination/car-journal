@@ -1,12 +1,16 @@
 {
   "id": "BMW-F30",
   "name": "BMW F30/F31/F34/F35 3 Series",
-  "years": "2011\u20132019",
+  "years": "2011–2019",
   "chassisCodes": [
     "F30",
     "F31",
     "F34",
     "F35"
+  ],
+  "drivetrains": [
+    "RWD",
+    "AWD"
   ],
   "vehicles": [
     {
@@ -150,8 +154,8 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "BMW Condition Based Service (CBS) sets engine oil and filter replacement from the service display based on driving conditions, cold starts, and fuel quality\u2014not a single fixed km figure. A 30,000 km mfr row models the typical maximum distance before the display calls for an oil service on many EU models; follow the vehicle display and annual minimums. garage.wiki BMW E90 interval tables list oil as \"according to service display\".",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
+    "engine oil": "BMW Condition Based Service (CBS) sets engine oil and filter replacement from the service display based on driving conditions, cold starts, and fuel quality—not a single fixed km figure. A 30,000 km mfr row models the typical maximum distance before the display calls for an oil service on many EU models; follow the vehicle display and annual minimums. garage.wiki BMW E90 interval tables list oil as \"according to service display\".",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
     "spark plugs": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature.",
     "fuel filter": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature. Diesel fuel filter applies to diesel engines.",
     "gearbox fluid": "Automatic and manual gear oil is often labelled lifetime; many specialists recommend exchange around 100,000 km for long-term health.",
@@ -162,8 +166,8 @@
     "check front brake pads": "Front brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services.",
     "check rear brake pads": "Rear brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services.",
     "vehicle check": "BMW CBS scheduled inspection. A comprehensive check covering braking systems, vehicle diagnostics, and technical components.",
-    "xDrive transfer case fluid": "xDrive models only. BMW considers transfer case fluid lifetime fill. Specialists recommend replacement at 60,000\u2013100,000 km for xDrive-equipped vehicles. Does not apply to rear-wheel drive models.",
-    "differential fluids": "xDrive models only. BMW considers differential fluid lifetime fill. Specialists recommend replacement at 60,000\u2013100,000 km for xDrive-equipped vehicles. Does not apply to rear-wheel drive models."
+    "xDrive transfer case fluid": "xDrive models only. BMW considers transfer case fluid lifetime fill. Specialists recommend replacement at 60,000–100,000 km for xDrive-equipped vehicles. Does not apply to rear-wheel drive models.",
+    "differential fluids": "xDrive models only. BMW considers differential fluid lifetime fill. Specialists recommend replacement at 60,000–100,000 km for xDrive-equipped vehicles. Does not apply to rear-wheel drive models."
   },
   "milestones": [
     {

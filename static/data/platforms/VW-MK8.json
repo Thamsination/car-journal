@@ -1,9 +1,12 @@
 {
   "id": "VW-MK8",
   "name": "Volkswagen Golf Mk8 (MQB evo)",
-  "years": "2019\u2013",
+  "years": "2019–",
   "chassisCodes": [
     "CD"
+  ],
+  "drivetrains": [
+    "FWD"
   ],
   "vehicles": [
     {
@@ -86,10 +89,10 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "Mk8 continues VW\u2019s EU fixed-interval option: inspection including oil and filter at 15,000 km or 12 months (whichever first) when the vehicle is set to time-and-distance servicing\u2014see the digital service schedule and maintenance booklet for your market.",
-    "cabin filter": "Pollen filter replacement follows VW\u2019s periodic maintenance plan, commonly at the major inspection interval (around 30,000 km / 24 months on fixed EU schedules).",
-    "air filter": "Air filter renewal appears on the extended inspection items in VW MQB evo maintenance tables (typically 60,000 km or 48 months for petrol models\u2014confirm per PR number).",
-    "spark plugs": "TSI engines use manufacturer-specified spark plug intervals in the service schedule; 60,000 km matches common EU petrol tables\u2014verify for eTSI/mHEV variants.",
+    "engine oil": "Mk8 continues VW’s EU fixed-interval option: inspection including oil and filter at 15,000 km or 12 months (whichever first) when the vehicle is set to time-and-distance servicing—see the digital service schedule and maintenance booklet for your market.",
+    "cabin filter": "Pollen filter replacement follows VW’s periodic maintenance plan, commonly at the major inspection interval (around 30,000 km / 24 months on fixed EU schedules).",
+    "air filter": "Air filter renewal appears on the extended inspection items in VW MQB evo maintenance tables (typically 60,000 km or 48 months for petrol models—confirm per PR number).",
+    "spark plugs": "TSI engines use manufacturer-specified spark plug intervals in the service schedule; 60,000 km matches common EU petrol tables—verify for eTSI/mHEV variants.",
     "DSG gearbox fluid": "As on Mk7, many owners replace DSG fluid and filter around 60,000 km despite lifetime labels, to protect wet clutches and the mechatronics unit.",
     "coolant flush": "Long-life coolant still ages; exchanging fluid around 120,000 km maintains corrosion protection for the electric auxiliary systems on mild-hybrid variants as well.",
     "intake carbon clean": "Direct injection TSI engines benefit from periodic intake valve cleaning; 120,000 km is a typical specialist interval.",

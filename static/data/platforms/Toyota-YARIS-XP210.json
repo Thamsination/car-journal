@@ -1,9 +1,12 @@
 {
   "id": "Toyota-YARIS-XP210",
   "name": "Toyota Yaris / Yaris Hybrid (XP210)",
-  "years": "2020\u2013",
+  "years": "2020–",
   "chassisCodes": [
     "XP210"
+  ],
+  "drivetrains": [
+    "FWD"
   ],
   "vehicles": [
     {
@@ -75,14 +78,14 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "Toyota Europe\u2019s periodic maintenance schedule for Yaris lists maintenance points every 15,000 km (or 12 months for normal conditions), including engine oil and filter replacement\u2014see Toyota Europe warranty and maintenance documentation (e.g. toyota-tech.eu maintenance schedule PDFs for regional equivalents).",
-    "cabin filter": "Air conditioning filter inspection/replacement is performed at periodic maintenance intervals; 15,000 km aligns with Toyota\u2019s standard EU inspection cycle for the model line.",
-    "brake fluid": "Toyota specifies brake fluid replacement on a time basis in the owner\u2019s manual; translated to distance, many owners use ~40,000 km as a practical EU interval\u2014confirm years/mileage in your manual.",
+    "engine oil": "Toyota Europe’s periodic maintenance schedule for Yaris lists maintenance points every 15,000 km (or 12 months for normal conditions), including engine oil and filter replacement—see Toyota Europe warranty and maintenance documentation (e.g. toyota-tech.eu maintenance schedule PDFs for regional equivalents).",
+    "cabin filter": "Air conditioning filter inspection/replacement is performed at periodic maintenance intervals; 15,000 km aligns with Toyota’s standard EU inspection cycle for the model line.",
+    "brake fluid": "Toyota specifies brake fluid replacement on a time basis in the owner’s manual; translated to distance, many owners use ~40,000 km as a practical EU interval—confirm years/mileage in your manual.",
     "coolant flush": "Super Long Life Coolant has a long change interval; many specialists suggest inspection at 150,000 km and replacement if tests show degradation.",
-    "transaxle fluid": "Hybrid transaxle oil is often treated as filled for life; some specialists recommend service near 120,000 km for taxi or heavy urban use\u2014check workshop manual.",
-    "air filter": "Toyota\u2019s periodic maintenance schedule includes engine air filter replacement at extended intervals, typically every 60,000 km.",
+    "transaxle fluid": "Hybrid transaxle oil is often treated as filled for life; some specialists recommend service near 120,000 km for taxi or heavy urban use—check workshop manual.",
+    "air filter": "Toyota’s periodic maintenance schedule includes engine air filter replacement at extended intervals, typically every 60,000 km.",
     "spark plugs": "Toyota specifies spark plug replacement at extended intervals for the 1.5L hybrid powertrain. Iridium-tipped plugs are used.",
-    "check brake pads": "Toyota\u2019s maintenance schedule includes brake system inspection at every service interval."
+    "check brake pads": "Toyota’s maintenance schedule includes brake system inspection at every service interval."
   },
   "milestones": [
     {
