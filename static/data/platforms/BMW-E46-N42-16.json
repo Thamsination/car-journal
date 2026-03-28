@@ -116,5 +116,18 @@
     "automatic transmission fluid": "Automatic: preventive ATF ~100,000 km.",
     "manual gearbox fluid": "Manual: preventive gear oil ~100,000 km.",
     "coolant flush": "Preventive ~120,000 km."
+  },
+  "serviceSources": {
+    "engine oil": "BMW owner's manual E46 — Oil Service; 15,000 km EU standard-oil schedule (N42 316i). Tier 2: https://www.auto-abc.eu/BMW-3-serija/v2208-2005/service lists 10,000 km / 12 months for compiled 2005 325i — use as generation cross-check; verify booklet",
+    "micro filter": "BMW owner's manual E46 — cabin microfilter on Inspection II cadence (~30,000 km typical EU spacing)",
+    "brake fluid": "BMW owner's manual E46 — brake fluid every 24 months (DOT 4 LV)",
+    "air cleaner element": "BMW owner's manual E46 — air filter ~30,000 km typical Inspection II spacing. Tier 2: https://www.auto-abc.eu/BMW-3-serija/v2208-2005/service lists 20,000 km — confirm printed table",
+    "spark plugs": "https://www.auto-abc.eu/BMW-3-serija/v2208-2005/service — four spark plugs 60,000 km (matches file); BMW owner's manual E46",
+    "check front brake pads": "BMW owner's manual E46 — brake inspection ~15,000 km service cadence",
+    "check rear brake pads": "BMW owner's manual E46 — brake inspection ~15,000 km service cadence",
+    "vehicle check": "BMW owner's manual E46 — Inspection I/II vehicle check (~60,000 km typical EU spacing)",
+    "automatic transmission fluid": "ZF/BMW specialist consensus; ATF often lifetime-fill — preventive independent interval",
+    "manual gearbox fluid": "BMW owner's manual — no routine manual trans fluid interval; preventive specialist interval",
+    "coolant flush": "BMW owner's manual E46 coolant interval by model; file value preventive — confirm booklet"
   }
 }

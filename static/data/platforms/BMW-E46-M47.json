@@ -125,5 +125,19 @@
     "manual gearbox fluid": "Manual: preventive gear oil ~100,000 km.",
     "coolant flush": "Preventive ~120,000 km.",
     "EGR / intake clean": "Diesel EGR and intake soot. Cleaning around ~120,000 km when flow is restricted."
+  },
+  "serviceSources": {
+    "engine oil": "BMW owner's manual E46 diesel — Oil Service; 15,000 km reflects common EU fixed diesel schedule. Tier 2: https://www.auto-abc.eu/BMW-3-serija/v2167-2001/service lists 10,000 km / 12 months for compiled 320d (M47) — verify printed maintenance table / market",
+    "micro filter": "BMW owner's manual E46 — cabin microfilter on Inspection II cadence (~30,000 km typical EU spacing)",
+    "brake fluid": "BMW owner's manual E46 — brake fluid every 24 months (DOT 4 LV)",
+    "air cleaner element": "BMW owner's manual E46 — diesel air filter at major inspection cadence (~30,000 km typical). Tier 2: https://www.auto-abc.eu/BMW-3-serija/v2167-2001/service lists 10,000 km for compiled 320d — confirm booklet (may reflect severe-duty or database aggregation)",
+    "fuel filter": "BMW owner's manual E46 diesel — file 60,000 km per common EU BMW diesel fuel-filter spacing. Tier 2: https://www.auto-abc.eu/BMW-3-serija/v2167-2001/service lists 20,000 km for 320d — discrepancy; verify OEM table for your production date / market",
+    "check front brake pads": "BMW owner's manual E46 — brake inspection with regular service visits (~15,000 km oil-service cadence)",
+    "check rear brake pads": "BMW owner's manual E46 — brake inspection with regular service visits (~15,000 km oil-service cadence)",
+    "vehicle check": "BMW owner's manual E46 — Inspection I/II vehicle check (~60,000 km typical EU major-inspection spacing)",
+    "automatic transmission fluid": "ZF/BMW specialist consensus; ATF often labelled lifetime — preventive change per independent recommendation",
+    "manual gearbox fluid": "BMW owner's manual does not state a routine manual gearbox oil interval — preventive specialist interval",
+    "coolant flush": "BMW owner's manual E46 specifies coolant change by model; file value preventive — confirm booklet",
+    "EGR / intake clean": "Diesel specialist consensus (soot/EGR fouling); not a fixed BMW MFR interval in consumer schedule"
   }
 }
