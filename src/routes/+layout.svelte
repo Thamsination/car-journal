@@ -470,7 +470,9 @@
 	{/if}
 
 	<main>
-		{@render children()}
+		{#key $activeVehicleId}
+			{@render children()}
+		{/key}
 	</main>
 
 	{#if $token}
