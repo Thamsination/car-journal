@@ -7,7 +7,7 @@
   "make": "Subaru",
   "model": "WRX STI",
   "chassis": "GD",
-  "engine": "",
+  "engine": "EJ257",
   "drivetrain": "AWD",
   "transmission": "manual",
   "odometer": 5000
