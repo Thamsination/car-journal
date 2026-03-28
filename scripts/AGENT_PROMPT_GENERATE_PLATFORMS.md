@@ -8,6 +8,12 @@ Use this prompt when instructing an agent to generate new platform config JSON f
 
 I'm working on the car journal app at /home/thamsination/car-journal/
 
+**Before doing anything else**, pull the latest version from git:
+
+```bash
+cd /home/thamsination/car-journal && git pull
+```
+
 Your task is to generate platform service schedule JSON files for specific car models. Each file must contain:
 
 1. **A `vehicles` array** listing every make/model/year combination the platform covers — this is used by the app to match a user's car to the correct service schedule
