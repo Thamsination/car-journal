@@ -104,20 +104,57 @@ Rules:
 
 If the source table shows a mismatch (the file's interval differs from what the source says):
 
-**Option A — The source is clearly more authoritative:** Fix the interval in the file and note the change:
-```
-"engine oil source note: Changed from 60,000 km to 30,000 km per BMW SIB B000214"
+**First: investigate the discrepancy.** Do an additional web search specifically targeting the mismatch before choosing an option. For example, if the file says 60,000 km for fuel filter but auto-abc says 20,000 km, search: "BMW E46 320d diesel fuel filter interval km owner's manual". Do not just note the discrepancy and move on.
+
+Then choose one of these options:
+
+**Option A — Fix the interval (DEFAULT for large discrepancies).** Use this when:
+- The discrepancy is >25% AND the Tier 1/2 source is specific to this model
+- The file's value looks like it was guessed or copied from a different engine/chassis
+- You found a more authoritative source during your investigation
+
+Fix the interval in the file AND update `serviceSources` to document the change:
+```json
+"fuel filter": "Changed from 60,000 km to 20,000 km per https://www.auto-abc.eu/BMW-3-serija/v2167-2001/service (Tier 2) and confirmed against BMW E46 owner's manual diesel maintenance table"
 ```
 
-**Option B — The discrepancy is ambiguous** (different markets, CBS vs fixed, etc.): Keep the current interval but add a detailed note in `serviceSources`:
-```
-"engine oil": "BMW SIB B000214 says 10,000 miles (US market). Current value 30,000 km reflects European CBS ceiling. Verify with EU-market owner's manual."
+**Option B — Keep the current value (ONLY for genuinely ambiguous cases).** Use this when:
+- The discrepancy is caused by different markets (US vs EU) or service regimes (standard vs long-life oil) AND you cannot determine which is correct for the European market
+- The discrepancy is small (<25%) and both values are plausible
+
+Add a detailed note explaining WHY you kept the old value:
+```json
+"engine oil": "File: 15,000 km. auto-abc: 10,000 km. Kept 15,000 km because BMW E46 EU owner's manual specifies 15,000 km Oil Service with standard oil; 10,000 km may reflect severe-duty or non-LL markets."
 ```
 
-**Option C — You cannot find any source:** Add:
-```
+Do NOT use Option B as a default. If you cannot explain why the file's value is correct, use Option A.
+
+**Option C — No source found at all.** Add:
+```json
 "engine oil": "NEEDS VERIFICATION: No Tier 1/2 source found. Current value inherited from [related platform or original catch-all]."
 ```
+
+### Step 5b: Check `months` fields
+
+While adding sources, also check every MFR interval for a missing time component:
+- **Engine oil** almost always has a time limit (typically 12 or 24 months). If `months` is null, investigate and fix it.
+- **Brake fluid** must always be `"months": 24` (or OEM-specified).
+- **Timing belts** often have a time limit (e.g., "every 5 years or 120,000 km").
+- **Coolant** sometimes has a time limit.
+
+If the file has `"months": null` but the source shows a time component, fix it.
+
+### Lessons from batch 1 (E46) — READ THIS
+
+Batch 1 (E46) was reviewed and these mistakes were found. **Do not repeat them.**
+
+1. **Do not use Option B for 3x discrepancies.** The M47 diesel fuel filter was 60,000 km in the file but 20,000 km on auto-abc. This is a 3x gap — Option A should have been used after investigation.
+
+2. **Do not leave `months: null` on engine oil.** The E46 Oil Service had a 12-month time component. All 9 non-M E46 files still have `"months": null` on engine oil. Always check and fix missing time components.
+
+3. **Do not hedge in source citations.** Phrases like "verify printed maintenance table" and "confirm booklet" are not sources — they are deferred homework. If you cannot confirm a value, use Option A to fix it or Option C to flag it. Do not cite the owner's manual as a source while simultaneously saying you haven't confirmed it.
+
+4. **Pre-CBS BMW models (E46 and earlier) use fixed intervals, not CBS.** The E46 used BMW's Inspection I / Inspection II system. There is no "CBS ceiling" concept. MFR = the printed interval from the owner's manual. Do not apply CBS logic to pre-CBS platforms.
 
 ### Step 6: Validate
 
@@ -200,6 +237,9 @@ Adjust groupings based on what actually exists — run `ls static/data/platforms
 - Use vague sources like "commonly known", "standard practice", or "various online sources"
 - Skip the source table step — it is mandatory for every batch
 - Change intervals without documenting the change and the source that motivated it
+- Default to Option B for every mismatch — Option B is for genuinely ambiguous cases only. If the discrepancy is >25%, investigate and use Option A.
+- Cite the owner's manual as a source without actually confirming the value — "BMW owner's manual E46" is not a source if followed by "verify printed table." Either confirm it or flag it as unverified.
+- Leave `months: null` on engine oil intervals — almost every manufacturer specifies a time limit (typically 12 months). Check and fix.
 - Rush — accuracy over speed. A wrong source citation is worse than no citation.
 
 ---
