@@ -12,9 +12,9 @@
   "transmissions": [
     "ev"
   ],
-  "engines": [
-    "Electric"
-  ],
+  "displacement": null,
+  "cylinders": 0,
+  "fuelType": "electric",
   "vehicles": [
     {
       "make": "Mercedes-Benz",
@@ -84,85 +84,5 @@
     "electric drivetrain coolant": "E-motor and power electronics cooling circuits use dedicated coolant with long but finite service life; Mercedes EQ service data commonly aligns major coolant work near 120,000 km—verify workshop bulletin.",
     "reduction gear oil": "Single-speed reduction gear oil is often labelled inspection-only officially; many specialists recommend fluid renewal around 120,000 km for long-term bearing health on EV drive units.",
     "coolant flush": "If separate circuits are not renewed together, a full coolant exchange around 120,000 km restores additive packages for ancillary cooling loops."
-  },
-  "milestones": [
-    {
-      "km": 30000,
-      "tasks": [
-        "check brake pad thickness",
-        "dust filter"
-      ]
-    },
-    {
-      "km": 60000,
-      "tasks": [
-        "check brake pad thickness",
-        "dust filter"
-      ]
-    },
-    {
-      "km": 90000,
-      "tasks": [
-        "check brake pad thickness",
-        "dust filter"
-      ]
-    },
-    {
-      "km": 120000,
-      "tasks": [
-        "check brake pad thickness",
-        "coolant flush",
-        "dust filter",
-        "electric drivetrain coolant",
-        "high-voltage battery coolant",
-        "reduction gear oil"
-      ]
-    },
-    {
-      "km": 150000,
-      "tasks": [
-        "check brake pad thickness",
-        "dust filter"
-      ]
-    },
-    {
-      "km": 180000,
-      "tasks": [
-        "check brake pad thickness",
-        "dust filter"
-      ]
-    },
-    {
-      "km": 210000,
-      "tasks": [
-        "check brake pad thickness",
-        "dust filter"
-      ]
-    },
-    {
-      "km": 240000,
-      "tasks": [
-        "check brake pad thickness",
-        "coolant flush",
-        "dust filter",
-        "electric drivetrain coolant",
-        "high-voltage battery coolant",
-        "reduction gear oil"
-      ]
-    },
-    {
-      "km": 270000,
-      "tasks": [
-        "check brake pad thickness",
-        "dust filter"
-      ]
-    },
-    {
-      "km": 300000,
-      "tasks": [
-        "check brake pad thickness",
-        "dust filter"
-      ]
-    }
-  ]
+  }
 }

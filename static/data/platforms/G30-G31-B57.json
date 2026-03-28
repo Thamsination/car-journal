@@ -1,6 +1,6 @@
 {
   "id": "G30-G31-B57",
-  "name": "BMW G30/G31 5 Series (B57 3.0d)",
+  "name": "BMW G30/G31 5 Series (3.0L 6-cyl diesel)",
   "years": "2017–2020",
   "chassisCodes": [
     "G30",
@@ -13,9 +13,9 @@
   "transmissions": [
     "automatic"
   ],
-  "engines": [
-    "B57"
-  ],
+  "displacement": "3.0L",
+  "cylinders": 6,
+  "fuelType": "diesel",
   "vehicles": [
     {
       "make": "BMW",
@@ -140,147 +140,5 @@
     "timing chain": "The B57 diesel timing chain is rear-mounted. While more reliable than the earlier N57, preventive replacement around 200,000 km avoids the risk of catastrophic engine failure from a stretched or broken chain. Chain stretch symptoms include rattling at cold start.",
     "coolant flush": "Engine coolant loses its anti-corrosion properties over time. A flush removes deposits and replenishes protection for the cooling system, water pump, and twin-turbo intercooler circuit.",
     "intake carbon clean": "Direct injection diesel engines accumulate carbon deposits on intake valves. The B57 twin-turbo setup can accelerate buildup. Walnut blasting or chemical cleaning restores performance."
-  },
-  "milestones": [
-    {
-      "km": 30000,
-      "tasks": [
-        "engine oil",
-        "micro filter"
-      ]
-    },
-    {
-      "km": 50000,
-      "tasks": [
-        "check front brake pads"
-      ]
-    },
-    {
-      "km": 60000,
-      "tasks": [
-        "air cleaner element",
-        "check rear brake pads",
-        "engine oil",
-        "fuel filter",
-        "micro filter",
-        "vehicle check"
-      ]
-    },
-    {
-      "km": 80000,
-      "tasks": [
-        "differential fluids",
-        "xDrive transfer case fluid"
-      ]
-    },
-    {
-      "km": 90000,
-      "tasks": [
-        "engine oil",
-        "micro filter"
-      ]
-    },
-    {
-      "km": 100000,
-      "tasks": [
-        "ZF8 gearbox fluid",
-        "check front brake pads"
-      ]
-    },
-    {
-      "km": 120000,
-      "tasks": [
-        "air cleaner element",
-        "check rear brake pads",
-        "coolant flush",
-        "engine oil",
-        "fuel filter",
-        "intake carbon clean",
-        "micro filter",
-        "vehicle check"
-      ]
-    },
-    {
-      "km": 150000,
-      "tasks": [
-        "check front brake pads",
-        "engine oil",
-        "micro filter"
-      ]
-    },
-    {
-      "km": 160000,
-      "tasks": [
-        "differential fluids",
-        "xDrive transfer case fluid"
-      ]
-    },
-    {
-      "km": 180000,
-      "tasks": [
-        "air cleaner element",
-        "check rear brake pads",
-        "engine oil",
-        "fuel filter",
-        "micro filter",
-        "vehicle check"
-      ]
-    },
-    {
-      "km": 200000,
-      "tasks": [
-        "ZF8 gearbox fluid",
-        "check front brake pads",
-        "timing chain"
-      ]
-    },
-    {
-      "km": 210000,
-      "tasks": [
-        "engine oil",
-        "micro filter"
-      ]
-    },
-    {
-      "km": 240000,
-      "tasks": [
-        "air cleaner element",
-        "check rear brake pads",
-        "coolant flush",
-        "differential fluids",
-        "engine oil",
-        "fuel filter",
-        "intake carbon clean",
-        "micro filter",
-        "vehicle check",
-        "xDrive transfer case fluid"
-      ]
-    },
-    {
-      "km": 250000,
-      "tasks": [
-        "check front brake pads"
-      ]
-    },
-    {
-      "km": 270000,
-      "tasks": [
-        "engine oil",
-        "micro filter"
-      ]
-    },
-    {
-      "km": 300000,
-      "tasks": [
-        "ZF8 gearbox fluid",
-        "air cleaner element",
-        "check front brake pads",
-        "check rear brake pads",
-        "engine oil",
-        "fuel filter",
-        "micro filter",
-        "vehicle check"
-      ]
-    }
-  ]
+  }
 }

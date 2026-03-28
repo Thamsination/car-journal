@@ -1,6 +1,6 @@
 {
   "id": "Subaru-WRX-EJ-turbo",
-  "name": "Subaru Impreza WRX / WRX / WRX STI (EJ turbo petrol: EJ205, EJ207, EJ255, EJ257)",
+  "name": "Subaru Impreza WRX / WRX / WRX STI (2.0–2.5L 4-cyl turbo petrol)",
   "years": "2000–2021",
   "chassisCodes": [
     "GD",
@@ -15,12 +15,9 @@
   "transmissions": [
     "manual"
   ],
-  "engines": [
-    "EJ205",
-    "EJ207",
-    "EJ255",
-    "EJ257"
-  ],
+  "displacement": "2.0–2.5L",
+  "cylinders": 4,
+  "fuelType": "petrol",
   "vehicles": [
     {
       "make": "Subaru",
@@ -32,8 +29,10 @@
       ],
       "yearFrom": 2000,
       "yearTo": 2007,
-      "chassisCodes": ["GD", "GG"],
-      "engines": ["EJ205", "EJ207", "EJ257"]
+      "chassisCodes": [
+        "GD",
+        "GG"
+      ]
     },
     {
       "make": "Subaru",
@@ -43,8 +42,10 @@
       ],
       "yearFrom": 2008,
       "yearTo": 2014,
-      "chassisCodes": ["GE", "GH"],
-      "engines": ["EJ207", "EJ255", "EJ257"]
+      "chassisCodes": [
+        "GE",
+        "GH"
+      ]
     },
     {
       "make": "Subaru",
@@ -53,8 +54,9 @@
       ],
       "yearFrom": 2015,
       "yearTo": 2021,
-      "chassisCodes": ["VA"],
-      "engines": ["EJ207", "EJ257"]
+      "chassisCodes": [
+        "VA"
+      ]
     }
   ],
   "serviceIntervals": [
@@ -154,281 +156,5 @@
     "coolant": "Subaru Long Life Coolant is formulated for extended service; official booklets specify first coolant change at high mileage/time (commonly around 120,000 km / 11 years on many models, then a repeat interval)—verify your year’s maintenance table.",
     "intake carbon clean": "Port-injection EJ turbo engines are less prone than direct-injection-only layouts, but throttle bodies and intake tracts still foul; many specialists recommend cleaning around 120,000 km if drivability issues appear.",
     "manual transmission oil": "Subaru often treats manual transmission oil as inspect-only under normal use; a preventive change around 120,000 km is a common enthusiast recommendation when towing or tracking."
-  },
-  "milestones": [
-    {
-      "km": 10000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 20000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 30000,
-      "tasks": [
-        "air cleaner element",
-        "cabin air filter",
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 40000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 50000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 60000,
-      "tasks": [
-        "air cleaner element",
-        "cabin air filter",
-        "engine oil",
-        "front differential oil",
-        "inspect disc brake pads",
-        "rear differential oil"
-      ]
-    },
-    {
-      "km": 70000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 80000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 90000,
-      "tasks": [
-        "air cleaner element",
-        "cabin air filter",
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 96000,
-      "tasks": [
-        "fuel filter",
-        "spark plugs"
-      ]
-    },
-    {
-      "km": 100000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 105000,
-      "tasks": [
-        "timing belt"
-      ]
-    },
-    {
-      "km": 110000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 120000,
-      "tasks": [
-        "air cleaner element",
-        "cabin air filter",
-        "coolant",
-        "engine oil",
-        "front differential oil",
-        "inspect disc brake pads",
-        "intake carbon clean",
-        "manual transmission oil",
-        "rear differential oil"
-      ]
-    },
-    {
-      "km": 130000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 140000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 150000,
-      "tasks": [
-        "air cleaner element",
-        "cabin air filter",
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 160000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 170000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 180000,
-      "tasks": [
-        "air cleaner element",
-        "cabin air filter",
-        "engine oil",
-        "front differential oil",
-        "inspect disc brake pads",
-        "rear differential oil"
-      ]
-    },
-    {
-      "km": 190000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 192000,
-      "tasks": [
-        "fuel filter",
-        "spark plugs"
-      ]
-    },
-    {
-      "km": 200000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 210000,
-      "tasks": [
-        "air cleaner element",
-        "cabin air filter",
-        "engine oil",
-        "inspect disc brake pads",
-        "timing belt"
-      ]
-    },
-    {
-      "km": 220000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 230000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 240000,
-      "tasks": [
-        "air cleaner element",
-        "cabin air filter",
-        "coolant",
-        "engine oil",
-        "front differential oil",
-        "inspect disc brake pads",
-        "intake carbon clean",
-        "manual transmission oil",
-        "rear differential oil"
-      ]
-    },
-    {
-      "km": 250000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 260000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 270000,
-      "tasks": [
-        "air cleaner element",
-        "cabin air filter",
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 280000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 288000,
-      "tasks": [
-        "fuel filter",
-        "spark plugs"
-      ]
-    },
-    {
-      "km": 290000,
-      "tasks": [
-        "engine oil",
-        "inspect disc brake pads"
-      ]
-    },
-    {
-      "km": 300000,
-      "tasks": [
-        "air cleaner element",
-        "cabin air filter",
-        "engine oil",
-        "front differential oil",
-        "inspect disc brake pads",
-        "rear differential oil"
-      ]
-    }
-  ]
+  }
 }

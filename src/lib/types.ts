@@ -149,5 +149,4 @@ export interface PlatformConfig {
 	vehicles?: PlatformVehicleEntry[];
 	serviceIntervals: PlatformServiceInterval[];
 	serviceNotes: Record<string, string>;
-	milestones?: { km: number; tasks: string[] }[];
 }

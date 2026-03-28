@@ -12,11 +12,6 @@
     "manual",
     "automatic"
   ],
-  "engines": [
-    "DV5DR",
-    "EB2DT",
-    "Electric"
-  ],
   "vehicles": [
     {
       "make": "Opel",
@@ -102,107 +97,5 @@
     "wet belt inspection": "Where fitted (PureTech-related engines), wet belt systems need specialist inspection around 100,000 km; confirm engine variant.",
     "brake fluid": "Opel specifies brake fluid replacement every 2 years, approximately every 60,000 km on the standard schedule.",
     "check brake pads": "Brake pad inspection is part of the Opel periodic service programme."
-  },
-  "milestones": [
-    {
-      "km": 30000,
-      "tasks": [
-        "check brake pads",
-        "engine oil"
-      ]
-    },
-    {
-      "km": 60000,
-      "tasks": [
-        "air filter",
-        "cabin filter",
-        "check brake pads",
-        "engine oil",
-        "fuel filter"
-      ]
-    },
-    {
-      "km": 90000,
-      "tasks": [
-        "check brake pads",
-        "engine oil"
-      ]
-    },
-    {
-      "km": 100000,
-      "tasks": [
-        "wet belt inspection"
-      ]
-    },
-    {
-      "km": 120000,
-      "tasks": [
-        "air filter",
-        "cabin filter",
-        "check brake pads",
-        "coolant flush",
-        "engine oil",
-        "fuel filter"
-      ]
-    },
-    {
-      "km": 150000,
-      "tasks": [
-        "check brake pads",
-        "engine oil"
-      ]
-    },
-    {
-      "km": 180000,
-      "tasks": [
-        "air filter",
-        "cabin filter",
-        "check brake pads",
-        "engine oil",
-        "fuel filter"
-      ]
-    },
-    {
-      "km": 200000,
-      "tasks": [
-        "wet belt inspection"
-      ]
-    },
-    {
-      "km": 210000,
-      "tasks": [
-        "check brake pads",
-        "engine oil"
-      ]
-    },
-    {
-      "km": 240000,
-      "tasks": [
-        "air filter",
-        "cabin filter",
-        "check brake pads",
-        "coolant flush",
-        "engine oil",
-        "fuel filter"
-      ]
-    },
-    {
-      "km": 270000,
-      "tasks": [
-        "check brake pads",
-        "engine oil"
-      ]
-    },
-    {
-      "km": 300000,
-      "tasks": [
-        "air filter",
-        "cabin filter",
-        "check brake pads",
-        "engine oil",
-        "fuel filter",
-        "wet belt inspection"
-      ]
-    }
-  ]
+  }
 }
