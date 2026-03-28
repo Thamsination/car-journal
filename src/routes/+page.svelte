@@ -14,7 +14,7 @@
 		eventCategory, categoryLabel, categoryColor,
 		computeMfrMilestones, computeRecMilestones, computeTimeMilestones,
 		milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask,
-		getServiceIntervals
+		getServiceIntervals, isEffectivelyCompleted
 	} from '$lib/utils';
 	import type { TimeMilestone } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceInterval, ServiceMilestone } from '$lib/types';
@@ -99,8 +99,9 @@
 	const WARNING_THRESHOLD = 0.8;
 
 	function findLastService(interval: ServiceInterval): CarEvent | null {
+		const odoKm = $latestOdometer.km;
 		const matches = $events.filter((e) => {
-			if (!e.completed) return false;
+			if (!isEffectivelyCompleted(e, odoKm)) return false;
 			const tasks = e.tasks ?? [e.event];
 			return tasks.some((t) =>
 				interval.taskMatches.some((m) => t.toLowerCase().includes(m.toLowerCase()))

@@ -447,12 +447,12 @@ export function computeTimeMilestones(
 	const timeOnly = intervals.filter((i) => i.km == null && i.months != null);
 	if (timeOnly.length === 0) return [];
 
-	const completed = completedByTaskMap(evts);
+	const completed = completedByTaskMap(evts, currentOdometer);
 	const now = new Date();
 	const results: TimeMilestone[] = [];
 
 	const purchaseEvt = evts.find(
-		(e) => e.completed && e.category === 'purchase' && (e.tasks ?? [e.event]).some((t) => t.toLowerCase() === 'car')
+		(e) => isEffectivelyCompleted(e, currentOdometer) && e.category === 'purchase' && (e.tasks ?? [e.event]).some((t) => t.toLowerCase() === 'car')
 	);
 	const purchaseDate = purchaseEvt?.date ?? null;
 
@@ -461,7 +461,7 @@ export function computeTimeMilestones(
 		const doneKms = mergedDoneKms(completed, interval.task);
 
 		const matchingEvents = evts
-			.filter((e) => e.completed && e.date)
+			.filter((e) => isEffectivelyCompleted(e, currentOdometer) && e.date)
 			.filter((e) => {
 				const tasks = (e.tasks ?? [e.event]).map((t) => t.toLowerCase().trim());
 				const taskKey = interval.task.toLowerCase().trim();

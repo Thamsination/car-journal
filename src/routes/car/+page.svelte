@@ -8,7 +8,7 @@
 		vehicleConfig, tireConfig, tireStatus, tireSwapEvents, platformConfig
 	} from '$lib/stores';
 	import { saveEvents, saveHealthConfig, saveTireConfig, saveVehicleConfig } from '$lib/github';
-	import { formatDate, formatDateISO } from '$lib/utils';
+	import { formatDate, formatDateISO, isEffectivelyCompleted } from '$lib/utils';
 	import type { HealthConfig, CarEvent, ServiceInterval, TireProfile, TireSeason, TireConfig } from '$lib/types';
 
 	let loading = $state(true);
@@ -223,8 +223,9 @@
 	}
 
 	function findLastService(interval: ServiceInterval): CarEvent | null {
+		const odoKm = $latestOdometer.km;
 		const matches = $events.filter((e) => {
-			if (!e.completed) return false;
+			if (!isEffectivelyCompleted(e, odoKm)) return false;
 			const tasks = e.tasks ?? [e.event];
 			return tasks.some((t) =>
 				interval.taskMatches.some((m) => t.toLowerCase().includes(m.toLowerCase()))
