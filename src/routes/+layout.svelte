@@ -7,7 +7,7 @@
 	import { getPendingWrites, flushPendingWrites } from '$lib/offline';
 	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, type PlatformIndexEntry } from '$lib/github';
 	import { generateHealthConfig } from '$lib/utils';
-	import type { TransmissionType } from '$lib/types';
+	import type { TransmissionType, PlatformConfig } from '$lib/types';
 
 	let { children } = $props();
 	let pendingCount = $state(0);
@@ -26,6 +26,7 @@
 	let addName = $state('');
 	let addOdometer = $state('');
 	let addTransmission = $state<TransmissionType | ''>('');
+	let addPlatformData = $state<PlatformConfig | null>(null);
 	let addSaving = $state(false);
 	let addError = $state('');
 
@@ -38,6 +39,37 @@
 	let editSaving = $state(false);
 	let editError = $state('');
 	let confirmDelete = $state(false);
+
+	const allTransmissionOptions: { value: TransmissionType; label: string }[] = [
+		{ value: 'manual', label: 'Manual' },
+		{ value: 'automatic', label: 'Automatic (torque converter)' },
+		{ value: 'dct', label: 'DCT / Dual-clutch' },
+		{ value: 'cvt', label: 'CVT' },
+		{ value: 'ev', label: 'EV (single-speed)' },
+	];
+
+	function platformTransmissions(pc: PlatformConfig | null): TransmissionType[] {
+		if (!pc) return [];
+		const types = new Set<TransmissionType>();
+		for (const si of pc.serviceIntervals) {
+			if (si.transmission) {
+				for (const t of si.transmission) types.add(t);
+			}
+		}
+		return [...types];
+	}
+
+	const addTransmissionOptions = $derived.by(() => {
+		const available = platformTransmissions(addPlatformData);
+		if (available.length === 0) return allTransmissionOptions;
+		return allTransmissionOptions.filter((o) => available.includes(o.value));
+	});
+
+	const editTransmissionOptions = $derived.by(() => {
+		const available = platformTransmissions($platformConfig);
+		if (available.length === 0) return allTransmissionOptions;
+		return allTransmissionOptions.filter((o) => available.includes(o.value));
+	});
 
 	const availableMakes = $derived(
 		[...new Set(platformIndex.map((e) => e.make))].sort()
@@ -78,6 +110,7 @@
 		addModel = '';
 		addYear = null;
 		addPlatformId = '';
+		addPlatformData = null;
 		addLicensePlate = '';
 		addName = '';
 		addOdometer = '';
@@ -95,17 +128,30 @@
 		addVehicleOpen = true;
 	}
 
-	function advanceStep() {
+	async function advanceStep() {
 		const matches = matchingPlatforms();
 		if (addStep === 0 && addMake && addModel && addYear) {
 			if (matches.length === 1) {
 				addPlatformId = matches[0].platformId;
+				addPlatformData = await loadPlatform(addPlatformId);
+				autoSelectTransmission();
 				addStep = 2;
 			} else if (matches.length > 1) {
 				addStep = 1;
 			}
 		} else if (addStep === 1 && addPlatformId) {
+			addPlatformData = await loadPlatform(addPlatformId);
+			autoSelectTransmission();
 			addStep = 2;
+		}
+	}
+
+	function autoSelectTransmission() {
+		const available = platformTransmissions(addPlatformData);
+		if (available.length === 1) {
+			addTransmission = available[0];
+		} else {
+			addTransmission = '';
 		}
 	}
 
@@ -125,7 +171,7 @@
 		addSaving = true;
 		addError = '';
 		try {
-			const platform = await loadPlatform(addPlatformId);
+			const platform = addPlatformData ?? await loadPlatform(addPlatformId);
 			if (!platform) throw new Error('Platform not found');
 
 			const vehicleId = addLicensePlate.trim().toUpperCase().replace(/\s+/g, '') || `V${Date.now().toString(36).toUpperCase()}`;
@@ -520,15 +566,18 @@
 				<label class="field-label">Odometer (km)</label>
 				<input class="field-input" type="number" inputmode="numeric" placeholder="Tap to set km" bind:value={editOdometer} />
 
-				<label class="field-label">Transmission</label>
-				<select class="field-input" bind:value={editTransmission}>
-					<option value="">Unknown</option>
-					<option value="manual">Manual</option>
-					<option value="automatic">Automatic (torque converter)</option>
-					<option value="dct">DCT / Dual-clutch</option>
-					<option value="cvt">CVT</option>
-					<option value="ev">EV (single-speed)</option>
-				</select>
+				{#if editTransmissionOptions.length > 1}
+					<label class="field-label">Transmission</label>
+					<select class="field-input" bind:value={editTransmission}>
+						<option value="">Unknown</option>
+						{#each editTransmissionOptions as opt}
+							<option value={opt.value}>{opt.label}</option>
+						{/each}
+					</select>
+				{:else if editTransmissionOptions.length === 1}
+					<label class="field-label">Transmission</label>
+					<input class="field-input" type="text" value={editTransmissionOptions[0].label} disabled />
+				{/if}
 
 				{#if editError}
 					<p class="add-error">{editError}</p>
@@ -643,15 +692,18 @@
 					<label class="field-label">Current odometer <span class="optional">(recommended)</span></label>
 					<input class="field-input" type="number" inputmode="numeric" placeholder="e.g. 85000" bind:value={addOdometer} />
 
-					<label class="field-label">Transmission <span class="optional">(recommended)</span></label>
-					<select class="field-input" bind:value={addTransmission}>
-						<option value="">Unknown</option>
-						<option value="manual">Manual</option>
-						<option value="automatic">Automatic (torque converter)</option>
-						<option value="dct">DCT / Dual-clutch</option>
-						<option value="cvt">CVT</option>
-						<option value="ev">EV (single-speed)</option>
-					</select>
+					{#if addTransmissionOptions.length > 1}
+						<label class="field-label">Transmission <span class="optional">(recommended)</span></label>
+						<select class="field-input" bind:value={addTransmission}>
+							<option value="">Unknown</option>
+							{#each addTransmissionOptions as opt}
+								<option value={opt.value}>{opt.label}</option>
+							{/each}
+						</select>
+					{:else if addTransmissionOptions.length === 1}
+						<label class="field-label">Transmission</label>
+						<input class="field-input" type="text" value={addTransmissionOptions[0].label} disabled />
+					{/if}
 
 					{#if addError}
 						<p class="add-error">{addError}</p>
