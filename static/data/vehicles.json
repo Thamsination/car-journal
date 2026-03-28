@@ -4,7 +4,12 @@
       "id": "EJ39063",
       "label": "Kaisern",
       "model": "520d xDrive Touring"
+    },
+    {
+      "id": "VMNAUVH33",
+      "label": "Snabbbert",
+      "model": "WRX STI"
     }
   ],
-  "activeVehicle": "VMNAM4ESN"
+  "activeVehicle": "VMNAUVH33"
 }
