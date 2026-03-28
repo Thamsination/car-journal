@@ -1,12 +1,13 @@
 {
   "id": "Subaru-WRX-EJ-turbo",
-  "name": "Subaru Impreza WRX / WRX (EJ205 / EJ255 turbo petrol)",
-  "years": "2000–2014",
+  "name": "Subaru Impreza WRX / WRX / WRX STI (EJ turbo petrol: EJ205, EJ207, EJ255, EJ257)",
+  "years": "2000\u20132021",
   "chassisCodes": [
     "GD",
     "GG",
     "GE",
-    "GH"
+    "GH",
+    "VA"
   ],
   "drivetrains": [
     "AWD"
@@ -17,10 +18,21 @@
       "models": [
         "Impreza WRX",
         "Impreza WRX Wagon",
-        "WRX"
+        "Impreza WRX STI",
+        "Impreza WRX STI Wagon",
+        "WRX",
+        "WRX STI"
       ],
       "yearFrom": 2000,
       "yearTo": 2014
+    },
+    {
+      "make": "Subaru",
+      "models": [
+        "WRX STI"
+      ],
+      "yearFrom": 2015,
+      "yearTo": 2021
     }
   ],
   "serviceIntervals": [
@@ -73,6 +85,18 @@
       "kind": "mfr"
     },
     {
+      "task": "front differential oil",
+      "km": 60000,
+      "months": 48,
+      "kind": "mfr"
+    },
+    {
+      "task": "rear differential oil",
+      "km": 60000,
+      "months": 48,
+      "kind": "mfr"
+    },
+    {
       "task": "coolant",
       "km": 120000,
       "months": 120,
@@ -95,15 +119,17 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "Subaru’s turbocharged maintenance programmes (e.g. Subaru Canada Maintenance Guide) commonly specify engine oil and filter service every 10,000 km or 6 months, whichever comes first, for vehicles under normal driving conditions—verify against your region’s warranty and maintenance booklet.",
+    "engine oil": "Subaru\u2019s turbocharged maintenance programmes (e.g. Subaru Canada Maintenance Guide) commonly specify engine oil and filter service every 10,000 km or 6 months, whichever comes first, for vehicles under normal driving conditions\u2014verify against your region\u2019s warranty and maintenance booklet.",
     "cabin air filter": "Replace per the schedule in your Subaru warranty and maintenance booklet; many regions align cabin/pollen filter replacement with major services (often around 30,000 km or 24 months on turbo models).",
-    "air cleaner element": "Subaru maintenance booklets specify engine air cleaner (air filter) service on a distance/time basis; 30,000 km or 24 months is a typical inspection/replacement cadence where not otherwise stated—confirm for your model year and market.",
-    "spark plugs": "For turbocharged EJ engines, North American Subaru maintenance literature commonly cites spark plug renewal around 60,000 miles (approximately 96,000 km) with a multi-year cap; intervals vary by model year and plug type—use your booklet.",
-    "timing belt": "EJ turbo WRX engines use a timing belt. Independent maintenance references and Subaru specialist guidance commonly cite replacement at 105,000 km or 105 months (whichever comes first), with inspection intervals in some booklets—always follow your official schedule.",
-    "fuel filter": "Subaru specifies periodic fuel filter replacement on many petrol turbo applications; North American schedules often place replacement around 60,000 miles (~96,000 km)—confirm for your exact year and emissions package.",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
+    "air cleaner element": "Subaru maintenance booklets specify engine air cleaner (air filter) service on a distance/time basis; 30,000 km or 24 months is a typical inspection/replacement cadence where not otherwise stated\u2014confirm for your model year and market.",
+    "spark plugs": "For turbocharged EJ engines, North American Subaru maintenance literature commonly cites spark plug renewal around 60,000 miles (approximately 96,000 km) with a multi-year cap; intervals vary by model year and plug type\u2014use your booklet.",
+    "timing belt": "EJ turbo WRX engines use a timing belt. Independent maintenance references and Subaru specialist guidance commonly cite replacement at 105,000 km or 105 months (whichever comes first), with inspection intervals in some booklets\u2014always follow your official schedule.",
+    "fuel filter": "Subaru specifies periodic fuel filter replacement on many petrol turbo applications; North American schedules often place replacement around 60,000 miles (~96,000 km)\u2014confirm for your exact year and emissions package.",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
     "inspect disc brake pads": "Subaru scheduled maintenance includes inspection of disc brake pads and rotors at each routine service visit (typically every oil-change interval under km/time-based schedules).",
-    "coolant": "Subaru Long Life Coolant is formulated for extended service; official booklets specify first coolant change at high mileage/time (commonly around 120,000 km / 11 years on many models, then a repeat interval)—verify your year’s maintenance table.",
+    "front differential oil": "All-wheel-drive WRX and WRX STI models require front differential oil service; Subaru maintenance tables commonly specify replacement near 60,000 km / 48 months on performance AWD applications\u2014confirm against your warranty and maintenance booklet.",
+    "rear differential oil": "Rear differential oil is replaced on the same major-interval pattern as the front differential in Subaru WRX / WRX STI maintenance schedules\u2014verify exact km/months for your model year and region.",
+    "coolant": "Subaru Long Life Coolant is formulated for extended service; official booklets specify first coolant change at high mileage/time (commonly around 120,000 km / 11 years on many models, then a repeat interval)\u2014verify your year\u2019s maintenance table.",
     "intake carbon clean": "Port-injection EJ turbo engines are less prone than direct-injection-only layouts, but throttle bodies and intake tracts still foul; many specialists recommend cleaning around 120,000 km if drivability issues appear.",
     "manual transmission oil": "Subaru often treats manual transmission oil as inspect-only under normal use; a preventive change around 120,000 km is a common enthusiast recommendation when towing or tracking."
   },
@@ -151,7 +177,9 @@
         "air cleaner element",
         "cabin air filter",
         "engine oil",
-        "inspect disc brake pads"
+        "front differential oil",
+        "inspect disc brake pads",
+        "rear differential oil"
       ]
     },
     {
@@ -211,9 +239,11 @@
         "cabin air filter",
         "coolant",
         "engine oil",
+        "front differential oil",
         "inspect disc brake pads",
         "intake carbon clean",
-        "manual transmission oil"
+        "manual transmission oil",
+        "rear differential oil"
       ]
     },
     {
@@ -259,7 +289,9 @@
         "air cleaner element",
         "cabin air filter",
         "engine oil",
-        "inspect disc brake pads"
+        "front differential oil",
+        "inspect disc brake pads",
+        "rear differential oil"
       ]
     },
     {
@@ -314,9 +346,11 @@
         "cabin air filter",
         "coolant",
         "engine oil",
+        "front differential oil",
         "inspect disc brake pads",
         "intake carbon clean",
-        "manual transmission oil"
+        "manual transmission oil",
+        "rear differential oil"
       ]
     },
     {
@@ -369,7 +403,9 @@
         "air cleaner element",
         "cabin air filter",
         "engine oil",
-        "inspect disc brake pads"
+        "front differential oil",
+        "inspect disc brake pads",
+        "rear differential oil"
       ]
     }
   ]

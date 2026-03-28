@@ -975,10 +975,22 @@
     "models": [
       "Impreza WRX",
       "Impreza WRX Wagon",
-      "WRX"
+      "Impreza WRX STI",
+      "Impreza WRX STI Wagon",
+      "WRX",
+      "WRX STI"
     ],
     "yearFrom": 2000,
     "yearTo": 2014
+  },
+  {
+    "platformId": "Subaru-WRX-EJ-turbo",
+    "make": "Subaru",
+    "models": [
+      "WRX STI"
+    ],
+    "yearFrom": 2015,
+    "yearTo": 2021
   },
   {
     "platformId": "Subaru-WRX-FA20DIT",
