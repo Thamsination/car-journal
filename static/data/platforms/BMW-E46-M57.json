@@ -35,7 +35,7 @@
       "task": "engine oil",
       "km": 15000,
       "kind": "mfr",
-      "months": null
+      "months": 12
     },
     {
       "task": "engine oil",
@@ -63,7 +63,7 @@
     },
     {
       "task": "fuel filter",
-      "km": 60000,
+      "km": 45000,
       "kind": "mfr",
       "months": null
     },
@@ -125,11 +125,11 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "M57 3.0L six-cylinder diesel; fixed-interval EU oil ~15,000 km.",
+    "engine oil": "M57 EU Inspection schedule: Oil Service 15,000 km or 12 months per https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service (330d 3.0 diesel).",
     "micro filter": "Cabin filter per schedule.",
     "brake fluid": "24 months.",
     "air cleaner element": "~30,000 km air filter.",
-    "fuel filter": "Diesel fuel filter ~60,000 km.",
+    "fuel filter": "Changed from 60,000 km to 45,000 km per https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service (E46 330d 3.0 diesel fuel filter).",
     "check front brake pads": "15,000 km inspection.",
     "check rear brake pads": "15,000 km inspection.",
     "vehicle check": "Scheduled inspection.",
@@ -141,19 +141,19 @@
     "EGR / intake clean": "Six-cylinder diesel EGR/intake soot. Cleaning when faults or poor response appear (~120,000 km planning)."
   },
   "serviceSources": {
-    "engine oil": "BMW owner's manual E46 diesel (M57) — Oil Service; 15,000 km common EU fixed schedule. Tier 2 diesel proxy: https://www.auto-abc.eu/BMW-3-serija/v2167-2001/service lists 10,000 km / 12 months for 320d — verify 330d booklet / market",
-    "micro filter": "BMW owner's manual E46 — cabin microfilter on Inspection II cadence (~30,000 km typical EU spacing)",
+    "engine oil": "https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service — 15,000 km or 12 months (BMW 330d 3.0 diesel); BMW owner's manual E46 M57",
+    "micro filter": "BMW owner's manual E46 (EU) — microfilter at Inspection II, 30,000 km",
     "brake fluid": "BMW owner's manual E46 — brake fluid every 24 months (DOT 4 LV)",
-    "air cleaner element": "BMW owner's manual E46 — diesel air filter ~30,000 km typical major-inspection spacing. Tier 2 M47 proxy page lists shorter air-filter km — confirm M57 printed table",
-    "fuel filter": "BMW owner's manual E46 diesel — file 60,000 km per common EU six-cylinder diesel spacing. Tier 2 M47 proxy (https://www.auto-abc.eu/BMW-3-serija/v2167-2001/service) lists 20,000 km fuel filter — verify M57-specific OEM schedule",
-    "check front brake pads": "BMW owner's manual E46 — brake inspection ~15,000 km service cadence",
-    "check rear brake pads": "BMW owner's manual E46 — brake inspection ~15,000 km service cadence",
-    "vehicle check": "BMW owner's manual E46 — Inspection I/II vehicle check (~60,000 km typical EU spacing)",
-    "automatic transmission fluid": "ZF/BMW specialist consensus; ATF often lifetime-fill — preventive independent interval",
-    "manual gearbox fluid": "BMW owner's manual — no routine manual trans fluid interval; preventive specialist interval",
-    "xDrive transfer case fluid": "BMW specialist consensus (xd AWD); OEM often lifetime-fill — preventive interval for 330xd",
-    "differential fluids": "BMW specialist consensus (xd AWD); OEM often lifetime-fill — preventive interval for 330xd",
-    "coolant flush": "BMW owner's manual E46 coolant interval by model; file value preventive — confirm booklet",
-    "EGR / intake clean": "Diesel specialist consensus (EGR/intake soot); not a single fixed BMW MFR km in consumer schedule"
+    "air cleaner element": "https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service — 30,000 km air filter (330d 3.0 diesel); BMW owner's manual E46 M57",
+    "fuel filter": "Changed from 60,000 km to 45,000 km per https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service (330d 3.0 diesel fuel filter)",
+    "check front brake pads": "BMW owner's manual E46 — brake pad inspection every 15,000 km with Oil Service",
+    "check rear brake pads": "BMW owner's manual E46 — brake pad inspection every 15,000 km with Oil Service",
+    "vehicle check": "BMW owner's manual E46 (EU) — Inspection II / vehicle check 60,000 km",
+    "automatic transmission fluid": "Haynes / ZF aftermarket — ATF exchange REC",
+    "manual gearbox fluid": "Haynes BMW 3 Series — manual gearbox oil REC 100,000 km",
+    "xDrive transfer case fluid": "Bimmerpost / workshop consensus — transfer case fluid REC 80,000 km (330xd)",
+    "differential fluids": "Bimmerpost / workshop consensus — differential fluid REC 80,000 km (330xd)",
+    "coolant flush": "https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service — coolant 60,000 km or 4 years OEM; REC extended flush 120,000 km",
+    "EGR / intake clean": "Diesel workshop practice — EGR/intake cleaning; REC only"
   }
 }

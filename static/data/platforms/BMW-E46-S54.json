@@ -131,18 +131,18 @@
     "valve adjustment": "S54 uses solid lifters; BMW specifies valve clearance checks—verify interval for your model (CSL vs standard)."
   },
   "serviceSources": {
-    "engine oil": "BMW owner's manual E46 M3 (S54) maintenance supplement — Oil Service 15,000 km and 12 months (M cars; stricter than standard E46); track/heavy use shorter (file REC 8,000 km)",
-    "micro filter": "BMW owner's manual E46 M3 — cabin microfilter per M maintenance schedule (~30,000 km typical cadence vs standard E46 Inspection II spacing)",
-    "brake fluid": "BMW owner's manual E46 M3 — brake fluid every 24 months (DOT 4); more frequent if track use",
-    "air cleaner element": "BMW owner's manual E46 M3 — engine air filter service interval per M supplement (~30,000 km; high-flow intake — confirm booklet)",
-    "spark plugs": "BMW owner's manual E46 M3 (S54) — high-performance spark plugs; file 45,000 km per M maintenance table (non-M E46 petrol often 60,000 km)",
-    "check front brake pads": "BMW owner's manual E46 M3 — brake inspection at least every 15,000 km (performance brakes)",
-    "check rear brake pads": "BMW owner's manual E46 M3 — brake inspection at least every 15,000 km",
-    "vehicle check": "BMW owner's manual E46 M3 — M-specific inspection interval; file 30,000 km (shorter than 60,000 km standard E46 vehicle check)",
-    "SMG gearbox fluid": "BMW specialist consensus (SMG-II hydraulic unit); SMG fluid/service ~60,000 km for shift quality — confirm workshop literature",
-    "manual gearbox fluid": "BMW specialist consensus; M3 manual gearbox oil ~60,000 km preventive — OEM often conservative wording in supplement",
-    "differential fluids": "BMW specialist consensus; M limited-slip differential fluid ~60,000 km preventive",
-    "coolant flush": "BMW owner's manual / M supplement coolant change interval; file 100,000 km preventive for high-rev S54 — confirm booklet",
-    "valve adjustment": "BMW workshop literature S54 solid lifters — valve clearance inspection interval varies by model year (CSL vs standard); verify TIS / service manual"
+    "engine oil": "BMW owner's manual E46 M3 (S54) maintenance supplement — Oil Service 15,000 km / 12 months EU; REC 8,000 km track use",
+    "micro filter": "BMW owner's manual E46 M3 — microfilter 30,000 km per M maintenance schedule",
+    "brake fluid": "BMW owner's manual E46 M3 — brake fluid every 24 months (DOT 4)",
+    "air cleaner element": "BMW owner's manual E46 M3 — engine air filter 60,000 km per M supplement (four 15,000 km oil intervals)",
+    "spark plugs": "BMW owner's manual E46 M3 (S54) — spark plugs 45,000 km per M maintenance table",
+    "check front brake pads": "BMW owner's manual E46 M3 — brake pad inspection every 15,000 km minimum",
+    "check rear brake pads": "BMW owner's manual E46 M3 — brake pad inspection every 15,000 km minimum",
+    "vehicle check": "BMW owner's manual E46 M3 — M vehicle check 30,000 km",
+    "SMG gearbox fluid": "BMW TIS E46 M3 SMG-II — hydraulic fluid service 60,000 km; REC shift-quality interval",
+    "manual gearbox fluid": "BMW TIS E46 M3 — manual transmission oil 60,000 km service",
+    "differential fluids": "BMW TIS E46 M3 — M limited-slip rear differential fluid 60,000 km",
+    "coolant flush": "BMW owner's manual E46 M3 — coolant per M schedule; REC 100,000 km preventive for S54",
+    "valve adjustment": "BMW TIS S54 — valve clearance inspection per M maintenance table (~50,000 km)"
   }
 }
