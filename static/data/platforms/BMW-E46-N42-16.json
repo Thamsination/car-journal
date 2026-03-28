@@ -21,7 +21,7 @@
       "models": [
         "316i",
         "316i Touring",
-        "316ti",
+        "316ti Compact",
         "316Ci Coupé"
       ],
       "yearFrom": 2001,
@@ -84,10 +84,18 @@
       "months": null
     },
     {
-      "task": "gearbox fluid",
+      "task": "automatic transmission fluid",
       "km": 100000,
       "kind": "rec",
-      "months": null
+      "months": null,
+      "transmission": ["automatic"]
+    },
+    {
+      "task": "manual gearbox fluid",
+      "km": 100000,
+      "kind": "rec",
+      "months": null,
+      "transmission": ["manual"]
     },
     {
       "task": "coolant flush",
@@ -97,7 +105,7 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "N42 1.6L: EU fixed or service-indicator intervals ~15,000 km typical. Sources: BMW E46 maintenance booklet.",
+    "engine oil": "1.6L four-cylinder: EU fixed or service-indicator intervals ~15,000 km typical. Sources: BMW E46 maintenance booklet.",
     "micro filter": "Cabin filter per schedule.",
     "brake fluid": "24 months.",
     "air cleaner element": "~30,000 km typical fixed-interval air filter.",
@@ -105,7 +113,8 @@
     "check front brake pads": "15,000 km inspection cadence.",
     "check rear brake pads": "15,000 km inspection cadence.",
     "vehicle check": "Scheduled inspection.",
-    "gearbox fluid": "Preventive ~100,000 km.",
+    "automatic transmission fluid": "Automatic: preventive ATF ~100,000 km.",
+    "manual gearbox fluid": "Manual: preventive gear oil ~100,000 km.",
     "coolant flush": "Preventive ~120,000 km."
   }
 }

@@ -94,7 +94,8 @@
       "task": "ZF8 gearbox fluid",
       "km": 100000,
       "kind": "rec",
-      "months": null
+      "months": null,
+      "transmission": ["automatic"]
     },
     {
       "task": "xDrive transfer case fluid",

@@ -92,10 +92,18 @@
       "months": null
     },
     {
-      "task": "gearbox fluid",
+      "task": "automatic transmission fluid",
       "km": 100000,
       "kind": "rec",
-      "months": null
+      "months": null,
+      "transmission": ["automatic"]
+    },
+    {
+      "task": "manual gearbox fluid",
+      "km": 100000,
+      "kind": "rec",
+      "months": null,
+      "transmission": ["manual"]
     },
     {
       "task": "xDrive transfer case fluid",
@@ -125,7 +133,8 @@
     "check front brake pads": "30,000 km inspection cadence.",
     "check rear brake pads": "30,000 km inspection cadence.",
     "vehicle check": "BMW inspection service.",
-    "gearbox fluid": "Automatic/manual: preventive ~100,000 km.",
+    "automatic transmission fluid": "Automatic (e.g. ZF 6HP): preventive ATF exchange ~100,000 km despite lifetime wording.",
+    "manual gearbox fluid": "Manual gearbox: preventive gear oil ~100,000 km.",
     "xDrive transfer case fluid": "xDrive models only.",
     "differential fluids": "xDrive models only.",
     "coolant flush": "Preventive ~120,000 km."

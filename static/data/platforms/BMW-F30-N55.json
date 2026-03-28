@@ -93,13 +93,15 @@
       "task": "ZF8 gearbox fluid",
       "km": 100000,
       "kind": "rec",
-      "months": null
+      "months": null,
+      "transmission": ["automatic"]
     },
     {
-      "task": "gearbox fluid",
+      "task": "manual gearbox fluid",
       "km": 100000,
       "kind": "rec",
-      "months": null
+      "months": null,
+      "transmission": ["manual"]
     },
     {
       "task": "xDrive transfer case fluid",
@@ -136,7 +138,7 @@
     "check rear brake pads": "30,000 km inspection.",
     "vehicle check": "BMW CBS vehicle check.",
     "ZF8 gearbox fluid": "8HP preventive ~100,000 km.",
-    "gearbox fluid": "Manual preventive ~100,000 km.",
+    "manual gearbox fluid": "Manual preventive ~100,000 km.",
     "xDrive transfer case fluid": "xDrive only.",
     "differential fluids": "xDrive only.",
     "coolant flush": "Turbo I6 cooling circuit: preventive ~120,000 km.",

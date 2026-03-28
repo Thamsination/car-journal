@@ -99,13 +99,15 @@
       "task": "ZF8 gearbox fluid",
       "km": 100000,
       "kind": "rec",
-      "months": null
+      "months": null,
+      "transmission": ["automatic"]
     },
     {
-      "task": "gearbox fluid",
+      "task": "manual gearbox fluid",
       "km": 100000,
       "kind": "rec",
-      "months": null
+      "months": null,
+      "transmission": ["manual"]
     },
     {
       "task": "xDrive transfer case fluid",
@@ -133,16 +135,16 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "BMW Condition Based Service (CBS) sets oil service from the vehicle display; 30,000 km is a typical EU maximum between oil services. Follow the service indicator. Sources: BMW EU service booklets for F30 N13, garage.wiki F30 maintenance summaries.",
+    "engine oil": "BMW Condition Based Service (CBS) sets oil service from the vehicle display; 30,000 km is a typical EU maximum between oil services. Follow the service indicator. Sources: BMW EU F30 service booklets, garage.wiki F30 maintenance summaries.",
     "micro filter": "Cabin micro filter per CBS; 30,000 km aligns with common EU inspection planning.",
     "brake fluid": "Replace every 24 months regardless of mileage (hygroscopic fluid).",
-    "air cleaner element": "Turbocharged direct-injection N13: air filter typically tied to CBS (~60,000 km planning interval). Confirm on the vehicle display.",
-    "spark plugs": "Petrol N13: iridium plugs commonly scheduled around every third oil service on CBS (~90,000 km). Verify in the owner’s literature.",
+    "air cleaner element": "Turbocharged direct-injection four-cylinder: air filter typically tied to CBS (~60,000 km planning interval). Confirm on the vehicle display.",
+    "spark plugs": "Petrol turbo four: iridium plugs commonly scheduled around every third oil service on CBS (~90,000 km). Verify in the owner’s literature.",
     "check front brake pads": "Inspect per CBS wear sensors and workshop visits; 30,000 km is a reasonable inspection cadence.",
     "check rear brake pads": "Inspect per CBS; 30,000 km is a reasonable inspection cadence.",
     "vehicle check": "BMW CBS vehicle check / inspection service.",
     "ZF8 gearbox fluid": "Applies to 8-speed automatic models. ZF often recommends fluid exchange around 100,000 km despite lifetime-fill wording.",
-    "gearbox fluid": "Manual gearbox: preventive oil exchange around 100,000 km is a common workshop recommendation.",
+    "manual gearbox fluid": "Manual gearbox: preventive oil exchange around 100,000 km is a common workshop recommendation.",
     "xDrive transfer case fluid": "xDrive models only. Often labelled lifetime; many specialists recommend 60,000–100,000 km.",
     "differential fluids": "xDrive models only. Often labelled lifetime; many specialists recommend 60,000–100,000 km.",
     "coolant flush": "Preventive coolant exchange around 120,000 km maintains corrosion protection.",

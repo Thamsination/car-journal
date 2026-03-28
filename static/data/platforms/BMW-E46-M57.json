@@ -86,10 +86,18 @@
       "months": null
     },
     {
-      "task": "gearbox fluid",
+      "task": "automatic transmission fluid",
       "km": 100000,
       "kind": "rec",
-      "months": null
+      "months": null,
+      "transmission": ["automatic"]
+    },
+    {
+      "task": "manual gearbox fluid",
+      "km": 100000,
+      "kind": "rec",
+      "months": null,
+      "transmission": ["manual"]
     },
     {
       "task": "xDrive transfer case fluid",
@@ -108,6 +116,12 @@
       "km": 120000,
       "kind": "rec",
       "months": null
+    },
+    {
+      "task": "EGR / intake clean",
+      "km": 120000,
+      "kind": "rec",
+      "months": null
     }
   ],
   "serviceNotes": {
@@ -119,9 +133,11 @@
     "check front brake pads": "15,000 km inspection.",
     "check rear brake pads": "15,000 km inspection.",
     "vehicle check": "Scheduled inspection.",
-    "gearbox fluid": "Preventive ~100,000 km.",
+    "automatic transmission fluid": "Automatic: preventive ATF ~100,000 km.",
+    "manual gearbox fluid": "Manual: preventive gear oil ~100,000 km.",
     "xDrive transfer case fluid": "330xd Touring only.",
     "differential fluids": "330xd only.",
-    "coolant flush": "Preventive ~120,000 km."
+    "coolant flush": "Preventive ~120,000 km.",
+    "EGR / intake clean": "Six-cylinder diesel EGR/intake soot. Cleaning when faults or poor response appear (~120,000 km planning)."
   }
 }
