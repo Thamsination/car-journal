@@ -49,8 +49,17 @@ Each platform file must be **specific to an engine family / fuel type**. The sam
 - Timing chain vs timing belt varies by engine
 - EVs have no engine oil, spark plugs, or air filter service
 - Hybrid drivetrains have unique service items (e.g., HV battery coolant)
+- AWD/4WD drivetrains (BMW xDrive, Audi quattro, Subaru Symmetrical AWD, etc.) have transfer case and additional differential fluid services that RWD/FWD models lack
 
 When a facelifted generation (LCI, FL, Phase 2, etc.) has **different service intervals or CBS calibrations**, create a separate platform file for it.
+
+**AWD/4WD drivetrain handling:**
+
+Many platforms cover models sold in both RWD/FWD and AWD variants (e.g., BMW 3 Series comes in both RWD and xDrive). Rather than creating separate files per drivetrain, include the AWD-specific service tasks (transfer case fluid, front/additional differential fluid) as `rec` entries in the platform file, with a service note clarifying they apply to AWD/4WD models only.
+
+**However**, if a platform covers **exclusively AWD/4WD models** (e.g., BMW X5, Subaru WRX, Audi Q5), the drivetrain fluid tasks should be `mfr` if the manufacturer specifies them, or `rec` if they recommend "lifetime fill".
+
+**Important:** The `vehicles` array must list xDrive/AWD model names explicitly when the manufacturer markets them as distinct models. For example, BMW sells `"320d"` and `"320d xDrive"` as separate models — both must appear. Similarly, Audi sells `"A4 2.0 TFSI"` and `"A4 2.0 TFSI quattro"`. Omitting the AWD variant means users with that car cannot find it in the app.
 
 **Platform ID format:** `<MAKE>-<CHASSIS>-<ENGINE/FUEL>` for new platforms.
 
@@ -68,14 +77,17 @@ Use whichever identifier is most recognizable for that brand's owners. BMW owner
 
 ### Step 2: Research BEFORE writing
 
-For each platform, perform **at least 4 separate web searches**:
+For each platform, perform **at least 5 separate web searches**:
 
 1. **Service schedule:** "[Make] [Model] [Year] [Engine] official maintenance schedule km Europe"
 2. **Component intervals:** "[Make] [Model] [Engine] owner's manual service intervals oil filter brake fluid spark plugs air filter"
 3. **Engine-specific:** "[Make] [Model] [Engine code] service schedule diesel/petrol timing chain belt"
 4. **Model variants:** "[Make] [Platform/generation] models variants body styles years produced"
+5. **Drivetrain variants:** "[Make] [Platform/generation] xDrive/quattro/AWD/4WD models transfer case differential fluid interval"
 
 Search #3 is critical for engine-family files — it tells you whether the engine uses a timing chain or belt, what spark plug interval applies, whether there's a fuel filter service, etc.
+
+Search #5 is critical for platforms covering AWD models — it tells you which models are available with AWD, and what the transfer case / differential fluid service intervals are. Many manufacturers specify these at 60,000–100,000 km.
 
 Good sources:
 - garage.wiki (structured interval tables per model year — excellent)
@@ -137,7 +149,8 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
 | Auxiliary / drive belt | If manufacturer specifies replacement interval |
 | Gearbox / transmission fluid | DSG/DCT/CVT — often REC since manufacturers say "lifetime" |
 | Intake carbon clean | Direct-injection engines — REC |
-| Transfer case / differential fluids | AWD/4WD vehicles |
+| Transfer case fluid | AWD/4WD vehicles — **mandatory** if any model on the platform ships with AWD. Use MFR if the manufacturer specifies an interval, REC if "lifetime". Add a service note: "xDrive/AWD models only" if mixed RWD+AWD platform. |
+| Front/rear differential fluid | AWD/4WD vehicles — same rule as transfer case. On exclusively AWD platforms (X-series, Subaru), these are standard MFR/REC tasks. On mixed platforms, add as REC with a note. |
 
 **EV platforms** omit engine oil, air filter, spark plugs, and fuel filter — but MUST still include brake fluid, brake inspection, cabin filter, and any HV-battery / e-drive coolant service.
 
@@ -174,7 +187,7 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
 This array is how the app matches a user's car to a platform. Get it right.
 
 - **`make`**: The brand name as the user would type it. Use title case: `"Volkswagen"` not `"VW"`, `"BMW"` not `"Bmw"`.
-- **`models`**: Every model name sold on this engine-platform combination. Include body style variants if they have different names (e.g., `["520d", "520d xDrive"]` for a BMW diesel platform, or `["Golf", "Golf Variant"]` for VW). Do NOT include chassis codes or generation numbers — users don't know those.
+- **`models`**: Every model name sold on this engine-platform combination. Include body style variants **and drivetrain variants** if they have different names (e.g., `["520d", "520d xDrive"]` for a BMW diesel platform, or `["Golf", "Golf Variant"]` for VW). Always list both the base and AWD model name when the manufacturer markets them separately (BMW: `"320i"` and `"320i xDrive"`, Audi: `"A4 2.0 TFSI"` and `"A4 2.0 TFSI quattro"`). Do NOT include chassis codes or generation numbers — users don't know those.
 - **`yearFrom`**: First model year this engine-platform combination was produced (integer).
 - **`yearTo`**: Last model year, or the current year (2026) if still in production (integer).
 - **Multi-brand platforms**: If the same platform is sold under different brands, add a separate entry per brand.
@@ -247,9 +260,11 @@ Before moving to the next platform, verify your output:
 7. **Check model completeness** — did you include all body style variants? (e.g., sedan AND touring/wagon if both exist)
 8. **Check multi-brand** — if this platform is shared across brands, did you list all brand names?
 9. **Verify engine specificity** — does the file only include tasks relevant to this engine family? (no spark plugs on diesels, no fuel filter on petrol if N/A, no engine oil on EVs)
-10. **Cross-check against other files for the same chassis** — if you generated multiple variants (petrol/diesel, different generations), verify: (a) intervals differ where expected (fuel filter, spark plugs, timing), (b) shared tasks like coolant and brake fluid appear on ALL variants, (c) task names are consistent within the same brand (don't use "cabin air filter" on one and "interior ventilation filter" on another unless the OEM actually changed terminology between generations)
-11. **Compare intervals to web search results** — do the numbers match what you found?
-12. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
+10. **Check AWD/4WD drivetrain tasks** — if any model in the `vehicles` array is an AWD/4WD variant (xDrive, quattro, 4MATIC, etc.), verify that transfer case and differential fluid tasks are present. If the platform covers exclusively AWD models (X-series, Subaru, etc.), these should be MFR or REC. If mixed RWD+AWD, they should be REC with a service note.
+11. **Check AWD model name completeness** — if the chassis is offered with optional AWD (e.g., BMW xDrive, Audi quattro), verify that both the base and AWD model names appear in the `vehicles.models` array. For example, a BMW G20 3 Series platform should list both `"320i"` and `"320i xDrive"` if both are sold.
+12. **Cross-check against other files for the same chassis** — if you generated multiple variants (petrol/diesel, different generations), verify: (a) intervals differ where expected (fuel filter, spark plugs, timing), (b) shared tasks like coolant and brake fluid appear on ALL variants, (c) task names are consistent within the same brand (don't use "cabin air filter" on one and "interior ventilation filter" on another unless the OEM actually changed terminology between generations)
+13. **Compare intervals to web search results** — do the numbers match what you found?
+14. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
 
 If any check fails, go back and fix it before proceeding.
 
@@ -277,6 +292,8 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Use generic task names when the OEM has specific terminology — use `"micro filter"` for BMW, not `"cabin filter"`
 - Create duplicate task entries — each task name appears at most once per `kind`
 - Leave the `vehicles` array empty or with models that don't match the engine family
+- Omit xDrive/quattro/AWD model names from the `vehicles` array when the manufacturer sells them as distinct models — users with AWD cars must be able to find their vehicle
+- Omit transfer case and differential fluid tasks on platforms that cover AWD/4WD models — every AWD vehicle has these components and they need servicing
 - Include spark plugs on diesel or EV platforms
 - Include fuel filter on petrol platforms where not applicable
 - Assign a `km` value to brake fluid — it is always time-based (`"km": null, "months": 24`)
