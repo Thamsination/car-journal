@@ -93,8 +93,9 @@ Good sources:
 - **Do NOT modify `index.json` manually** — it will be rebuilt by script
 
 The ONLY changes are:
-1. Adding the `"engines"` array to each platform JSON file
-2. Adding `engines?: string[];` to the `PlatformConfig` type
+1. Adding the `"engines"` array to each platform JSON file (platform-level)
+2. Adding per-entry `"engines"` arrays to `vehicles` entries **when a catch-all platform spans multiple generations with different engine options** (e.g., Subaru WRX EJ turbo 2000–2021 has different engines per chassis generation). Also add per-entry `"chassisCodes"` in the same case. See `Subaru-WRX-EJ-turbo.json` as a reference.
+3. Adding `engines?: string[];` to the `PlatformConfig` type (already done)
 
 ### Step 5: Self-validation
 

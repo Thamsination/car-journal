@@ -129,8 +129,22 @@
 		return [...years].sort((a, b) => b - a);
 	});
 
-	const editChassisOptions = $derived($platformConfig?.chassisCodes ?? []);
-	const editEngineOptions = $derived($platformConfig?.engines ?? []);
+	const editMatchedEntry = $derived.by(() => {
+		const vehicles = $platformConfig?.vehicles;
+		if (!vehicles || !editMake || !editModel || !editYear) return undefined;
+		const y = parseInt(editYear, 10);
+		if (isNaN(y)) return undefined;
+		return vehicles.find(v =>
+			v.make === editMake && v.models.includes(editModel) && y >= v.yearFrom && y <= v.yearTo
+		);
+	});
+
+	const editChassisOptions = $derived(
+		editMatchedEntry?.chassisCodes ?? $platformConfig?.chassisCodes ?? []
+	);
+	const editEngineOptions = $derived(
+		editMatchedEntry?.engines ?? $platformConfig?.engines ?? []
+	);
 
 	$effect(() => {
 		if (editMakeOptions.length === 1 && editMake !== editMakeOptions[0]) {
@@ -303,6 +317,12 @@
 
 			const odoVal = parseInt(addOdometer, 10);
 			const trans = addTransmission || null;
+			const matchedEntry = platform.vehicles?.find(v =>
+				v.make === addMake && v.models.includes(addModel) && addYear! >= v.yearFrom && addYear! <= v.yearTo
+			);
+			const chassisOpts = matchedEntry?.chassisCodes ?? platform.chassisCodes ?? [];
+			const engineOpts = matchedEntry?.engines ?? platform.engines ?? [];
+
 			const config = {
 				name: label,
 				licensePlate: addLicensePlate.trim().toUpperCase(),
@@ -311,8 +331,8 @@
 				year: addYear!,
 				make: addMake,
 				model: addModel,
-				chassis: platform.chassisCodes?.[0] ?? '',
-				engine: platform.engines?.length === 1 ? platform.engines[0] : '',
+				chassis: chassisOpts.length === 1 ? chassisOpts[0] : (chassisOpts[0] ?? ''),
+				engine: engineOpts.length === 1 ? engineOpts[0] : '',
 				drivetrain: addDrivetrain || '',
 				transmission: trans as TransmissionType | null,
 				odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null

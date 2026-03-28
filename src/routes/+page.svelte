@@ -57,7 +57,14 @@
 
 	function vehicleTechLine(v: typeof $vehicleConfig): string {
 		if (!v) return '';
-		const engine = v.engine || ($platformConfig?.engines?.length === 1 ? $platformConfig.engines[0] : '');
+		let engine = v.engine;
+		if (!engine && $platformConfig) {
+			const entry = $platformConfig.vehicles?.find(e =>
+				e.make === v.make && e.models.includes(v.model) && v.year >= e.yearFrom && v.year <= e.yearTo
+			);
+			const opts = entry?.engines ?? $platformConfig.engines ?? [];
+			if (opts.length === 1) engine = opts[0];
+		}
 		const transLabel = v.transmission ? transmissionLabels[v.transmission] ?? '' : '';
 		return [v.chassis, engine, driveLabel(v.drivetrain), transLabel].filter(Boolean).join(', ');
 	}

@@ -127,6 +127,8 @@ export interface PlatformVehicleEntry {
 	models: string[];
 	yearFrom: number;
 	yearTo: number;
+	chassisCodes?: string[];
+	engines?: string[];
 }
 
 export interface PlatformConfig {

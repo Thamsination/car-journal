@@ -181,7 +181,9 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
       "make": "<Make>",
       "models": ["<Model1>", "<Model2>", "<Variant>"],
       "yearFrom": 2019,
-      "yearTo": 2026
+      "yearTo": 2026,
+      "chassisCodes": ["<optional: subset of platform chassisCodes for this era>"],
+      "engines": ["<optional: subset of platform engines for this era>"]
     }
   ],
   "serviceIntervals": [
@@ -206,9 +208,17 @@ This array is how the app matches a user's car to a platform. Get it right.
 - **`models`**: Every model name **actually sold** on this engine-platform combination. **Every entry must identify the engine variant** — bare series names like `"3 Series"`, `"5 Series"`, or `"Golf"` are NOT valid because they don't tell the app which engine the user has. Use the full model designation: `"320d"`, `"520d"`, `"Golf TDI"`, etc. Include body style variants **and drivetrain variants** if they have different market names (e.g., `["520d", "520d Touring", "520d xDrive", "520d xDrive Touring"]` for a BMW diesel platform covering sedan and wagon). Always list both the base and AWD model name when the manufacturer markets them separately (BMW: `"320i"` and `"320i xDrive"`, Audi: `"A4 2.0 TFSI"` and `"A4 2.0 TFSI quattro"`). For platforms covering both sedan and Touring/wagon body styles (BMW G30 sedan + G31 Touring, E60 sedan + E61 Touring), every model that is sold as a Touring must have a separate `"... Touring"` entry — a user with a `520d xDrive Touring` must find that exact name, not just `"520d xDrive"`. Do NOT include chassis codes or generation numbers — users don't know those. **Verify model names exist** — not every generation/chassis offered AWD. For example, BMW E39 (1995–2003) had NO xDrive/xi variants; those started with the E60. Adding fictional model names breaks user trust.
 - **`yearFrom`**: First model year this engine-platform combination was produced (integer).
 - **`yearTo`**: Last model year, or the current year (2026) if still in production (integer).
+- **`chassisCodes`** (optional): If the platform spans multiple chassis generations, list only the chassis codes that apply to this vehicles entry's year range. The app uses this to filter the chassis dropdown. Omit if all platform-level `chassisCodes` apply to this entry.
+- **`engines`** (optional): If the platform spans multiple engine variants, list only the engine codes that apply to this vehicles entry's models and year range. The app uses this to filter the engine dropdown. Omit if all platform-level `engines` apply to this entry.
 - **Multi-brand platforms**: If the same platform is sold under different brands, add a separate entry per brand.
 
-**Example — BMW G30/G31 diesel (sedan + Touring):**
+**When to use per-entry `chassisCodes` and `engines`:**
+
+Use these when a single platform file covers multiple chassis generations or when different model/year ranges used different engines. This is common on catch-all platforms that span many years (e.g., Subaru WRX 2000–2021 covers GD, GE, and VA chassis with different EJ engine variants). The app matches the user's make + model + year to a specific vehicles entry, then uses that entry's `chassisCodes`/`engines` for dropdowns. If no per-entry arrays exist, it falls back to the platform-level arrays.
+
+**Split vehicles entries by generation** when chassis codes or engine options differ. Don't cram everything into one entry spanning 20 years if the chassis changed halfway through.
+
+**Example — BMW G30/G31 diesel (sedan + Touring, single generation):**
 ```json
 "vehicles": [
   {
@@ -219,6 +229,35 @@ This array is how the app matches a user's car to a platform. Get it right.
   }
 ]
 ```
+No per-entry `chassisCodes`/`engines` needed — single-engine platform with consistent chassis.
+
+**Example — Subaru WRX/STI EJ turbo (multi-generation catch-all):**
+```json
+"vehicles": [
+  {
+    "make": "Subaru",
+    "models": ["Impreza WRX", "Impreza WRX Wagon", "Impreza WRX STI", "Impreza WRX STI Wagon"],
+    "yearFrom": 2000, "yearTo": 2007,
+    "chassisCodes": ["GD", "GG"],
+    "engines": ["EJ205", "EJ207", "EJ257"]
+  },
+  {
+    "make": "Subaru",
+    "models": ["WRX", "WRX STI"],
+    "yearFrom": 2008, "yearTo": 2014,
+    "chassisCodes": ["GE", "GH"],
+    "engines": ["EJ207", "EJ255", "EJ257"]
+  },
+  {
+    "make": "Subaru",
+    "models": ["WRX STI"],
+    "yearFrom": 2015, "yearTo": 2021,
+    "chassisCodes": ["VA"],
+    "engines": ["EJ207", "EJ257"]
+  }
+]
+```
+Each entry scopes chassis codes and engines to the correct generation, so a 2016 WRX STI user only sees chassis `VA` and engines `EJ207`/`EJ257`.
 
 **Example — VW Golf Mk7 TDI:**
 ```json
@@ -411,6 +450,8 @@ Before moving to the next platform, verify your output:
 20. **Check model names identify the engine variant** — no bare series names like `"3 Series"`, `"5 Series"`, `"Golf"`. Every model entry must include the engine designation (e.g., `"320d"`, `"520i xDrive"`, `"Golf TDI"`). If a user cannot tell from the model name alone which engine it refers to, the entry is invalid.
 21. **Check body style completeness** — if the platform covers multiple body styles (sedan + Touring/wagon, coupé + convertible), verify that every engine/drivetrain model name has a variant for each body style. For example, a G30/G31 platform must list both `"520d"` (sedan) and `"520d Touring"` (wagon), not just `"520d"`.
 22. **Check `transmissions` array** — must be present and contain at least one of `"manual"`, `"automatic"`, `"dct"`, `"cvt"`, `"ev"`. Use `"dct"` for dual-clutch (DSG, PDK), `"cvt"` for CVT, `"ev"` for BEV single-speed, `"automatic"` for conventional torque-converter auto. BEV platforms should be `["ev"]`, not `["automatic"]`.
+23. **Check `engines` array** — must be present and contain at least one engine code. Engine-specific platform files (e.g., `G30-G31-B47`) must list exactly the engine(s) in their scope. Catch-all platforms must list all engine codes offered in the generation (EU market). EV platforms must use `["Electric"]`. PHEV platforms must include both the combustion engine code and `"Electric"`. Entries must be sorted alphabetically with no duplicates. Every code must be verified via web search.
+24. **Check per-entry `chassisCodes`/`engines` on vehicles entries** — if the platform spans multiple chassis generations (e.g., different chassis codes for different year ranges), each `vehicles` entry must have per-entry `chassisCodes` and/or `engines` arrays scoped to that entry's year range. A 2016 WRX STI user should only see chassis `VA` and engines `EJ207`/`EJ257`, not all codes from 2000–2021. Per-entry arrays must be subsets of the platform-level arrays.
 
 If any check fails, go back and fix it before proceeding.
 

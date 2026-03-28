@@ -28,12 +28,23 @@
         "Impreza WRX",
         "Impreza WRX Wagon",
         "Impreza WRX STI",
-        "Impreza WRX STI Wagon",
+        "Impreza WRX STI Wagon"
+      ],
+      "yearFrom": 2000,
+      "yearTo": 2007,
+      "chassisCodes": ["GD", "GG"],
+      "engines": ["EJ205", "EJ207", "EJ257"]
+    },
+    {
+      "make": "Subaru",
+      "models": [
         "WRX",
         "WRX STI"
       ],
-      "yearFrom": 2000,
-      "yearTo": 2014
+      "yearFrom": 2008,
+      "yearTo": 2014,
+      "chassisCodes": ["GE", "GH"],
+      "engines": ["EJ207", "EJ255", "EJ257"]
     },
     {
       "make": "Subaru",
@@ -41,7 +52,9 @@
         "WRX STI"
       ],
       "yearFrom": 2015,
-      "yearTo": 2021
+      "yearTo": 2021,
+      "chassisCodes": ["VA"],
+      "engines": ["EJ207", "EJ257"]
     }
   ],
   "serviceIntervals": [
