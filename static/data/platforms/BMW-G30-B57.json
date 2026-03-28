@@ -38,7 +38,7 @@
       "task": "engine oil",
       "km": 30000,
       "kind": "mfr",
-      "months": null
+      "months": 24
     },
     {
       "task": "micro filter",
@@ -142,7 +142,7 @@
     "intake carbon clean": "Direct injection diesel engines accumulate carbon deposits on intake valves. The B57 twin-turbo setup can accelerate buildup. Walnut blasting or chemical cleaning restores performance."
   },
   "serviceSources": {
-    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals). NOTE: 30,000 km is the B47 CBS ceiling — the B57 (higher output 530d/540d/M550d) may have a lower CBS-calculated ceiling. User reports and online sources suggest CBS typically calculates 10-12,000 km for these models. Needs Tier 1 verification.",
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — 30,000 km / 24 months EU CBS maximum, same ceiling as B47. CBS typically calculates shorter intervals for high-output B57 models (530d/540d/M550d) under normal driving.",
     "micro filter": "BMW SIB B000214 Attachment 2 (CBS intervals); every oil service",
     "brake fluid": "BMW owner's manual G30 — 2-year interval (industry standard, DOT 4)",
     "air cleaner element": "BMW SIB B000214 Attachment 2 (CBS intervals); every 4th oil service",
