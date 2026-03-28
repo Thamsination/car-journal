@@ -3,6 +3,14 @@
   "name": "BMW G30/G31 5 Series",
   "years": "2017–2020",
   "chassisCodes": ["G30", "G31"],
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": ["520d", "520d xDrive", "520i", "530i", "530i xDrive", "530d", "530d xDrive", "540i", "540i xDrive", "530e", "M550i xDrive"],
+      "yearFrom": 2017,
+      "yearTo": 2020
+    }
+  ],
   "serviceIntervals": [
     { "task": "engine oil", "km": 30000, "kind": "mfr" },
     { "task": "micro filter", "km": 30000, "kind": "mfr" },

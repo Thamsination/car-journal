@@ -5,6 +5,20 @@
   "chassisCodes": [
     "F"
   ],
+  "vehicles": [
+    {
+      "make": "Opel",
+      "models": ["Corsa", "Corsa-e"],
+      "yearFrom": 2019,
+      "yearTo": 2026
+    },
+    {
+      "make": "Vauxhall",
+      "models": ["Corsa", "Corsa-e"],
+      "yearFrom": 2019,
+      "yearTo": 2026
+    }
+  ],
   "serviceIntervals": [
     {
       "task": "engine oil",

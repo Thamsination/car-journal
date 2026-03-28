@@ -5,6 +5,14 @@
   "chassisCodes": [
     "5G"
   ],
+  "vehicles": [
+    {
+      "make": "Volkswagen",
+      "models": ["Golf", "Golf Variant", "Golf Alltrack", "Golf GTE", "Golf GTI", "Golf GTD", "Golf R", "Golf Sportsvan"],
+      "yearFrom": 2012,
+      "yearTo": 2020
+    }
+  ],
   "serviceIntervals": [
     {
       "task": "engine oil",

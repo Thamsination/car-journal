@@ -5,6 +5,14 @@
   "chassisCodes": [
     "P21"
   ],
+  "vehicles": [
+    {
+      "make": "Peugeot",
+      "models": ["208", "e-208"],
+      "yearFrom": 2019,
+      "yearTo": 2026
+    }
+  ],
   "serviceIntervals": [
     {
       "task": "engine oil",

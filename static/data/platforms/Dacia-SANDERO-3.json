@@ -5,6 +5,14 @@
   "chassisCodes": [
     "BJI"
   ],
+  "vehicles": [
+    {
+      "make": "Dacia",
+      "models": ["Sandero", "Sandero Stepway"],
+      "yearFrom": 2020,
+      "yearTo": 2026
+    }
+  ],
   "serviceIntervals": [
     {
       "task": "engine oil",

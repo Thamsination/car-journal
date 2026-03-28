@@ -5,6 +5,14 @@
   "chassisCodes": [
     "AW"
   ],
+  "vehicles": [
+    {
+      "make": "Volkswagen",
+      "models": ["Polo", "Polo GTI"],
+      "yearFrom": 2017,
+      "yearTo": 2026
+    }
+  ],
   "serviceIntervals": [
     {
       "task": "engine oil",

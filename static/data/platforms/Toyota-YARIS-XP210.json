@@ -5,6 +5,14 @@
   "chassisCodes": [
     "XP210"
   ],
+  "vehicles": [
+    {
+      "make": "Toyota",
+      "models": ["Yaris", "Yaris Hybrid", "Yaris Cross", "Yaris Cross Hybrid"],
+      "yearFrom": 2020,
+      "yearTo": 2026
+    }
+  ],
   "serviceIntervals": [
     {
       "task": "engine oil",

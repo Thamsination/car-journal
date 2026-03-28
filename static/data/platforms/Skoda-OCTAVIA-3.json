@@ -5,6 +5,20 @@
   "chassisCodes": [
     "5E"
   ],
+  "vehicles": [
+    {
+      "make": "Škoda",
+      "models": ["Octavia", "Octavia Combi", "Octavia Scout", "Octavia RS"],
+      "yearFrom": 2012,
+      "yearTo": 2020
+    },
+    {
+      "make": "Skoda",
+      "models": ["Octavia", "Octavia Combi", "Octavia Scout", "Octavia RS"],
+      "yearFrom": 2012,
+      "yearTo": 2020
+    }
+  ],
   "serviceIntervals": [
     {
       "task": "engine oil",
