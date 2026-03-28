@@ -45,7 +45,7 @@
       "task": "engine oil",
       "km": 30000,
       "kind": "mfr",
-      "months": null
+      "months": 24
     },
     {
       "task": "engine oil",
@@ -135,11 +135,11 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "N57 straight-six diesel: CBS oil service; 30,000 km typical EU maximum. Sources: BMW EU diesel maintenance, garage.wiki.",
+    "engine oil": "CBS oil service MFR 30,000 km / 24 months EU maximum with Long-Life oil (SIB B000214 / service display).",
     "micro filter": "Cabin filter CBS.",
     "brake fluid": "24 months.",
-    "air cleaner element": "Six-cylinder diesel air filter ~60,000 km CBS-style.",
-    "fuel filter": "Diesel fuel filter ~60,000 km.",
+    "air cleaner element": "Air filter each second engine oil service (60,000 km at 30,000 km oil ceiling) per garage.wiki F30 LCI schedule.",
+    "fuel filter": "Diesel fuel filter each second engine oil service (60,000 km) per garage.wiki F30 LCI schedule.",
     "check front brake pads": "Heavy torque RWD/xDrive: inspect ~30,000 km.",
     "check rear brake pads": "Inspect ~30,000 km.",
     "vehicle check": "BMW CBS vehicle check.",
@@ -149,5 +149,15 @@
     "differential fluids": "xDrive only.",
     "timing chain": "Chain-driven N57; monitor at very high mileage.",
     "coolant flush": "Preventive ~120,000 km."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — 30,000 km / 24 months EU maximum. https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2015/service-intervals.html",
+    "micro filter": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2015/service-intervals.html — interior filter at every engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2015/service-intervals.html — first change 3 years then every 2 years; BMW owner's manual F30/F31",
+    "air cleaner element": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2015/service-intervals.html — air filter with each second engine oil change (60,000 km)",
+    "fuel filter": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2015/service-intervals.html — fuel filter with each second engine oil change (60,000 km)",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval (pre-LCI spacing in data)",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)"
   }
 }

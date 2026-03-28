@@ -45,7 +45,7 @@
       "task": "engine oil",
       "km": 30000,
       "kind": "mfr",
-      "months": null
+      "months": 24
     },
     {
       "task": "engine oil",
@@ -73,7 +73,7 @@
     },
     {
       "task": "spark plugs",
-      "km": 90000,
+      "km": 30000,
       "kind": "mfr",
       "months": null
     },
@@ -141,11 +141,11 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "N20 is CBS-controlled; 30,000 km is a typical EU maximum between oil services. Follow the service display. Sources: BMW EU maintenance plans, garage.wiki F30.",
+    "engine oil": "CBS oil service MFR 30,000 km / 24 months EU maximum with Long-Life oil (SIB B000214 / service display).",
     "micro filter": "Cabin micro filter per CBS.",
     "brake fluid": "Every 24 months.",
-    "air cleaner element": "Turbo DI N20: air filter commonly on ~60,000 km CBS cycle.",
-    "spark plugs": "Petrol DI: plugs often tied to third oil service (~90,000 km). Confirm display.",
+    "air cleaner element": "Air filter each second engine oil service (2 × 30,000 km CBS ceiling = 60,000 km) per garage.wiki F30 schedule.",
+    "spark plugs": "Changed from 90,000 km to 30,000 km: N20/N26 schedule — spark plugs at every engine oil service (garage.wiki F30).",
     "check front brake pads": "CBS wear monitoring; 30,000 km inspection cadence.",
     "check rear brake pads": "CBS wear monitoring; 30,000 km inspection cadence.",
     "vehicle check": "BMW CBS vehicle check.",
@@ -155,6 +155,16 @@
     "differential fluids": "xDrive only.",
     "coolant flush": "Preventive ~120,000 km.",
     "intake carbon clean": "DI intake deposits: clean ~120,000 km.",
-    "timing chain inspection": "N20 timing chain assemblies are a known wear area; many specialists recommend listening for rattle and inspection around 100,000 km (not an OEM fixed interval—verify with workshop)."
+    "timing chain inspection": "N20 timing chain assemblies are a known wear area; many specialists recommend listening for rattle and inspection around 100,000 km (workshop REC, not an OEM fixed interval)."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — 30,000 km / 24 months EU maximum. https://garage.wiki/bmw/3-series-sedan/sixth-generation-f30/2012/service-intervals.html",
+    "micro filter": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-f30/2012/service-intervals.html — interior filter at every engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-f30/2012/service-intervals.html — first change 3 years then every 2 years; BMW owner's manual F30",
+    "air cleaner element": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-f30/2012/service-intervals.html — air filter with each second engine oil change (60,000 km)",
+    "spark plugs": "Changed from 90,000 km to 30,000 km per https://garage.wiki/bmw/3-series-sedan/sixth-generation-f30/2012/service-intervals.html — N20 B20 A at every engine oil change",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval (pre-LCI F30)",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval (pre-LCI F30)",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)"
   }
 }

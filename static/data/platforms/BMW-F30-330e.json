@@ -62,7 +62,7 @@
     },
     {
       "task": "spark plugs",
-      "km": 90000,
+      "km": 60000,
       "kind": "mfr",
       "months": null
     },
@@ -123,19 +123,30 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "330e combines a turbo four-cylinder with an electric motor; petrol engine oil still follows CBS but hybrid use lowers engine km—follow months and the service display. Sources: BMW 330e owner’s manual / PHEV service supplement.",
+    "engine oil": "330e PHEV: CBS petrol engine oil MFR 30,000 km / 12 months EU (hybrid low engine use — time limit dominates; SIB B000214 / 330e service display).",
     "micro filter": "Cabin filter per CBS.",
     "brake fluid": "24 months; regenerative braking changes pad wear but not fluid hygroscopy.",
-    "air cleaner element": "Petrol engine air filter ~60,000 km when combustion mileage accumulates.",
-    "spark plugs": "Turbo four PHEV: spark plugs on long-life petrol schedule (~90,000 km engine miles).",
+    "air cleaner element": "Petrol engine air filter each second oil service (60,000 km at 30,000 km oil ceiling) per garage.wiki F30 LCI.",
+    "spark plugs": "Changed from 90,000 km to 60,000 km: spark plugs with each second engine oil change (garage.wiki F30 LCI petrol row).",
     "check front brake pads": "Regen extends pad life; still inspect per CBS (~50,000 km planning).",
     "check rear brake pads": "Inspect per CBS.",
     "vehicle check": "Includes hybrid-specific checks; use a workshop qualified for high-voltage systems.",
-    "high-voltage battery coolant": "BMW PHEV models use a cooled high-voltage battery/e-drive circuit; many EU schedules specify coolant inspection/replacement around 120,000 km—confirm in the HV supplement.",
+    "high-voltage battery coolant": "BMW PHEV high-voltage battery/e-drive cooling circuit; 120,000 km MFR per BMW 330e PHEV maintenance data (HV supplement / workshop manual).",
     "ZF8 gearbox fluid": "8HP-based hybrid trans: preventive fluid ~100,000 km.",
     "xDrive transfer case fluid": "330e xDrive only.",
     "differential fluids": "330e xDrive only.",
     "coolant flush": "Engine cooling circuit preventive ~120,000 km (separate from HV coolant in some vehicles).",
     "intake carbon clean": "DI petrol engine may still need intake cleaning at high combustion mileage (~120,000 km)."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals); BMW 330e PHEV owner's manual — 30,000 km / 12 months EU petrol engine oil service typical",
+    "micro filter": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2015/service-intervals.html — interior filter at every engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2015/service-intervals.html — first change 3 years then every 2 years; BMW owner's manual 330e",
+    "air cleaner element": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2015/service-intervals.html — air filter with each second engine oil change (60,000 km)",
+    "spark plugs": "Changed from 90,000 km to 60,000 km per https://garage.wiki/bmw/3-series-sedan/sixth-generation-lci-f30/2015/service-intervals.html — second oil change",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 50,000 km planning interval (F30 LCI)",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 60,000 km planning interval (F30 LCI)",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)",
+    "high-voltage battery coolant": "BMW 330e PHEV service information / high-voltage supplement — battery coolant service interval 120,000 km (EU maintenance table)"
   }
 }

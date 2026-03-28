@@ -45,7 +45,7 @@
       "task": "engine oil",
       "km": 30000,
       "kind": "mfr",
-      "months": null
+      "months": 24
     },
     {
       "task": "engine oil",
@@ -73,7 +73,7 @@
     },
     {
       "task": "spark plugs",
-      "km": 90000,
+      "km": 60000,
       "kind": "mfr",
       "months": null
     },
@@ -135,13 +135,13 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "BMW Condition Based Service (CBS) sets oil service from the vehicle display; 30,000 km is a typical EU maximum between oil services. Follow the service indicator. Sources: BMW EU F30 service booklets, garage.wiki F30 maintenance summaries.",
-    "micro filter": "Cabin micro filter per CBS; 30,000 km aligns with common EU inspection planning.",
-    "brake fluid": "Replace every 24 months regardless of mileage (hygroscopic fluid).",
-    "air cleaner element": "Turbocharged direct-injection four-cylinder: air filter typically tied to CBS (~60,000 km planning interval). Confirm on the vehicle display.",
-    "spark plugs": "Petrol turbo four: iridium plugs commonly scheduled around every third oil service on CBS (~90,000 km). Verify in the owner’s literature.",
-    "check front brake pads": "Inspect per CBS wear sensors and workshop visits; 30,000 km is a reasonable inspection cadence.",
-    "check rear brake pads": "Inspect per CBS; 30,000 km is a reasonable inspection cadence.",
+    "engine oil": "CBS oil service MFR 30,000 km / 24 months EU maximum with Long-Life oil (SIB B000214 / service display).",
+    "micro filter": "Interior filter at every engine oil change (30,000 km CBS ceiling) per garage.wiki F30.",
+    "brake fluid": "Replace every 24 months after the first change; garage.wiki notes first brake fluid change at 3 years then every 2 years — follow owner’s manual for your market.",
+    "air cleaner element": "Air filter each second engine oil service (2 × 30,000 km = 60,000 km) per garage.wiki F30.",
+    "spark plugs": "Changed from 90,000 km to 60,000 km: spark plugs with each second engine oil change (all other modifications row, garage.wiki F30).",
+    "check front brake pads": "Inspect per CBS; 30,000 km planning interval (pre-LCI F30).",
+    "check rear brake pads": "Inspect per CBS; 30,000 km planning interval (pre-LCI F30).",
     "vehicle check": "BMW CBS vehicle check / inspection service.",
     "ZF8 gearbox fluid": "Applies to 8-speed automatic models. ZF often recommends fluid exchange around 100,000 km despite lifetime-fill wording.",
     "manual gearbox fluid": "Manual gearbox: preventive oil exchange around 100,000 km is a common workshop recommendation.",
@@ -149,5 +149,15 @@
     "differential fluids": "xDrive models only. Often labelled lifetime; many specialists recommend 60,000–100,000 km.",
     "coolant flush": "Preventive coolant exchange around 120,000 km maintains corrosion protection.",
     "intake carbon clean": "Direct injection can cause intake valve deposits; walnut/chemical clean around 120,000 km is a common recommendation."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — 30,000 km / 24 months EU maximum. https://garage.wiki/bmw/3-series-sedan/sixth-generation-f30/2012/service-intervals.html",
+    "micro filter": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-f30/2012/service-intervals.html — interior filter at every engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-f30/2012/service-intervals.html — first change 3 years then every 2 years; BMW owner's manual F30",
+    "air cleaner element": "https://garage.wiki/bmw/3-series-sedan/sixth-generation-f30/2012/service-intervals.html — air filter with each second engine oil change (60,000 km)",
+    "spark plugs": "Changed from 90,000 km to 60,000 km per https://garage.wiki/bmw/3-series-sedan/sixth-generation-f30/2012/service-intervals.html — all other modifications: second oil change",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)"
   }
 }
