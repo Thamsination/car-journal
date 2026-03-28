@@ -96,8 +96,8 @@
 		sortDate: string;
 	}
 
-	const mfrMilestones = $derived(computeMfrMilestones($events, serviceIntervals));
-	const recMilestones = $derived(computeRecMilestones($events, serviceIntervals));
+	const mfrMilestones = $derived(computeMfrMilestones($events, serviceIntervals, $latestOdometer.km));
+	const recMilestones = $derived(computeRecMilestones($events, serviceIntervals, $latestOdometer.km));
 	const timeMilestones = $derived(computeTimeMilestones(serviceIntervals, $events, $latestOdometer.km, $dailyAverageKm));
 
 	type NextMilestoneInfo = { type: 'km'; ms: ServiceMilestone } | { type: 'time'; tm: TimeMilestone };

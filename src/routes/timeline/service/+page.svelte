@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
-	import { events, platformConfig, vehicleConfig } from '$lib/stores';
+	import { events, platformConfig, vehicleConfig, latestOdometer } from '$lib/stores';
 	import { computeMfrMilestones, computeRecMilestones, getServiceNotes, getServiceIntervals } from '$lib/utils';
 	import type { ServiceMilestone } from '$lib/types';
 
@@ -15,8 +15,8 @@
 	const milestone = $derived.by(() => {
 		if (!kind || !km) return null;
 		const all = kind === 'mfr'
-			? computeMfrMilestones($events, serviceIntervals)
-			: computeRecMilestones($events, serviceIntervals);
+			? computeMfrMilestones($events, serviceIntervals, $latestOdometer.km)
+			: computeRecMilestones($events, serviceIntervals, $latestOdometer.km);
 		return all.find((ms) => ms.km === km) ?? null;
 	});
 

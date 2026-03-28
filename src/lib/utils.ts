@@ -232,10 +232,10 @@ const WEAR_BASED_TASKS = new Set(['check front brake pads', 'check rear brake pa
 
 const VEHICLE_CHECK_IMPLIES = ['check front brake pads', 'check rear brake pads'];
 
-function completedByTaskMap(events: CarEvent[]): Map<string, number[]> {
+function completedByTaskMap(events: CarEvent[], currentOdometer: number): Map<string, number[]> {
 	const map = new Map<string, number[]>();
 	for (const evt of events) {
-		if (!evt.completed || evt.km === null) continue;
+		if (!isEffectivelyCompleted(evt, currentOdometer) || evt.km === null) continue;
 		const tasks = evt.tasks ?? [evt.event];
 		for (const t of tasks) {
 			const key = t.toLowerCase().trim();
@@ -301,8 +301,9 @@ function computeIntervalMilestones(
 	intervals: ServiceInterval[],
 	events: CarEvent[],
 	kind: MilestoneKind,
+	currentOdometer: number,
 ): ServiceMilestone[] {
-	const completed = completedByTaskMap(events);
+	const completed = completedByTaskMap(events, currentOdometer);
 	const filtered = intervals.filter((i) => i.kind === kind && i.km != null);
 
 	const allRolling: RollingMilestone[] = [];
@@ -346,7 +347,7 @@ export function milestoneTaskStatuses(
 	currentOdometer: number,
 	serviceIntervals: ServiceInterval[] = []
 ): TaskWithStatus[] {
-	const completed = completedByTaskMap(events);
+	const completed = completedByTaskMap(events, currentOdometer);
 
 	const allIntervals = serviceIntervals;
 
@@ -397,13 +398,13 @@ export function milestoneCardStatus(taskStatuses: TaskWithStatus[]): TaskStatus 
 	return 'covered';
 }
 
-export function computeMfrMilestones(events: CarEvent[], serviceIntervals: ServiceInterval[] = []): ServiceMilestone[] {
-	return computeIntervalMilestones(serviceIntervals, events, 'mfr');
+export function computeMfrMilestones(events: CarEvent[], serviceIntervals: ServiceInterval[] = [], currentOdometer = 0): ServiceMilestone[] {
+	return computeIntervalMilestones(serviceIntervals, events, 'mfr', currentOdometer);
 }
 
-export function computeRecMilestones(events: CarEvent[], serviceIntervals: ServiceInterval[] = []): ServiceMilestone[] {
-	const recMilestones = computeIntervalMilestones(serviceIntervals, events, 'rec');
-	const mfrMilestones = computeMfrMilestones(events, serviceIntervals);
+export function computeRecMilestones(events: CarEvent[], serviceIntervals: ServiceInterval[] = [], currentOdometer = 0): ServiceMilestone[] {
+	const recMilestones = computeIntervalMilestones(serviceIntervals, events, 'rec', currentOdometer);
+	const mfrMilestones = computeMfrMilestones(events, serviceIntervals, currentOdometer);
 
 	const mfrTasksByKm = new Map<number, Set<string>>();
 	for (const ms of mfrMilestones) {
