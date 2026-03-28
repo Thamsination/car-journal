@@ -1,7 +1,7 @@
 {
   "id": "Mercedes-E-W211-Diesel",
   "name": "Mercedes-Benz E-Class W211/S211 (diesel, OM646/OM642)",
-  "years": "2002\u20132009",
+  "years": "2002–2009",
   "chassisCodes": [
     "W211",
     "S211"
@@ -13,6 +13,12 @@
   "transmissions": [
     "manual",
     "automatic"
+  ],
+  "engines": [
+    "OM642",
+    "OM646",
+    "OM647",
+    "OM648"
   ],
   "vehicles": [
     {
@@ -138,13 +144,13 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "Mfr row: later W211 diesel model years often use ASSYST flexible plans with engine oil and filter up to 25,000 km or 12 months per EU-oriented maintenance summaries (oil-change.info style W211 diesel data); earlier OM646 cars may use 15,000 km fixed plans\u2014follow the in-dash indicator and printed booklet. Rec row: for short-trip or severe use, 15,000 km oil changes are a conservative specialist recommendation when longer flexible intervals are shown.",
+    "engine oil": "Mfr row: later W211 diesel model years often use ASSYST flexible plans with engine oil and filter up to 25,000 km or 12 months per EU-oriented maintenance summaries (oil-change.info style W211 diesel data); earlier OM646 cars may use 15,000 km fixed plans—follow the in-dash indicator and printed booklet. Rec row: for short-trip or severe use, 15,000 km oil changes are a conservative specialist recommendation when longer flexible intervals are shown.",
     "dust filter": "Mercedes-Benz specifies dust filter (cabin filter) replacement on time and distance criteria in the European maintenance programme (typically every 24 months and/or with major inspections).",
     "engine air filter": "Air filter replacement follows Mercedes inspection intervals (commonly 60,000 km or 48 months on EU sheets for this generation).",
     "brake fluid": "Brake fluid must be renewed every 24 months per Mercedes-Benz; interval is time-based only.",
     "check brake pad thickness": "Brake pads are inspected at each service; 30,000 km provides a mid-cycle reminder for high-mileage driving between oil services.",
     "fuel filter": "Diesel fuel filter replacement is specified in the manufacturer schedule (typically 60,000 km for OM646/OM642 E-Class diesels; verify exact engine variant in the printed booklet).",
-    "coolant": "Long-life coolant exchange is specified at high mileage in Mercedes maintenance data for W211; 150,000 km is a commonly quoted renewal point\u2014verify for your market booklet.",
+    "coolant": "Long-life coolant exchange is specified at high mileage in Mercedes maintenance data for W211; 150,000 km is a commonly quoted renewal point—verify for your market booklet.",
     "automatic transmission fluid": "722.6/722.9 transmissions are often lifetime-fill officially; preventive ATF service near 60,000 km is widely recommended by independent Mercedes specialists.",
     "manual transmission oil": "Manual gearbox oil is typically long-life; changing near 100,000 km is a common workshop practice.",
     "transfer case oil": "4MATIC models only. When Mercedes lists no routine interval, many specialists renew transfer case fluid around 60,000 km.",

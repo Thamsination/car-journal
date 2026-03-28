@@ -1,7 +1,7 @@
 {
   "id": "Mercedes-E-W210-Petrol",
   "name": "Mercedes-Benz E-Class W210/S210 (petrol)",
-  "years": "2000\u20132002",
+  "years": "2000–2002",
   "chassisCodes": [
     "W210",
     "S210"
@@ -13,6 +13,11 @@
   "transmissions": [
     "manual",
     "automatic"
+  ],
+  "engines": [
+    "M111",
+    "M112",
+    "M113"
   ],
   "vehicles": [
     {
@@ -143,7 +148,7 @@
     "engine air filter": "Engine air filter service follows Mercedes mileage-based inspection items on EU maintenance sheets (often 60,000 km or 48 months).",
     "brake fluid": "Replace brake fluid every 24 months per Mercedes-Benz time-based requirement; do not use a km value.",
     "check brake pad thickness": "Pad thickness checks are part of each inspection service; 30,000 km aligns with biennial oil-service cadence when oil is at 15,000 km.",
-    "spark plugs": "Spark plug renewal for M112/M113-era petrol engines is specified at extended mileage and time limits (commonly 60,000 km or 48 months on EU sheets\u2014verify for your exact engine code).",
+    "spark plugs": "Spark plug renewal for M112/M113-era petrol engines is specified at extended mileage and time limits (commonly 60,000 km or 48 months on EU sheets—verify for your exact engine code).",
     "coolant": "Coolant renewal interval is specified in the vehicle maintenance booklet (many W210 petrol variants list long-life coolant exchange around 160,000 km).",
     "automatic transmission fluid": "Automatic transmission fluid is officially long-life on many W210 gearboxes; fluid service around 60,000 km is a widely recommended preventive interval.",
     "manual transmission oil": "Manual gearbox oil is typically long-life; renewal near 100,000 km is a common independent recommendation.",

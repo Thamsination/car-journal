@@ -1,7 +1,7 @@
 {
   "id": "Mercedes-E-W213-Petrol",
   "name": "Mercedes-Benz E-Class W213/S213, C238/A238 (petrol, incl. AMG)",
-  "years": "2016\u20132026",
+  "years": "2016–2026",
   "chassisCodes": [
     "W213",
     "S213",
@@ -15,44 +15,52 @@
   "transmissions": [
     "automatic"
   ],
+  "engines": [
+    "M177",
+    "M256",
+    "M264",
+    "M270",
+    "M274",
+    "M276"
+  ],
   "vehicles": [
     {
       "make": "Mercedes-Benz",
       "models": [
         "E 200",
         "E 200 Estate",
-        "E 200 Coup\u00e9",
+        "E 200 Coupé",
         "E 200 Cabriolet",
         "E 200 4MATIC",
         "E 200 4MATIC Estate",
         "E 300",
         "E 300 Estate",
-        "E 300 Coup\u00e9",
+        "E 300 Coupé",
         "E 300 Cabriolet",
         "E 300 4MATIC",
         "E 300 4MATIC Estate",
         "E 350",
         "E 350 Estate",
-        "E 350 Coup\u00e9",
+        "E 350 Coupé",
         "E 350 Cabriolet",
         "E 350 4MATIC",
         "E 350 4MATIC Estate",
         "E 450",
         "E 450 Estate",
-        "E 450 Coup\u00e9",
+        "E 450 Coupé",
         "E 450 Cabriolet",
         "E 450 4MATIC",
         "E 450 4MATIC Estate",
         "E 53 AMG 4MATIC+",
         "E 53 AMG 4MATIC+ Estate",
-        "E 53 AMG 4MATIC+ Coup\u00e9",
+        "E 53 AMG 4MATIC+ Coupé",
         "E 53 AMG 4MATIC+ Cabriolet",
         "E 63 AMG",
         "E 63 AMG Estate",
         "E 63 S AMG",
         "E 63 S AMG Estate",
-        "E 63 AMG Coup\u00e9",
-        "E 63 S AMG Coup\u00e9"
+        "E 63 AMG Coupé",
+        "E 63 S AMG Coupé"
       ],
       "yearFrom": 2016,
       "yearTo": 2026
@@ -156,7 +164,7 @@
     "engine air filter": "Engine air filter at ASSYST inspection intervals (60,000 km / 48 months typical on EU documentation).",
     "brake fluid": "24-month brake fluid renewal for W213 across petrol and diesel lines per Mercedes-Benz European guidance cited in independent maintenance references.",
     "check brake pad thickness": "Inspect pads each service; 30,000 km mid-cycle reminder.",
-    "spark plugs": "Spark plug renewal for M264/M256-type petrol engines at extended mileage and time limits (60,000 km / 48 months typical EU orientation\u2014AMG M177 may differ; verify ASSYST for E 63).",
+    "spark plugs": "Spark plug renewal for M264/M256-type petrol engines at extended mileage and time limits (60,000 km / 48 months typical EU orientation—AMG M177 may differ; verify ASSYST for E 63).",
     "coolant": "Long-life coolant exchange per Mercedes maintenance data (often near 150,000 km).",
     "automatic transmission fluid": "9G-TRONIC preventive ATF service near 60,000 km despite lifetime claims.",
     "transfer case oil": "4MATIC and AMG Performance 4MATIC+ models only. Preventive fluid near 60,000 km when no fixed OEM interval.",

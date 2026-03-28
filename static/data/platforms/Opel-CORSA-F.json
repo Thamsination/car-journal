@@ -12,6 +12,11 @@
     "manual",
     "automatic"
   ],
+  "engines": [
+    "DV5DR",
+    "EB2DT",
+    "Electric"
+  ],
   "vehicles": [
     {
       "make": "Opel",

@@ -1,7 +1,7 @@
 {
   "id": "Mercedes-E-W214-Petrol",
   "name": "Mercedes-Benz E-Class W214/S214 (petrol, mild hybrid)",
-  "years": "2024\u20132026",
+  "years": "2024–2026",
   "chassisCodes": [
     "W214",
     "S214"
@@ -12,6 +12,10 @@
   ],
   "transmissions": [
     "automatic"
+  ],
+  "engines": [
+    "M254",
+    "M256"
   ],
   "vehicles": [
     {
@@ -126,7 +130,7 @@
     "engine air filter": "Engine air filter at ASSYST inspection intervals.",
     "brake fluid": "24-month brake fluid renewal per Mercedes-Benz European requirements.",
     "check brake pad thickness": "Brake pad inspection each workshop visit; mild-hybrid recuperation extends pad life but does not remove inspection need.",
-    "spark plugs": "Spark plugs at extended ASSYST intervals (60,000 km / 48 months EU orientation\u2014verify for M254 engine).",
+    "spark plugs": "Spark plugs at extended ASSYST intervals (60,000 km / 48 months EU orientation—verify for M254 engine).",
     "coolant": "Long-life coolant renewal per Mercedes high-mileage specification.",
     "automatic transmission fluid": "9G-TRONIC preventive ATF near 60,000 km.",
     "transfer case oil": "4MATIC models only. Preventive fluid near 60,000 km.",

@@ -12,6 +12,11 @@
     "manual",
     "cvt"
   ],
+  "engines": [
+    "1KR-FE",
+    "M15A-FKS",
+    "M15A-FXE"
+  ],
   "vehicles": [
     {
       "make": "Toyota",

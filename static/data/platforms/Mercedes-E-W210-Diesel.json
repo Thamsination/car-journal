@@ -1,7 +1,7 @@
 {
   "id": "Mercedes-E-W210-Diesel",
   "name": "Mercedes-Benz E-Class W210/S210 (diesel, OM60x)",
-  "years": "2000\u20132002",
+  "years": "2000–2002",
   "chassisCodes": [
     "W210",
     "S210"
@@ -12,6 +12,11 @@
   "transmissions": [
     "manual",
     "automatic"
+  ],
+  "engines": [
+    "OM611",
+    "OM612",
+    "OM613"
   ],
   "vehicles": [
     {
@@ -115,7 +120,7 @@
     "brake fluid": "Mercedes-Benz specifies brake fluid replacement on a time basis (typically every 24 months) for vehicles of this generation; brake fluid is hygroscopic and must not be assigned a distance-only interval.",
     "check brake pad thickness": "Brake pad wear is inspected at each scheduled maintenance visit; a 30,000 km reminder aligns with alternating EU service visits when oil service is at 15,000 km.",
     "fuel filter": "Diesel fuel filter replacement is part of the manufacturer maintenance programme (commonly around 60,000 km on OM611/OM613-era schedules; verify against your printed service booklet for the exact engine code).",
-    "coolant": "Mercedes-Benz specifies nitrite-free coolant with a long change interval on W210 diesels; many EU booklists quote coolant renewal around 160,000 km\u2014confirm in the owner\u2019s maintenance booklet.",
+    "coolant": "Mercedes-Benz specifies nitrite-free coolant with a long change interval on W210 diesels; many EU booklists quote coolant renewal around 160,000 km—confirm in the owner’s maintenance booklet.",
     "automatic transmission fluid": "722.6 five-speed automatics are often labelled fill-for-life officially; specialists recommend fluid and filter service around 60,000 km for long-term reliability.",
     "manual transmission oil": "Gear oil is typically treated as long-life; renewal around 100,000 km is a common workshop recommendation for Mercedes manual gearboxes.",
     "coolant flush": "If the OEM long interval is not yet due, a full coolant exchange around 120,000 km restores corrosion inhibitor protection for the water pump and radiator.",

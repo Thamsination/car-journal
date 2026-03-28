@@ -1,7 +1,7 @@
 {
   "id": "Mercedes-E-W213-Diesel",
   "name": "Mercedes-Benz E-Class W213/S213, C238/A238 (diesel)",
-  "years": "2016\u20132026",
+  "years": "2016–2026",
   "chassisCodes": [
     "W213",
     "S213",
@@ -15,31 +15,36 @@
   "transmissions": [
     "automatic"
   ],
+  "engines": [
+    "OM642",
+    "OM654",
+    "OM656"
+  ],
   "vehicles": [
     {
       "make": "Mercedes-Benz",
       "models": [
         "E 200 d",
         "E 200 d Estate",
-        "E 200 d Coup\u00e9",
+        "E 200 d Coupé",
         "E 200 d Cabriolet",
         "E 200 d 4MATIC",
         "E 200 d 4MATIC Estate",
         "E 220 d",
         "E 220 d Estate",
-        "E 220 d Coup\u00e9",
+        "E 220 d Coupé",
         "E 220 d Cabriolet",
         "E 220 d 4MATIC",
         "E 220 d 4MATIC Estate",
         "E 300 d",
         "E 300 d Estate",
-        "E 300 d Coup\u00e9",
+        "E 300 d Coupé",
         "E 300 d Cabriolet",
         "E 300 d 4MATIC",
         "E 300 d 4MATIC Estate",
         "E 350 d",
         "E 350 d Estate",
-        "E 350 d Coup\u00e9",
+        "E 350 d Coupé",
         "E 350 d Cabriolet",
         "E 350 d 4MATIC",
         "E 350 d 4MATIC Estate",
@@ -144,7 +149,7 @@
     "engine air filter": "Engine air filter at ASSYST inspection intervals (commonly 60,000 km or 48 months on EU sheets).",
     "brake fluid": "Brake fluid replacement every 24 months across W213 variants per third-party summaries of Mercedes-Benz European operator documentation (e.g. cararac.com E-Class brake fluid guidance).",
     "check brake pad thickness": "Brake pad wear checks at each workshop visit; 30,000 km reminder for high annual mileage.",
-    "fuel filter": "Diesel fuel filter on OM654/OM656 family engines is scheduled around 60,000 km in Mercedes maintenance data\u2014confirm on ASSYST printout.",
+    "fuel filter": "Diesel fuel filter on OM654/OM656 family engines is scheduled around 60,000 km in Mercedes maintenance data—confirm on ASSYST printout.",
     "coolant": "Long-life coolant renewal interval per Mercedes maintenance tables (commonly near 150,000 km for current diesels).",
     "automatic transmission fluid": "9G-TRONIC is officially long-life; preventive fluid service near 60,000 km is widely recommended by independent Mercedes specialists.",
     "transfer case oil": "4MATIC models only. Preventive transfer case fluid around 60,000 km when OEM lists no fixed interval.",

@@ -1,7 +1,7 @@
 {
   "id": "Mercedes-E-W214-Diesel",
   "name": "Mercedes-Benz E-Class W214/S214 (diesel)",
-  "years": "2024\u20132026",
+  "years": "2024–2026",
   "chassisCodes": [
     "W214",
     "S214"
@@ -12,6 +12,10 @@
   ],
   "transmissions": [
     "automatic"
+  ],
+  "engines": [
+    "OM654",
+    "OM656"
   ],
   "vehicles": [
     {
@@ -120,7 +124,7 @@
     "engine air filter": "Engine air filter at ASSYST inspection intervals.",
     "brake fluid": "24-month brake fluid change per Mercedes-Benz European E-Class maintenance guidance (consistent with W213 documentation pattern).",
     "check brake pad thickness": "Pad inspection each service visit.",
-    "fuel filter": "Diesel fuel filter typically near 60,000 km on current four- and six-cylinder diesel schedules\u2014confirm ASSYST for your VIN.",
+    "fuel filter": "Diesel fuel filter typically near 60,000 km on current four- and six-cylinder diesel schedules—confirm ASSYST for your VIN.",
     "coolant": "Long-life engine coolant renewal per Mercedes high-mileage interval.",
     "automatic transmission fluid": "9G-TRONIC preventive fluid service near 60,000 km despite lifetime classification.",
     "transfer case oil": "4MATIC models only. Preventive transfer case fluid near 60,000 km.",

@@ -12,6 +12,13 @@
     "manual",
     "dct"
   ],
+  "engines": [
+    "EA189 TDI",
+    "EA211 TSI",
+    "EA288 TDI",
+    "EA888 TSI",
+    "Electric"
+  ],
   "vehicles": [
     {
       "make": "Volkswagen",

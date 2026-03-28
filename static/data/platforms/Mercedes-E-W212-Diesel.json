@@ -1,7 +1,7 @@
 {
   "id": "Mercedes-E-W212-Diesel",
   "name": "Mercedes-Benz E-Class W212/S212, C207/A207 (diesel)",
-  "years": "2009\u20132016",
+  "years": "2009–2016",
   "chassisCodes": [
     "W212",
     "S212",
@@ -16,33 +16,37 @@
     "manual",
     "automatic"
   ],
+  "engines": [
+    "OM642",
+    "OM651"
+  ],
   "vehicles": [
     {
       "make": "Mercedes-Benz",
       "models": [
         "E 200 CDI",
         "E 200 CDI Estate",
-        "E 200 CDI Coup\u00e9",
+        "E 200 CDI Coupé",
         "E 200 CDI Cabriolet",
         "E 220 CDI",
         "E 220 CDI Estate",
-        "E 220 CDI Coup\u00e9",
+        "E 220 CDI Coupé",
         "E 220 CDI Cabriolet",
         "E 220 CDI 4MATIC",
         "E 220 CDI 4MATIC Estate",
         "E 250 CDI",
         "E 250 CDI Estate",
-        "E 250 CDI Coup\u00e9",
+        "E 250 CDI Coupé",
         "E 250 CDI Cabriolet",
         "E 250 CDI 4MATIC",
         "E 250 CDI 4MATIC Estate",
         "E 350 CDI",
         "E 350 CDI Estate",
-        "E 350 CDI Coup\u00e9",
+        "E 350 CDI Coupé",
         "E 350 CDI Cabriolet",
         "E 350 BlueTEC",
         "E 350 BlueTEC Estate",
-        "E 350 BlueTEC Coup\u00e9",
+        "E 350 BlueTEC Coupé",
         "E 350 BlueTEC Cabriolet",
         "E 350 BlueTEC 4MATIC",
         "E 350 BlueTEC 4MATIC Estate"
@@ -155,7 +159,7 @@
     "engine air filter": "Air filter service at Mercedes inspection intervals (commonly 60,000 km or 48 months on EU sheets).",
     "brake fluid": "Brake fluid renewal every 24 months per Mercedes-Benz European operator documentation; time-based only.",
     "check brake pad thickness": "Brake inspection each service visit; 30,000 km reminder between annual services for high-mileage drivers.",
-    "fuel filter": "Diesel fuel filter on OM651/OM642 BlueTEC schedules is typically renewed around 60,000 km\u2014confirm in ASSYST printout for your VIN.",
+    "fuel filter": "Diesel fuel filter on OM651/OM642 BlueTEC schedules is typically renewed around 60,000 km—confirm in ASSYST printout for your VIN.",
     "coolant": "Long-life coolant exchange interval per Mercedes maintenance data (commonly near 150,000 km for this generation).",
     "automatic transmission fluid": "7G-Tronic and related units are often lifetime-fill officially; preventive ATF service near 60,000 km is widely recommended.",
     "manual transmission oil": "Six-speed manual gearboxes are long-life officially; oil renewal near 100,000 km is a common workshop interval.",

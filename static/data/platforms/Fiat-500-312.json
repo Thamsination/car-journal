@@ -12,6 +12,10 @@
     "manual",
     "automatic"
   ],
+  "engines": [
+    "312A2.000",
+    "312A5.000"
+  ],
   "vehicles": [
     {
       "make": "Fiat",

@@ -12,6 +12,11 @@
     "manual",
     "dct"
   ],
+  "engines": [
+    "EA211 TSI",
+    "EA288 TDI",
+    "EA888 TSI"
+  ],
   "vehicles": [
     {
       "make": "Škoda",

@@ -1,7 +1,7 @@
 {
   "id": "Mercedes-E-W211-Petrol",
   "name": "Mercedes-Benz E-Class W211/S211 (petrol)",
-  "years": "2002\u20132009",
+  "years": "2002–2009",
   "chassisCodes": [
     "W211",
     "S211"
@@ -13,6 +13,14 @@
   "transmissions": [
     "manual",
     "automatic"
+  ],
+  "engines": [
+    "M112",
+    "M113",
+    "M156",
+    "M271",
+    "M272",
+    "M273"
   ],
   "vehicles": [
     {
@@ -153,7 +161,7 @@
     "engine air filter": "Engine air filter follows Mercedes inspection mileage items (commonly 60,000 km or 48 months).",
     "brake fluid": "Mercedes-Benz specifies brake fluid replacement every 24 months; time-based only per operator manual guidance.",
     "check brake pad thickness": "Brake pad inspection at each scheduled service; 30,000 km mid-cycle reminder for high annual mileage.",
-    "spark plugs": "Spark plugs for M272/M273 V6 and related petrol engines are renewed at extended intervals on EU sheets (commonly 60,000 km or 48 months\u2014confirm for your engine code).",
+    "spark plugs": "Spark plugs for M272/M273 V6 and related petrol engines are renewed at extended intervals on EU sheets (commonly 60,000 km or 48 months—confirm for your engine code).",
     "coolant": "Long-life coolant exchange appears in Mercedes maintenance tables around 150,000 km for this generation; verify printed service booklet.",
     "automatic transmission fluid": "722.6/722.9 units are often lifetime-fill officially; ATF service near 60,000 km is a widely used preventive interval.",
     "manual transmission oil": "Manual gearbox oil typically long-life; renewal near 100,000 km is a common workshop recommendation.",

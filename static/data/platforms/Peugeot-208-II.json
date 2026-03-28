@@ -12,6 +12,13 @@
     "manual",
     "automatic"
   ],
+  "engines": [
+    "BlueHDi 1.5",
+    "EB2DT",
+    "EB2DTS",
+    "EB2FA",
+    "Electric"
+  ],
   "vehicles": [
     {
       "make": "Peugeot",

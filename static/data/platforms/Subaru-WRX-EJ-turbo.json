@@ -15,6 +15,12 @@
   "transmissions": [
     "manual"
   ],
+  "engines": [
+    "EJ205",
+    "EJ207",
+    "EJ255",
+    "EJ257"
+  ],
   "vehicles": [
     {
       "make": "Subaru",

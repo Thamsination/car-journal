@@ -12,6 +12,14 @@
     "manual",
     "cvt"
   ],
+  "engines": [
+    "B4D",
+    "Electric",
+    "H4M",
+    "H5D",
+    "H5H",
+    "K9K"
+  ],
   "vehicles": [
     {
       "make": "Renault",

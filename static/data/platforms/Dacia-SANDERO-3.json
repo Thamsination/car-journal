@@ -12,6 +12,11 @@
     "manual",
     "cvt"
   ],
+  "engines": [
+    "B4D",
+    "H4Dt",
+    "H5Ht"
+  ],
   "vehicles": [
     {
       "make": "Dacia",

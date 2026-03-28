@@ -12,6 +12,9 @@
     "manual",
     "cvt"
   ],
+  "engines": [
+    "FA24F"
+  ],
   "vehicles": [
     {
       "make": "Subaru",
