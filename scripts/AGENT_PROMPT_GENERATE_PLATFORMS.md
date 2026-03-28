@@ -30,7 +30,7 @@ Also compare the engine-family variants for the G30/G31 5 Series to see how dies
 8. `static/data/platforms/G30-G31-B57.json` — B57 I6 diesel (has fuel filter + timing chain, no spark plugs)
 9. `static/data/platforms/G30-G31-B58.json` — B58 I6 petrol (has spark plugs, no fuel filter)
 
-Study these files carefully. Your output must match the same level of completeness.
+Study these files carefully — note that every `serviceIntervals` entry has both a `km` and `months` field (one may be null). Your output must match the same schema and level of completeness.
 
 ### Step 1: One platform file per engine family
 
@@ -52,7 +52,9 @@ Each platform file must be **specific to an engine family / fuel type**. The sam
 
 When a facelifted generation (LCI, FL, Phase 2, etc.) has **different service intervals or CBS calibrations**, create a separate platform file for it.
 
-**Platform ID format:** `<MAKE>-<CHASSIS>-<ENGINE/FUEL>`
+**Platform ID format:** `<MAKE>-<CHASSIS>-<ENGINE/FUEL>` for new platforms.
+
+> **Note:** Some legacy BMW files use older naming conventions (e.g., `G30-G31-B47.json` without a `BMW-` prefix, or `BMW-E90.json` without an engine suffix). Do NOT rename existing files — use the new format for all newly created platforms only.
 
 Examples by brand:
 - BMW: `BMW-F30-N20`, `BMW-F30-B47`, `BMW-G20-B48` (use engine code)
@@ -207,7 +209,9 @@ This array is how the app matches a user's car to a platform. Get it right.
 - `kind: "rec"` = community/specialist recommendation not in official schedule
 - **`km`**: distance-based interval in kilometres. Set to `null` for time-only tasks (e.g., brake fluid)
 - **`months`**: time-based interval in months. Set to `null` for distance-only tasks
+- **Every entry MUST have both `km` and `months` fields** — one or both can be null, but both keys must be present
 - **Brake fluid is ALWAYS time-based** — use `"km": null, "months": 24` (or the OEM-specified months). Never assign a km proxy value.
+- **Any task with a manufacturer-specified time interval** should use the `months` field (brake fluid is the most common, but coolant, spark plugs, and timing belts sometimes have time limits too — e.g., "every 5 years or 120,000 km")
 - Tasks with both `km` and `months` will trigger based on whichever comes first
 - Tasks with only `months` (km is null) are excluded from km-based milestones and tracked by date in the app
 - Leave `milestones` as an empty array — the build script will generate them (it skips time-only tasks automatically)
@@ -235,7 +239,7 @@ python3 scripts/build_platform_index.py
 Before moving to the next platform, verify your output:
 
 1. **Count MFR tasks** — must be ≥ 6 for ICE, ≥ 3 for EV
-2. **Check for brake fluid** — if missing, you have a problem
+2. **Check for brake fluid** — must be present with `"km": null, "months": 24` (or OEM-specified months). If it has a `km` value instead of null, fix it.
 3. **Check for brake pad inspection** — if missing, you have a problem
 4. **Check for duplicate task names** — no task should appear more than once per `kind` (mfr or rec)
 5. **Check `vehicles` array** — must have at least one entry with `make`, `models` (≥1 model), `yearFrom`, and `yearTo`
@@ -244,6 +248,7 @@ Before moving to the next platform, verify your output:
 8. **Verify engine specificity** — does the file only include tasks relevant to this engine family? (no spark plugs on diesels, no fuel filter on petrol if N/A, no engine oil on EVs)
 9. **Cross-check against other files for the same chassis** — if you generated both a petrol and diesel variant, verify the intervals are actually different where they should be (fuel filter, spark plugs, timing)
 10. **Compare intervals to web search results** — do the numbers match what you found?
+11. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
 
 If any check fails, go back and fix it before proceeding.
 
@@ -273,6 +278,8 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Leave the `vehicles` array empty or with models that don't match the engine family
 - Include spark plugs on diesel or EV platforms
 - Include fuel filter on petrol platforms where not applicable
+- Assign a `km` value to brake fluid — it is always time-based (`"km": null, "months": 24`)
+- Omit the `months` field from any `serviceIntervals` entry — every entry needs both `km` and `months` (set to null when not applicable)
 - Generate milestones manually — always use the Python script
-- Modify existing platform files unless explicitly told to
+- Modify or rename existing platform files unless explicitly told to
 - Commit without self-validating
