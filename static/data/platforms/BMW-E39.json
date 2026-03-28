@@ -12,8 +12,31 @@
     {
       "make": "BMW",
       "models": [
-        "5 Series",
-        "5 Series Touring"
+        "520d",
+        "520d Touring",
+        "520i",
+        "520i Touring",
+        "523i",
+        "523i Touring",
+        "525d",
+        "525d Touring",
+        "525i",
+        "525i Touring",
+        "525td",
+        "525td Touring",
+        "525tds",
+        "525tds Touring",
+        "528i",
+        "528i Touring",
+        "530d",
+        "530d Touring",
+        "530i",
+        "530i Touring",
+        "535i",
+        "535i Touring",
+        "540i",
+        "540i Touring",
+        "M5"
       ],
       "yearFrom": 1995,
       "yearTo": 2003
