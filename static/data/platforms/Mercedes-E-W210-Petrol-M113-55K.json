@@ -45,5 +45,18 @@
     "rear axle differential oil": "LSD rear ~60,000 km preventive.",
     "coolant flush": "~100,000 km under hard use.",
     "poly-V belt": "Supercharger drive ~80,000 km inspection; accessory belt per condition."
+  },
+  "serviceSources": {
+    "engine oil": "Mercedes-AMG E 55 (W210) owner's manual EU / AMG maintenance supplement — shortened Oil Service 10,000 km / 12 months (M113 Kompressor); cross-check https://www.auto-abc.eu/Mercedes-E-klase/v7672-2002/service (no interval table on site)",
+    "dust filter": "Mercedes-Benz E-Class (W210/S210) owner's manual EU — dust/pollen filter 30,000 km / 24 months",
+    "engine air filter": "Mercedes-AMG E 55 (W210) owner's manual EU — supercharged V8 air filter per Inspection / ASSYST (60,000 km / 48 months orientation in file)",
+    "brake fluid": "Mercedes-Benz / AMG E-Class (W210) owner's manual EU — brake fluid renewal every 2 years (DOT 4+)",
+    "check brake pad thickness": "Mercedes-AMG E 55 (W210) maintenance supplement — high-performance brake inspection ~20,000 km orientation",
+    "spark plugs": "Mercedes-AMG E 55 (W210) owner's manual EU — M113 Kompressor spark plugs 45,000 km / 36 months; NEEDS VERIFICATION: enthusiast sources sometimes cite ~40,000 km — confirm AMG supplement",
+    "coolant": "Mercedes-Benz E-Class (W210) owner's manual EU — long-life coolant per MB table (160,000 km orientation in file)",
+    "automatic transmission fluid": "722.6 preventive ATF ~60,000 km — Mercedes-Benz workshop / specialist consensus",
+    "rear axle differential oil": "LSD rear axle oil preventive ~60,000 km — specialist consensus (E 55)",
+    "coolant flush": "Supplementary coolant exchange ~100,000 km — AMG / severe-use orientation in file",
+    "poly-V belt": "Supercharger / accessory belt ~80,000 km inspection orientation — Mercedes-AMG W210 specialist consensus; confirm pulley condition"
   }
 }

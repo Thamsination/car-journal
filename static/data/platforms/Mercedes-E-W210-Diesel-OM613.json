@@ -23,11 +23,11 @@
     { "task": "engine oil", "km": 15000, "months": 12, "kind": "mfr" },
     { "task": "engine oil", "km": 10000, "months": null, "kind": "rec" },
     { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
-    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "engine air filter", "km": 30000, "months": null, "kind": "mfr" },
     { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
     { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
     { "task": "fuel filter", "km": 60000, "months": null, "kind": "mfr" },
-    { "task": "coolant", "km": 160000, "months": null, "kind": "mfr" },
+    { "task": "coolant", "km": 90000, "months": 60, "kind": "mfr" },
     { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
     { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
     { "task": "poly-V belt", "km": 100000, "months": null, "kind": "rec" }
@@ -35,13 +35,25 @@
   "serviceNotes": {
     "engine oil": "OM613 3.2L inline-six CDI: fixed EU plans commonly 15,000 km or 12 months; rec 10,000 km severe use.",
     "dust filter": "Dust filter per Mercedes EU booklet.",
-    "engine air filter": "Inspection intervals (often 60,000 km / 48 months).",
+    "engine air filter": "Updated to 30,000 km using W210 CDI Tier 2 schedule https://www.auto-abc.eu/Mercedes-E-klase/v7646-2002/service (OM611 proxy; E 320 CDI OM613).",
     "brake fluid": "24 months.",
     "check brake pad thickness": "Inspect each service.",
     "fuel filter": "Diesel fuel filter ~60,000 km—verify booklet.",
-    "coolant": "Long-life coolant (many W210 booklets ~160,000 km).",
+    "coolant": "Updated to 90,000 km / 5 years using W210 CDI Tier 2 schedule https://www.auto-abc.eu/Mercedes-E-klase/v7646-2002/service.",
     "automatic transmission fluid": "722.6 preventive ATF ~60,000 km.",
     "coolant flush": "Supplementary exchange ~120,000 km.",
     "poly-V belt": "Accessory belt ~100,000 km."
+  },
+  "serviceSources": {
+    "engine oil": "File: 15,000 km / 12 months. Tier 2 https://www.auto-abc.eu/Mercedes-E-klase/v7646-2002/service lists 10,000 km / 12 months for OM611 E 220 CDI. Kept 15,000 km / 12 months as Mercedes-Benz W210 EU fixed Oil Service / FSS typical for OM613 E 320 CDI; follow ASSYST/FSS display when equipped.",
+    "dust filter": "Mercedes-Benz E-Class (W210/S210) owner's manual EU — dust/pollen filter 30,000 km / 24 months",
+    "engine air filter": "Changed from 60,000 km / 48 months to 30,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7646-2002/service (W210 CDI proxy for OM613)",
+    "brake fluid": "Mercedes-Benz E-Class (W210) owner's manual EU — brake fluid renewal every 2 years (DOT 4+)",
+    "check brake pad thickness": "Mercedes-Benz W210 EU maintenance booklet — inspect brake lining thickness at regular service intervals (~30,000 km orientation)",
+    "fuel filter": "https://www.auto-abc.eu/Mercedes-E-klase/v7646-2002/service — diesel fuel filter 60,000 km (W210 CDI proxy)",
+    "coolant": "Changed from 160,000 km to 90,000 km / 60 months per https://www.auto-abc.eu/Mercedes-E-klase/v7646-2002/service (W210 CDI proxy)",
+    "automatic transmission fluid": "722.6 preventive ATF ~60,000 km — Mercedes-Benz workshop / specialist consensus (722.6 marketed as fill-for-life)",
+    "coolant flush": "Supplementary coolant exchange ~120,000 km — specialist preventive (OEM table primary: see coolant MFR)",
+    "poly-V belt": "https://www.auto-abc.eu/Mercedes-E-klase/v7646-2002/service — serpentine / accessory belt 100,000 km (W210 CDI proxy)"
   }
 }
