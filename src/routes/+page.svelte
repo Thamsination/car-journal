@@ -11,10 +11,11 @@
 	import {
 		formatCost, formatDateISO, deriveStatus, statusColor,
 		eventCategory, categoryLabel, categoryColor,
-		computeMfrMilestones, computeRecMilestones,
+		computeMfrMilestones, computeRecMilestones, computeTimeMilestones,
 		milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask,
 		getServiceIntervals
 	} from '$lib/utils';
+	import type { TimeMilestone } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceInterval, ServiceMilestone } from '$lib/types';
 
 	let editingOdo = $state(false);
@@ -159,28 +160,28 @@
 	// Milestones
 	const mfrMilestones = $derived(computeMfrMilestones($events, serviceIntervals));
 	const recMilestones = $derived(computeRecMilestones($events, serviceIntervals));
+	const timeMilestones = $derived(computeTimeMilestones(serviceIntervals, $events, $latestOdometer.km, $dailyAverageKm));
 
-	const nextMilestone = $derived.by(() => {
+	type FutureMilestone = { type: 'km'; ms: ServiceMilestone } | { type: 'time'; tm: TimeMilestone };
+
+	const futureMilestones = $derived.by((): FutureMilestone[] => {
 		const odoKm = $latestOdometer.km;
-		if (odoKm <= 0) return null;
-		const all = [...mfrMilestones, ...recMilestones]
+		if (odoKm <= 0) return [];
+		const kmBased: FutureMilestone[] = [...mfrMilestones, ...recMilestones]
 			.filter((ms) => ms.km > odoKm)
-			.sort((a, b) => a.km - b.km);
-		return all[0] ?? null;
+			.map((ms) => ({ type: 'km' as const, ms }));
+		const timeBased: FutureMilestone[] = timeMilestones
+			.filter((tm) => tm.status !== 'covered')
+			.map((tm) => ({ type: 'time' as const, tm }));
+		return [...kmBased, ...timeBased].sort((a, b) => {
+			const aKm = a.type === 'km' ? a.ms.km : a.tm.estimatedKm;
+			const bKm = b.type === 'km' ? b.ms.km : b.tm.estimatedKm;
+			return aKm - bKm;
+		});
 	});
 
-	const nextMilestoneCard = $derived.by(() => {
-		const odoKm = $latestOdometer.km;
-		if (odoKm <= 0) return null;
-		const all = [...mfrMilestones, ...recMilestones]
-			.filter((ms) => ms.km > odoKm)
-			.sort((a, b) => a.km - b.km);
-		if (all.length < 2) return null;
-		const ms = all[1];
-		const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
-		const cardStatus = milestoneCardStatus(stats);
-		return { ms, stats, cardStatus };
-	});
+	const nextMilestone = $derived(futureMilestones[0] ?? null);
+	const nextMilestoneCard = $derived(futureMilestones[1] ?? null);
 
 	function smartStatusText(evt: CarEvent, status: DerivedStatus, odoKm: number): string {
 		if (status === 'overdue' && evt.km !== null && odoKm > 0) {
@@ -264,14 +265,18 @@
 		<!-- 3. Next Milestone -->
 		<h3 class="section-title">Next Milestone</h3>
 		<a href="{base}/timeline" class="here-card">
-			{#if nextMilestone}
-				{@const remaining = nextMilestone.km - $latestOdometer.km}
+			{#if nextMilestone?.type === 'km'}
+				{@const remaining = nextMilestone.ms.km - $latestOdometer.km}
 				{#if remaining > 0}
 					<span class="here-label">In {remaining.toLocaleString()} km</span>
-					<span class="here-action">{milestoneActionText(nextMilestone.tasks)}</span>
+					<span class="here-action">{milestoneActionText(nextMilestone.ms.tasks)}</span>
 				{:else}
 					<span class="here-overdue">Overdue by {Math.abs(remaining).toLocaleString()} km</span>
 				{/if}
+			{:else if nextMilestone?.type === 'time'}
+				{@const dueDate = new Date(nextMilestone.tm.dueDate + '-01T00:00:00')}
+				<span class="here-label">{dueDate.getFullYear()} {dueDate.toLocaleString('en', { month: 'long' })}</span>
+				<span class="here-action">{capitalizeTask(nextMilestone.tm.task)}</span>
 			{:else}
 				<span class="here-label">You are here</span>
 			{/if}
@@ -279,8 +284,10 @@
 
 		<!-- 4. Upcoming Milestone -->
 		<h3 class="section-title">Upcoming Milestone</h3>
-		{#if nextMilestoneCard}
-			{@const { ms, stats, cardStatus } = nextMilestoneCard}
+		{#if nextMilestoneCard?.type === 'km'}
+			{@const ms = nextMilestoneCard.ms}
+			{@const stats = milestoneTaskStatuses(ms, $events, $latestOdometer.km, serviceIntervals)}
+			{@const cardStatus = milestoneCardStatus(stats)}
 			<a
 				href="{base}/timeline/service?kind={ms.kind}&km={ms.km}"
 				class="ms-card"
@@ -311,6 +318,29 @@
 					<span class="ms-estimate">~{est.getFullYear()} {est.toLocaleString('en', { month: 'long' })}</span>
 				{/if}
 			</a>
+		{:else if nextMilestoneCard?.type === 'time'}
+			{@const tm = nextMilestoneCard.tm}
+			{@const dueDate = new Date(tm.dueDate + '-01T00:00:00')}
+			<div
+				class="ms-card"
+				class:ms-card-covered={tm.status === 'covered'}
+			>
+				<div class="ms-card-header">
+					<span class="ms-category-label">
+						{tm.kind === 'mfr' ? 'OEM Service' : 'Recommended'}
+					</span>
+					{#if tm.status === 'covered'}
+						<span class="ms-status-label" style="color: #34c759">OK</span>
+					{:else if tm.status === 'overdue'}
+						<span class="ms-status-label" style="color: #ff3b30">Overdue</span>
+					{/if}
+				</div>
+				<span class="ms-km-label">~{tm.estimatedKm.toLocaleString()} km</span>
+				<div class="ms-task-list">
+					<span class="ms-task-item ms-task-scheduled">{tm.task}</span>
+				</div>
+				<span class="ms-estimate">{dueDate.getFullYear()} {dueDate.toLocaleString('en', { month: 'long' })}</span>
+			</div>
 		{/if}
 
 		<!-- 5. Next Scheduled -->

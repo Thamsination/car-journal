@@ -436,6 +436,86 @@ export function milestoneId(ms: ServiceMilestone): string {
 	return `${ms.kind}-${ms.km}`;
 }
 
+export interface TimeMilestone {
+	task: string;
+	kind: MilestoneKind;
+	dueDate: string;
+	estimatedKm: number;
+	months: number;
+	lastServiceDate: string;
+	status: 'covered' | 'scheduled' | 'overdue';
+}
+
+export function computeTimeMilestones(
+	intervals: ServiceInterval[],
+	evts: CarEvent[],
+	currentOdometer: number,
+	dailyAvgKm: number,
+): TimeMilestone[] {
+	const timeOnly = intervals.filter((i) => i.km == null && i.months != null);
+	if (timeOnly.length === 0) return [];
+
+	const completed = completedByTaskMap(evts);
+	const now = new Date();
+	const results: TimeMilestone[] = [];
+
+	const purchaseEvt = evts.find(
+		(e) => e.completed && e.category === 'purchase' && (e.tasks ?? [e.event]).some((t) => t.toLowerCase() === 'car')
+	);
+	const purchaseDate = purchaseEvt?.date ?? null;
+
+	for (const interval of timeOnly) {
+		const months = interval.months!;
+		const doneKms = mergedDoneKms(completed, interval.task);
+
+		const matchingEvents = evts
+			.filter((e) => e.completed && e.date)
+			.filter((e) => {
+				const tasks = (e.tasks ?? [e.event]).map((t) => t.toLowerCase().trim());
+				const taskKey = interval.task.toLowerCase().trim();
+				const matchKey = taskKey.replace('check ', '');
+				return tasks.includes(taskKey) || tasks.includes(matchKey);
+			})
+			.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+		const lastDate = matchingEvents[0]?.date ?? purchaseDate;
+		if (!lastDate) continue;
+
+		const lastMs = new Date(lastDate + 'T00:00:00');
+		const dueMs = new Date(lastMs);
+		dueMs.setMonth(dueMs.getMonth() + months);
+		const dueDate = `${dueMs.getFullYear()}-${String(dueMs.getMonth() + 1).padStart(2, '0')}`;
+
+		const daysUntilDue = Math.round((dueMs.getTime() - now.getTime()) / 86400000);
+		const estimatedKm = dailyAvgKm > 0
+			? Math.round(currentOdometer + daysUntilDue * dailyAvgKm)
+			: currentOdometer;
+
+		let status: TimeMilestone['status'] = 'scheduled';
+		if (daysUntilDue < 0) status = 'overdue';
+		else {
+			const lastEventKm = matchingEvents[0]?.km;
+			if (lastEventKm != null && doneKms.length > 0) {
+				const intervalMs = months * 30.44 * 86400000;
+				const elapsed = now.getTime() - lastMs.getTime();
+				if (elapsed < intervalMs * 0.5) status = 'covered';
+			}
+		}
+
+		results.push({
+			task: interval.task,
+			kind: interval.kind,
+			dueDate,
+			estimatedKm,
+			months,
+			lastServiceDate: lastDate,
+			status,
+		});
+	}
+
+	return results;
+}
+
 export type CompletionQuality = 'green' | 'amber' | 'red';
 
 export function completionQuality(evt: CarEvent): CompletionQuality {

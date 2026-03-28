@@ -5,8 +5,8 @@
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm, platformConfig } from '$lib/stores';
 	import { receiptUrl } from '$lib/github';
-	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask, getServiceIntervals } from '$lib/utils';
-	import type { TaskWithStatus } from '$lib/utils';
+	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask, getServiceIntervals, computeTimeMilestones } from '$lib/utils';
+	import type { TaskWithStatus, TimeMilestone } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
 
 	let loading = $state(true);
@@ -87,9 +87,10 @@
 	});
 
 	interface TimelineEntry {
-		kind: 'event' | 'odometer' | 'milestone';
+		kind: 'event' | 'odometer' | 'milestone' | 'time-milestone';
 		evt?: CarEvent;
 		milestone?: ServiceMilestone;
+		timeMilestone?: TimeMilestone;
 		coveredMilestones?: ServiceMilestone[];
 		km: number;
 		sortDate: string;
@@ -97,13 +98,24 @@
 
 	const mfrMilestones = $derived(computeMfrMilestones($events, serviceIntervals));
 	const recMilestones = $derived(computeRecMilestones($events, serviceIntervals));
+	const timeMilestones = $derived(computeTimeMilestones(serviceIntervals, $events, $latestOdometer.km, $dailyAverageKm));
 
-	const nextMilestone = $derived.by(() => {
+	type NextMilestoneInfo = { type: 'km'; ms: ServiceMilestone } | { type: 'time'; tm: TimeMilestone };
+
+	const nextMilestone = $derived.by((): NextMilestoneInfo | null => {
 		const odoKm = $latestOdometer.km;
 		if (odoKm <= 0) return null;
-		const all = [...mfrMilestones, ...recMilestones]
+		const kmBased: NextMilestoneInfo[] = [...mfrMilestones, ...recMilestones]
 			.filter((ms) => ms.km > odoKm)
-			.sort((a, b) => a.km - b.km);
+			.map((ms) => ({ type: 'km' as const, ms }));
+		const timeBased: NextMilestoneInfo[] = timeMilestones
+			.filter((tm) => tm.status !== 'covered')
+			.map((tm) => ({ type: 'time' as const, tm }));
+		const all = [...kmBased, ...timeBased].sort((a, b) => {
+			const aKm = a.type === 'km' ? a.ms.km : a.tm.estimatedKm;
+			const bKm = b.type === 'km' ? b.ms.km : b.tm.estimatedKm;
+			return aKm - bKm;
+		});
 		return all[0] ?? null;
 	});
 
@@ -213,10 +225,22 @@
 			}
 		}
 
+		if (showMfr) {
+			for (const tm of timeMilestones.filter((t) => t.kind === 'mfr')) {
+				combined.push({ kind: 'time-milestone', timeMilestone: tm, km: tm.estimatedKm, sortDate: '' });
+			}
+		}
+		if (showRec) {
+			for (const tm of timeMilestones.filter((t) => t.kind === 'rec')) {
+				combined.push({ kind: 'time-milestone', timeMilestone: tm, km: tm.estimatedKm, sortDate: '' });
+			}
+		}
+
 		combined.sort((a, b) => {
 			if (a.km !== b.km) return a.km - b.km;
-			if (a.kind === 'milestone' && b.kind !== 'milestone') return 1;
-			if (a.kind !== 'milestone' && b.kind === 'milestone') return -1;
+			const isMs = (k: string) => k === 'milestone' || k === 'time-milestone';
+			if (isMs(a.kind) && !isMs(b.kind)) return 1;
+			if (!isMs(a.kind) && isMs(b.kind)) return -1;
 			return 0;
 		});
 
@@ -307,14 +331,18 @@
 							<div class="ruler-line"></div>
 						</div>
 					<a class="odo-marker" href="{base}/timeline/new?km={$latestOdometer.km}">
-						{#if nextMilestone}
-							{@const remaining = nextMilestone.km - $latestOdometer.km}
+						{#if nextMilestone?.type === 'km'}
+							{@const remaining = nextMilestone.ms.km - $latestOdometer.km}
 							{#if remaining > 0}
 								<span class="odo-label">In {remaining.toLocaleString()} km</span>
-								<span class="odo-action">{milestoneActionText(nextMilestone.tasks)}</span>
+								<span class="odo-action">{milestoneActionText(nextMilestone.ms.tasks)}</span>
 							{:else}
 								<span class="odo-overdue">Overdue by {Math.abs(remaining).toLocaleString()} km</span>
 							{/if}
+						{:else if nextMilestone?.type === 'time'}
+							{@const dueDate = new Date(nextMilestone.tm.dueDate + '-01T00:00:00')}
+							<span class="odo-label">{dueDate.getFullYear()} {dueDate.toLocaleString('en', { month: 'long' })}</span>
+							<span class="odo-action">{capitalizeTask(nextMilestone.tm.task)}</span>
 						{:else}
 							<span class="odo-label">You are here</span>
 						{/if}
@@ -372,12 +400,43 @@
 					{/if}
 				</a>
 			</div>
-			{:else if entry.evt}
-				{@const evt = entry.evt}
-				{@const status = deriveStatus(evt, $latestOdometer.km)}
-				{@const isNext = evt.id === nextId}
-				{@const isFocus = focusId ? evt.id === focusId : false}
-				{@const isExpanded = expandedIds.has(evt.id)}
+		{:else if entry.kind === 'time-milestone' && entry.timeMilestone}
+			{@const tm = entry.timeMilestone}
+			{@const dueDate = new Date(tm.dueDate + '-01T00:00:00')}
+			{@const dueDateLabel = `${dueDate.getFullYear()} ${dueDate.toLocaleString('en', { month: 'long' })}`}
+			<div class="tl-row" style="margin-top: {gap}px">
+				<div class="tl-ruler">
+					<div class="ruler-line ruler-line-ms"></div>
+					<div class="ruler-km ms-km">~{tm.estimatedKm.toLocaleString()}</div>
+					<div class="ruler-dot ms-dot" class:ms-dot-covered={tm.status === 'covered'}></div>
+					<div class="ruler-line ruler-line-ms"></div>
+				</div>
+				<div
+					class="ms-card"
+					class:ms-card-covered={tm.status === 'covered'}
+				>
+					<div class="ms-card-header">
+						<span class="ms-category-label">
+							{tm.kind === 'mfr' ? 'OEM Service' : 'Recommended'}
+						</span>
+						{#if tm.status === 'covered'}
+							<span class="ms-status-label" style="color: #34c759">OK</span>
+						{:else if tm.status === 'overdue'}
+							<span class="ms-status-label" style="color: #ff3b30">Overdue</span>
+						{/if}
+					</div>
+					<div class="ms-task-list">
+						<span class="ms-task-item ms-task-{tm.status === 'covered' ? 'covered' : 'scheduled'}">{tm.task}</span>
+					</div>
+					<span class="ms-estimate">{dueDateLabel}</span>
+				</div>
+			</div>
+		{:else if entry.evt}
+			{@const evt = entry.evt}
+			{@const status = deriveStatus(evt, $latestOdometer.km)}
+			{@const isNext = evt.id === nextId}
+			{@const isFocus = focusId ? evt.id === focusId : false}
+			{@const isExpanded = expandedIds.has(evt.id)}
 				<div
 					class="tl-row"
 					class:next-scheduled={isNext}
