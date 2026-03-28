@@ -257,7 +257,7 @@ When a platform has only one drivetrain, the app auto-selects it. When multiple 
 #### `serviceIntervals` field rules
 
 - `kind: "mfr"` = interval comes from the manufacturer's official schedule
-- `kind: "rec"` = community/specialist recommendation not in official schedule
+- `kind: "rec"` = specialist recommendation for a **documented wear item** not in the official schedule (see qualifying criteria below)
 - **`km`**: distance-based interval in kilometres. Set to `null` for time-only tasks (e.g., brake fluid)
 - **`months`**: time-based interval in months. Set to `null` for distance-only tasks
 - **Every entry MUST have both `km` and `months` fields** — one or both can be null, but both keys must be present
@@ -268,6 +268,33 @@ When a platform has only one drivetrain, the app auto-selects it. When multiple 
 - Leave `milestones` as an empty array — the build script will generate them (it skips time-only tasks automatically)
 - serviceNotes should mention the source (e.g., "per BMW CBS SIB documentation" or "garage.wiki interval table")
 - Each task name must appear **at most once per `kind`** — no duplicate entries
+
+#### `rec` task qualifying criteria
+
+A `rec` (recommended) task must meet **all three** of the following criteria:
+
+1. **It services a physical wear item or fluid** that degrades with use or time (gearbox fluid, coolant, differential oil, timing chain, carbon deposits on intake valves).
+2. **There is a documented engineering reason** for the service — not just "some people on forums do it." Valid reasons include: manufacturer labels the fluid "lifetime fill" but independent testing shows degradation; the engine design causes a known failure mode (e.g., carbon buildup on direct-injection intake valves, timing chain stretch on specific engines); the component is a known weak point with documented failure patterns.
+3. **The task can be described with a specific km or month interval** based on specialist consensus, not a vague "when needed."
+
+**What qualifies as `rec`:**
+- Gearbox/transmission fluid changes on "lifetime fill" transmissions (ZF8, DSG, CVT)
+- Coolant flush when manufacturer says "lifetime" but the coolant chemistry degrades
+- Intake carbon clean on direct-injection engines (documented carbon buildup issue)
+- Timing chain replacement on engines with known chain-stretch problems (e.g., BMW N47)
+- Differential and transfer case fluids on AWD vehicles when OEM says "lifetime"
+- Wet belt inspection on engines with known timing belt-in-oil issues (PureTech)
+- Manual transmission oil change when OEM says "inspect only"
+
+**What does NOT qualify as `rec`:**
+- Fuel system additives / fuel system cleanse — these are consumable products, not wear-item services
+- Engine flush additives — not a maintenance task, no fixed interval
+- Performance modifications (upgraded spark plugs, aftermarket filters)
+- Cosmetic or comfort items (interior treatment, paint sealant)
+- Generic "good practice" items that lack a specific engineering justification for the platform
+- Tasks that only apply under severe/special conditions (towing, track use) unless the platform is specifically a performance model (STI, M-car, RS) where spirited driving is expected
+
+If you are unsure whether a task qualifies, leave it out. A missing `rec` task is harmless; a spurious one creates false maintenance alerts.
 
 #### `transmission` field rules (transmission-specific tasks)
 
@@ -347,6 +374,7 @@ Before moving to the next platform, verify your output:
 16. **Check that model names belong to this platform** — no models from other platforms (e.g., i4 belongs to G26, not G20; M5 belongs to F10/G30 M, not the standard chassis file)
 17. **Check transmission-specific tasks** — if the platform covers vehicles with multiple transmission types (manual + automatic, manual + CVT, etc.), verify that each transmission-specific fluid task has a `"transmission"` array tag. If the platform only comes with one transmission type, the tag may be omitted. Never include both `CVT fluid` and `manual transmission oil` without tagging each with the appropriate `transmission` value.
 18. **Check `drivetrains` array** — must be present and contain at least one of `"FWD"`, `"RWD"`, `"AWD"`. If the platform includes AWD models (xDrive, quattro, etc.), `"AWD"` must be in the array. If the platform is exclusively AWD (X-series, Subaru), it should be `["AWD"]` only. FWD-based platforms with optional AWD should be `["FWD", "AWD"]`, not `["RWD", "AWD"]`.
+19. **Validate every `rec` task against the qualifying criteria** — each `rec` entry must (a) service a physical wear item or fluid, (b) have a documented engineering reason specific to this platform/engine, and (c) have a specific km or month interval from specialist consensus. If any `rec` task is an additive, consumable product, or "nice to have" without a documented failure mode, remove it.
 
 If any check fails, go back and fix it before proceeding.
 
@@ -389,6 +417,8 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Omit the `"transmission"` tag on transmission fluid tasks when the platform covers both manual and automatic/CVT/DCT variants
 - Omit the `drivetrains` array — every platform must declare its available drivetrain layouts
 - Use `"RWD"` for FWD-based platforms — BMW F40/F44/F45/F48/F39 are FWD-based (UKL/FAAR), not RWD. VW, Renault, Toyota, etc. are FWD.
+- Add fuel system additives, engine flush, or any consumable product as a `rec` task — these are not wear-item services and do not belong in a maintenance schedule
+- Add `rec` tasks based on generic forum advice without a documented engineering justification specific to the engine/platform — "some people recommend it" is not sufficient
 - Generate milestones manually — always use the Python script
 - Modify or rename existing platform files unless explicitly told to
 - Commit without self-validating
