@@ -136,6 +136,7 @@ export interface PlatformConfig {
 	chassisCodes: string[];
 	drivetrains?: DrivetrainType[];
 	transmissions?: TransmissionType[];
+	engines?: string[];
 	vehicles?: PlatformVehicleEntry[];
 	serviceIntervals: PlatformServiceInterval[];
 	serviceNotes: Record<string, string>;

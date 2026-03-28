@@ -13,6 +13,9 @@
   "transmissions": [
     "automatic"
   ],
+  "engines": [
+    "B58"
+  ],
   "vehicles": [
     {
       "make": "BMW",

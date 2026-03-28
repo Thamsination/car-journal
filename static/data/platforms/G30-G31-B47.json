@@ -13,6 +13,9 @@
   "transmissions": [
     "automatic"
   ],
+  "engines": [
+    "B47"
+  ],
   "vehicles": [
     {
       "make": "BMW",
