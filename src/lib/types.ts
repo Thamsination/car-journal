@@ -110,7 +110,8 @@ export interface VehiclesRegistry {
 
 export interface PlatformServiceInterval {
 	task: string;
-	km: number;
+	km: number | null;
+	months: number | null;
 	kind: MilestoneKind;
 }
 

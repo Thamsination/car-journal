@@ -130,7 +130,8 @@ import type { ServiceMilestone, MilestoneKind, PlatformConfig } from './types';
 
 export interface ServiceInterval {
 	task: string;
-	km: number;
+	km: number | null;
+	months: number | null;
 	kind: MilestoneKind;
 }
 
@@ -288,12 +289,12 @@ function computeIntervalMilestones(
 	kind: MilestoneKind,
 ): ServiceMilestone[] {
 	const completed = completedByTaskMap(events);
-	const filtered = intervals.filter((i) => i.kind === kind);
+	const filtered = intervals.filter((i) => i.kind === kind && i.km != null);
 
 	const allRolling: RollingMilestone[] = [];
 	for (const interval of filtered) {
 		const doneKms = mergedDoneKms(completed, interval.task);
-		allRolling.push(...buildRollingChain(interval.task, interval.km, doneKms));
+		allRolling.push(...buildRollingChain(interval.task, interval.km!, doneKms));
 	}
 
 	const milestoneMap = new Map<number, { tasks: string[]; coveredTasks: Set<string> }>();
@@ -343,7 +344,7 @@ export function milestoneTaskStatuses(
 		const doneKms = mergedDoneKms(completed, task);
 
 		const interval = allIntervals.find((i) => i.task === task);
-		if (!interval) {
+		if (!interval || interval.km == null) {
 			const hasCoveringService = doneKms.some((dkm) => dkm <= ms.km + COVER_TOLERANCE_KM);
 			if (hasCoveringService) {
 				return { task, status: 'covered' as TaskStatus, overdueKm: 0 };

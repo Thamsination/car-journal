@@ -19,31 +19,36 @@
     {
       "task": "micro filter",
       "km": 20000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "brake fluid",
-      "km": 30000,
-      "kind": "mfr"
+      "km": null,
+      "kind": "mfr",
+      "months": 24
     },
     {
       "task": "check brake pads",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "coolant flush",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "gearbox fluid",
       "km": 100000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     }
   ],
   "serviceNotes": {
-    "brake fluid": "BMW specifies brake fluid replacement every 2 years (first change at 3 years on some models per BMW maintenance SIBs). Distance equivalent uses ~30,000 km/year as a planning proxy; always respect the time limit. See BMW X5 service documentation summary at bmwx5info.com (brake fluid change interval every 2 years).",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
     "check brake pads": "Brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services. Strong regen on BEV often extends pad life; inspections still required.",
     "coolant flush": "High-voltage battery and e-drive cooling circuit: BMW publishes time/distance-based coolant service for EVs; 60,000 km is a planning proxy\u2014interval estimated, confirm official service data.",
     "gearbox fluid": "Reduction gear / drive unit fluid: officially often \"lifetime\"; 100,000 km mfr row is interval estimated for long-term wear metals in oil\u2014specialist preventive change.",
@@ -59,7 +64,6 @@
     {
       "km": 30000,
       "tasks": [
-        "brake fluid",
         "check brake pads"
       ]
     },
@@ -72,7 +76,6 @@
     {
       "km": 60000,
       "tasks": [
-        "brake fluid",
         "check brake pads",
         "coolant flush",
         "micro filter"
@@ -87,7 +90,6 @@
     {
       "km": 90000,
       "tasks": [
-        "brake fluid",
         "check brake pads"
       ]
     },
@@ -101,7 +103,6 @@
     {
       "km": 120000,
       "tasks": [
-        "brake fluid",
         "check brake pads",
         "coolant flush",
         "micro filter"
@@ -116,7 +117,6 @@
     {
       "km": 150000,
       "tasks": [
-        "brake fluid",
         "check brake pads"
       ]
     },
@@ -129,7 +129,6 @@
     {
       "km": 180000,
       "tasks": [
-        "brake fluid",
         "check brake pads",
         "coolant flush",
         "micro filter"
@@ -145,7 +144,6 @@
     {
       "km": 210000,
       "tasks": [
-        "brake fluid",
         "check brake pads"
       ]
     },
@@ -158,7 +156,6 @@
     {
       "km": 240000,
       "tasks": [
-        "brake fluid",
         "check brake pads",
         "coolant flush",
         "micro filter"
@@ -173,7 +170,6 @@
     {
       "km": 270000,
       "tasks": [
-        "brake fluid",
         "check brake pads"
       ]
     },
@@ -186,7 +182,6 @@
     {
       "km": 300000,
       "tasks": [
-        "brake fluid",
         "check brake pads",
         "coolant flush",
         "gearbox fluid",

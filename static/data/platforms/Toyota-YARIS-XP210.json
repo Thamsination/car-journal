@@ -8,7 +8,12 @@
   "vehicles": [
     {
       "make": "Toyota",
-      "models": ["Yaris", "Yaris Hybrid", "Yaris Cross", "Yaris Cross Hybrid"],
+      "models": [
+        "Yaris",
+        "Yaris Hybrid",
+        "Yaris Cross",
+        "Yaris Cross Hybrid"
+      ],
       "yearFrom": 2020,
       "yearTo": 2026
     }
@@ -17,47 +22,56 @@
     {
       "task": "engine oil",
       "km": 15000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "cabin filter",
       "km": 15000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "engine oil",
       "km": 10000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "brake fluid",
-      "km": 40000,
-      "kind": "mfr"
+      "km": null,
+      "kind": "mfr",
+      "months": 24
     },
     {
       "task": "coolant flush",
       "km": 150000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "transaxle fluid",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "air filter",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "spark plugs",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "check brake pads",
       "km": 15000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     }
   ],
   "serviceNotes": {
@@ -88,12 +102,6 @@
       ]
     },
     {
-      "km": 40000,
-      "tasks": [
-        "brake fluid"
-      ]
-    },
-    {
       "km": 45000,
       "tasks": [
         "cabin filter",
@@ -120,12 +128,6 @@
       ]
     },
     {
-      "km": 80000,
-      "tasks": [
-        "brake fluid"
-      ]
-    },
-    {
       "km": 90000,
       "tasks": [
         "cabin filter",
@@ -145,7 +147,6 @@
       "km": 120000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -168,12 +169,6 @@
         "check brake pads",
         "coolant flush",
         "engine oil"
-      ]
-    },
-    {
-      "km": 160000,
-      "tasks": [
-        "brake fluid"
       ]
     },
     {
@@ -203,12 +198,6 @@
       ]
     },
     {
-      "km": 200000,
-      "tasks": [
-        "brake fluid"
-      ]
-    },
-    {
       "km": 210000,
       "tasks": [
         "cabin filter",
@@ -228,7 +217,6 @@
       "km": 240000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -250,12 +238,6 @@
         "cabin filter",
         "check brake pads",
         "engine oil"
-      ]
-    },
-    {
-      "km": 280000,
-      "tasks": [
-        "brake fluid"
       ]
     },
     {

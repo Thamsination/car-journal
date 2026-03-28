@@ -119,7 +119,7 @@ When in doubt about OEM terminology, default to the most common English term fou
 | Engine oil + filter | 10,000–30,000 km | Every manufacturer specifies this |
 | Cabin / pollen filter | 15,000–60,000 km | Every manufacturer specifies this |
 | Air filter | 30,000–90,000 km | Every manufacturer specifies this |
-| Brake fluid | 30,000–120,000 km | Every manufacturer specifies this (often time-based: every 2–4 years) |
+| Brake fluid | Time-based: 24–48 months | Every manufacturer specifies this — always time-based, not km |
 | Brake pad inspection | 15,000–30,000 km | Every manufacturer includes brake inspection |
 | Spark plugs | 30,000–90,000 km | All petrol engines require this |
 
@@ -156,8 +156,9 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
     }
   ],
   "serviceIntervals": [
-    { "task": "<OEM task name>", "km": <interval>, "kind": "mfr" },
-    { "task": "<OEM task name>", "km": <interval>, "kind": "rec" }
+    { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "mfr" },
+    { "task": "<OEM task name>", "km": null, "months": <interval>, "kind": "mfr" },
+    { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec" }
   ],
   "serviceNotes": {
     "<OEM task name>": "<Why this matters + platform/engine-specific context + source>"
@@ -200,11 +201,16 @@ This array is how the app matches a user's car to a platform. Get it right.
 ]
 ```
 
-#### Other schema rules
+#### `serviceIntervals` field rules
 
 - `kind: "mfr"` = interval comes from the manufacturer's official schedule
 - `kind: "rec"` = community/specialist recommendation not in official schedule
-- Leave `milestones` as an empty array — the build script will generate them
+- **`km`**: distance-based interval in kilometres. Set to `null` for time-only tasks (e.g., brake fluid)
+- **`months`**: time-based interval in months. Set to `null` for distance-only tasks
+- **Brake fluid is ALWAYS time-based** — use `"km": null, "months": 24` (or the OEM-specified months). Never assign a km proxy value.
+- Tasks with both `km` and `months` will trigger based on whichever comes first
+- Tasks with only `months` (km is null) are excluded from km-based milestones and tracked by date in the app
+- Leave `milestones` as an empty array — the build script will generate them (it skips time-only tasks automatically)
 - serviceNotes should mention the source (e.g., "per BMW CBS SIB documentation" or "garage.wiki interval table")
 - Each task name must appear **at most once per `kind`** — no duplicate entries
 

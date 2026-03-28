@@ -8,7 +8,16 @@
   "vehicles": [
     {
       "make": "Volkswagen",
-      "models": ["Golf", "Golf Variant", "Golf Alltrack", "Golf GTE", "Golf GTI", "Golf GTD", "Golf R", "Golf Sportsvan"],
+      "models": [
+        "Golf",
+        "Golf Variant",
+        "Golf Alltrack",
+        "Golf GTE",
+        "Golf GTI",
+        "Golf GTD",
+        "Golf R",
+        "Golf Sportsvan"
+      ],
       "yearFrom": 2012,
       "yearTo": 2020
     }
@@ -17,57 +26,68 @@
     {
       "task": "engine oil",
       "km": 15000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "cabin filter",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "air filter",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "spark plugs",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "engine oil",
       "km": 10000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "DSG gearbox fluid",
       "km": 60000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "manual gearbox fluid",
       "km": 50000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "coolant flush",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "intake carbon clean",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "brake fluid",
-      "km": 60000,
-      "kind": "mfr"
+      "km": null,
+      "kind": "mfr",
+      "months": 24
     },
     {
       "task": "check brake pads",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     }
   ],
   "serviceNotes": {
@@ -114,7 +134,6 @@
       "tasks": [
         "DSG gearbox fluid",
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -152,7 +171,6 @@
       "tasks": [
         "DSG gearbox fluid",
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "coolant flush",
@@ -187,7 +205,6 @@
       "tasks": [
         "DSG gearbox fluid",
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -225,7 +242,6 @@
       "tasks": [
         "DSG gearbox fluid",
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "coolant flush",
@@ -265,7 +281,6 @@
       "tasks": [
         "DSG gearbox fluid",
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",

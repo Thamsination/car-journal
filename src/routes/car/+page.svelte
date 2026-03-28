@@ -146,9 +146,13 @@
 				remainingKm, remainingDays, usedKmPct, usedTimePct, health
 			};
 		}).sort((a, b) => {
-			const aKm = a.remainingKm ?? Infinity;
-			const bKm = b.remainingKm ?? Infinity;
-			return aKm - bKm;
+			const healthOrder: Record<string, number> = { overdue: 0, warning: 1, good: 2 };
+			const aH = healthOrder[a.health] ?? 2;
+			const bH = healthOrder[b.health] ?? 2;
+			if (aH !== bH) return aH - bH;
+			const aRemain = a.remainingKm ?? (a.remainingDays != null ? a.remainingDays * 50 : Infinity);
+			const bRemain = b.remainingKm ?? (b.remainingDays != null ? b.remainingDays * 50 : Infinity);
+			return aRemain - bRemain;
 		});
 	});
 

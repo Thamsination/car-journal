@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build milestones from serviceIntervals: if a task has any mfr row, only mfr km
-cadences are used for that task in milestones; otherwise rec cadences are used."""
+cadences are used for that task in milestones; otherwise rec cadences are used.
+Tasks that are time-only (months set, km null) are excluded from km milestones."""
 from __future__ import annotations
 
 import json
@@ -18,8 +19,8 @@ def build_milestones(intervals: list[dict]) -> list[dict]:
     km_to_tasks: dict[int, set[str]] = defaultdict(set)
 
     for task, items in by_task.items():
-        mfr_kms = sorted({x["km"] for x in items if x["kind"] == "mfr"})
-        rec_kms = sorted({x["km"] for x in items if x["kind"] == "rec"})
+        mfr_kms = sorted({x["km"] for x in items if x["kind"] == "mfr" and x.get("km")})
+        rec_kms = sorted({x["km"] for x in items if x["kind"] == "rec" and x.get("km")})
         use_kms = mfr_kms if mfr_kms else rec_kms
         for k in use_kms:
             n = k

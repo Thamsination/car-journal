@@ -19,72 +19,85 @@
     {
       "task": "engine oil",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "engine oil",
       "km": 10000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "micro filter",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "air cleaner element",
       "km": 90000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "brake fluid",
-      "km": 30000,
-      "kind": "mfr"
+      "km": null,
+      "kind": "mfr",
+      "months": 24
     },
     {
       "task": "check front brake pads",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "check rear brake pads",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "spark plugs",
       "km": 90000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "fuel filter",
       "km": 90000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "gearbox fluid",
       "km": 100000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "coolant flush",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "intake carbon clean",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "vehicle check",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     }
   ],
   "serviceNotes": {
     "engine oil": "BMW Condition Based Service (CBS) sets engine oil and filter replacement from the service display based on driving conditions, cold starts, and fuel quality\u2014not a single fixed km figure. A 30,000 km mfr row models the typical maximum distance before the display calls for an oil service on many EU models; follow the vehicle display and annual minimums. garage.wiki BMW E90 interval tables list oil as \"according to service display\".",
-    "brake fluid": "BMW specifies brake fluid replacement every 2 years (first change at 3 years on some models per BMW maintenance SIBs). Distance equivalent uses ~30,000 km/year as a planning proxy; always respect the time limit. See BMW X5 service documentation summary at bmwx5info.com (brake fluid change interval every 2 years).",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
     "spark plugs": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature.",
     "fuel filter": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature. Diesel fuel filter applies to diesel engines.",
     "gearbox fluid": "Automatic and manual gear oil is often labelled lifetime; many specialists recommend exchange around 100,000 km for long-term health.",
@@ -100,7 +113,6 @@
     {
       "km": 30000,
       "tasks": [
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -110,7 +122,6 @@
     {
       "km": 60000,
       "tasks": [
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -122,7 +133,6 @@
       "km": 90000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -140,7 +150,6 @@
     {
       "km": 120000,
       "tasks": [
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "coolant flush",
@@ -153,7 +162,6 @@
     {
       "km": 150000,
       "tasks": [
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -164,7 +172,6 @@
       "km": 180000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -183,7 +190,6 @@
     {
       "km": 210000,
       "tasks": [
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -193,7 +199,6 @@
     {
       "km": 240000,
       "tasks": [
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "coolant flush",
@@ -207,7 +212,6 @@
       "km": 270000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -219,7 +223,6 @@
     {
       "km": 300000,
       "tasks": [
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",

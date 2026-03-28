@@ -8,7 +8,10 @@
   "vehicles": [
     {
       "make": "Dacia",
-      "models": ["Sandero", "Sandero Stepway"],
+      "models": [
+        "Sandero",
+        "Sandero Stepway"
+      ],
       "yearFrom": 2020,
       "yearTo": 2026
     }
@@ -17,52 +20,62 @@
     {
       "task": "engine oil",
       "km": 20000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "cabin filter",
       "km": 20000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "air filter",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "engine oil",
       "km": 10000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "coolant flush",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "brake fluid",
-      "km": 120000,
-      "kind": "mfr"
+      "km": null,
+      "kind": "mfr",
+      "months": 24
     },
     {
       "task": "spark plugs",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "timing belt",
       "km": 120000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "auxiliary belt",
       "km": 120000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "check brake pads",
       "km": 20000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     }
   ],
   "serviceNotes": {
@@ -124,7 +137,6 @@
       "tasks": [
         "air filter",
         "auxiliary belt",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "coolant flush",
@@ -180,7 +192,6 @@
       "tasks": [
         "air filter",
         "auxiliary belt",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "coolant flush",

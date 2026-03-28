@@ -8,7 +8,10 @@
   "vehicles": [
     {
       "make": "Peugeot",
-      "models": ["208", "e-208"],
+      "models": [
+        "208",
+        "e-208"
+      ],
       "yearFrom": 2019,
       "yearTo": 2026
     }
@@ -17,52 +20,62 @@
     {
       "task": "engine oil",
       "km": 20000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "cabin filter",
       "km": 20000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "air filter",
       "km": 20000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "fuel filter",
       "km": 40000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "engine oil",
       "km": 10000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "coolant flush",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "wet belt inspection",
       "km": 100000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "brake fluid",
-      "km": 40000,
-      "kind": "mfr"
+      "km": null,
+      "kind": "mfr",
+      "months": 24
     },
     {
       "task": "spark plugs",
       "km": 40000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "check brake pads",
       "km": 20000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     }
   ],
   "serviceNotes": {
@@ -90,7 +103,6 @@
       "km": 40000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -111,7 +123,6 @@
       "km": 80000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -133,7 +144,6 @@
       "km": 120000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "coolant flush",
@@ -155,7 +165,6 @@
       "km": 160000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -176,7 +185,6 @@
       "km": 200000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -198,7 +206,6 @@
       "km": 240000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "coolant flush",
@@ -220,7 +227,6 @@
       "km": 280000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",

@@ -24,67 +24,79 @@
     {
       "task": "engine oil",
       "km": 15000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "engine oil",
       "km": 10000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "micro filter",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "air cleaner element",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "brake fluid",
-      "km": 30000,
-      "kind": "mfr"
+      "km": null,
+      "kind": "mfr",
+      "months": 24
     },
     {
       "task": "check front brake pads",
       "km": 15000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "check rear brake pads",
       "km": 15000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "spark plugs",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "fuel filter",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "gearbox fluid",
       "km": 100000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "coolant flush",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "intake carbon clean",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     }
   ],
   "serviceNotes": {
     "engine oil": "Pre-CBS EU maintenance booklets commonly used fixed oil change intervals around 15,000 km for many petrol and diesel models; verify against the service indicator or printed schedule for your model year.",
-    "brake fluid": "BMW specifies brake fluid replacement every 2 years (first change at 3 years on some models per BMW maintenance SIBs). Distance equivalent uses ~30,000 km/year as a planning proxy; always respect the time limit. See BMW X5 service documentation summary at bmwx5info.com (brake fluid change interval every 2 years).",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
     "spark plugs": "Petrol spark plug renewal per BMW maintenance schedule for this generation.",
     "fuel filter": "Diesel fuel filter replacement per BMW fixed-interval schedules for this generation (verify engine code).",
     "gearbox fluid": "Automatic and manual gear oil is often labelled lifetime; many specialists recommend exchange around 100,000 km for long-term health.",
@@ -108,7 +120,6 @@
       "km": 30000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -127,7 +138,6 @@
       "km": 60000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -148,7 +158,6 @@
       "km": 90000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -173,7 +182,6 @@
       "km": 120000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "coolant flush",
@@ -196,7 +204,6 @@
       "km": 150000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -215,7 +222,6 @@
       "km": 180000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -242,7 +248,6 @@
       "km": 210000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -261,7 +266,6 @@
       "km": 240000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "coolant flush",
@@ -284,7 +288,6 @@
       "km": 270000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",
@@ -303,7 +306,6 @@
       "km": 300000,
       "tasks": [
         "air cleaner element",
-        "brake fluid",
         "check front brake pads",
         "check rear brake pads",
         "engine oil",

@@ -8,13 +8,19 @@
   "vehicles": [
     {
       "make": "Opel",
-      "models": ["Corsa", "Corsa-e"],
+      "models": [
+        "Corsa",
+        "Corsa-e"
+      ],
       "yearFrom": 2019,
       "yearTo": 2026
     },
     {
       "make": "Vauxhall",
-      "models": ["Corsa", "Corsa-e"],
+      "models": [
+        "Corsa",
+        "Corsa-e"
+      ],
       "yearFrom": 2019,
       "yearTo": 2026
     }
@@ -23,47 +29,56 @@
     {
       "task": "engine oil",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "cabin filter",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "air filter",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "fuel filter",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "engine oil",
       "km": 10000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "coolant flush",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "wet belt inspection",
       "km": 100000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "brake fluid",
-      "km": 60000,
-      "kind": "mfr"
+      "km": null,
+      "kind": "mfr",
+      "months": 24
     },
     {
       "task": "check brake pads",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     }
   ],
   "serviceNotes": {
@@ -88,7 +103,6 @@
       "km": 60000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -112,7 +126,6 @@
       "km": 120000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "coolant flush",
@@ -131,7 +144,6 @@
       "km": 180000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -155,7 +167,6 @@
       "km": 240000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "coolant flush",
@@ -174,7 +185,6 @@
       "km": 300000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",

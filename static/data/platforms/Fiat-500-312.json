@@ -8,13 +8,20 @@
   "vehicles": [
     {
       "make": "Fiat",
-      "models": ["500", "500C", "500 Hybrid"],
+      "models": [
+        "500",
+        "500C",
+        "500 Hybrid"
+      ],
       "yearFrom": 2015,
       "yearTo": 2026
     },
     {
       "make": "Abarth",
-      "models": ["595", "695"],
+      "models": [
+        "595",
+        "695"
+      ],
       "yearFrom": 2015,
       "yearTo": 2023
     }
@@ -23,47 +30,56 @@
     {
       "task": "engine oil",
       "km": 15000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "cabin filter",
       "km": 15000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "air filter",
       "km": 30000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "spark plugs",
       "km": 60000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     },
     {
       "task": "engine oil",
       "km": 10000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "timing belt",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "coolant flush",
       "km": 120000,
-      "kind": "rec"
+      "kind": "rec",
+      "months": null
     },
     {
       "task": "brake fluid",
-      "km": 30000,
-      "kind": "mfr"
+      "km": null,
+      "kind": "mfr",
+      "months": 24
     },
     {
       "task": "check brake pads",
       "km": 15000,
-      "kind": "mfr"
+      "kind": "mfr",
+      "months": null
     }
   ],
   "serviceNotes": {
@@ -73,7 +89,7 @@
     "spark plugs": "Petrol engines list spark plug renewal at extended intervals in Fiat maintenance tables; 60,000 km is typical for four-valve Fire/TwinAir families\u2014verify engine code.",
     "timing belt": "Where a timing belt is fitted (some variants), specialist mechanics often plan replacement near 120,000 km or earlier by age\u2014chain-equipped engines do not apply.",
     "coolant flush": "Long-life coolant still ages; exchange around 120,000 km protects the small turbo cooling circuit on newer variants.",
-    "brake fluid": "Fiat specifies brake fluid inspection and replacement as part of the periodic maintenance programme, typically every 2 years or 30,000 km.",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
     "check brake pads": "Brake system inspection is performed at each scheduled service as specified in the Fiat maintenance booklet."
   },
   "milestones": [
@@ -89,7 +105,6 @@
       "km": 30000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil"
@@ -107,7 +122,6 @@
       "km": 60000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -126,7 +140,6 @@
       "km": 90000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil"
@@ -144,7 +157,6 @@
       "km": 120000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "coolant flush",
@@ -165,7 +177,6 @@
       "km": 150000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil"
@@ -183,7 +194,6 @@
       "km": 180000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",
@@ -202,7 +212,6 @@
       "km": 210000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil"
@@ -220,7 +229,6 @@
       "km": 240000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "coolant flush",
@@ -241,7 +249,6 @@
       "km": 270000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil"
@@ -259,7 +266,6 @@
       "km": 300000,
       "tasks": [
         "air filter",
-        "brake fluid",
         "cabin filter",
         "check brake pads",
         "engine oil",

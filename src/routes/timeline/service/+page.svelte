@@ -26,7 +26,12 @@
 	function taskInterval(task: string, taskKind: 'mfr' | 'rec'): string | null {
 		const entry = serviceIntervals.find((si) => si.task === task && si.kind === taskKind);
 		if (!entry) return null;
-		return `Every ${entry.km.toLocaleString()} km`;
+		if (entry.km != null && entry.months != null) {
+			return `Every ${entry.km.toLocaleString()} km or ${entry.months} months`;
+		}
+		if (entry.months != null) return `Every ${entry.months} months`;
+		if (entry.km != null) return `Every ${entry.km.toLocaleString()} km`;
+		return null;
 	}
 </script>
 
