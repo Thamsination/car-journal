@@ -17,8 +17,6 @@ function persistedWritable<T>(key: string, initial: T) {
 export const token = persistedWritable<string>('gh_token', '');
 export const repoOwner = persistedWritable<string>('repo_owner', 'Thamsination');
 export const repoName = persistedWritable<string>('repo_name', 'car-journal');
-export const manualOdometer = persistedWritable<number | null>('manual_odometer', null);
-
 export const activeVehicleId = persistedWritable<string>('active_vehicle', '');
 export const vehicleList = writable<VehicleRegistryEntry[]>([]);
 
@@ -26,6 +24,8 @@ export const events = writable<CarEvent[]>([]);
 export const parts = writable<Part[]>([]);
 export const healthIntervals = writable<HealthInterval[]>([]);
 export const platformConfig = writable<PlatformConfig | null>(null);
+export const vehicleConfig = writable<VehicleConfig | null>(null);
+export const tireConfig = writable<TireConfig | null>(null);
 
 export const isLoading = writable(false);
 export const error = writable<string | null>(null);
@@ -121,10 +121,11 @@ export const dailyAverageKm = derived(events, ($events) => {
 });
 
 export const latestOdometer = derived(
-	[manualOdometer, events, dailyAverageKm],
-	([$manual, $events, $avgKm]) => {
-		if ($manual !== null && $manual > 0) {
-			return { km: $manual, approximate: false, source: 'manual' as const };
+	[vehicleConfig, events, dailyAverageKm],
+	([$vc, $events, $avgKm]) => {
+		const manual = $vc?.odometer ?? null;
+		if (manual !== null && manual > 0) {
+			return { km: manual, approximate: false, source: 'manual' as const };
 		}
 		const completed = $events
 			.filter((e) => e.completed && e.km !== null && e.date)
@@ -241,9 +242,6 @@ function findLastServiceForInterval(evts: CarEvent[], interval: HealthInterval):
 	});
 	return matches[0] ?? null;
 }
-
-export const vehicleConfig = writable<VehicleConfig | null>(null);
-export const tireConfig = writable<TireConfig | null>(null);
 
 export type TireHealth = 'good' | 'warning' | 'overdue';
 

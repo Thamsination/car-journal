@@ -1,21 +1,28 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { token, repoOwner, repoName, events, parts, manualOdometer, latestOdometer } from '$lib/stores';
+	import { token, repoOwner, repoName, events, parts, vehicleConfig, latestOdometer } from '$lib/stores';
+	import { saveVehicleConfig } from '$lib/github';
 
-	let odoInput = $state($manualOdometer?.toString() ?? '');
+	let odoInput = $state($vehicleConfig?.odometer?.toString() ?? '');
 	let odoSaved = $state(false);
 
 	function saveOdometer() {
 		const val = parseInt(odoInput, 10);
-		$manualOdometer = val > 0 ? val : null;
+		if ($vehicleConfig) {
+			$vehicleConfig = { ...$vehicleConfig, odometer: val > 0 ? val : null };
+			saveVehicleConfig($vehicleConfig, 'Update odometer').catch(() => {});
+		}
 		odoSaved = true;
 		setTimeout(() => (odoSaved = false), 2000);
 	}
 
 	function clearOdometer() {
 		odoInput = '';
-		$manualOdometer = null;
+		if ($vehicleConfig) {
+			$vehicleConfig = { ...$vehicleConfig, odometer: null };
+			saveVehicleConfig($vehicleConfig, 'Clear odometer').catch(() => {});
+		}
 		odoSaved = true;
 		setTimeout(() => (odoSaved = false), 2000);
 	}
@@ -99,7 +106,7 @@
 				{odoSaved ? 'Saved!' : 'Set'}
 			</button>
 		</div>
-		{#if $manualOdometer}
+		{#if $vehicleConfig?.odometer}
 			<button class="odo-clear-btn" onclick={clearOdometer}>Clear manual odometer</button>
 		{/if}
 	</div>

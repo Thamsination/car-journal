@@ -5,9 +5,10 @@
 	import {
 		token, events, totalSpent, totalPlanned, costByCategory,
 		nextBatchEvents, latestOdometer, lastCompletedKm, dailyAverageKm,
-		nextScheduledEvent, manualOdometer,
+		nextScheduledEvent,
 		vehicleConfig, healthIntervals, tireConfig, tireStatus, platformConfig
 	} from '$lib/stores';
+	import { saveVehicleConfig } from '$lib/github';
 	import {
 		formatCost, formatDateISO, deriveStatus, statusColor,
 		eventCategory, categoryLabel, categoryColor,
@@ -48,8 +49,9 @@
 
 	function saveOdo() {
 		const val = parseInt(odoInput, 10);
-		if (!isNaN(val) && val > 0) {
-			$manualOdometer = val;
+		if (!isNaN(val) && val > 0 && $vehicleConfig) {
+			$vehicleConfig = { ...$vehicleConfig, odometer: val };
+			saveVehicleConfig($vehicleConfig, 'Update odometer').catch(() => {});
 		}
 		editingOdo = false;
 	}

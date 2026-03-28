@@ -5,7 +5,7 @@
 	import { base } from '$app/paths';
 	import { token, activeVehicleId, vehicleList, events, parts, healthIntervals, vehicleConfig, tireConfig, platformConfig } from '$lib/stores';
 	import { getPendingWrites, flushPendingWrites } from '$lib/offline';
-	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, type PlatformIndexEntry } from '$lib/github';
+	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, type PlatformIndexEntry } from '$lib/github';
 	import { generateHealthConfig } from '$lib/utils';
 
 	let { children } = $props();
@@ -23,8 +23,18 @@
 	let addPlatformId = $state('');
 	let addLicensePlate = $state('');
 	let addName = $state('');
+	let addOdometer = $state('');
 	let addSaving = $state(false);
 	let addError = $state('');
+
+	let editVehicleOpen = $state(false);
+	let editVehicleId = $state('');
+	let editName = $state('');
+	let editPlate = $state('');
+	let editOdometer = $state('');
+	let editSaving = $state(false);
+	let editError = $state('');
+	let confirmDelete = $state(false);
 
 	const availableMakes = $derived(
 		[...new Set(platformIndex.map((e) => e.make))].sort()
@@ -67,6 +77,7 @@
 		addPlatformId = '';
 		addLicensePlate = '';
 		addName = '';
+		addOdometer = '';
 		addError = '';
 		addSaving = false;
 	}
@@ -116,6 +127,7 @@
 			const vehicleId = addLicensePlate.trim().toUpperCase().replace(/\s+/g, '') || `V${Date.now().toString(36).toUpperCase()}`;
 			const label = addName.trim() || `${addMake} ${addModel}`;
 
+			const odoVal = parseInt(addOdometer, 10);
 			const config = {
 				name: label,
 				licensePlate: addLicensePlate.trim().toUpperCase(),
@@ -126,7 +138,8 @@
 				model: addModel,
 				chassis: platform.chassisCodes?.[0] ?? '',
 				engine: '',
-				drivetrain: ''
+				drivetrain: '',
+				odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
 			};
 
 			const healthCfg = generateHealthConfig(platform);
@@ -154,6 +167,101 @@
 			addError = e instanceof Error ? e.message : String(e);
 		} finally {
 			addSaving = false;
+		}
+	}
+
+	function openEditVehicle(id: string) {
+		dropdownOpen = false;
+		editVehicleId = id;
+		const entry = $vehicleList.find((v) => v.id === id);
+		editName = entry?.label ?? '';
+		editPlate = id;
+		editOdometer = '';
+		editError = '';
+		editSaving = false;
+		confirmDelete = false;
+
+		if (id === $activeVehicleId && $vehicleConfig) {
+			editName = $vehicleConfig.name;
+			editPlate = $vehicleConfig.licensePlate;
+			editOdometer = $vehicleConfig.odometer ? String($vehicleConfig.odometer) : '';
+		}
+		editVehicleOpen = true;
+	}
+
+	async function saveEditVehicle() {
+		editSaving = true;
+		editError = '';
+		try {
+			const needsSwitch = editVehicleId !== $activeVehicleId;
+			if (needsSwitch) {
+				await switchVehicle(editVehicleId);
+			}
+
+			if ($vehicleConfig) {
+				const odoVal = parseInt(editOdometer, 10);
+				const updated = {
+					...$vehicleConfig,
+					name: editName.trim() || $vehicleConfig.name,
+					licensePlate: editPlate.trim().toUpperCase(),
+					odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
+				};
+				$vehicleConfig = updated;
+				await saveVehicleConfig(updated, `Update vehicle: ${updated.name}`);
+			}
+
+			const registry = await loadVehiclesRegistry();
+			const entry = registry.vehicles.find((v) => v.id === editVehicleId);
+			if (entry) {
+				entry.label = editName.trim() || entry.label;
+				await saveVehiclesRegistry(registry, `Update registry: ${entry.label}`);
+				$vehicleList = registry.vehicles;
+			}
+
+			editVehicleOpen = false;
+		} catch (e) {
+			editError = e instanceof Error ? e.message : String(e);
+		} finally {
+			editSaving = false;
+		}
+	}
+
+	async function deleteVehicle() {
+		editSaving = true;
+		editError = '';
+		try {
+			await deleteVehicleFiles(editVehicleId);
+
+			const registry = await loadVehiclesRegistry();
+			registry.vehicles = registry.vehicles.filter((v) => v.id !== editVehicleId);
+
+			const wasActive = editVehicleId === $activeVehicleId;
+			if (wasActive) {
+				const next = registry.vehicles[0]?.id ?? '';
+				registry.activeVehicle = next;
+			}
+			await saveVehiclesRegistry(registry, `Delete vehicle: ${editVehicleId}`);
+			$vehicleList = registry.vehicles;
+
+			editVehicleOpen = false;
+
+			if (wasActive) {
+				if (registry.vehicles.length > 0) {
+					await switchVehicle(registry.vehicles[0].id);
+				} else {
+					$activeVehicleId = '';
+					$events = [];
+					$parts = [];
+					$healthIntervals = [];
+					$vehicleConfig = null;
+					$tireConfig = null;
+					$platformConfig = null;
+				}
+			}
+		} catch (e) {
+			editError = e instanceof Error ? e.message : String(e);
+		} finally {
+			editSaving = false;
 		}
 	}
 
@@ -187,9 +295,23 @@
 				loadTireConfig()
 			]);
 			$events = evts;
-			$vehicleConfig = vc;
 			$healthIntervals = hc.intervals;
 			$tireConfig = tc;
+
+			if (vc && vc.odometer === undefined) {
+				const legacyOdo = typeof localStorage !== 'undefined'
+					? localStorage.getItem('manual_odometer')
+					: null;
+				if (legacyOdo) {
+					const parsed = JSON.parse(legacyOdo);
+					if (typeof parsed === 'number' && parsed > 0) {
+						vc.odometer = parsed;
+						saveVehicleConfig(vc, 'Migrate odometer to vehicle config').catch(() => {});
+						localStorage.removeItem('manual_odometer');
+					}
+				}
+			}
+			$vehicleConfig = vc;
 
 			if (vc?.platform) {
 				const pc = await loadPlatform(vc.platform);
@@ -303,18 +425,19 @@
 				</div>
 				{#if dropdownOpen}
 					<div class="selector-dropdown">
-						{#each $vehicleList as v}
-							<!-- svelte-ignore a11y_click_events_have_key_events -->
-							<!-- svelte-ignore a11y_no_static_element_interactions -->
-							<div
-								class="dropdown-item"
-								class:dropdown-item-active={v.id === $activeVehicleId}
-								onclick={() => switchVehicle(v.id)}
-							>
-								<span class="dropdown-plate">{v.id}</span>
-								<span class="dropdown-label">{v.label}</span>
-							</div>
-						{/each}
+					{#each $vehicleList as v}
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<div
+							class="dropdown-item"
+							class:dropdown-item-active={v.id === $activeVehicleId}
+							onclick={() => switchVehicle(v.id)}
+						>
+							<span class="dropdown-plate">{v.id}</span>
+							<span class="dropdown-label">{v.label}</span>
+							<span class="dropdown-edit" onclick={(e) => { e.stopPropagation(); openEditVehicle(v.id); }}>⚙</span>
+						</div>
+					{/each}
 						<div class="dropdown-divider"></div>
 						<!-- svelte-ignore a11y_click_events_have_key_events -->
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -365,6 +488,53 @@
 		</nav>
 	{/if}
 </div>
+
+{#if editVehicleOpen}
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
+	<div class="modal-backdrop" onclick={() => { editVehicleOpen = false; }}>
+		<div class="modal-panel" onclick={(e) => e.stopPropagation()}>
+			<div class="modal-header">
+				<span class="modal-title">Edit Vehicle</span>
+				<button class="modal-close" onclick={() => { editVehicleOpen = false; }}>&times;</button>
+			</div>
+			<div class="modal-body">
+				<label class="field-label">Name</label>
+				<input class="field-input" type="text" bind:value={editName} />
+
+				<label class="field-label">License plate</label>
+				<input class="field-input" type="text" bind:value={editPlate} disabled />
+
+				<label class="field-label">Odometer (km)</label>
+				<input class="field-input" type="number" inputmode="numeric" placeholder="Tap to set km" bind:value={editOdometer} />
+
+				{#if editError}
+					<p class="add-error">{editError}</p>
+				{/if}
+
+				{#if !confirmDelete}
+					<button class="btn-delete" onclick={() => { confirmDelete = true; }}>Delete Vehicle</button>
+				{:else}
+					<div class="delete-confirm">
+						<p class="delete-warning">This will permanently delete all data for this vehicle. Platform data will be preserved.</p>
+						<div class="delete-actions">
+							<button class="btn-secondary" onclick={() => { confirmDelete = false; }}>Cancel</button>
+							<button class="btn-delete-confirm" disabled={editSaving} onclick={deleteVehicle}>
+								{editSaving ? 'Deleting...' : 'Confirm Delete'}
+							</button>
+						</div>
+					</div>
+				{/if}
+			</div>
+			<div class="modal-footer">
+				<button class="btn-secondary" onclick={() => { editVehicleOpen = false; }}>Cancel</button>
+				<button class="btn-primary" disabled={editSaving} onclick={saveEditVehicle}>
+					{editSaving ? 'Saving...' : 'Save'}
+				</button>
+			</div>
+		</div>
+	</div>
+{/if}
 
 {#if addVehicleOpen}
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -447,6 +617,9 @@
 
 					<label class="field-label">Name <span class="optional">(optional)</span></label>
 					<input class="field-input" type="text" placeholder="e.g. My daily driver" bind:value={addName} />
+
+					<label class="field-label">Current odometer <span class="optional">(recommended)</span></label>
+					<input class="field-input" type="number" inputmode="numeric" placeholder="e.g. 85000" bind:value={addOdometer} />
 
 					{#if addError}
 						<p class="add-error">{addError}</p>
@@ -839,5 +1012,72 @@
 		color: var(--color-danger, #ff3b30);
 		font-size: 13px;
 		margin-top: 12px;
+	}
+
+	.dropdown-edit {
+		margin-left: auto;
+		font-size: 14px;
+		color: var(--color-text-secondary);
+		padding: 4px 6px;
+		border-radius: var(--radius-sm);
+		cursor: pointer;
+		opacity: 0.6;
+		transition: opacity 0.15s;
+	}
+
+	.dropdown-edit:active {
+		opacity: 1;
+		background: rgba(142, 142, 147, 0.12);
+	}
+
+	.btn-delete {
+		width: 100%;
+		padding: 12px 16px;
+		margin-top: 24px;
+		border-radius: var(--radius-sm);
+		font-size: 15px;
+		font-weight: 600;
+		cursor: pointer;
+		border: none;
+		background: none;
+		color: var(--color-danger, #ff3b30);
+	}
+
+	.btn-delete:active {
+		background: rgba(255, 59, 48, 0.08);
+	}
+
+	.delete-confirm {
+		margin-top: 16px;
+		padding: 14px;
+		border: 1px solid var(--color-danger, #ff3b30);
+		border-radius: var(--radius-sm);
+	}
+
+	.delete-warning {
+		font-size: 13px;
+		color: var(--color-danger, #ff3b30);
+		margin: 0 0 12px;
+	}
+
+	.delete-actions {
+		display: flex;
+		gap: 8px;
+	}
+
+	.btn-delete-confirm {
+		flex: 1;
+		padding: 10px 14px;
+		border-radius: var(--radius-sm);
+		font-size: 14px;
+		font-weight: 600;
+		cursor: pointer;
+		border: none;
+		background: var(--color-danger, #ff3b30);
+		color: #fff;
+	}
+
+	.btn-delete-confirm:disabled {
+		opacity: 0.4;
 	}
 </style>

@@ -312,6 +312,39 @@ export function receiptUrl(filename: string): string {
 	return `https://${get(repoOwner)}.github.io/${get(repoName)}/data/vehicles/${vid}/receipts/${filename}`;
 }
 
+export async function deleteVehicleFiles(vehicleId: string): Promise<void> {
+	const dirPath = `${ROOT_DATA}/vehicles/${vehicleId}`;
+	const res = await fetch(`${repoPath()}/contents/${dirPath}`, { headers: headers() });
+	if (!res.ok) return;
+
+	const files = await res.json();
+	if (!Array.isArray(files)) return;
+
+	for (const file of files) {
+		if (file.type === 'dir') {
+			const subRes = await fetch(`${repoPath()}/contents/${file.path}`, { headers: headers() });
+			if (subRes.ok) {
+				const subFiles = await subRes.json();
+				if (Array.isArray(subFiles)) {
+					for (const sf of subFiles) {
+						await fetch(`${repoPath()}/contents/${sf.path}`, {
+							method: 'DELETE',
+							headers: headers(),
+							body: JSON.stringify({ message: `Delete ${sf.path}`, sha: sf.sha })
+						});
+					}
+				}
+			}
+		} else {
+			await fetch(`${repoPath()}/contents/${file.path}`, {
+				method: 'DELETE',
+				headers: headers(),
+				body: JSON.stringify({ message: `Delete ${file.path}`, sha: file.sha })
+			});
+		}
+	}
+}
+
 export function clearShaCache(): void {
 	shaCache.clear();
 }

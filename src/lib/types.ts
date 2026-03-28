@@ -75,6 +75,7 @@ export interface VehicleConfig {
 	chassis: string;
 	engine: string;
 	drivetrain: string;
+	odometer?: number | null;
 }
 
 export type TireSeason = 'summer' | 'winter' | 'all-year';

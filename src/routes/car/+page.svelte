@@ -5,9 +5,9 @@
 	import { tick } from 'svelte';
 	import {
 		token, events, latestOdometer, healthIntervals, dailyAverageKm,
-		vehicleConfig, tireConfig, tireStatus, tireSwapEvents, manualOdometer
+		vehicleConfig, tireConfig, tireStatus, tireSwapEvents
 	} from '$lib/stores';
-	import { saveEvents, saveHealthConfig, saveTireConfig } from '$lib/github';
+	import { saveEvents, saveHealthConfig, saveTireConfig, saveVehicleConfig } from '$lib/github';
 	import { formatDate, formatDateISO } from '$lib/utils';
 	import type { HealthConfig, CarEvent, ServiceInterval, TireProfile, TireSeason, TireConfig } from '$lib/types';
 
@@ -65,8 +65,9 @@
 
 	function saveOdo() {
 		const val = parseInt(odoInput, 10);
-		if (!isNaN(val) && val > 0) {
-			$manualOdometer = val;
+		if (!isNaN(val) && val > 0 && $vehicleConfig) {
+			$vehicleConfig = { ...$vehicleConfig, odometer: val };
+			saveVehicleConfig($vehicleConfig, 'Update odometer').catch(() => {});
 		}
 		editingOdo = false;
 	}
