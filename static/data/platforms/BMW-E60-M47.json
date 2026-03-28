@@ -20,12 +20,12 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": 24 },
     { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
     { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
     { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
-    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "fuel filter", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "air cleaner element", "km": 90000, "kind": "mfr", "months": null },
+    { "task": "fuel filter", "km": 90000, "kind": "mfr", "months": null },
     { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
     { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
     { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
@@ -38,11 +38,11 @@
     { "task": "EGR / intake clean", "km": 120000, "kind": "rec", "months": null }
   ],
   "serviceNotes": {
-    "engine oil": "N47 diesel CBS; ~30,000 km EU maximum typical.",
-    "micro filter": "Cabin micro filter per CBS.",
+    "engine oil": "CBS oil service MFR 30,000 km / 24 months EU maximum with Long-Life oil (SIB B000214 / service display).",
+    "micro filter": "Cabin micro filter per CBS (520d: each engine oil change per garage.wiki E60 table).",
     "brake fluid": "24 months.",
-    "air cleaner element": "~60,000 km diesel air filter.",
-    "fuel filter": "Diesel fuel filter ~60,000 km.",
+    "air cleaner element": "Changed from 60,000 km to 90,000 km: air filter every third engine oil service (3 × 30,000 km CBS ceiling).",
+    "fuel filter": "Changed from 60,000 km to 90,000 km: diesel fuel filter every third engine oil service (3 × 30,000 km CBS ceiling).",
     "check front brake pads": "Inspect ~30,000 km.",
     "check rear brake pads": "Inspect ~30,000 km.",
     "vehicle check": "BMW CBS vehicle check.",
@@ -53,5 +53,15 @@
     "timing chain": "N47 chain: monitor noise at high mileage.",
     "coolant flush": "Preventive ~120,000 km.",
     "EGR / intake clean": "Diesel EGR/intake soot; ~120,000 km when needed."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — 30,000 km / 24 months EU maximum. https://garage.wiki/bmw/5-series-sedan/fifth-generation-e60/2007/service-intervals.html",
+    "micro filter": "https://garage.wiki/bmw/5-series-sedan/fifth-generation-e60/2007/service-intervals.html — 520d interior filter each engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/5-series-sedan/fifth-generation-e60/2007/service-intervals.html — every 2 years; BMW owner's manual E60",
+    "air cleaner element": "Changed from 60,000 km to 90,000 km per https://garage.wiki/bmw/5-series-sedan/fifth-generation-e60/2007/service-intervals.html — air filter each third engine oil change",
+    "fuel filter": "Changed from 60,000 km to 90,000 km per https://garage.wiki/bmw/5-series-sedan/fifth-generation-e60/2007/service-intervals.html — fuel filter each third engine oil change",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)"
   }
 }

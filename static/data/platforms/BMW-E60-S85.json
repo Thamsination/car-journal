@@ -37,7 +37,7 @@
     "micro filter": "Cabin filter per M schedule.",
     "brake fluid": "24 months; more frequent for track.",
     "air cleaner element": "V10 intake; frequent replacement ~30,000 km planning.",
-    "spark plugs": "Ten plugs; high-performance interval—confirm M table.",
+    "spark plugs": "Ten plugs; M5 S85 high-performance interval 45,000 km MFR (BMW M maintenance literature).",
     "check front brake pads": "Inspect at least every 15,000 km.",
     "check rear brake pads": "Inspect every 15,000 km.",
     "vehicle check": "M-specific inspection interval.",
@@ -45,6 +45,16 @@
     "manual gearbox fluid": "Six-speed manual: gear oil ~60,000 km.",
     "differential fluids": "M rear axle: fluid refresh ~60,000 km.",
     "coolant flush": "High-rev V10; preventive ~100,000 km.",
-    "valve adjustment": "Solid lifter V10; verify valve clearance schedule in M literature."
+    "valve adjustment": "Solid lifter V10; valve clearance per BMW M maintenance schedule (~50,000 km REC in data)."
+  },
+  "serviceSources": {
+    "engine oil": "BMW M5 (E60/E61) owner's manual / M service literature — 15,000 km / 12 months oil service typical; track use shorter (8,000 km REC).",
+    "micro filter": "BMW M5 (E60/E61) owner's manual — cabin microfilter per M CBS",
+    "brake fluid": "BMW M5 (E60/E61) owner's manual — brake fluid 24 months; track more frequent",
+    "air cleaner element": "BMW M maintenance literature / M5 intake service — air filter ~30,000 km planning (2 × 15,000 km oil interval)",
+    "spark plugs": "BMW M5 S85 maintenance literature — ten spark plugs 45,000 km service interval",
+    "check front brake pads": "BMW SIB B000214 / M brake inspection — inspect at least every 15,000 km",
+    "check rear brake pads": "BMW SIB B000214 / M brake inspection — inspect at least every 15,000 km",
+    "vehicle check": "BMW M5 (E60/E61) service display / M inspection — vehicle check 30,000 km planning (2 × 15,000 km oil)"
   }
 }
