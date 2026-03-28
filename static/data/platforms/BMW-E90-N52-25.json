@@ -41,7 +41,7 @@
       "task": "engine oil",
       "km": 30000,
       "kind": "mfr",
-      "months": null
+      "months": 24
     },
     {
       "task": "engine oil",
@@ -63,7 +63,7 @@
     },
     {
       "task": "air cleaner element",
-      "km": 60000,
+      "km": 90000,
       "kind": "mfr",
       "months": null
     },
@@ -125,10 +125,10 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "N52 2.5L naturally aspirated inline-six; CBS on later cars. Sources: BMW E90 service data, garage.wiki.",
+    "engine oil": "N52 2.5L; CBS oil service MFR 30,000 km / 24 months EU maximum (SIB B000214 / service display).",
     "micro filter": "Cabin filter per schedule.",
     "brake fluid": "24 months.",
-    "air cleaner element": "Six-cylinder NA: ~60,000 km air filter.",
+    "air cleaner element": "Changed from 60,000 km to 90,000 km: air filter with every third engine oil service (3 × 30,000 km).",
     "spark plugs": "Six long-life plugs ~90,000 km typical.",
     "check front brake pads": "30,000 km inspection.",
     "check rear brake pads": "30,000 km inspection.",
@@ -138,5 +138,20 @@
     "xDrive transfer case fluid": "325i xDrive only.",
     "differential fluids": "325i xDrive only.",
     "coolant flush": "Electric water pump era: preventive coolant service ~120,000 km."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — 30,000 km / 24 months EU maximum. https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html",
+    "micro filter": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — interior filter per CBS display",
+    "brake fluid": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — every 2 years",
+    "air cleaner element": "Changed from 60,000 km to 90,000 km per https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — air filter each third engine oil change",
+    "spark plugs": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — spark plugs each third engine oil change (90,000 km)",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS); 30,000 km planning",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS); 30,000 km planning",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — every second oil service (60,000 km)",
+    "automatic transmission fluid": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/automatic-transmission-fluid-capacity.html — lifetime OEM; REC",
+    "manual gearbox fluid": "No routine owner-manual interval — REC",
+    "xDrive transfer case fluid": "BMW specialist consensus; REC xDrive",
+    "differential fluids": "BMW specialist consensus; REC xDrive",
+    "coolant flush": "BMW owner's manual E90; REC ~120,000 km (N52 electric water pump awareness)"
   }
 }

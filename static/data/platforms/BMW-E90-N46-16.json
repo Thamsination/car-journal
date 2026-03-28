@@ -41,7 +41,7 @@
       "task": "engine oil",
       "km": 30000,
       "kind": "mfr",
-      "months": null
+      "months": 24
     },
     {
       "task": "engine oil",
@@ -63,7 +63,7 @@
     },
     {
       "task": "air cleaner element",
-      "km": 60000,
+      "km": 90000,
       "kind": "mfr",
       "months": null
     },
@@ -125,10 +125,10 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "E90 four-cylinder petrol with CBS on later cars; 30,000 km typical EU maximum between oil services. Sources: BMW E90 maintenance booklet, garage.wiki.",
+    "engine oil": "E90 four-cylinder petrol with CBS; MFR 30,000 km / 24 months EU maximum oil service with Long-Life oil (SIB B000214 / service display).",
     "micro filter": "Cabin micro filter per service plan.",
     "brake fluid": "24 months.",
-    "air cleaner element": "Naturally aspirated/port-injection four: ~60,000 km air filter planning.",
+    "air cleaner element": "Changed from 60,000 km to 90,000 km: BMW E90 CBS schedules air filter replacement with every third engine oil service; at the 30,000 km EU oil-service ceiling this equals 90,000 km maximum spacing.",
     "spark plugs": "Long-life plugs commonly ~90,000 km on EU schedules.",
     "check front brake pads": "30,000 km inspection cadence.",
     "check rear brake pads": "30,000 km inspection cadence.",
@@ -138,5 +138,20 @@
     "xDrive transfer case fluid": "xDrive models only.",
     "differential fluids": "xDrive models only.",
     "coolant flush": "Preventive ~120,000 km."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — EU maximum oil service 30,000 km / 24 months with Long-Life oil. https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html",
+    "micro filter": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — interior (micro) filter per CBS service display; typical maximum cadence aligns with 30,000 km oil-service steps",
+    "brake fluid": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — brake fluid every 2 years; BMW owner's manual E90",
+    "air cleaner element": "Changed from 60,000 km to 90,000 km per https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — air filter with each third engine oil change (3 × 30,000 km CBS oil ceiling)",
+    "spark plugs": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — spark plugs with each third engine oil change (3 × 30,000 km = 90,000 km)",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS wear-based brake service); file uses 30,000 km inspection planning interval",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS wear-based brake service); file uses 30,000 km inspection planning interval",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check CBS item typically every second engine oil service (2 × 30,000 km = 60,000 km maximum spacing)",
+    "automatic transmission fluid": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/automatic-transmission-fluid-capacity.html — ZF 6HP; BMW classifies ATF as lifetime; REC preventive exchange",
+    "manual gearbox fluid": "BMW AG does not publish a routine manual gearbox oil interval in the E90 owner literature — preventive REC",
+    "xDrive transfer case fluid": "BMW specialist consensus; xDrive transfer case often lifetime-fill per OEM — preventive REC for AWD variants",
+    "differential fluids": "BMW specialist consensus; differentials often lifetime-fill per OEM — preventive REC for xDrive variants",
+    "coolant flush": "BMW owner's manual E90 coolant interval by model; REC preventive ~120,000 km"
   }
 }

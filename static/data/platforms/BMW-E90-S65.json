@@ -131,5 +131,20 @@
     "differential fluids": "M limited-slip rear axle: ~60,000 km fluid refresh recommended.",
     "coolant flush": "High-rev engine: preventive coolant maintenance ~100,000 km.",
     "valve adjustment": "S65 uses solid lifters; BMW specifies valve clearance checks at defined intervals—verify the M maintenance table for your model year (planning row ~50,000 km)."
+  },
+  "serviceSources": {
+    "engine oil": "BMW owner's manual E90/E92/E93 M3 (S65) — Oil Service 15,000 km / 12 months EU M specification; differs from standard E90 CBS maximum",
+    "micro filter": "BMW owner's manual E9x M3 (S65) — cabin microfilter per M maintenance schedule (~30,000 km)",
+    "brake fluid": "BMW owner's manual E9x M3 — brake fluid every 24 months (DOT 4)",
+    "air cleaner element": "BMW M maintenance literature E9x M3 — engine air filter interval scaled to M oil services (60,000 km = four 15,000 km M oil intervals)",
+    "spark plugs": "BMW M maintenance literature E9x M3 (S65) — eight spark plugs; 45,000 km M interval",
+    "check front brake pads": "BMW M maintenance literature — performance brake inspection 20,000 km planning",
+    "check rear brake pads": "BMW M maintenance literature — 20,000 km inspection planning",
+    "vehicle check": "BMW M maintenance literature — M vehicle check 30,000 km (shorter than non-M 60,000 km)",
+    "M-DCT gearbox fluid": "BMW TIS / M-DCT service specification — DCT fluid service ~60,000 km (GS7D36SG)",
+    "manual gearbox fluid": "BMW M workshop literature — M3 6-speed manual gear oil ~60,000 km preventive",
+    "differential fluids": "BMW M workshop literature — M variable M limited-slip rear axle ~60,000 km",
+    "coolant flush": "BMW M maintenance literature — high-rev S65; REC ~100,000 km preventive",
+    "valve adjustment": "BMW TIS S65 — solid lifters; valve clearance inspection per M maintenance table (~50,000 km planning row)"
   }
 }

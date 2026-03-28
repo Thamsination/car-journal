@@ -51,7 +51,7 @@
       "task": "engine oil",
       "km": 30000,
       "kind": "mfr",
-      "months": null
+      "months": 24
     },
     {
       "task": "engine oil",
@@ -73,13 +73,13 @@
     },
     {
       "task": "air cleaner element",
-      "km": 60000,
+      "km": 90000,
       "kind": "mfr",
       "months": null
     },
     {
       "task": "fuel filter",
-      "km": 60000,
+      "km": 90000,
       "kind": "mfr",
       "months": null
     },
@@ -147,11 +147,11 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "N47 2.0L diesel; CBS/flexible service. Sources: BMW E90 diesel booklets, garage.wiki.",
+    "engine oil": "N47 2.0L diesel CBS; MFR 30,000 km / 24 months EU maximum oil service with approved diesel Long-Life oil (SIB B000214 / service display).",
     "micro filter": "Cabin filter per schedule.",
     "brake fluid": "24 months.",
-    "air cleaner element": "~60,000 km diesel air filter.",
-    "fuel filter": "Diesel fuel filter ~60,000 km typical EU interval.",
+    "air cleaner element": "Changed from 60,000 km to 90,000 km: diesel air filter with every third engine oil service (3 × 30,000 km CBS ceiling).",
+    "fuel filter": "Changed from 60,000 km to 90,000 km: diesel fuel filter with every third engine oil service per BMW E90 CBS schedule (garage.wiki / SIB B000214 linkage).",
     "check front brake pads": "30,000 km inspection.",
     "check rear brake pads": "30,000 km inspection.",
     "vehicle check": "BMW inspection service.",
@@ -162,5 +162,22 @@
     "timing chain": "N47 timing chain wear documented; monitor noise; no short fixed OEM replacement interval.",
     "coolant flush": "Preventive ~120,000 km.",
     "EGR / intake clean": "Diesel EGR and intake manifold soot. Cleaning around ~120,000 km can restore response and reduce faults."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — EU maximum oil service 30,000 km / 24 months. https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html",
+    "micro filter": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — interior filter per CBS service display (N47 320d rows)",
+    "brake fluid": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — every 2 years",
+    "air cleaner element": "Changed from 60,000 km to 90,000 km per https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — air filter with each third engine oil change",
+    "fuel filter": "Changed from 60,000 km to 90,000 km per https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/service-intervals.html — fuel filter with each third engine oil change (supersedes https://www.auto-abc.eu/BMW-3-serija/v2239-2008/service 60,000 km static row)",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)",
+    "automatic transmission fluid": "https://garage.wiki/bmw/3-series-sedan/fifth-generation-e90/2008/automatic-transmission-fluid-capacity.html — lifetime-fill OEM; REC",
+    "manual gearbox fluid": "No routine interval in owner literature — REC",
+    "xDrive transfer case fluid": "BMW specialist consensus; REC xDrive",
+    "differential fluids": "BMW specialist consensus; REC xDrive",
+    "timing chain": "BMW AG no fixed N47 chain replacement km in consumer CBS table — REC high-mileage inspection",
+    "coolant flush": "BMW owner's manual E90 diesel coolant; REC ~120,000 km",
+    "EGR / intake clean": "Diesel workshop consensus; not an OEM fixed MFR km"
   }
 }
