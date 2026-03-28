@@ -122,6 +122,13 @@ export interface PlatformServiceInterval {
 
 export type DrivetrainType = 'FWD' | 'RWD' | 'AWD';
 
+export interface PlatformVehicleEntry {
+	make: string;
+	models: string[];
+	yearFrom: number;
+	yearTo: number;
+}
+
 export interface PlatformConfig {
 	id: string;
 	name: string;
@@ -129,6 +136,7 @@ export interface PlatformConfig {
 	chassisCodes: string[];
 	drivetrains?: DrivetrainType[];
 	transmissions?: TransmissionType[];
+	vehicles?: PlatformVehicleEntry[];
 	serviceIntervals: PlatformServiceInterval[];
 	serviceNotes: Record<string, string>;
 	milestones: { km: number; tasks: string[] }[];

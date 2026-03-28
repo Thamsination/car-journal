@@ -99,6 +99,50 @@
 		return allDrivetrainOptions.filter((o) => dts.includes(o.value));
 	});
 
+	const editMakeOptions = $derived.by(() => {
+		const vehicles = $platformConfig?.vehicles;
+		if (!vehicles) return [];
+		return [...new Set(vehicles.map(v => v.make))].sort();
+	});
+
+	const editModelOptions = $derived.by(() => {
+		const vehicles = $platformConfig?.vehicles;
+		if (!vehicles || !editMake) return [];
+		const models = new Set<string>();
+		for (const v of vehicles) {
+			if (v.make === editMake) {
+				for (const m of v.models) models.add(m);
+			}
+		}
+		return [...models].sort();
+	});
+
+	const editYearOptions = $derived.by(() => {
+		const vehicles = $platformConfig?.vehicles;
+		if (!vehicles || !editMake || !editModel) return [];
+		const years = new Set<number>();
+		for (const v of vehicles) {
+			if (v.make === editMake && v.models.includes(editModel)) {
+				for (let y = v.yearFrom; y <= v.yearTo; y++) years.add(y);
+			}
+		}
+		return [...years].sort((a, b) => b - a);
+	});
+
+	const editChassisOptions = $derived($platformConfig?.chassisCodes ?? []);
+
+	$effect(() => {
+		if (editMakeOptions.length === 1 && editMake !== editMakeOptions[0]) {
+			editMake = editMakeOptions[0];
+		}
+	});
+
+	$effect(() => {
+		if (editChassisOptions.length === 1 && editChassis !== editChassisOptions[0]) {
+			editChassis = editChassisOptions[0];
+		}
+	});
+
 	$effect(() => {
 		if (editDetectedDrivetrain) {
 			editDrivetrain = editDetectedDrivetrain;
@@ -655,20 +699,66 @@
 				<label class="field-label">License plate</label>
 				<input class="field-input" type="text" bind:value={editPlate} disabled />
 
-				<label class="field-label">Make</label>
-				<input class="field-input" type="text" bind:value={editMake} />
+				{#if editMakeOptions.length > 1}
+					<label class="field-label">Make</label>
+					<select class="field-input" bind:value={editMake}>
+						<option value="">—</option>
+						{#each editMakeOptions as m}
+							<option value={m}>{m}</option>
+						{/each}
+					</select>
+				{:else if editMakeOptions.length === 1}
+					<label class="field-label">Make</label>
+					<input class="field-input" type="text" value={editMakeOptions[0]} disabled />
+				{:else}
+					<label class="field-label">Make</label>
+					<input class="field-input" type="text" bind:value={editMake} />
+				{/if}
 
-				<label class="field-label">Model</label>
-				<input class="field-input" type="text" bind:value={editModel} />
+				{#if editModelOptions.length > 0}
+					<label class="field-label">Model</label>
+					<select class="field-input" bind:value={editModel}>
+						<option value="">—</option>
+						{#each editModelOptions as m}
+							<option value={m}>{m}</option>
+						{/each}
+					</select>
+				{:else}
+					<label class="field-label">Model</label>
+					<input class="field-input" type="text" bind:value={editModel} />
+				{/if}
 
-				<label class="field-label">Year</label>
-				<input class="field-input" type="number" inputmode="numeric" bind:value={editYear} />
+				{#if editYearOptions.length > 0}
+					<label class="field-label">Year</label>
+					<select class="field-input" bind:value={editYear}>
+						<option value="">—</option>
+						{#each editYearOptions as y}
+							<option value={String(y)}>{y}</option>
+						{/each}
+					</select>
+				{:else}
+					<label class="field-label">Year</label>
+					<input class="field-input" type="number" inputmode="numeric" bind:value={editYear} />
+				{/if}
 
-				<label class="field-label">Chassis</label>
-				<input class="field-input" type="text" bind:value={editChassis} />
+				{#if editChassisOptions.length > 1}
+					<label class="field-label">Chassis</label>
+					<select class="field-input" bind:value={editChassis}>
+						<option value="">—</option>
+						{#each editChassisOptions as c}
+							<option value={c}>{c}</option>
+						{/each}
+					</select>
+				{:else if editChassisOptions.length === 1}
+					<label class="field-label">Chassis</label>
+					<input class="field-input" type="text" value={editChassisOptions[0]} disabled />
+				{:else}
+					<label class="field-label">Chassis</label>
+					<input class="field-input" type="text" bind:value={editChassis} />
+				{/if}
 
 				<label class="field-label">Engine</label>
-				<input class="field-input" type="text" bind:value={editEngine} />
+				<input class="field-input" type="text" bind:value={editEngine} disabled />
 
 				<label class="field-label">Odometer (km)</label>
 				<input class="field-input" type="number" inputmode="numeric" placeholder="Tap to set km" bind:value={editOdometer} />
