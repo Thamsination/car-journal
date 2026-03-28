@@ -40,6 +40,16 @@
       "task": "coolant flush",
       "km": 120000,
       "kind": "rec"
+    },
+    {
+      "task": "brake fluid",
+      "km": 30000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pads",
+      "km": 15000,
+      "kind": "mfr"
     }
   ],
   "serviceNotes": {
@@ -48,13 +58,16 @@
     "air filter": "Engine air filter replacement typically follows every second oil service on many Fiat small-car EU programmes (~30,000 km)\u2014confirm in your maintenance plan.",
     "spark plugs": "Petrol engines list spark plug renewal at extended intervals in Fiat maintenance tables; 60,000 km is typical for four-valve Fire/TwinAir families\u2014verify engine code.",
     "timing belt": "Where a timing belt is fitted (some variants), specialist mechanics often plan replacement near 120,000 km or earlier by age\u2014chain-equipped engines do not apply.",
-    "coolant flush": "Long-life coolant still ages; exchange around 120,000 km protects the small turbo cooling circuit on newer variants."
+    "coolant flush": "Long-life coolant still ages; exchange around 120,000 km protects the small turbo cooling circuit on newer variants.",
+    "brake fluid": "Fiat specifies brake fluid inspection and replacement as part of the periodic maintenance programme, typically every 2 years or 30,000 km.",
+    "check brake pads": "Brake system inspection is performed at each scheduled service as specified in the Fiat maintenance booklet."
   },
   "milestones": [
     {
       "km": 15000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -62,7 +75,9 @@
       "km": 30000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -70,6 +85,7 @@
       "km": 45000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -77,7 +93,9 @@
       "km": 60000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
         "spark plugs"
       ]
@@ -86,6 +104,7 @@
       "km": 75000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -93,7 +112,9 @@
       "km": 90000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -101,6 +122,7 @@
       "km": 105000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -108,7 +130,9 @@
       "km": 120000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
         "engine oil",
         "spark plugs",
@@ -119,6 +143,7 @@
       "km": 135000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -126,7 +151,9 @@
       "km": 150000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -134,6 +161,7 @@
       "km": 165000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -141,7 +169,9 @@
       "km": 180000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
         "spark plugs"
       ]
@@ -150,6 +180,7 @@
       "km": 195000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -157,7 +188,9 @@
       "km": 210000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -165,6 +198,7 @@
       "km": 225000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -172,7 +206,9 @@
       "km": 240000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
         "engine oil",
         "spark plugs",
@@ -183,6 +219,7 @@
       "km": 255000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -190,7 +227,9 @@
       "km": 270000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -198,6 +237,7 @@
       "km": 285000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -205,7 +245,9 @@
       "km": 300000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
         "spark plugs"
       ]

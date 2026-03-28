@@ -18,7 +18,7 @@
     },
     {
       "task": "air filter",
-      "km": 20000,
+      "km": 60000,
       "kind": "mfr"
     },
     {
@@ -30,28 +30,58 @@
       "task": "coolant flush",
       "km": 120000,
       "kind": "rec"
+    },
+    {
+      "task": "brake fluid",
+      "km": 120000,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "timing belt",
+      "km": 120000,
+      "kind": "mfr"
+    },
+    {
+      "task": "auxiliary belt",
+      "km": 120000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pads",
+      "km": 20000,
+      "kind": "mfr"
     }
   ],
   "serviceNotes": {
     "engine oil": "Dacia\u2019s European maintenance programme aligns with Renault Group intervals: routine maintenance including oil and filter at 20,000 km or 12 months (whichever first) per the official Sandero maintenance booklet / myDacia service schedule.",
     "cabin filter": "Pollen filter replacement is performed at the scheduled maintenance interval for the model.",
-    "air filter": "Engine air filter is serviced at the same routine maintenance visits as specified in Dacia\u2019s periodic maintenance table.",
-    "coolant flush": "Budget models still need coolant inhibitor renewal long-term; 120,000 km is a reasonable preventive exchange interval."
+    "air filter": "Engine air filter replacement is specified at 60,000 km / 4 years per the official Dacia maintenance schedule.",
+    "coolant flush": "Budget models still need coolant inhibitor renewal long-term; 120,000 km is a reasonable preventive exchange interval.",
+    "brake fluid": "Dacia specifies brake fluid replacement every 120,000 km or 4 years per the official maintenance schedule.",
+    "spark plugs": "Spark plug replacement is specified at 60,000 km / 4 years for petrol engines in the Dacia maintenance programme.",
+    "timing belt": "Dacia specifies timing belt replacement at 120,000 km or 6 years, whichever comes first. Failure is catastrophic.",
+    "auxiliary belt": "Auxiliary drive belt replacement is specified at 120,000 km or 6 years in the official Dacia schedule.",
+    "check brake pads": "Brake pad inspection is performed at each scheduled maintenance visit."
   },
   "milestones": [
     {
       "km": 20000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 40000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -60,22 +90,24 @@
       "tasks": [
         "air filter",
         "cabin filter",
-        "engine oil"
+        "check brake pads",
+        "engine oil",
+        "spark plugs"
       ]
     },
     {
       "km": 80000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 100000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -83,24 +115,29 @@
       "km": 120000,
       "tasks": [
         "air filter",
+        "auxiliary belt",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
-        "engine oil"
+        "engine oil",
+        "spark plugs",
+        "timing belt"
       ]
     },
     {
       "km": 140000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 160000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -109,22 +146,24 @@
       "tasks": [
         "air filter",
         "cabin filter",
-        "engine oil"
+        "check brake pads",
+        "engine oil",
+        "spark plugs"
       ]
     },
     {
       "km": 200000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 220000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -132,24 +171,29 @@
       "km": 240000,
       "tasks": [
         "air filter",
+        "auxiliary belt",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
-        "engine oil"
+        "engine oil",
+        "spark plugs",
+        "timing belt"
       ]
     },
     {
       "km": 260000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 280000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -158,7 +202,9 @@
       "tasks": [
         "air filter",
         "cabin filter",
-        "engine oil"
+        "check brake pads",
+        "engine oil",
+        "spark plugs"
       ]
     }
   ]

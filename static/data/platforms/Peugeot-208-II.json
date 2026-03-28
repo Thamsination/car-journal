@@ -40,6 +40,21 @@
       "task": "wet belt inspection",
       "km": 100000,
       "kind": "rec"
+    },
+    {
+      "task": "brake fluid",
+      "km": 40000,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 40000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pads",
+      "km": 20000,
+      "kind": "mfr"
     }
   ],
   "serviceNotes": {
@@ -48,7 +63,10 @@
     "air filter": "Air filter service is included at the same minor maintenance interval for ICE versions.",
     "fuel filter": "Diesel variants specify fuel filter on the major maintenance cycle; Stellantis schedules commonly place this near 40,000 km / 24 months\u2014petrol cars have no separate fuel filter service.",
     "coolant flush": "Coolant should be renewed periodically; 120,000 km is a common preventive interval for small Stellantis turbo engines.",
-    "wet belt inspection": "PureTech engines use a wet timing belt; specialist forums recommend inspection and planned belt service around 100,000 km to avoid debris-related failures\u2014verify engine code (some are chain)."
+    "wet belt inspection": "PureTech engines use a wet timing belt; specialist forums recommend inspection and planned belt service around 100,000 km to avoid debris-related failures\u2014verify engine code (some are chain).",
+    "brake fluid": "Peugeot specifies brake fluid replacement every 2 years as part of the scheduled maintenance programme.",
+    "spark plugs": "Spark plug replacement at 40,000 km is specified in the Peugeot 208 maintenance schedule for petrol engines.",
+    "check brake pads": "Brake system inspection is performed at each scheduled service visit."
   },
   "milestones": [
     {
@@ -56,6 +74,7 @@
       "tasks": [
         "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -63,9 +82,12 @@
       "km": 40000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
-        "fuel filter"
+        "fuel filter",
+        "spark plugs"
       ]
     },
     {
@@ -73,6 +95,7 @@
       "tasks": [
         "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -80,9 +103,12 @@
       "km": 80000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
-        "fuel filter"
+        "fuel filter",
+        "spark plugs"
       ]
     },
     {
@@ -90,6 +116,7 @@
       "tasks": [
         "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil",
         "wet belt inspection"
       ]
@@ -98,10 +125,13 @@
       "km": 120000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
         "engine oil",
-        "fuel filter"
+        "fuel filter",
+        "spark plugs"
       ]
     },
     {
@@ -109,6 +139,7 @@
       "tasks": [
         "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -116,9 +147,12 @@
       "km": 160000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
-        "fuel filter"
+        "fuel filter",
+        "spark plugs"
       ]
     },
     {
@@ -126,6 +160,7 @@
       "tasks": [
         "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -133,9 +168,12 @@
       "km": 200000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
         "fuel filter",
+        "spark plugs",
         "wet belt inspection"
       ]
     },
@@ -144,6 +182,7 @@
       "tasks": [
         "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -151,10 +190,13 @@
       "km": 240000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
         "engine oil",
-        "fuel filter"
+        "fuel filter",
+        "spark plugs"
       ]
     },
     {
@@ -162,6 +204,7 @@
       "tasks": [
         "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -169,9 +212,12 @@
       "km": 280000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
-        "fuel filter"
+        "fuel filter",
+        "spark plugs"
       ]
     },
     {
@@ -179,6 +225,7 @@
       "tasks": [
         "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil",
         "wet belt inspection"
       ]

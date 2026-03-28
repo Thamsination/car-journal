@@ -18,7 +18,7 @@
     },
     {
       "task": "air filter",
-      "km": 20000,
+      "km": 60000,
       "kind": "mfr"
     },
     {
@@ -35,29 +35,47 @@
       "task": "coolant flush",
       "km": 120000,
       "kind": "rec"
+    },
+    {
+      "task": "brake fluid",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pads",
+      "km": 20000,
+      "kind": "mfr"
     }
   ],
   "serviceNotes": {
     "engine oil": "Renault\u2019s European maintenance programme for current Clio models schedules routine maintenance (including oil and filter) at 20,000 km or 12 months, whichever comes first, as documented in the official user manual maintenance section (user-manual.renault.com).",
     "cabin filter": "Pollen/cabin filter replacement is listed at the same routine maintenance visits as other filter checks in Renault\u2019s periodic maintenance tables.",
-    "air filter": "Engine air filter inspection/replacement is part of Renault\u2019s scheduled maintenance at the standard interval (20,000 km / 12 months on typical EU programmes).",
+    "air filter": "Engine air filter replacement is specified at longer intervals than routine service, typically every 60,000 km / 4 years in Renault\u2019s maintenance tables.",
     "CVT fluid": "For EDC / CVT variants, fluid condition is critical; many Renault specialists suggest fluid service near 60,000 km\u2014confirm against the workshop manual for your transmission code.",
-    "coolant flush": "Long-life coolant still benefits from exchange around 120,000 km to restore inhibitor levels for the turbo and cabin heating circuit."
+    "coolant flush": "Long-life coolant still benefits from exchange around 120,000 km to restore inhibitor levels for the turbo and cabin heating circuit.",
+    "brake fluid": "Renault specifies brake fluid replacement every 2\u20133 years per the maintenance programme.",
+    "spark plugs": "Petrol engines require spark plug replacement per the Renault maintenance schedule, typically every 60,000 km.",
+    "check brake pads": "Brake system inspection is performed at each scheduled maintenance visit."
   },
   "milestones": [
     {
       "km": 20000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 40000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -66,23 +84,26 @@
       "tasks": [
         "CVT fluid",
         "air filter",
+        "brake fluid",
         "cabin filter",
-        "engine oil"
+        "check brake pads",
+        "engine oil",
+        "spark plugs"
       ]
     },
     {
       "km": 80000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 100000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -91,24 +112,27 @@
       "tasks": [
         "CVT fluid",
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
-        "engine oil"
+        "engine oil",
+        "spark plugs"
       ]
     },
     {
       "km": 140000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 160000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -117,23 +141,26 @@
       "tasks": [
         "CVT fluid",
         "air filter",
+        "brake fluid",
         "cabin filter",
-        "engine oil"
+        "check brake pads",
+        "engine oil",
+        "spark plugs"
       ]
     },
     {
       "km": 200000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 220000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -142,24 +169,27 @@
       "tasks": [
         "CVT fluid",
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
-        "engine oil"
+        "engine oil",
+        "spark plugs"
       ]
     },
     {
       "km": 260000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 280000,
       "tasks": [
-        "air filter",
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -168,8 +198,11 @@
       "tasks": [
         "CVT fluid",
         "air filter",
+        "brake fluid",
         "cabin filter",
-        "engine oil"
+        "check brake pads",
+        "engine oil",
+        "spark plugs"
       ]
     }
   ]

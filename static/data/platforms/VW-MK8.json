@@ -45,6 +45,16 @@
       "task": "intake carbon clean",
       "km": 120000,
       "kind": "rec"
+    },
+    {
+      "task": "brake fluid",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pads",
+      "km": 30000,
+      "kind": "mfr"
     }
   ],
   "serviceNotes": {
@@ -54,7 +64,9 @@
     "spark plugs": "TSI engines use manufacturer-specified spark plug intervals in the service schedule; 60,000 km matches common EU petrol tables\u2014verify for eTSI/mHEV variants.",
     "DSG gearbox fluid": "As on Mk7, many owners replace DSG fluid and filter around 60,000 km despite lifetime labels, to protect wet clutches and the mechatronics unit.",
     "coolant flush": "Long-life coolant still ages; exchanging fluid around 120,000 km maintains corrosion protection for the electric auxiliary systems on mild-hybrid variants as well.",
-    "intake carbon clean": "Direct injection TSI engines benefit from periodic intake valve cleaning; 120,000 km is a typical specialist interval."
+    "intake carbon clean": "Direct injection TSI engines benefit from periodic intake valve cleaning; 120,000 km is a typical specialist interval.",
+    "brake fluid": "VW specifies brake fluid replacement every 2 years. On the fixed-interval EU schedule this aligns with approximately 60,000 km.",
+    "check brake pads": "Brake pad inspection is part of the VW periodic maintenance programme at each major service."
   },
   "milestones": [
     {
@@ -67,6 +79,7 @@
       "km": 30000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -81,7 +94,9 @@
       "tasks": [
         "DSG gearbox fluid",
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
         "spark plugs"
       ]
@@ -96,6 +111,7 @@
       "km": 90000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -110,7 +126,9 @@
       "tasks": [
         "DSG gearbox fluid",
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
         "engine oil",
         "intake carbon clean",
@@ -127,6 +145,7 @@
       "km": 150000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -141,7 +160,9 @@
       "tasks": [
         "DSG gearbox fluid",
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
         "spark plugs"
       ]
@@ -156,6 +177,7 @@
       "km": 210000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -170,7 +192,9 @@
       "tasks": [
         "DSG gearbox fluid",
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
         "engine oil",
         "intake carbon clean",
@@ -187,6 +211,7 @@
       "km": 270000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -201,7 +226,9 @@
       "tasks": [
         "DSG gearbox fluid",
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
         "spark plugs"
       ]

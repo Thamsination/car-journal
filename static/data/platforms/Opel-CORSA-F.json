@@ -8,22 +8,22 @@
   "serviceIntervals": [
     {
       "task": "engine oil",
-      "km": 20000,
+      "km": 30000,
       "kind": "mfr"
     },
     {
       "task": "cabin filter",
-      "km": 20000,
+      "km": 60000,
       "kind": "mfr"
     },
     {
       "task": "air filter",
-      "km": 20000,
+      "km": 60000,
       "kind": "mfr"
     },
     {
       "task": "fuel filter",
-      "km": 40000,
+      "km": 60000,
       "kind": "mfr"
     },
     {
@@ -40,57 +40,57 @@
       "task": "wet belt inspection",
       "km": 100000,
       "kind": "rec"
+    },
+    {
+      "task": "brake fluid",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pads",
+      "km": 30000,
+      "kind": "mfr"
     }
   ],
   "serviceNotes": {
-    "engine oil": "Corsa F shares Stellantis CMP service logic: Opel\u2019s EU maintenance plan schedules routine servicing including oil and filter at 20,000 km or 12 months on standard programmes (see owner\u2019s manual / myOpel service schedule).",
-    "cabin filter": "Interior ventilation filter replacement follows the same periodic maintenance interval as other filter items.",
-    "air filter": "Engine air filter is serviced at the standard maintenance visit for petrol and diesel ICE models.",
-    "fuel filter": "Diesel models include fuel filter replacement on the extended maintenance interval (~40,000 km); not applicable to petrol.",
+    "engine oil": "Opel\u2019s EU maintenance schedule for Corsa F specifies service including oil and filter every 30,000 km or 1 year, whichever comes first.",
+    "cabin filter": "Interior ventilation filter replacement is specified at 60,000 km / 2 years in Opel\u2019s maintenance schedule.",
+    "air filter": "Engine air filter replacement at 60,000 km / 4 years per the Opel periodic maintenance plan.",
+    "fuel filter": "Fuel filter replacement at 60,000 km / 2 years (diesel models) per the Opel service schedule.",
     "coolant flush": "Preventive coolant exchange around 120,000 km maintains corrosion protection for turbocharged CMP engines.",
-    "wet belt inspection": "Where fitted (PureTech-related engines), wet belt systems need specialist inspection around 100,000 km; confirm engine variant."
+    "wet belt inspection": "Where fitted (PureTech-related engines), wet belt systems need specialist inspection around 100,000 km; confirm engine variant.",
+    "brake fluid": "Opel specifies brake fluid replacement every 2 years, approximately every 60,000 km on the standard schedule.",
+    "check brake pads": "Brake pad inspection is part of the Opel periodic service programme."
   },
   "milestones": [
     {
-      "km": 20000,
+      "km": 30000,
       "tasks": [
-        "air filter",
-        "cabin filter",
+        "check brake pads",
         "engine oil"
-      ]
-    },
-    {
-      "km": 40000,
-      "tasks": [
-        "air filter",
-        "cabin filter",
-        "engine oil",
-        "fuel filter"
       ]
     },
     {
       "km": 60000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
-        "engine oil"
-      ]
-    },
-    {
-      "km": 80000,
-      "tasks": [
-        "air filter",
-        "cabin filter",
+        "check brake pads",
         "engine oil",
         "fuel filter"
       ]
     },
     {
+      "km": 90000,
+      "tasks": [
+        "check brake pads",
+        "engine oil"
+      ]
+    },
+    {
       "km": 100000,
       "tasks": [
-        "air filter",
-        "cabin filter",
-        "engine oil",
         "wet belt inspection"
       ]
     },
@@ -98,52 +98,42 @@
       "km": 120000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
         "engine oil",
         "fuel filter"
       ]
     },
     {
-      "km": 140000,
+      "km": 150000,
       "tasks": [
-        "air filter",
-        "cabin filter",
+        "check brake pads",
         "engine oil"
-      ]
-    },
-    {
-      "km": 160000,
-      "tasks": [
-        "air filter",
-        "cabin filter",
-        "engine oil",
-        "fuel filter"
       ]
     },
     {
       "km": 180000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
-        "engine oil"
+        "check brake pads",
+        "engine oil",
+        "fuel filter"
       ]
     },
     {
       "km": 200000,
       "tasks": [
-        "air filter",
-        "cabin filter",
-        "engine oil",
-        "fuel filter",
         "wet belt inspection"
       ]
     },
     {
-      "km": 220000,
+      "km": 210000,
       "tasks": [
-        "air filter",
-        "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -151,35 +141,30 @@
       "km": 240000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
         "engine oil",
         "fuel filter"
       ]
     },
     {
-      "km": 260000,
+      "km": 270000,
       "tasks": [
-        "air filter",
-        "cabin filter",
+        "check brake pads",
         "engine oil"
-      ]
-    },
-    {
-      "km": 280000,
-      "tasks": [
-        "air filter",
-        "cabin filter",
-        "engine oil",
-        "fuel filter"
       ]
     },
     {
       "km": 300000,
       "tasks": [
         "air filter",
+        "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
+        "fuel filter",
         "wet belt inspection"
       ]
     }

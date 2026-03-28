@@ -24,7 +24,7 @@
     {
       "task": "brake fluid",
       "km": 40000,
-      "kind": "rec"
+      "kind": "mfr"
     },
     {
       "task": "coolant flush",
@@ -35,6 +35,21 @@
       "task": "transaxle fluid",
       "km": 120000,
       "kind": "rec"
+    },
+    {
+      "task": "air filter",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pads",
+      "km": 15000,
+      "kind": "mfr"
     }
   ],
   "serviceNotes": {
@@ -42,13 +57,17 @@
     "cabin filter": "Air conditioning filter inspection/replacement is performed at periodic maintenance intervals; 15,000 km aligns with Toyota\u2019s standard EU inspection cycle for the model line.",
     "brake fluid": "Toyota specifies brake fluid replacement on a time basis in the owner\u2019s manual; translated to distance, many owners use ~40,000 km as a practical EU interval\u2014confirm years/mileage in your manual.",
     "coolant flush": "Super Long Life Coolant has a long change interval; many specialists suggest inspection at 150,000 km and replacement if tests show degradation.",
-    "transaxle fluid": "Hybrid transaxle oil is often treated as filled for life; some specialists recommend service near 120,000 km for taxi or heavy urban use\u2014check workshop manual."
+    "transaxle fluid": "Hybrid transaxle oil is often treated as filled for life; some specialists recommend service near 120,000 km for taxi or heavy urban use\u2014check workshop manual.",
+    "air filter": "Toyota\u2019s periodic maintenance schedule includes engine air filter replacement at extended intervals, typically every 60,000 km.",
+    "spark plugs": "Toyota specifies spark plug replacement at extended intervals for the 1.5L hybrid powertrain. Iridium-tipped plugs are used.",
+    "check brake pads": "Toyota\u2019s maintenance schedule includes brake system inspection at every service interval."
   },
   "milestones": [
     {
       "km": 15000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -56,6 +75,7 @@
       "km": 30000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -69,20 +89,25 @@
       "km": 45000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 60000,
       "tasks": [
+        "air filter",
         "cabin filter",
-        "engine oil"
+        "check brake pads",
+        "engine oil",
+        "spark plugs"
       ]
     },
     {
       "km": 75000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -96,6 +121,7 @@
       "km": 90000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -103,15 +129,19 @@
       "km": 105000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 120000,
       "tasks": [
+        "air filter",
         "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
+        "spark plugs",
         "transaxle fluid"
       ]
     },
@@ -119,6 +149,7 @@
       "km": 135000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -126,6 +157,7 @@
       "km": 150000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "coolant flush",
         "engine oil"
       ]
@@ -140,20 +172,25 @@
       "km": 165000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 180000,
       "tasks": [
+        "air filter",
         "cabin filter",
-        "engine oil"
+        "check brake pads",
+        "engine oil",
+        "spark plugs"
       ]
     },
     {
       "km": 195000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -167,6 +204,7 @@
       "km": 210000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -174,15 +212,19 @@
       "km": 225000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 240000,
       "tasks": [
+        "air filter",
         "brake fluid",
         "cabin filter",
+        "check brake pads",
         "engine oil",
+        "spark plugs",
         "transaxle fluid"
       ]
     },
@@ -190,6 +232,7 @@
       "km": 255000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -197,6 +240,7 @@
       "km": 270000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
@@ -210,15 +254,19 @@
       "km": 285000,
       "tasks": [
         "cabin filter",
+        "check brake pads",
         "engine oil"
       ]
     },
     {
       "km": 300000,
       "tasks": [
+        "air filter",
         "cabin filter",
+        "check brake pads",
         "coolant flush",
-        "engine oil"
+        "engine oil",
+        "spark plugs"
       ]
     }
   ]
