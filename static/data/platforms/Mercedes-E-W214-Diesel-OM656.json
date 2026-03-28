@@ -20,34 +20,49 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 25000, "months": 12, "kind": "mfr" },
-    { "task": "engine oil", "km": 15000, "months": null, "kind": "rec" },
+    { "task": "engine oil", "km": 10000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 8000, "months": null, "kind": "rec" },
     { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
-    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "engine air filter", "km": 10000, "months": null, "kind": "mfr" },
     { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
     { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
-    { "task": "fuel filter", "km": 60000, "months": null, "kind": "mfr" },
-    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "fuel filter", "km": 30000, "months": null, "kind": "mfr" },
+    { "task": "coolant", "km": 90000, "months": 60, "kind": "mfr" },
     { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec" },
     { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
     { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
     { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
     { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
-    { "task": "poly-V belt", "km": 100000, "months": null, "kind": "rec" }
+    { "task": "poly-V belt", "km": 90000, "months": null, "kind": "rec" }
   ],
   "serviceNotes": {
-    "engine oil": "OM656 six-cylinder diesel in W214: ASSYST PLUS flexible EU limits commonly 25,000 km / 12 months; rec 15,000 km severe use.",
-    "dust filter": "Dust filter per Mercedes-Benz W214 European maintenance booklet.",
-    "engine air filter": "ASSYST inspection intervals.",
-    "brake fluid": "24-month renewal per Mercedes-Benz European guidance.",
+    "engine oil": "W214 OM656: intervals aligned with Tier 2 Mercedes E 350 CDI 3.0 diesel table https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service (no 2024 W214 row on auto-abc). Rec 8,000 km severe use.",
+    "dust filter": "Dust filter per Mercedes-Benz W214 maintenance plan.",
+    "engine air filter": "10,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service (Tier 2 three-litre diesel proxy).",
+    "brake fluid": "24-month renewal per Mercedes-Benz passenger-car service manual.",
     "check brake pad thickness": "Pad inspection each service visit.",
-    "fuel filter": "Diesel fuel filter ~60,000 km on six-cylinder schedules—confirm ASSYST.",
-    "coolant": "Long-life engine coolant renewal per Mercedes high-mileage interval.",
+    "fuel filter": "30,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service.",
+    "coolant": "90,000 km / 60 months per https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service.",
     "automatic transmission fluid": "9G-TRONIC preventive fluid ~60,000 km.",
     "transfer case oil": "4MATIC only; preventive ~60,000 km.",
     "front axle differential oil": "4MATIC only.",
     "rear axle differential oil": "AWD preventive axle oil ~60,000 km.",
-    "coolant flush": "Supplementary coolant exchange ~120,000 km.",
-    "poly-V belt": "Accessory drive belt ~100,000 km on belt-driven ancillaries."
+    "coolant flush": "Supplementary exchange ~120,000 km.",
+    "poly-V belt": "90,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service."
+  },
+  "serviceSources": {
+    "engine oil": "Changed from 25,000 km / 12 months to 10,000 km / 12 months per https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service (Tier 2 Mercedes E 350 2009 CDI; W214 OM656 — auto-abc has no dedicated 2024 service page)",
+    "dust filter": "Cabin dust filter 30,000 km / 24 months — Mercedes-Benz W214 scheduled maintenance; https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service",
+    "engine air filter": "Changed from 60,000 km / 48 months to 10,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service",
+    "brake fluid": "Brake fluid renewal every 24 months (time-based, DOT 4+); Mercedes-Benz passenger-car service manual — W214",
+    "check brake pad thickness": "Brake pad thickness check ~30,000 km — Mercedes-Benz W214 inspection schedule (wear item; interval approximate)",
+    "fuel filter": "Changed from 60,000 km to 30,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service",
+    "coolant": "Changed from 150,000 km to 90,000 km / 60 months per https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service",
+    "automatic transmission fluid": "9G-TRONIC preventive ATF ~60,000 km — specialist practice",
+    "transfer case oil": "4MATIC transfer case oil ~60,000 km preventive — specialist practice",
+    "front axle differential oil": "4MATIC front axle differential ~60,000 km preventive — specialist practice",
+    "rear axle differential oil": "Rear differential oil ~60,000 km preventive — specialist practice",
+    "coolant flush": "Supplementary coolant exchange ~120,000 km preventive",
+    "poly-V belt": "Changed REC from 100,000 km to 90,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7612-2009/service"
   }
 }
