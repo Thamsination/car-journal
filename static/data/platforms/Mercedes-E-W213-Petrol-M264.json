@@ -1,0 +1,78 @@
+{
+  "id": "Mercedes-E-W213-Petrol-M264",
+  "name": "Mercedes-Benz E-Class W213/S213, C238/A238 (2.0L 4-cyl turbo petrol)",
+  "years": "2016–2026",
+  "chassisCodes": ["W213", "S213", "C238", "A238"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["automatic"],
+  "displacement": "2.0L",
+  "cylinders": 4,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 200",
+        "E 200 Estate",
+        "E 200 Coupé",
+        "E 200 Cabriolet",
+        "E 200 4MATIC",
+        "E 200 4MATIC Estate",
+        "E 300",
+        "E 300 Estate",
+        "E 300 Coupé",
+        "E 300 Cabriolet",
+        "E 300 4MATIC",
+        "E 300 4MATIC Estate"
+      ],
+      "yearFrom": 2016,
+      "yearTo": 2026
+    },
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 350",
+        "E 350 Estate",
+        "E 350 Coupé",
+        "E 350 Cabriolet",
+        "E 350 4MATIC",
+        "E 350 4MATIC Estate"
+      ],
+      "yearFrom": 2020,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 10000, "months": null, "kind": "rec" },
+    { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
+    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
+    { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
+    { "task": "spark plugs", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
+    { "task": "poly-V belt", "km": 100000, "months": null, "kind": "rec" },
+    { "task": "intake carbon clean", "km": 120000, "months": null, "kind": "rec" }
+  ],
+  "serviceNotes": {
+    "engine oil": "M264 (and late M274) four-cylinder turbo: Mercedes EU ASSYST plans commonly show engine oil and filter at 15,000 km or 12 months; rec row 10,000 km for severe use.",
+    "dust filter": "Dust filter per Mercedes-Benz maintenance booklet.",
+    "engine air filter": "ASSYST inspection intervals (often 60,000 km / 48 months on EU sheets).",
+    "brake fluid": "24-month renewal per Mercedes-Benz European guidance.",
+    "check brake pad thickness": "Inspect each service; 30,000 km planning reminder.",
+    "spark plugs": "Four-cylinder direct-injection turbo: typically 60,000 km / 48 months EU orientation—confirm ASSYST.",
+    "coolant": "Long-life coolant renewal (often near 150,000 km).",
+    "automatic transmission fluid": "9G-TRONIC preventive ATF ~60,000 km despite lifetime claims.",
+    "transfer case oil": "4MATIC only; preventive ~60,000 km.",
+    "front axle differential oil": "4MATIC only.",
+    "rear axle differential oil": "AWD preventive axle oil ~60,000 km.",
+    "coolant flush": "Supplementary exchange ~120,000 km.",
+    "poly-V belt": "Accessory belt ~100,000 km.",
+    "intake carbon clean": "Direct injection: intake cleaning ~120,000 km if carbon symptoms appear. E 350 from 2020 onward is commonly 2.0L M264; earlier E 350 V6 is Mercedes-E-W213-Petrol-M276."
+  }
+}

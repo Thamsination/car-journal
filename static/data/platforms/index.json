@@ -2156,7 +2156,7 @@
     "yearTo": 2016
   },
   {
-    "platformId": "Mercedes-E-W213-Diesel",
+    "platformId": "Mercedes-E-W213-Diesel-OM654",
     "make": "Mercedes-Benz",
     "models": [
       "E 200 d",
@@ -2176,7 +2176,15 @@
       "E 300 d Coupé",
       "E 300 d Cabriolet",
       "E 300 d 4MATIC",
-      "E 300 d 4MATIC Estate",
+      "E 300 d 4MATIC Estate"
+    ],
+    "yearFrom": 2016,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "Mercedes-E-W213-Diesel-OM656",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 350 d",
       "E 350 d Estate",
       "E 350 d Coupé",
@@ -2204,7 +2212,39 @@
     "yearTo": 2026
   },
   {
-    "platformId": "Mercedes-E-W213-Petrol",
+    "platformId": "Mercedes-E-W213-Petrol-M177",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 63 AMG",
+      "E 63 AMG Estate",
+      "E 63 S AMG",
+      "E 63 S AMG Estate",
+      "E 63 AMG Coupé",
+      "E 63 S AMG Coupé"
+    ],
+    "yearFrom": 2017,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "Mercedes-E-W213-Petrol-M256",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 450",
+      "E 450 Estate",
+      "E 450 Coupé",
+      "E 450 Cabriolet",
+      "E 450 4MATIC",
+      "E 450 4MATIC Estate",
+      "E 53 AMG 4MATIC+",
+      "E 53 AMG 4MATIC+ Estate",
+      "E 53 AMG 4MATIC+ Coupé",
+      "E 53 AMG 4MATIC+ Cabriolet"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "Mercedes-E-W213-Petrol-M264",
     "make": "Mercedes-Benz",
     "models": [
       "E 200",
@@ -2218,41 +2258,55 @@
       "E 300 Coupé",
       "E 300 Cabriolet",
       "E 300 4MATIC",
-      "E 300 4MATIC Estate",
-      "E 350",
-      "E 350 Estate",
-      "E 350 Coupé",
-      "E 350 Cabriolet",
-      "E 350 4MATIC",
-      "E 350 4MATIC Estate",
-      "E 450",
-      "E 450 Estate",
-      "E 450 Coupé",
-      "E 450 Cabriolet",
-      "E 450 4MATIC",
-      "E 450 4MATIC Estate",
-      "E 53 AMG 4MATIC+",
-      "E 53 AMG 4MATIC+ Estate",
-      "E 53 AMG 4MATIC+ Coupé",
-      "E 53 AMG 4MATIC+ Cabriolet",
-      "E 63 AMG",
-      "E 63 AMG Estate",
-      "E 63 S AMG",
-      "E 63 S AMG Estate",
-      "E 63 AMG Coupé",
-      "E 63 S AMG Coupé"
+      "E 300 4MATIC Estate"
     ],
     "yearFrom": 2016,
     "yearTo": 2026
   },
   {
-    "platformId": "Mercedes-E-W214-Diesel",
+    "platformId": "Mercedes-E-W213-Petrol-M264",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 350",
+      "E 350 Estate",
+      "E 350 Coupé",
+      "E 350 Cabriolet",
+      "E 350 4MATIC",
+      "E 350 4MATIC Estate"
+    ],
+    "yearFrom": 2020,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "Mercedes-E-W213-Petrol-M276",
+    "make": "Mercedes-Benz",
+    "models": [
+      "E 350",
+      "E 350 Estate",
+      "E 350 Coupé",
+      "E 350 Cabriolet",
+      "E 350 4MATIC",
+      "E 350 4MATIC Estate"
+    ],
+    "yearFrom": 2016,
+    "yearTo": 2019
+  },
+  {
+    "platformId": "Mercedes-E-W214-Diesel-OM654",
     "make": "Mercedes-Benz",
     "models": [
       "E 220 d",
       "E 220 d Estate",
       "E 220 d 4MATIC",
-      "E 220 d 4MATIC Estate",
+      "E 220 d 4MATIC Estate"
+    ],
+    "yearFrom": 2024,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "Mercedes-E-W214-Diesel-OM656",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 450 d 4MATIC",
       "E 450 d 4MATIC Estate"
     ],
@@ -2272,13 +2326,21 @@
     "yearTo": 2026
   },
   {
-    "platformId": "Mercedes-E-W214-Petrol",
+    "platformId": "Mercedes-E-W214-Petrol-M254",
     "make": "Mercedes-Benz",
     "models": [
       "E 200",
       "E 200 Estate",
       "E 200 4MATIC",
-      "E 200 4MATIC Estate",
+      "E 200 4MATIC Estate"
+    ],
+    "yearFrom": 2024,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "Mercedes-E-W214-Petrol-M256",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 450 4MATIC",
       "E 450 4MATIC Estate"
     ],

@@ -1,0 +1,69 @@
+{
+  "id": "Mercedes-E-W213-Diesel-OM654",
+  "name": "Mercedes-Benz E-Class W213/S213, C238/A238 (2.0L 4-cyl diesel)",
+  "years": "2016–2026",
+  "chassisCodes": ["W213", "S213", "C238", "A238"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["automatic"],
+  "displacement": "2.0L",
+  "cylinders": 4,
+  "fuelType": "diesel",
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 200 d",
+        "E 200 d Estate",
+        "E 200 d Coupé",
+        "E 200 d Cabriolet",
+        "E 200 d 4MATIC",
+        "E 200 d 4MATIC Estate",
+        "E 220 d",
+        "E 220 d Estate",
+        "E 220 d Coupé",
+        "E 220 d Cabriolet",
+        "E 220 d 4MATIC",
+        "E 220 d 4MATIC Estate",
+        "E 300 d",
+        "E 300 d Estate",
+        "E 300 d Coupé",
+        "E 300 d Cabriolet",
+        "E 300 d 4MATIC",
+        "E 300 d 4MATIC Estate"
+      ],
+      "yearFrom": 2016,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 25000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 15000, "months": null, "kind": "rec" },
+    { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
+    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
+    { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
+    { "task": "fuel filter", "km": 60000, "months": null, "kind": "mfr" },
+    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
+    { "task": "poly-V belt", "km": 100000, "months": null, "kind": "rec" }
+  ],
+  "serviceNotes": {
+    "engine oil": "OM654 four-cylinder diesel: Mercedes ASSYST PLUS flexible EU maintenance commonly up to 25,000 km or 12 months; rec 15,000 km severe or urban short trips.",
+    "dust filter": "Dust filter per Mercedes-Benz European maintenance booklet.",
+    "engine air filter": "ASSYST inspection intervals (commonly 60,000 km / 48 months).",
+    "brake fluid": "24-month renewal per Mercedes-Benz European operator documentation pattern.",
+    "check brake pad thickness": "Inspect each workshop visit; 30,000 km reminder for high mileage.",
+    "fuel filter": "Diesel fuel filter ~60,000 km on OM654—confirm ASSYST printout.",
+    "coolant": "Long-life coolant renewal (often near 150,000 km).",
+    "automatic transmission fluid": "9G-TRONIC preventive fluid ~60,000 km despite lifetime classification.",
+    "transfer case oil": "4MATIC only; preventive ~60,000 km.",
+    "front axle differential oil": "4MATIC only.",
+    "rear axle differential oil": "AWD preventive axle oil ~60,000 km.",
+    "coolant flush": "Full coolant exchange ~120,000 km if OEM renewal not yet due.",
+    "poly-V belt": "Accessory belt ~100,000 km on belt-driven ancillaries."
+  }
+}
