@@ -615,6 +615,37 @@
     "yearTo": 2020
   },
   {
+    "platformId": "Subaru-WRX-EJ-turbo",
+    "make": "Subaru",
+    "models": [
+      "Impreza WRX",
+      "Impreza WRX Wagon",
+      "WRX"
+    ],
+    "yearFrom": 2000,
+    "yearTo": 2014
+  },
+  {
+    "platformId": "Subaru-WRX-FA20DIT",
+    "make": "Subaru",
+    "models": [
+      "WRX"
+    ],
+    "yearFrom": 2015,
+    "yearTo": 2021
+  },
+  {
+    "platformId": "Subaru-WRX-FA24DIT",
+    "make": "Subaru",
+    "models": [
+      "WRX",
+      "WRX TR",
+      "WRX GT"
+    ],
+    "yearFrom": 2022,
+    "yearTo": 2026
+  },
+  {
     "platformId": "Toyota-YARIS-XP210",
     "make": "Toyota",
     "models": [

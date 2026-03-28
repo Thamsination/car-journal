@@ -1,0 +1,289 @@
+{
+  "id": "Subaru-WRX-FA24DIT",
+  "name": "Subaru WRX (FA24F direct-injection turbo petrol)",
+  "years": "2022\u2013",
+  "chassisCodes": [
+    "VB"
+  ],
+  "vehicles": [
+    {
+      "make": "Subaru",
+      "models": [
+        "WRX",
+        "WRX TR",
+        "WRX GT"
+      ],
+      "yearFrom": 2022,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "interior ventilation filter",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "air cleaner element",
+      "km": 45000,
+      "months": 36,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 120000,
+      "months": 120,
+      "kind": "mfr"
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "inspect disc brake pads",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "front differential oil",
+      "km": 60000,
+      "months": 48,
+      "kind": "mfr"
+    },
+    {
+      "task": "rear differential oil",
+      "km": 60000,
+      "months": 48,
+      "kind": "mfr"
+    },
+    {
+      "task": "coolant",
+      "km": 120000,
+      "months": 96,
+      "kind": "mfr"
+    },
+    {
+      "task": "intake carbon clean",
+      "km": 120000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "CVT fluid",
+      "km": 60000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "manual transmission oil",
+      "km": 120000,
+      "months": null,
+      "kind": "rec"
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "Subaru Australia\u2019s Model Year 2022 onwards BRZ/WRX Warranty and Service Handbook states scheduled services every 12 months or 15,000 km (whichever occurs first), including engine oil and oil filter replacement at each scheduled service under the normal driving maintenance schedule.",
+    "interior ventilation filter": "The MY22+ Australian warranty and service handbook lists \u2018Interior ventilation filter\u2019 as inspect (I) at each A\u2013H service in the published table; where the booklet does not spell out a standalone replace interval, this 30,000 km / 24 month cadence is interval estimated to satisfy routine replacement needs\u2014follow your owner\u2019s manual if it specifies different mileage or time.",
+    "air cleaner element": "Per the MY22+ BRZ/WRX maintenance schedule for normal driving conditions in Subaru Australia\u2019s handbook, the air cleaner element is replaced at the 45,000 km / 36 month and 90,000 km / 72 month services (and repeats with the documented cycle).",
+    "spark plugs": "The maintenance schedule table in the MY22+ Australian handbook marks spark plugs for replacement (R), but some PDF extracts collapse the per-interval columns; 120,000 km / 120 months is interval estimated from typical long-life iridium service for current Subaru turbo petrol engines\u2014confirm the exact row in your warranty and maintenance handbook.",
+    "brake fluid": "Subaru Australia\u2019s MY22+ BRZ/WRX maintenance schedule shows brake fluid replacement (R) on every second scheduled service, which aligns with a 24-month cadence alongside the 15,000 km annual service rhythm.",
+    "inspect disc brake pads": "The handbook includes inspection of disc brake pads and discs at each scheduled maintenance interval under normal driving conditions.",
+    "front differential oil": "Subaru Australia\u2019s MY22+ WRX maintenance schedule specifies front differential oil replacement starting at the 60,000 km / 48 month service, then again at the 120,000 km / 96 month service.",
+    "rear differential oil": "The same schedule specifies rear differential oil replacement on the same 60,000 km / 120,000 km pattern as the front differential for WRX.",
+    "coolant": "Coolant replacement (R) appears at the 120,000 km / 96 month service in the MY22+ Subaru Australia WRX maintenance schedule, using Subaru Genuine Long Life coolant only.",
+    "intake carbon clean": "FA24DIT is direct injected; intake valves can coke over time. Cleaning around 120,000 km is a common specialist recommendation if you develop cold-start misfire or loss of low-end response.",
+    "CVT fluid": "Where equipped, CVT fluid is often treated as long-life officially; many owners change near 60,000 km for severe use\u2014follow your booklet if a replace interval is listed.",
+    "manual transmission oil": "Manual transmission oil is primarily inspected in factory schedules; consider exchange near 120,000 km if the oil darkens or after track use."
+  },
+  "milestones": [
+    {
+      "km": 15000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 30000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads",
+        "interior ventilation filter"
+      ]
+    },
+    {
+      "km": 45000,
+      "tasks": [
+        "air cleaner element",
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "CVT fluid",
+        "engine oil",
+        "front differential oil",
+        "inspect disc brake pads",
+        "interior ventilation filter",
+        "rear differential oil"
+      ]
+    },
+    {
+      "km": 75000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 90000,
+      "tasks": [
+        "air cleaner element",
+        "engine oil",
+        "inspect disc brake pads",
+        "interior ventilation filter"
+      ]
+    },
+    {
+      "km": 105000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "CVT fluid",
+        "coolant",
+        "engine oil",
+        "front differential oil",
+        "inspect disc brake pads",
+        "intake carbon clean",
+        "interior ventilation filter",
+        "manual transmission oil",
+        "rear differential oil",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 135000,
+      "tasks": [
+        "air cleaner element",
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 150000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads",
+        "interior ventilation filter"
+      ]
+    },
+    {
+      "km": 165000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "CVT fluid",
+        "air cleaner element",
+        "engine oil",
+        "front differential oil",
+        "inspect disc brake pads",
+        "interior ventilation filter",
+        "rear differential oil"
+      ]
+    },
+    {
+      "km": 195000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 210000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads",
+        "interior ventilation filter"
+      ]
+    },
+    {
+      "km": 225000,
+      "tasks": [
+        "air cleaner element",
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "CVT fluid",
+        "coolant",
+        "engine oil",
+        "front differential oil",
+        "inspect disc brake pads",
+        "intake carbon clean",
+        "interior ventilation filter",
+        "manual transmission oil",
+        "rear differential oil",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 255000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 270000,
+      "tasks": [
+        "air cleaner element",
+        "engine oil",
+        "inspect disc brake pads",
+        "interior ventilation filter"
+      ]
+    },
+    {
+      "km": 285000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "CVT fluid",
+        "engine oil",
+        "front differential oil",
+        "inspect disc brake pads",
+        "interior ventilation filter",
+        "rear differential oil"
+      ]
+    }
+  ]
+}

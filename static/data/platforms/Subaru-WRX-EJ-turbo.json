@@ -1,0 +1,370 @@
+{
+  "id": "Subaru-WRX-EJ-turbo",
+  "name": "Subaru Impreza WRX / WRX (EJ205 / EJ255 turbo petrol)",
+  "years": "2000\u20132014",
+  "chassisCodes": [
+    "GD",
+    "GG",
+    "GE",
+    "GH"
+  ],
+  "vehicles": [
+    {
+      "make": "Subaru",
+      "models": [
+        "Impreza WRX",
+        "Impreza WRX Wagon",
+        "WRX"
+      ],
+      "yearFrom": 2000,
+      "yearTo": 2014
+    }
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "months": 6,
+      "kind": "mfr"
+    },
+    {
+      "task": "cabin air filter",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "air cleaner element",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 96000,
+      "months": 72,
+      "kind": "mfr"
+    },
+    {
+      "task": "timing belt",
+      "km": 105000,
+      "months": 105,
+      "kind": "mfr"
+    },
+    {
+      "task": "fuel filter",
+      "km": 96000,
+      "months": 72,
+      "kind": "mfr"
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "months": 30,
+      "kind": "mfr"
+    },
+    {
+      "task": "inspect disc brake pads",
+      "km": 10000,
+      "months": 6,
+      "kind": "mfr"
+    },
+    {
+      "task": "coolant",
+      "km": 120000,
+      "months": 120,
+      "kind": "mfr"
+    },
+    {
+      "task": "intake carbon clean",
+      "km": 120000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "manual transmission oil",
+      "km": 120000,
+      "months": null,
+      "kind": "rec"
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "Subaru\u2019s turbocharged maintenance programmes (e.g. Subaru Canada Maintenance Guide) commonly specify engine oil and filter service every 10,000 km or 6 months, whichever comes first, for vehicles under normal driving conditions\u2014verify against your region\u2019s warranty and maintenance booklet.",
+    "cabin air filter": "Replace per the schedule in your Subaru warranty and maintenance booklet; many regions align cabin/pollen filter replacement with major services (often around 30,000 km or 24 months on turbo models).",
+    "air cleaner element": "Subaru maintenance booklets specify engine air cleaner (air filter) service on a distance/time basis; 30,000 km or 24 months is a typical inspection/replacement cadence where not otherwise stated\u2014confirm for your model year and market.",
+    "spark plugs": "For turbocharged EJ engines, North American Subaru maintenance literature commonly cites spark plug renewal around 60,000 miles (approximately 96,000 km) with a multi-year cap; intervals vary by model year and plug type\u2014use your booklet.",
+    "timing belt": "EJ turbo WRX engines use a timing belt. Independent maintenance references and Subaru specialist guidance commonly cite replacement at 105,000 km or 105 months (whichever comes first), with inspection intervals in some booklets\u2014always follow your official schedule.",
+    "fuel filter": "Subaru specifies periodic fuel filter replacement on many petrol turbo applications; North American schedules often place replacement around 60,000 miles (~96,000 km)\u2014confirm for your exact year and emissions package.",
+    "brake fluid": "Subaru of America customer-service guidance documents brake fluid replacement every 30 months (and distance triggers in some markets); this entry uses a time-only cadence per app rules\u2014see your warranty and maintenance booklet for the exact first/second replacement pattern.",
+    "inspect disc brake pads": "Subaru scheduled maintenance includes inspection of disc brake pads and rotors at each routine service visit (typically every oil-change interval under km/time-based schedules).",
+    "coolant": "Subaru Long Life Coolant is formulated for extended service; official booklets specify first coolant change at high mileage/time (commonly around 120,000 km / 11 years on many models, then a repeat interval)\u2014verify your year\u2019s maintenance table.",
+    "intake carbon clean": "Port-injection EJ turbo engines are less prone than direct-injection-only layouts, but throttle bodies and intake tracts still foul; many specialists recommend cleaning around 120,000 km if drivability issues appear.",
+    "manual transmission oil": "Subaru often treats manual transmission oil as inspect-only under normal use; a preventive change around 120,000 km is a common enthusiast recommendation when towing or tracking."
+  },
+  "milestones": [
+    {
+      "km": 10000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 20000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 30000,
+      "tasks": [
+        "air cleaner element",
+        "cabin air filter",
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 40000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 50000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "air cleaner element",
+        "cabin air filter",
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 70000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 80000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 90000,
+      "tasks": [
+        "air cleaner element",
+        "cabin air filter",
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 96000,
+      "tasks": [
+        "fuel filter",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 100000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 105000,
+      "tasks": [
+        "timing belt"
+      ]
+    },
+    {
+      "km": 110000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "air cleaner element",
+        "cabin air filter",
+        "coolant",
+        "engine oil",
+        "inspect disc brake pads",
+        "intake carbon clean",
+        "manual transmission oil"
+      ]
+    },
+    {
+      "km": 130000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 140000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 150000,
+      "tasks": [
+        "air cleaner element",
+        "cabin air filter",
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 160000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 170000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "air cleaner element",
+        "cabin air filter",
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 190000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 192000,
+      "tasks": [
+        "fuel filter",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 200000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 210000,
+      "tasks": [
+        "air cleaner element",
+        "cabin air filter",
+        "engine oil",
+        "inspect disc brake pads",
+        "timing belt"
+      ]
+    },
+    {
+      "km": 220000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 230000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "air cleaner element",
+        "cabin air filter",
+        "coolant",
+        "engine oil",
+        "inspect disc brake pads",
+        "intake carbon clean",
+        "manual transmission oil"
+      ]
+    },
+    {
+      "km": 250000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 260000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 270000,
+      "tasks": [
+        "air cleaner element",
+        "cabin air filter",
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 280000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 288000,
+      "tasks": [
+        "fuel filter",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 290000,
+      "tasks": [
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "air cleaner element",
+        "cabin air filter",
+        "engine oil",
+        "inspect disc brake pads"
+      ]
+    }
+  ]
+}
