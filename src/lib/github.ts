@@ -133,6 +133,38 @@ export async function loadPlatform(platformId: string): Promise<import('./types'
 	return JSON.parse(content) as import('./types').PlatformConfig;
 }
 
+export interface PlatformIndexEntry {
+	platformId: string;
+	make: string;
+	models: string[];
+	yearFrom: number;
+	yearTo: number;
+}
+
+export async function loadPlatformIndex(): Promise<PlatformIndexEntry[]> {
+	const { content } = await getFile(`${ROOT_DATA}/platforms/index.json`);
+	if (!content) return [];
+	return JSON.parse(content) as PlatformIndexEntry[];
+}
+
+export async function createVehicleFiles(
+	vehicleId: string,
+	config: import('./types').VehicleConfig,
+	healthConfig: import('./types').HealthConfig
+): Promise<void> {
+	const base = `${ROOT_DATA}/vehicles/${vehicleId}`;
+	const msg = `Add vehicle: ${config.make} ${config.model}`;
+
+	await writeJsonFile(`${base}/vehicle-config.json`, config, '', msg);
+	await writeJsonFile(`${base}/events.json`, { events: [] }, '', msg);
+	await writeJsonFile(`${base}/parts.json`, { parts: [] }, '', msg);
+	await writeJsonFile(`${base}/health-config.json`, healthConfig, '', msg);
+	await writeJsonFile(`${base}/tire-config.json`, {
+		profiles: [],
+		warningPct: 0.8
+	}, '', msg);
+}
+
 // --- Per-Vehicle Data ---
 
 export async function loadEvents(): Promise<import('./types').CarEvent[]> {

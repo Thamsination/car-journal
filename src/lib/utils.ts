@@ -1,4 +1,4 @@
-import type { DerivedStatus, EventCategory, CarEvent } from './types';
+import type { DerivedStatus, EventCategory, CarEvent, PlatformConfig, HealthConfig } from './types';
 export type { EventCategory } from './types';
 
 export function generateId(prefix: string): string {
@@ -126,7 +126,7 @@ export function buildEventString(tasks: string[]): string {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-import type { ServiceMilestone, MilestoneKind, PlatformConfig } from './types';
+import type { ServiceMilestone, MilestoneKind } from './types';
 
 export interface ServiceInterval {
 	task: string;
@@ -516,6 +516,40 @@ export function computeTimeMilestones(
 	}
 
 	return results;
+}
+
+export function generateHealthConfig(platform: PlatformConfig): HealthConfig {
+	const taskMap = new Map<string, { km: number | null; months: number | null }>();
+
+	for (const si of platform.serviceIntervals) {
+		const key = si.task.toLowerCase();
+		const existing = taskMap.get(key);
+		if (!existing) {
+			taskMap.set(key, { km: si.km, months: si.months });
+		} else {
+			if (si.km != null && (existing.km == null || si.km < existing.km)) {
+				existing.km = si.km;
+			}
+			if (si.months != null && (existing.months == null || si.months < existing.months)) {
+				existing.months = si.months;
+			}
+		}
+	}
+
+	const intervals: import('./types').ServiceInterval[] = [];
+	for (const [task, { km, months }] of taskMap) {
+		const id = task.replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+		const name = task.split(' ').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+		intervals.push({
+			id,
+			name,
+			taskMatches: [task],
+			intervalKm: km,
+			intervalMonths: months,
+		});
+	}
+
+	return { intervals };
 }
 
 export type CompletionQuality = 'green' | 'amber' | 'red';
