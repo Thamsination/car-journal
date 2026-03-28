@@ -1,6 +1,13 @@
 {
   "vehicles": [
-    { "id": "EJ39063", "label": "520d xDrive" }
+    {
+      "id": "EJ39063",
+      "label": "520d xDrive"
+    },
+    {
+      "id": "VMNA4XO8E",
+      "label": "Subaru WRX"
+    }
   ],
-  "activeVehicle": "EJ39063"
+  "activeVehicle": "VMNA4XO8E"
 }
