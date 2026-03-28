@@ -186,10 +186,21 @@
 	const overallColors = { good: '#34c759', okay: '#ff9500', bad: '#ff3b30' };
 	const overallIcons = { good: '✓', okay: '!', bad: '✕' };
 
-	function vehicleTitle(v: typeof $vehicleConfig): string {
+	function vehicleDisplayName(v: typeof $vehicleConfig): string {
 		if (!v) return 'Vehicle';
-		if (v.name) return `${v.year} ${v.make} ${v.chassis} ${v.name}`;
-		return `${v.year} ${v.make} ${v.chassis} ${v.model}`;
+		return v.name || v.model || 'Vehicle';
+	}
+
+	function vehicleSubtitle(v: typeof $vehicleConfig): string {
+		if (!v) return '';
+		return [v.year, v.make, v.model].filter(Boolean).join(', ');
+	}
+
+	function vehicleTechLine(v: typeof $vehicleConfig): string {
+		if (!v) return '';
+		const awd = ['xdrive', 'quattro', 'awd', '4wd', '4matic', '4motion', 'sh-awd'];
+		const driveLabel = awd.includes((v.drivetrain || '').toLowerCase()) ? '4WD' : '2WD';
+		return [v.chassis, v.engine, driveLabel].filter(Boolean).join(', ');
 	}
 
 	function findLastService(interval: ServiceInterval): CarEvent | null {
@@ -445,9 +456,10 @@
 		<div class="vehicle-card">
 			<div class="vehicle-header">
 				<div class="vehicle-identity">
-					<h2 class="vehicle-name">{vehicleTitle($vehicleConfig)}</h2>
+					<h2 class="vehicle-name">{vehicleDisplayName($vehicleConfig)}</h2>
 					{#if $vehicleConfig}
-						<span class="vehicle-detail">{$vehicleConfig.engine} · {$vehicleConfig.drivetrain}</span>
+						<span class="vehicle-detail">{vehicleSubtitle($vehicleConfig)}</span>
+						<span class="vehicle-tech">{vehicleTechLine($vehicleConfig)}</span>
 					{/if}
 				</div>
 			<span class="health-badge" style="color: {overallColors[overallHealth]}">
@@ -857,6 +869,14 @@
 	.vehicle-detail {
 		font-size: 13px;
 		color: var(--color-text-secondary);
+	}
+
+	.vehicle-tech {
+		display: block;
+		font-size: 11px;
+		color: var(--color-text-secondary);
+		opacity: 0.7;
+		margin-top: 1px;
 	}
 
 	.odometer {
