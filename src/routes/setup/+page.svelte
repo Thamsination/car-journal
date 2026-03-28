@@ -1,87 +1,110 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { token, repoOwner, repoName } from '$lib/stores';
-	import { validateToken } from '$lib/github';
+	import { session } from '$lib/stores';
+	import { supabase } from '$lib/supabase';
 
-	let inputToken = $state('');
-	let inputOwner = $state($repoOwner);
-	let inputRepo = $state($repoName);
-	let validating = $state(false);
-	let validationError = $state('');
+	let inputEmail = $state('');
+	let sending = $state(false);
+	let emailSent = $state(false);
+	let loginError = $state('');
 
-	async function handleSubmit() {
-		if (!inputToken.trim()) {
-			validationError = 'Please enter a token';
+	async function signInWithEmail() {
+		if (!inputEmail.trim()) {
+			loginError = 'Please enter your email';
 			return;
 		}
 
-		validating = true;
-		validationError = '';
+		sending = true;
+		loginError = '';
 
-		$token = inputToken.trim();
-		$repoOwner = inputOwner.trim();
-		$repoName = inputRepo.trim();
+		const { error } = await supabase.auth.signInWithOtp({
+			email: inputEmail.trim(),
+			options: {
+				emailRedirectTo: window.location.origin + base + '/'
+			}
+		});
 
-		const result = await validateToken();
-		if (result.ok) {
-			goto(`${base}/`);
+		if (error) {
+			loginError = error.message;
 		} else {
-			validationError = result.error || 'Could not access the repository.';
-			$token = '';
+			emailSent = true;
 		}
-		validating = false;
+		sending = false;
 	}
+
+	async function signInWithGoogle() {
+		loginError = '';
+		const { error } = await supabase.auth.signInWithOAuth({
+			provider: 'google',
+			options: {
+				redirectTo: window.location.origin + base + '/'
+			}
+		});
+		if (error) {
+			loginError = error.message;
+		}
+	}
+
+	$effect(() => {
+		if ($session) {
+			goto(`${base}/`);
+		}
+	});
 </script>
 
 <svelte:head>
-	<title>Setup — Car Journal</title>
+	<title>Sign In — Car Journal</title>
 </svelte:head>
 
 <div class="container setup-page">
 	<div class="setup-card">
 		<div class="setup-header">
 			<h2>Welcome</h2>
-			<p>Connect to your GitHub repository to get started.</p>
+			<p>Sign in to track your vehicle maintenance.</p>
 		</div>
 
-		<form onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-			<div class="field">
-				<label for="owner">Repository Owner</label>
-				<input id="owner" type="text" bind:value={inputOwner} placeholder="Thamsination" />
-			</div>
-
-			<div class="field">
-				<label for="repo">Repository Name</label>
-				<input id="repo" type="text" bind:value={inputRepo} placeholder="car-journal" />
-			</div>
-
-			<div class="field">
-				<label for="token">Personal Access Token</label>
-				<input
-					id="token"
-					type="password"
-					bind:value={inputToken}
-					placeholder="github_pat_..."
-					autocomplete="off"
-				/>
-				<p class="field-hint">
-					Create a <a
-						href="https://github.com/settings/tokens?type=beta"
-						target="_blank"
-						rel="noopener">fine-grained token</a
-					> with <strong>Contents: Read and write</strong> permission for this repo only.
+		{#if emailSent}
+			<div class="email-sent">
+				<p class="sent-icon">✉</p>
+				<p class="sent-title">Check your inbox</p>
+				<p class="sent-desc">
+					We sent a sign-in link to <strong>{inputEmail}</strong>. Click the link to continue.
 				</p>
+				<button class="link-btn" onclick={() => { emailSent = false; inputEmail = ''; }}>
+					Use a different email
+				</button>
+			</div>
+		{:else}
+			<form onsubmit={(e) => { e.preventDefault(); signInWithEmail(); }}>
+				<div class="field">
+					<label for="email">Email</label>
+					<input
+						id="email"
+						type="email"
+						bind:value={inputEmail}
+						placeholder="you@example.com"
+						autocomplete="email"
+					/>
+				</div>
+
+				{#if loginError}
+					<p class="error-msg">{loginError}</p>
+				{/if}
+
+				<button type="submit" class="submit-btn" disabled={sending}>
+					{sending ? 'Sending...' : 'Send magic link'}
+				</button>
+			</form>
+
+			<div class="divider">
+				<span>or</span>
 			</div>
 
-			{#if validationError}
-				<p class="error-msg">{validationError}</p>
-			{/if}
-
-			<button type="submit" class="submit-btn" disabled={validating}>
-				{validating ? 'Validating...' : 'Connect'}
+			<button class="google-btn" onclick={signInWithGoogle}>
+				Sign in with Google
 			</button>
-		</form>
+		{/if}
 	</div>
 </div>
 
@@ -130,11 +153,14 @@
 		color: var(--color-text-secondary);
 	}
 
-	.field-hint {
-		font-size: 12px;
-		color: var(--color-text-secondary);
-		margin-top: 6px;
-		line-height: 1.4;
+	.field input {
+		width: 100%;
+		padding: 12px;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		font-size: 15px;
+		background: var(--color-surface);
+		color: var(--color-text);
 	}
 
 	.error-msg {
@@ -162,5 +188,71 @@
 	.submit-btn:disabled {
 		opacity: 0.6;
 		cursor: not-allowed;
+	}
+
+	.divider {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin: 20px 0;
+		color: var(--color-text-secondary);
+		font-size: 13px;
+	}
+
+	.divider::before,
+	.divider::after {
+		content: '';
+		flex: 1;
+		height: 1px;
+		background: var(--color-border);
+	}
+
+	.google-btn {
+		width: 100%;
+		padding: 12px;
+		background: var(--color-surface);
+		color: var(--color-text);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		font-size: 15px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background 0.15s;
+	}
+
+	.google-btn:hover {
+		background: var(--color-surface-elevated, #f2f2f7);
+	}
+
+	.email-sent {
+		text-align: center;
+		padding: 12px 0;
+	}
+
+	.sent-icon {
+		font-size: 36px;
+		margin-bottom: 8px;
+	}
+
+	.sent-title {
+		font-size: 18px;
+		font-weight: 700;
+		margin-bottom: 8px;
+	}
+
+	.sent-desc {
+		font-size: 14px;
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+		margin-bottom: 16px;
+	}
+
+	.link-btn {
+		background: none;
+		color: var(--color-accent);
+		font-size: 14px;
+		font-weight: 500;
+		cursor: pointer;
+		padding: 8px;
 	}
 </style>

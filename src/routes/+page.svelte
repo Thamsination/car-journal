@@ -3,12 +3,12 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import {
-		token, events, totalSpent, totalPlanned, costByCategory,
+		session, events, totalSpent, totalPlanned, costByCategory,
 		nextBatchEvents, latestOdometer, lastCompletedKm, dailyAverageKm,
 		nextScheduledEvent,
 		vehicleConfig, healthIntervals, tireConfig, tireStatus, platformConfig
 	} from '$lib/stores';
-	import { saveVehicleConfig } from '$lib/github';
+	import { saveVehicleConfig } from '$lib/data';
 	import {
 		formatCost, formatDateISO, deriveStatus, statusColor,
 		eventCategory, categoryLabel, categoryColor,
@@ -23,10 +23,10 @@
 	let odoInput = $state('');
 	let odoInputEl = $state<HTMLInputElement | null>(null);
 
-	const loading = $derived(!$token || ($events.length === 0 && !$vehicleConfig));
+	const loading = $derived(!$session || ($events.length === 0 && !$vehicleConfig));
 
 	onMount(() => {
-		if (!$token) {
+		if (!$session) {
 			goto(`${base}/setup`);
 		}
 	});

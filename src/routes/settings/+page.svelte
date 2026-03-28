@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { token, repoOwner, repoName, events, parts, vehicleConfig, latestOdometer } from '$lib/stores';
-	import { saveVehicleConfig } from '$lib/github';
+	import { session, events, parts, vehicleConfig, latestOdometer } from '$lib/stores';
+	import { supabase } from '$lib/supabase';
+	import { saveVehicleConfig } from '$lib/data';
 
 	let odoInput = $state($vehicleConfig?.odometer?.toString() ?? '');
 	let odoSaved = $state(false);
@@ -27,9 +28,10 @@
 		setTimeout(() => (odoSaved = false), 2000);
 	}
 
-	function handleLogout() {
-		if (!confirm('Disconnect from GitHub? Your data is safe in the repository.')) return;
-		$token = '';
+	async function handleLogout() {
+		if (!confirm('Sign out? Your data is stored securely and will be here when you return.')) return;
+		await supabase.auth.signOut();
+		$session = null;
 		$events = [];
 		$parts = [];
 		goto(`${base}/setup`);
@@ -58,6 +60,8 @@
 		a.click();
 		URL.revokeObjectURL(url);
 	}
+
+	const userEmail = $derived($session?.user?.email ?? '');
 </script>
 
 <svelte:head>
@@ -72,12 +76,8 @@
 
 	<div class="settings-card">
 		<div class="setting-row">
-			<span class="setting-label">Repository</span>
-			<span class="setting-value">{$repoOwner}/{$repoName}</span>
-		</div>
-		<div class="setting-row">
-			<span class="setting-label">Token</span>
-			<span class="setting-value">••••••{$token.slice(-4)}</span>
+			<span class="setting-label">Account</span>
+			<span class="setting-value">{userEmail}</span>
 		</div>
 	</div>
 
@@ -116,7 +116,7 @@
 			Export Events as CSV
 		</button>
 		<button class="action-btn logout" onclick={handleLogout}>
-			Disconnect
+			Sign Out
 		</button>
 	</div>
 
@@ -169,7 +169,6 @@
 	.setting-value {
 		font-size: 14px;
 		font-weight: 500;
-		font-family: monospace;
 	}
 
 	.card-title {

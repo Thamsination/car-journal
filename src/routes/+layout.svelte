@@ -3,9 +3,10 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
-	import { token, activeVehicleId, vehicleList, events, parts, healthIntervals, vehicleConfig, tireConfig, platformConfig } from '$lib/stores';
+	import { session, activeVehicleId, vehicleList, events, parts, healthIntervals, vehicleConfig, tireConfig, platformConfig } from '$lib/stores';
+	import { supabase } from '$lib/supabase';
 	import { getPendingWrites, flushPendingWrites } from '$lib/offline';
-	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, type PlatformIndexEntry } from '$lib/github';
+	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, setUserId, type PlatformIndexEntry } from '$lib/data';
 	import { generateHealthConfig } from '$lib/utils';
 	import type { TransmissionType, DrivetrainType, PlatformConfig } from '$lib/types';
 
@@ -495,7 +496,7 @@
 	}
 
 	async function loadVehicleData() {
-		if (!$activeVehicleId || !$token) return;
+		if (!$activeVehicleId || !$session) return;
 		clearShaCache();
 		try {
 			const [evts, vc, hc, tc] = await Promise.all([
@@ -555,37 +556,54 @@
 		}
 	}
 
-	onMount(async () => {
+	let pendingInterval: ReturnType<typeof setInterval> | undefined;
+	let onlineHandler: (() => void) | undefined;
+	let authUnsub: (() => void) | undefined;
+
+	onMount(() => {
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.register(`${base}/sw.js`).catch(() => {});
 		}
 
 		checkPending();
-		const interval = setInterval(checkPending, 10000);
+		pendingInterval = setInterval(checkPending, 10000);
 
-		const handleOnline = () => {
+		onlineHandler = () => {
 			if (pendingCount > 0) syncNow();
 		};
-		window.addEventListener('online', handleOnline);
+		window.addEventListener('online', onlineHandler);
 
-		if ($token) {
-			try {
-				const registry = await loadVehiclesRegistry();
-				$vehicleList = registry.vehicles;
-				if (!$activeVehicleId && registry.activeVehicle) {
-					$activeVehicleId = registry.activeVehicle;
+		(async () => {
+			const { data: { session: initialSession } } = await supabase.auth.getSession();
+			$session = initialSession;
+			if (initialSession?.user) setUserId(initialSession.user.id);
+
+			const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
+				$session = s;
+				if (s?.user) setUserId(s.user.id);
+			});
+			authUnsub = () => subscription.unsubscribe();
+
+			if ($session) {
+				try {
+					const registry = await loadVehiclesRegistry();
+					$vehicleList = registry.vehicles;
+					if (!$activeVehicleId && registry.activeVehicle) {
+						$activeVehicleId = registry.activeVehicle;
+					}
+					if ($activeVehicleId) {
+						await loadVehicleData();
+					}
+				} catch {
+					// registry may not exist yet
 				}
-				if ($activeVehicleId) {
-					await loadVehicleData();
-				}
-			} catch {
-				// registry may not exist yet
 			}
-		}
+		})();
 
 		return () => {
-			clearInterval(interval);
-			window.removeEventListener('online', handleOnline);
+			if (pendingInterval) clearInterval(pendingInterval);
+			if (onlineHandler) window.removeEventListener('online', onlineHandler);
+			if (authUnsub) authUnsub();
 		};
 	});
 
@@ -658,9 +676,9 @@
 					</div>
 				{/if}
 			</div>
-			{#if $token}
-				<a href="{base}/settings" class="settings-btn" aria-label="Settings">⚙︎</a>
-			{/if}
+		{#if $session}
+			<a href="{base}/settings" class="settings-btn" aria-label="Settings">⚙︎</a>
+		{/if}
 		</div>
 	</header>
 
@@ -685,7 +703,7 @@
 		{/key}
 	</main>
 
-	{#if $token}
+	{#if $session}
 		<nav class="bottom-nav">
 			{#each navItems as item}
 				<a

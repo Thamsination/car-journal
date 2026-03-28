@@ -4,10 +4,10 @@
 	import { goto } from '$app/navigation';
 	import { tick } from 'svelte';
 	import {
-		token, events, latestOdometer, healthIntervals, dailyAverageKm,
+		session, events, latestOdometer, healthIntervals, dailyAverageKm,
 		vehicleConfig, tireConfig, tireStatus, tireSwapEvents, platformConfig
 	} from '$lib/stores';
-	import { saveEvents, saveHealthConfig, saveTireConfig, saveVehicleConfig } from '$lib/github';
+	import { saveEvents, saveHealthConfig, saveTireConfig, saveVehicleConfig } from '$lib/data';
 	import { formatDate, formatDateISO, isEffectivelyCompleted } from '$lib/utils';
 	import type { HealthConfig, CarEvent, ServiceInterval, TireProfile, TireSeason, TireConfig } from '$lib/types';
 
@@ -41,7 +41,7 @@
 	const archivedProfiles = $derived($tireConfig?.profiles.filter((p) => p.archived) ?? []);
 
 	onMount(async () => {
-		if (!$token) {
+		if (!$session) {
 			goto(`${base}/setup`);
 			return;
 		}

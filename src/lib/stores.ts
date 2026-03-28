@@ -1,4 +1,5 @@
 import { writable, derived } from 'svelte/store';
+import type { Session } from '@supabase/supabase-js';
 import type { CarEvent, Part, DerivedStatus, ServiceInterval as HealthInterval, VehicleConfig, TireConfig, TireProfile, VehicleRegistryEntry, PlatformConfig } from './types';
 import { deriveStatus, isEffectivelyCompleted, eventCategory } from './utils';
 
@@ -14,9 +15,7 @@ function persistedWritable<T>(key: string, initial: T) {
 	return store;
 }
 
-export const token = persistedWritable<string>('gh_token', '');
-export const repoOwner = persistedWritable<string>('repo_owner', 'Thamsination');
-export const repoName = persistedWritable<string>('repo_name', 'car-journal');
+export const session = writable<Session | null>(null);
 export const activeVehicleId = persistedWritable<string>('active_vehicle', '');
 export const vehicleList = writable<VehicleRegistryEntry[]>([]);
 

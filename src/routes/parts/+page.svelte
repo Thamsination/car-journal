@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { parts } from '$lib/stores';
-	import { loadParts, saveParts } from '$lib/github';
+	import { loadParts, saveParts } from '$lib/data';
 	import { formatCost, generateId } from '$lib/utils';
 	import type { Part } from '$lib/types';
 

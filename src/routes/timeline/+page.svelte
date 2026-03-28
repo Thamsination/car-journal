@@ -3,8 +3,8 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { token, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm, platformConfig, vehicleConfig } from '$lib/stores';
-	import { receiptUrl } from '$lib/github';
+	import { session, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm, platformConfig, vehicleConfig } from '$lib/stores';
+	import { receiptUrl } from '$lib/data';
 	import { formatCost, formatDate, formatDateISO, deriveStatus, isEffectivelyCompleted, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask, getServiceIntervals, computeTimeMilestones } from '$lib/utils';
 	import type { TaskWithStatus, TimeMilestone } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
@@ -72,7 +72,7 @@
 	const serviceIntervals = $derived(getServiceIntervals($platformConfig, $vehicleConfig?.transmission));
 
 	onMount(async () => {
-		if (!$token) {
+		if (!$session) {
 			goto(`${base}/setup`);
 			return;
 		}

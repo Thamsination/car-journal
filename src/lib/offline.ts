@@ -72,7 +72,7 @@ export async function removePendingWrite(id: string): Promise<void> {
 }
 
 export async function flushPendingWrites(): Promise<number> {
-	const { saveEvents, saveParts } = await import('./github');
+	const { saveEvents, saveParts } = await import('./data');
 	const pending = await getPendingWrites();
 	let flushed = 0;
 

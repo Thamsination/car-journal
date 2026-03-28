@@ -5,7 +5,7 @@
 	import { page } from '$app/stores';
 	import { events, latestOdometer, healthIntervals, componentHealthMap } from '$lib/stores';
 	import type { ComponentHealth } from '$lib/stores';
-	import { saveEvents, loadEvents } from '$lib/github';
+	import { saveEvents, loadEvents } from '$lib/data';
 	import { generateId, formatDateISO, allCategories, eventCategory, getEventTasks, buildEventString } from '$lib/utils';
 	import { isOnline, queueWrite } from '$lib/offline';
 	import type { CarEvent, EventCategory } from '$lib/types';
