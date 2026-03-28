@@ -7,7 +7,11 @@
     {
       "id": "VMNA89Y55",
       "label": "STIBert"
+    },
+    {
+      "id": "VMNABNDUV",
+      "label": "Mercedes-Benz E 220 d 4MATIC Estate"
     }
   ],
-  "activeVehicle": "EJ39063"
+  "activeVehicle": "VMNABNDUV"
 }
