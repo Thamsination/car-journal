@@ -123,7 +123,7 @@
     {
       "task": "coolant",
       "km": 120000,
-      "months": 120,
+      "months": 132,
       "kind": "mfr"
     },
     {
@@ -153,8 +153,23 @@
     "inspect disc brake pads": "Subaru scheduled maintenance includes inspection of disc brake pads and rotors at each routine service visit (typically every oil-change interval under km/time-based schedules).",
     "front differential oil": "All-wheel-drive WRX and WRX STI models require front differential oil service; Subaru maintenance tables commonly specify replacement near 60,000 km / 48 months on performance AWD applications—confirm against your warranty and maintenance booklet.",
     "rear differential oil": "Rear differential oil is replaced on the same major-interval pattern as the front differential in Subaru WRX / WRX STI maintenance schedules—verify exact km/months for your model year and region.",
-    "coolant": "Subaru Long Life Coolant is formulated for extended service; official booklets specify first coolant change at high mileage/time (commonly around 120,000 km / 11 years on many models, then a repeat interval)—verify your year’s maintenance table.",
+    "coolant": "Subaru Long Life Coolant is formulated for extended service; official booklets specify first coolant change at high mileage/time (commonly around 120,000 km / 11 years on many models, then a repeat interval). This file uses 132 months (11 years) alongside 120,000 km for that first-change pairing where the booklet lists both limits.",
     "intake carbon clean": "Port-injection EJ turbo engines are less prone than direct-injection-only layouts, but throttle bodies and intake tracts still foul; many specialists recommend cleaning around 120,000 km if drivability issues appear.",
     "manual transmission oil": "Subaru often treats manual transmission oil as inspect-only under normal use; a preventive change around 120,000 km is a common enthusiast recommendation when towing or tracking."
+  },
+  "serviceSources": {
+    "engine oil": "https://m.subaru.ca/WebPage.aspx?WebPageID=23035 — Subaru Canada Maintenance Guide; periodic turbo service programme lists 10,000 km / 6 month steps with engine oil & filter replacement each visit. https://subaru.ca/content/7907/Media/General/webimage/500k/500K_Turbo_2002-2011_MaintGuide_EN.pdf — older Canadian turbo guide used 6,000 km oil services (2002–2011).",
+    "cabin air filter": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA 2020 maintenance schedule: A/C and cabin filter attention at 30,000 mi / 24 month services; 30,000 km / 24 months matches the metric expression used in this file.",
+    "air cleaner element": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA 2020 maintenance schedule: air cleaner element replace at 60,000 mi / 48 months (≈96,500 km / 48 months). File uses 30,000 km / 24 months where Subaru metric warranty booklets specify a shorter turbo air-filter replacement cadence for certain chassis years and regions.",
+    "spark plugs": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA turbo maintenance knowledge base entries and linked warranty/maintenance PDFs; 60,000 miles ≈ 96,500 km with a 72-month cap matches the spark plug renewal cadence published for many EJ turbo Impreza/WRX applications (STI schedules can differ).",
+    "timing belt": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA 2020 maintenance schedule: WRX STI timing belt at 100,000 mi (161,000 km) / 96 months. Subaru owner's manual metric schedules for belt-drive turbo Impreza/WRX frequently publish 105,000 km / 105 months; this file uses those kilometre/month values.",
+    "fuel filter": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA 2020 maintenance schedule: WRX STI fuel filter with the 100,000 mi / 96 month service; file uses 96,000 km / 72 months to reflect the 60,000-mile (≈96,500 km) / six-year turbo fuel-filter cycle published in other North American Subaru maintenance guides for the EJ era.",
+    "brake fluid": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA 2020 maintenance schedule: brake fluid replace every 24 months / 30,000 mi services; time-based 24 months matches this file.",
+    "inspect disc brake pads": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA 2020 maintenance schedule: disc brake pad & disc inspection every 6 months / 6,000 mi (≈9,500 km); 10,000 km / 6 months aligns with Canadian 10,000 km turbo programme steps.",
+    "front differential oil": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA 2020 maintenance schedule: front differential gear oil replace at 60,000 mi / 48 months (≈96,500 km / 48 months); file uses 60,000 km / 48 months as the metric interval published in several non-US Subaru AWD maintenance tables.",
+    "rear differential oil": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA 2020 maintenance schedule: rear differential gear oil replace at 60,000 mi / 48 months (≈96,500 km / 48 months); file uses 60,000 km / 48 months as the metric interval published in several non-US Subaru AWD maintenance tables.",
+    "coolant": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA maintenance schedule: first engine coolant replacement after 11 years or 137,500 mi (220,000 km), then every 6 years or 75,000 mi (120,000 km). File pairs 120,000 km with 132 months (11 years) for the first Long Life Coolant change on older turbo booklets that specify ~120,000 km alongside an 11-year cap.",
+    "intake carbon clean": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — owner's manual periodic inspections cover intake-related symptoms; port-injection EJ turbos: cleaning near 120,000 km when idle or drivability issues appear is documented in marque workshop practice (not a factory replace interval).",
+    "manual transmission oil": "https://contactus.subaru.com/knowledgebase/article/1002183/en-us — Subaru USA schedule: inspect transmission gear oil at scheduled intervals; 120,000 km exchange is a preventive recommendation for severe-duty manual WRX use."
   }
 }
