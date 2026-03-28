@@ -1,0 +1,121 @@
+{
+  "intervals": [
+    {
+      "id": "engine-oil",
+      "name": "Engine Oil",
+      "taskMatches": [
+        "engine oil"
+      ],
+      "intervalKm": 15000,
+      "intervalMonths": 12
+    },
+    {
+      "id": "dust-filter",
+      "name": "Dust Filter",
+      "taskMatches": [
+        "dust filter"
+      ],
+      "intervalKm": 30000,
+      "intervalMonths": 24
+    },
+    {
+      "id": "engine-air-filter",
+      "name": "Engine Air Filter",
+      "taskMatches": [
+        "engine air filter"
+      ],
+      "intervalKm": 60000,
+      "intervalMonths": 48
+    },
+    {
+      "id": "brake-fluid",
+      "name": "Brake Fluid",
+      "taskMatches": [
+        "brake fluid"
+      ],
+      "intervalKm": null,
+      "intervalMonths": 24
+    },
+    {
+      "id": "check-brake-pad-thickness",
+      "name": "Check Brake Pad Thickness",
+      "taskMatches": [
+        "check brake pad thickness"
+      ],
+      "intervalKm": 30000,
+      "intervalMonths": null
+    },
+    {
+      "id": "fuel-filter",
+      "name": "Fuel Filter",
+      "taskMatches": [
+        "fuel filter"
+      ],
+      "intervalKm": 60000,
+      "intervalMonths": null
+    },
+    {
+      "id": "coolant",
+      "name": "Coolant",
+      "taskMatches": [
+        "coolant"
+      ],
+      "intervalKm": 150000,
+      "intervalMonths": null
+    },
+    {
+      "id": "automatic-transmission-fluid",
+      "name": "Automatic Transmission Fluid",
+      "taskMatches": [
+        "automatic transmission fluid"
+      ],
+      "intervalKm": 60000,
+      "intervalMonths": null
+    },
+    {
+      "id": "transfer-case-oil",
+      "name": "Transfer Case Oil",
+      "taskMatches": [
+        "transfer case oil"
+      ],
+      "intervalKm": 60000,
+      "intervalMonths": null
+    },
+    {
+      "id": "front-axle-differential-oil",
+      "name": "Front Axle Differential Oil",
+      "taskMatches": [
+        "front axle differential oil"
+      ],
+      "intervalKm": 60000,
+      "intervalMonths": null
+    },
+    {
+      "id": "rear-axle-differential-oil",
+      "name": "Rear Axle Differential Oil",
+      "taskMatches": [
+        "rear axle differential oil"
+      ],
+      "intervalKm": 60000,
+      "intervalMonths": null
+    },
+    {
+      "id": "coolant-flush",
+      "name": "Coolant Flush",
+      "taskMatches": [
+        "coolant flush"
+      ],
+      "intervalKm": 120000,
+      "intervalMonths": null
+    },
+    {
+      "id": "poly-v-belt",
+      "name": "Poly-v Belt",
+      "taskMatches": [
+        "poly-v belt"
+      ],
+      "intervalKm": 100000,
+      "intervalMonths": null
+    }
+  ]
+}
