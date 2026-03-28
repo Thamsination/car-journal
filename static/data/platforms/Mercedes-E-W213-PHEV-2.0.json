@@ -1,0 +1,57 @@
+{
+  "id": "Mercedes-E-W213-PHEV-2.0",
+  "name": "Mercedes-Benz E-Class W213/S213 plug-in hybrid (2.0L 4-cyl petrol + electric)",
+  "years": "2019–2026",
+  "chassisCodes": ["W213", "S213"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["automatic"],
+  "displacement": "2.0L",
+  "cylinders": 4,
+  "fuelType": "hybrid",
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 300 e",
+        "E 300 e Estate",
+        "E 350 e",
+        "E 350 e Estate"
+      ],
+      "yearFrom": 2019,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 10000, "months": null, "kind": "rec" },
+    { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
+    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
+    { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
+    { "task": "spark plugs", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "high-voltage battery coolant", "km": 120000, "months": null, "kind": "mfr" },
+    { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
+    { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
+    { "task": "intake carbon clean", "km": 120000, "months": null, "kind": "rec" }
+  ],
+  "serviceNotes": {
+    "engine oil": "Four-cylinder PHEV: petrol engine follows Mercedes EU ASSYST (commonly 15,000 km or 12 months when combustion mileage accumulates—display may stretch with EV use).",
+    "dust filter": "Cabin dust filter per Mercedes maintenance booklet.",
+    "engine air filter": "Petrol engine air filter at standard ASSYST inspection intervals.",
+    "brake fluid": "24 months; regen does not remove hygroscopy.",
+    "check brake pad thickness": "Regen extends pad life; inspections remain mandatory.",
+    "spark plugs": "Turbo four PHEV: 60,000 km / 48 months EU orientation—verify booklet (M274/M264-era).",
+    "coolant": "Engine cooling circuit long-life interval (often near 150,000 km).",
+    "high-voltage battery coolant": "HV battery/e-drive coolant per supplement—120,000 km is a common major renewal point; use a qualified high-voltage workshop.",
+    "automatic transmission fluid": "9G-TRONIC hybrid integration: preventive ATF ~60,000 km specialist practice.",
+    "transfer case oil": "4MATIC PHEV variants only; ~60,000 km preventive.",
+    "front axle differential oil": "4MATIC only.",
+    "rear axle differential oil": "4MATIC preventive ~60,000 km.",
+    "coolant flush": "Supplementary engine coolant exchange ~120,000 km if not yet due for OEM long interval.",
+    "intake carbon clean": "Direct-injection PHEV four: consider ~120,000 km if carbon symptoms appear."
+  }
+}

@@ -2412,7 +2412,7 @@
     "yearTo": 2026
   },
   {
-    "platformId": "Mercedes-E-W213-PHEV",
+    "platformId": "Mercedes-E-W213-PHEV-2.0",
     "make": "Mercedes-Benz",
     "models": [
       "E 300 e",
@@ -2420,7 +2420,7 @@
       "E 350 e",
       "E 350 e Estate"
     ],
-    "yearFrom": 2016,
+    "yearFrom": 2019,
     "yearTo": 2026
   },
   {
@@ -2526,11 +2526,19 @@
     "yearTo": 2026
   },
   {
-    "platformId": "Mercedes-E-W214-PHEV",
+    "platformId": "Mercedes-E-W214-PHEV-2.0",
     "make": "Mercedes-Benz",
     "models": [
       "E 300 e",
-      "E 300 e Estate",
+      "E 300 e Estate"
+    ],
+    "yearFrom": 2024,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "Mercedes-E-W214-PHEV-3.0",
+    "make": "Mercedes-Benz",
+    "models": [
       "E 400 e 4MATIC",
       "E 400 e 4MATIC Estate"
     ],
