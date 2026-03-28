@@ -1,7 +1,7 @@
 {
   "id": "BMW-E65",
   "name": "BMW E65/E66 7 Series",
-  "years": "2001\u20132008",
+  "years": "2001–2008",
   "chassisCodes": [
     "E65",
     "E66",
@@ -12,7 +12,14 @@
     {
       "make": "BMW",
       "models": [
-        "7 Series"
+        "7 Series",
+        "730d xDrive",
+        "730Ld xDrive",
+        "740d xDrive",
+        "745d xDrive",
+        "750i xDrive",
+        "750Li xDrive",
+        "760Li xDrive"
       ],
       "yearFrom": 2001,
       "yearTo": 2008
@@ -99,8 +106,8 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "BMW Condition Based Service (CBS) sets engine oil and filter replacement from the service display based on driving conditions, cold starts, and fuel quality\u2014not a single fixed km figure. A 30,000 km mfr row models the typical maximum distance before the display calls for an oil service on many EU models; follow the vehicle display and annual minimums. garage.wiki BMW E90 interval tables list oil as \"according to service display\".",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
+    "engine oil": "BMW Condition Based Service (CBS) sets engine oil and filter replacement from the service display based on driving conditions, cold starts, and fuel quality—not a single fixed km figure. A 30,000 km mfr row models the typical maximum distance before the display calls for an oil service on many EU models; follow the vehicle display and annual minimums. garage.wiki BMW E90 interval tables list oil as \"according to service display\".",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
     "spark plugs": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature.",
     "fuel filter": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature. Diesel fuel filter applies to diesel engines.",
     "gearbox fluid": "Automatic and manual gear oil is often labelled lifetime; many specialists recommend exchange around 100,000 km for long-term health.",

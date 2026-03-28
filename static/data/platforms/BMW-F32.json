@@ -1,7 +1,7 @@
 {
   "id": "BMW-F32",
   "name": "BMW F32/F33/F36 4 Series",
-  "years": "2013\u20132020",
+  "years": "2013–2020",
   "chassisCodes": [
     "F32",
     "F33",
@@ -13,9 +13,33 @@
       "models": [
         "4 Series",
         "4 Series Convertible",
-        "4 Series Gran Coup\u00e9",
+        "4 Series Gran Coupé",
         "M4",
-        "M4 Convertible"
+        "M4 Convertible",
+        "418d xDrive",
+        "420d xDrive",
+        "425d xDrive",
+        "430d xDrive",
+        "435d xDrive",
+        "420i xDrive",
+        "428i xDrive",
+        "430i xDrive",
+        "435i xDrive",
+        "440i xDrive",
+        "420d xDrive Convertible",
+        "430d xDrive Convertible",
+        "420i xDrive Convertible",
+        "428i xDrive Convertible",
+        "430i xDrive Convertible",
+        "435i xDrive Convertible",
+        "440i xDrive Convertible",
+        "418d xDrive Gran Coupé",
+        "420d xDrive Gran Coupé",
+        "420i xDrive Gran Coupé",
+        "428i xDrive Gran Coupé",
+        "430i xDrive Gran Coupé",
+        "435i xDrive Gran Coupé",
+        "440i xDrive Gran Coupé"
       ],
       "yearFrom": 2013,
       "yearTo": 2020
@@ -102,8 +126,8 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "BMW Condition Based Service (CBS) sets engine oil and filter replacement from the service display based on driving conditions, cold starts, and fuel quality\u2014not a single fixed km figure. A 30,000 km mfr row models the typical maximum distance before the display calls for an oil service on many EU models; follow the vehicle display and annual minimums. garage.wiki BMW E90 interval tables list oil as \"according to service display\".",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
+    "engine oil": "BMW Condition Based Service (CBS) sets engine oil and filter replacement from the service display based on driving conditions, cold starts, and fuel quality—not a single fixed km figure. A 30,000 km mfr row models the typical maximum distance before the display calls for an oil service on many EU models; follow the vehicle display and annual minimums. garage.wiki BMW E90 interval tables list oil as \"according to service display\".",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
     "spark plugs": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature.",
     "fuel filter": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature. Diesel fuel filter applies to diesel engines.",
     "gearbox fluid": "Automatic and manual gear oil is often labelled lifetime; many specialists recommend exchange around 100,000 km for long-term health.",

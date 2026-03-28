@@ -13,7 +13,13 @@
     "make": "BMW",
     "models": [
       "5 Series",
-      "5 Series Touring"
+      "5 Series Touring",
+      "525xi",
+      "530xi",
+      "530xd",
+      "525xi Touring",
+      "530xi Touring",
+      "530xd Touring"
     ],
     "yearFrom": 1995,
     "yearTo": 2003
@@ -27,7 +33,18 @@
       "3 Series Coup\u00e9",
       "3 Series Convertible",
       "M3",
-      "M3 Convertible"
+      "M3 Convertible",
+      "325xi",
+      "330xi",
+      "330xd",
+      "320xd",
+      "325xi Touring",
+      "330xi Touring",
+      "330xd Touring",
+      "320xd Touring",
+      "325xi Coup\u00e9",
+      "330xi Coup\u00e9",
+      "330xd Coup\u00e9"
     ],
     "yearFrom": 1998,
     "yearTo": 2006
@@ -48,7 +65,24 @@
       "5 Series",
       "5 Series Touring",
       "M5",
-      "M5 Touring"
+      "M5 Touring",
+      "520d xDrive",
+      "525d xDrive",
+      "530d xDrive",
+      "530xd",
+      "535d xDrive",
+      "528i xDrive",
+      "530i xDrive",
+      "535i xDrive",
+      "550i xDrive",
+      "520d xDrive Touring",
+      "525d xDrive Touring",
+      "530d xDrive Touring",
+      "535d xDrive Touring",
+      "528i xDrive Touring",
+      "530i xDrive Touring",
+      "535i xDrive Touring",
+      "550i xDrive Touring"
     ],
     "yearFrom": 2003,
     "yearTo": 2010
@@ -69,7 +103,14 @@
     "platformId": "BMW-E65",
     "make": "BMW",
     "models": [
-      "7 Series"
+      "7 Series",
+      "730d xDrive",
+      "730Ld xDrive",
+      "740d xDrive",
+      "745d xDrive",
+      "750i xDrive",
+      "750Li xDrive",
+      "760Li xDrive"
     ],
     "yearFrom": 2001,
     "yearTo": 2008
@@ -79,7 +120,15 @@
     "make": "BMW",
     "models": [
       "X5",
-      "X5 M"
+      "X5 M",
+      "X5 xDrive30d",
+      "X5 xDrive30i",
+      "X5 xDrive35d",
+      "X5 xDrive35i",
+      "X5 xDrive40d",
+      "X5 xDrive48i",
+      "X5 xDrive50i",
+      "X5 ActiveHybrid xDrive"
     ],
     "yearFrom": 2006,
     "yearTo": 2013
@@ -89,7 +138,12 @@
     "make": "BMW",
     "models": [
       "X6",
-      "X6 ActiveHybrid"
+      "X6 ActiveHybrid",
+      "X6 xDrive30d",
+      "X6 xDrive35i",
+      "X6 xDrive40d",
+      "X6 xDrive50i",
+      "X6 M"
     ],
     "yearFrom": 2007,
     "yearTo": 2014
@@ -98,7 +152,12 @@
     "platformId": "BMW-E83",
     "make": "BMW",
     "models": [
-      "X3"
+      "X3",
+      "X3 xDrive20d",
+      "X3 xDrive25i",
+      "X3 xDrive30d",
+      "X3 xDrive30i",
+      "X3 xDrive35d"
     ],
     "yearFrom": 2003,
     "yearTo": 2010
@@ -107,7 +166,15 @@
     "platformId": "BMW-E84",
     "make": "BMW",
     "models": [
-      "X1"
+      "X1",
+      "X1 xDrive16d",
+      "X1 xDrive18d",
+      "X1 xDrive20d",
+      "X1 xDrive20i",
+      "X1 xDrive23d",
+      "X1 xDrive25d",
+      "X1 xDrive28i",
+      "X1 xDrive35i"
     ],
     "yearFrom": 2009,
     "yearTo": 2015
@@ -131,7 +198,34 @@
       "3 Series Convertible",
       "M3",
       "M3 Coup\u00e9",
-      "M3 Convertible"
+      "M3 Convertible",
+      "316i xDrive",
+      "318i xDrive",
+      "320i xDrive",
+      "320d xDrive",
+      "325i xDrive",
+      "325d xDrive",
+      "330i xDrive",
+      "330d xDrive",
+      "330xd",
+      "335i xDrive",
+      "335d xDrive",
+      "320i xDrive Touring",
+      "318d xDrive Touring",
+      "320d xDrive Touring",
+      "325i xDrive Touring",
+      "330i xDrive Touring",
+      "330d xDrive Touring",
+      "335i xDrive Touring",
+      "320i xDrive Coup\u00e9",
+      "325i xDrive Coup\u00e9",
+      "330i xDrive Coup\u00e9",
+      "330xd Coup\u00e9",
+      "335i xDrive Coup\u00e9",
+      "320i xDrive Convertible",
+      "325i xDrive Convertible",
+      "330i xDrive Convertible",
+      "335i xDrive Convertible"
     ],
     "yearFrom": 2005,
     "yearTo": 2013
@@ -140,7 +234,15 @@
     "platformId": "BMW-F01",
     "make": "BMW",
     "models": [
-      "7 Series"
+      "7 Series",
+      "730d xDrive",
+      "740d xDrive",
+      "740i xDrive",
+      "750i xDrive",
+      "750Li xDrive",
+      "760i xDrive",
+      "760Li xDrive",
+      "ActiveHybrid 7 xDrive"
     ],
     "yearFrom": 2008,
     "yearTo": 2015
@@ -154,7 +256,14 @@
       "6 Series Gran Coup\u00e9",
       "M6",
       "M6 Convertible",
-      "M6 Gran Coup\u00e9"
+      "M6 Gran Coup\u00e9",
+      "640i xDrive",
+      "640d xDrive",
+      "650i xDrive",
+      "640i xDrive Convertible",
+      "650i xDrive Convertible",
+      "640i xDrive Gran Coup\u00e9",
+      "650i xDrive Gran Coup\u00e9"
     ],
     "yearFrom": 2011,
     "yearTo": 2018
@@ -166,7 +275,27 @@
       "5 Series",
       "5 Series Touring",
       "M5",
-      "M5 Touring"
+      "M5 Touring",
+      "518d xDrive",
+      "520d xDrive",
+      "520i xDrive",
+      "525d xDrive",
+      "528i xDrive",
+      "530d xDrive",
+      "530i xDrive",
+      "535d xDrive",
+      "535i xDrive",
+      "550i xDrive",
+      "M550d xDrive",
+      "ActiveHybrid 5 xDrive",
+      "520d xDrive Touring",
+      "525d xDrive Touring",
+      "530d xDrive Touring",
+      "535d xDrive Touring",
+      "528i xDrive Touring",
+      "530i xDrive Touring",
+      "535i xDrive Touring",
+      "550i xDrive Touring"
     ],
     "yearFrom": 2010,
     "yearTo": 2017
@@ -176,7 +305,15 @@
     "make": "BMW",
     "models": [
       "X5",
-      "X5 M"
+      "X5 M",
+      "X5 xDrive25d",
+      "X5 xDrive30d",
+      "X5 xDrive35i",
+      "X5 xDrive40d",
+      "X5 xDrive40e",
+      "X5 xDrive40i",
+      "X5 xDrive50i",
+      "X5 M50d"
     ],
     "yearFrom": 2013,
     "yearTo": 2018
@@ -186,7 +323,13 @@
     "make": "BMW",
     "models": [
       "X6",
-      "X6 M"
+      "X6 M",
+      "X6 xDrive30d",
+      "X6 xDrive35i",
+      "X6 xDrive40d",
+      "X6 xDrive40e",
+      "X6 xDrive50i",
+      "X6 M50d"
     ],
     "yearFrom": 2014,
     "yearTo": 2019
@@ -195,7 +338,15 @@
     "platformId": "BMW-F20",
     "make": "BMW",
     "models": [
-      "1 Series"
+      "1 Series",
+      "116d xDrive",
+      "116i xDrive",
+      "118d xDrive",
+      "118i xDrive",
+      "120d xDrive",
+      "125d xDrive",
+      "120i xDrive",
+      "125i xDrive"
     ],
     "yearFrom": 2011,
     "yearTo": 2019
@@ -206,7 +357,18 @@
     "models": [
       "2 Series",
       "2 Series Convertible",
-      "M2"
+      "M2",
+      "218i xDrive",
+      "218d xDrive",
+      "220d xDrive",
+      "220i xDrive",
+      "225d xDrive",
+      "228i xDrive",
+      "230i xDrive",
+      "M235i xDrive",
+      "M240i xDrive",
+      "M235i xDrive Convertible",
+      "M240i xDrive Convertible"
     ],
     "yearFrom": 2014,
     "yearTo": 2021
@@ -215,7 +377,14 @@
     "platformId": "BMW-F25",
     "make": "BMW",
     "models": [
-      "X3"
+      "X3",
+      "X3 xDrive20d",
+      "X3 xDrive20i",
+      "X3 xDrive28i",
+      "X3 xDrive30d",
+      "X3 xDrive35i",
+      "X3 xDrive35d",
+      "X3 M40i"
     ],
     "yearFrom": 2010,
     "yearTo": 2017
@@ -224,7 +393,14 @@
     "platformId": "BMW-F26",
     "make": "BMW",
     "models": [
-      "X4"
+      "X4",
+      "X4 xDrive20d",
+      "X4 xDrive20i",
+      "X4 xDrive28i",
+      "X4 xDrive30d",
+      "X4 xDrive35i",
+      "X4 xDrive35d",
+      "X4 M40i"
     ],
     "yearFrom": 2014,
     "yearTo": 2018
@@ -236,7 +412,44 @@
       "3 Series",
       "3 Series Touring",
       "3 Series Gran Turismo",
-      "M3"
+      "M3",
+      "316i xDrive",
+      "318i xDrive",
+      "320i xDrive",
+      "328i xDrive",
+      "330i xDrive",
+      "335i xDrive",
+      "340i xDrive",
+      "316d xDrive",
+      "318d xDrive",
+      "320d xDrive",
+      "325d xDrive",
+      "330d xDrive",
+      "335d xDrive",
+      "330e xDrive",
+      "ActiveHybrid 3 xDrive",
+      "320i xDrive Touring",
+      "328i xDrive Touring",
+      "330i xDrive Touring",
+      "335i xDrive Touring",
+      "340i xDrive Touring",
+      "316d xDrive Touring",
+      "318d xDrive Touring",
+      "320d xDrive Touring",
+      "325d xDrive Touring",
+      "330d xDrive Touring",
+      "335d xDrive Touring",
+      "330e xDrive Touring",
+      "320i xDrive Gran Turismo",
+      "328i xDrive Gran Turismo",
+      "330i xDrive Gran Turismo",
+      "335i xDrive Gran Turismo",
+      "340i xDrive Gran Turismo",
+      "318d xDrive Gran Turismo",
+      "320d xDrive Gran Turismo",
+      "325d xDrive Gran Turismo",
+      "330d xDrive Gran Turismo",
+      "335d xDrive Gran Turismo"
     ],
     "yearFrom": 2011,
     "yearTo": 2019
@@ -249,7 +462,31 @@
       "4 Series Convertible",
       "4 Series Gran Coup\u00e9",
       "M4",
-      "M4 Convertible"
+      "M4 Convertible",
+      "418d xDrive",
+      "420d xDrive",
+      "425d xDrive",
+      "430d xDrive",
+      "435d xDrive",
+      "420i xDrive",
+      "428i xDrive",
+      "430i xDrive",
+      "435i xDrive",
+      "440i xDrive",
+      "420d xDrive Convertible",
+      "430d xDrive Convertible",
+      "420i xDrive Convertible",
+      "428i xDrive Convertible",
+      "430i xDrive Convertible",
+      "435i xDrive Convertible",
+      "440i xDrive Convertible",
+      "418d xDrive Gran Coup\u00e9",
+      "420d xDrive Gran Coup\u00e9",
+      "420i xDrive Gran Coup\u00e9",
+      "428i xDrive Gran Coup\u00e9",
+      "430i xDrive Gran Coup\u00e9",
+      "435i xDrive Gran Coup\u00e9",
+      "440i xDrive Gran Coup\u00e9"
     ],
     "yearFrom": 2013,
     "yearTo": 2020
@@ -258,7 +495,12 @@
     "platformId": "BMW-F39",
     "make": "BMW",
     "models": [
-      "X2"
+      "X2",
+      "X2 xDrive18d",
+      "X2 xDrive20d",
+      "X2 xDrive20i",
+      "X2 xDrive25d",
+      "X2 M35i xDrive"
     ],
     "yearFrom": 2017,
     "yearTo": 2026
@@ -267,7 +509,8 @@
     "platformId": "BMW-F40",
     "make": "BMW",
     "models": [
-      "1 Series"
+      "1 Series",
+      "M135i xDrive"
     ],
     "yearFrom": 2019,
     "yearTo": 2026
@@ -276,7 +519,15 @@
     "platformId": "BMW-F44",
     "make": "BMW",
     "models": [
-      "2 Series Gran Coup\u00e9"
+      "2 Series Gran Coup\u00e9",
+      "216d xDrive",
+      "218i xDrive",
+      "218d xDrive",
+      "220i xDrive",
+      "220d xDrive",
+      "225i xDrive",
+      "225e xDrive",
+      "M235i xDrive"
     ],
     "yearFrom": 2019,
     "yearTo": 2026
@@ -286,7 +537,14 @@
     "make": "BMW",
     "models": [
       "2 Series Active Tourer",
-      "2 Series Gran Tourer"
+      "2 Series Gran Tourer",
+      "216d xDrive",
+      "218i xDrive",
+      "218d xDrive",
+      "220i xDrive",
+      "220d xDrive",
+      "225i xDrive",
+      "225xe Active Tourer"
     ],
     "yearFrom": 2014,
     "yearTo": 2021
@@ -295,7 +553,17 @@
     "platformId": "BMW-F48",
     "make": "BMW",
     "models": [
-      "X1"
+      "X1",
+      "X1 sDrive18d",
+      "X1 sDrive18i",
+      "X1 xDrive18d",
+      "X1 xDrive18i",
+      "X1 xDrive20d",
+      "X1 xDrive20i",
+      "X1 xDrive25d",
+      "X1 xDrive25e",
+      "X1 xDrive25Le",
+      "X1 M35i xDrive"
     ],
     "yearFrom": 2015,
     "yearTo": 2022
@@ -305,7 +573,14 @@
     "make": "BMW",
     "models": [
       "X3",
-      "X3 M"
+      "X3 M",
+      "X3 xDrive20d",
+      "X3 xDrive20i",
+      "X3 xDrive30d",
+      "X3 xDrive30e",
+      "X3 xDrive30i",
+      "X3 M40i",
+      "X3 M Competition"
     ],
     "yearFrom": 2017,
     "yearTo": 2026
@@ -315,7 +590,13 @@
     "make": "BMW",
     "models": [
       "X4",
-      "X4 M"
+      "X4 M",
+      "X4 xDrive20d",
+      "X4 xDrive20i",
+      "X4 xDrive30d",
+      "X4 xDrive30i",
+      "X4 M40i",
+      "X4 M Competition"
     ],
     "yearFrom": 2018,
     "yearTo": 2026
@@ -325,7 +606,16 @@
     "make": "BMW",
     "models": [
       "X5",
-      "X5 M"
+      "X5 M",
+      "X5 xDrive25d",
+      "X5 xDrive30d",
+      "X5 xDrive40d",
+      "X5 xDrive40i",
+      "X5 xDrive45e",
+      "X5 xDrive50e",
+      "X5 M50i",
+      "X5 M60i",
+      "X5 M Competition"
     ],
     "yearFrom": 2018,
     "yearTo": 2026
@@ -335,7 +625,13 @@
     "make": "BMW",
     "models": [
       "X6",
-      "X6 M"
+      "X6 M",
+      "X6 xDrive30d",
+      "X6 xDrive40d",
+      "X6 xDrive40i",
+      "X6 M50i",
+      "X6 M60i",
+      "X6 M Competition"
     ],
     "yearFrom": 2019,
     "yearTo": 2026
@@ -344,7 +640,14 @@
     "platformId": "BMW-G07",
     "make": "BMW",
     "models": [
-      "X7"
+      "X7",
+      "X7 xDrive30d",
+      "X7 xDrive40d",
+      "X7 xDrive40i",
+      "X7 M50d",
+      "X7 M50i",
+      "X7 M60i",
+      "X7 M60 xDrive"
     ],
     "yearFrom": 2018,
     "yearTo": 2026
@@ -362,7 +665,18 @@
     "platformId": "BMW-G11",
     "make": "BMW",
     "models": [
-      "7 Series"
+      "7 Series",
+      "730d xDrive",
+      "730Ld xDrive",
+      "740d xDrive",
+      "740e xDrive",
+      "740i xDrive",
+      "740Li xDrive",
+      "745e xDrive",
+      "745Le xDrive",
+      "750i xDrive",
+      "750Li xDrive",
+      "M760Li xDrive"
     ],
     "yearFrom": 2015,
     "yearTo": 2022
@@ -376,7 +690,20 @@
       "8 Series Gran Coup\u00e9",
       "M8",
       "M8 Convertible",
-      "M8 Gran Coup\u00e9"
+      "M8 Gran Coup\u00e9",
+      "840i xDrive",
+      "840d xDrive",
+      "M850i xDrive",
+      "M8 xDrive",
+      "M8 Competition xDrive",
+      "840i xDrive Convertible",
+      "M850i xDrive Convertible",
+      "M8 xDrive Convertible",
+      "M8 Competition xDrive Convertible",
+      "840i xDrive Gran Coup\u00e9",
+      "M850i xDrive Gran Coup\u00e9",
+      "M8 xDrive Gran Coup\u00e9",
+      "M8 Competition xDrive Gran Coup\u00e9"
     ],
     "yearFrom": 2018,
     "yearTo": 2026
@@ -387,7 +714,23 @@
     "models": [
       "3 Series",
       "3 Series Touring",
-      "M3"
+      "M3",
+      "318i xDrive",
+      "318d xDrive",
+      "320i xDrive",
+      "320d xDrive",
+      "330i xDrive",
+      "330d xDrive",
+      "330e xDrive",
+      "M340i xDrive",
+      "M3 xDrive",
+      "320i xDrive Touring",
+      "330i xDrive Touring",
+      "320d xDrive Touring",
+      "330d xDrive Touring",
+      "330e xDrive Touring",
+      "M340i xDrive Touring",
+      "i4 M50"
     ],
     "yearFrom": 2018,
     "yearTo": 2026
@@ -401,7 +744,19 @@
       "4 Series Gran Coup\u00e9",
       "i4",
       "M4",
-      "M4 Convertible"
+      "M4 Convertible",
+      "420i xDrive",
+      "430i xDrive",
+      "M440i xDrive",
+      "420d xDrive",
+      "430d xDrive",
+      "420i xDrive Convertible",
+      "430i xDrive Convertible",
+      "M440i xDrive Convertible",
+      "420i xDrive Gran Coup\u00e9",
+      "430i xDrive Gran Coup\u00e9",
+      "M440i xDrive Gran Coup\u00e9",
+      "i4 M50"
     ],
     "yearFrom": 2020,
     "yearTo": 2026
@@ -419,7 +774,11 @@
     "platformId": "BMW-G32",
     "make": "BMW",
     "models": [
-      "6 Series Gran Turismo"
+      "6 Series Gran Turismo",
+      "620d xDrive",
+      "630i xDrive",
+      "630d xDrive",
+      "640i xDrive"
     ],
     "yearFrom": 2017,
     "yearTo": 2026
@@ -429,7 +788,10 @@
     "make": "BMW",
     "models": [
       "2 Series",
-      "M2"
+      "M2",
+      "220i xDrive",
+      "230i xDrive",
+      "M240i xDrive"
     ],
     "yearFrom": 2021,
     "yearTo": 2026
@@ -439,7 +801,12 @@
     "make": "BMW",
     "models": [
       "7 Series",
-      "i7"
+      "i7",
+      "740d xDrive",
+      "740i xDrive",
+      "750e xDrive",
+      "i7 xDrive60",
+      "i7 M70 xDrive"
     ],
     "yearFrom": 2022,
     "yearTo": 2026
@@ -466,7 +833,10 @@
     "platformId": "BMW-I20",
     "make": "BMW",
     "models": [
-      "iX"
+      "iX",
+      "iX xDrive40",
+      "iX xDrive50",
+      "iX M60"
     ],
     "yearFrom": 2021,
     "yearTo": 2026
