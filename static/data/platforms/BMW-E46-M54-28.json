@@ -1,0 +1,44 @@
+{
+  "id": "BMW-E46-M54-28",
+  "name": "BMW E46 3 Series (2.8L 6-cyl petrol, M54)",
+  "years": "1998–2006",
+  "chassisCodes": ["E46"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "2.8L",
+  "cylinders": 6,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": ["328Ci Convertible", "328Ci Coupé", "328i", "328i Touring"],
+      "yearFrom": 1998,
+      "yearTo": 2006
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "gearbox fluid", "km": 100000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "M54B28 2.8L inline-six; EU fixed-interval oil ~15,000 km.",
+    "micro filter": "Cabin filter per schedule.",
+    "brake fluid": "24 months.",
+    "air cleaner element": "~30,000 km air filter.",
+    "spark plugs": "Six plugs ~60,000 km.",
+    "check front brake pads": "15,000 km inspection.",
+    "check rear brake pads": "15,000 km inspection.",
+    "vehicle check": "Scheduled inspection.",
+    "gearbox fluid": "Preventive ~100,000 km.",
+    "coolant flush": "Preventive ~120,000 km."
+  }
+}

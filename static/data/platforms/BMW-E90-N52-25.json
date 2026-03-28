@@ -1,0 +1,57 @@
+{
+  "id": "BMW-E90-N52-25",
+  "name": "BMW E90/E91/E92/E93 3 Series (2.5L 6-cyl petrol, N52)",
+  "years": "2005–2013",
+  "chassisCodes": ["E90", "E91", "E92", "E93"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "2.5L",
+  "cylinders": 6,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "325i",
+        "325i xDrive",
+        "325i Touring",
+        "325i xDrive Touring",
+        "325i Coupé",
+        "325i xDrive Coupé",
+        "325i Convertible",
+        "325i xDrive Convertible"
+      ],
+      "yearFrom": 2005,
+      "yearTo": 2013
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "gearbox fluid", "km": 100000, "kind": "rec", "months": null },
+    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
+    { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "N52 2.5L naturally aspirated inline-six; CBS on later cars. Sources: BMW E90 service data, garage.wiki.",
+    "micro filter": "Cabin filter per schedule.",
+    "brake fluid": "24 months.",
+    "air cleaner element": "Six-cylinder NA: ~60,000 km air filter.",
+    "spark plugs": "Six long-life plugs ~90,000 km typical.",
+    "check front brake pads": "30,000 km inspection.",
+    "check rear brake pads": "30,000 km inspection.",
+    "vehicle check": "BMW inspection service.",
+    "gearbox fluid": "Preventive ~100,000 km.",
+    "xDrive transfer case fluid": "325i xDrive only.",
+    "differential fluids": "325i xDrive only.",
+    "coolant flush": "Electric water pump era: preventive coolant service ~120,000 km."
+  }
+}

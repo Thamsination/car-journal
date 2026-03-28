@@ -1,0 +1,48 @@
+{
+  "id": "BMW-E90-S65",
+  "name": "BMW E90/E92/E93 M3 (4.0L V8 petrol, S65)",
+  "years": "2007–2013",
+  "chassisCodes": ["E90", "E92", "E93"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "4.0L",
+  "cylinders": 8,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": ["M3", "M3 Coupé", "M3 Convertible"],
+      "yearFrom": 2007,
+      "yearTo": 2013
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": 12 },
+    { "task": "engine oil", "km": 8000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 45000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 20000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 20000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "gearbox fluid", "km": 60000, "kind": "rec", "months": null },
+    { "task": "differential fluids", "km": 60000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 100000, "kind": "rec", "months": null },
+    { "task": "valve adjustment", "km": 50000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "S65 high-rev V8: BMW M maintenance specifies shorter oil intervals than standard 3 Series (often 15,000 km / 12 months EU); track use warrants ~8,000 km changes. Sources: BMW M E9x service literature.",
+    "micro filter": "Cabin filter per M schedule.",
+    "brake fluid": "24 months; more frequent for track.",
+    "air cleaner element": "High-flow V8 intake; ~60,000 km filter planning.",
+    "spark plugs": "Eight spark plugs; high-performance engine—many schedules specify ~45,000–60,000 km; confirm M supplement.",
+    "check front brake pads": "Performance use: inspect every 20,000 km or before track events.",
+    "check rear brake pads": "Inspect every 20,000 km.",
+    "vehicle check": "M-specific inspection intervals.",
+    "gearbox fluid": "DCT or manual: shorter fluid life than non-M cars—~60,000 km specialist recommendation.",
+    "differential fluids": "M limited-slip rear axle: ~60,000 km fluid refresh recommended.",
+    "coolant flush": "High-rev engine: preventive coolant maintenance ~100,000 km.",
+    "valve adjustment": "S65 uses solid lifters; BMW specifies valve clearance checks at defined intervals—verify the M maintenance table for your model year (planning row ~50,000 km)."
+  }
+}

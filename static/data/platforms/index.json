@@ -55,26 +55,48 @@
     "yearTo": 2003
   },
   {
-    "platformId": "BMW-E46",
+    "platformId": "BMW-E46-M43-19",
     "make": "BMW",
     "models": [
-      "316Ci Coupé",
       "316i",
       "316i Touring",
-      "318Ci Convertible",
-      "318Ci Coupé",
-      "318d",
-      "318d Touring",
+      "316Ci Coupé",
       "318i",
       "318i Touring",
-      "320Cd Convertible",
-      "320Cd Coupé",
-      "320Ci Convertible",
-      "320Ci Coupé",
+      "318Ci Convertible",
+      "318Ci Coupé"
+    ],
+    "yearFrom": 1998,
+    "yearTo": 2001
+  },
+  {
+    "platformId": "BMW-E46-M47",
+    "make": "BMW",
+    "models": [
+      "318d",
+      "318d Touring",
       "320d",
       "320d Touring",
-      "320i",
-      "320i Touring",
+      "320Cd Convertible",
+      "320Cd Coupé"
+    ],
+    "yearFrom": 1998,
+    "yearTo": 2006
+  },
+  {
+    "platformId": "BMW-E46-M54-22",
+    "make": "BMW",
+    "models": [
+      "320Ci Convertible",
+      "320Ci Coupé"
+    ],
+    "yearFrom": 1999,
+    "yearTo": 2006
+  },
+  {
+    "platformId": "BMW-E46-M54-25",
+    "make": "BMW",
+    "models": [
       "323Ci Convertible",
       "323Ci Coupé",
       "323i",
@@ -84,26 +106,84 @@
       "325i",
       "325i Touring",
       "325xi",
-      "325xi Touring",
+      "325xi Touring"
+    ],
+    "yearFrom": 1998,
+    "yearTo": 2006
+  },
+  {
+    "platformId": "BMW-E46-M54-28",
+    "make": "BMW",
+    "models": [
+      "328Ci Convertible",
       "328Ci Coupé",
       "328i",
-      "328i Touring",
-      "330Cd Convertible",
-      "330Cd Coupé",
+      "328i Touring"
+    ],
+    "yearFrom": 1998,
+    "yearTo": 2006
+  },
+  {
+    "platformId": "BMW-E46-M54-30",
+    "make": "BMW",
+    "models": [
       "330Ci Convertible",
       "330Ci Coupé",
-      "330d",
-      "330d Touring",
       "330i",
       "330i Touring",
-      "330xd Touring",
       "330xi",
-      "330xi Touring",
+      "330xi Touring"
+    ],
+    "yearFrom": 1998,
+    "yearTo": 2006
+  },
+  {
+    "platformId": "BMW-E46-M57",
+    "make": "BMW",
+    "models": [
+      "330Cd Convertible",
+      "330Cd Coupé",
+      "330d",
+      "330d Touring",
+      "330xd Touring"
+    ],
+    "yearFrom": 1998,
+    "yearTo": 2006
+  },
+  {
+    "platformId": "BMW-E46-N42-16",
+    "make": "BMW",
+    "models": [
+      "316i",
+      "316i Touring",
+      "316Ci Coupé"
+    ],
+    "yearFrom": 2001,
+    "yearTo": 2005
+  },
+  {
+    "platformId": "BMW-E46-N46-20",
+    "make": "BMW",
+    "models": [
+      "318i",
+      "318i Touring",
+      "318Ci Convertible",
+      "318Ci Coupé",
+      "320i",
+      "320i Touring"
+    ],
+    "yearFrom": 2001,
+    "yearTo": 2006
+  },
+  {
+    "platformId": "BMW-E46-S54",
+    "make": "BMW",
+    "models": [
       "M3",
       "M3 Convertible",
       "M3 CSL"
     ],
-    "yearFrom": 1998,
+    "yearFrom": 2000,
     "yearTo": 2006
   },
   {
@@ -246,45 +326,183 @@
     "yearTo": 2016
   },
   {
-    "platformId": "BMW-E90",
+    "platformId": "BMW-E90-N46-16",
     "make": "BMW",
     "models": [
-      "3 Series",
-      "3 Series Touring",
-      "3 Series Coupé",
-      "3 Series Convertible",
-      "M3",
-      "M3 Coupé",
-      "M3 Convertible",
+      "316i",
       "316i xDrive",
-      "318i xDrive",
-      "320i xDrive",
-      "320d xDrive",
-      "325i xDrive",
-      "325d xDrive",
-      "330i xDrive",
-      "330d xDrive",
-      "330xd",
-      "335i xDrive",
-      "335d xDrive",
-      "320i xDrive Touring",
-      "318d xDrive Touring",
-      "320d xDrive Touring",
-      "325i xDrive Touring",
-      "330i xDrive Touring",
-      "330d xDrive Touring",
-      "335i xDrive Touring",
-      "320i xDrive Coupé",
-      "325i xDrive Coupé",
-      "330i xDrive Coupé",
-      "330xd Coupé",
-      "335i xDrive Coupé",
-      "320i xDrive Convertible",
-      "325i xDrive Convertible",
-      "330i xDrive Convertible",
-      "335i xDrive Convertible"
+      "316i Touring",
+      "316i xDrive Touring",
+      "316i Coupé",
+      "316i xDrive Coupé",
+      "316i Convertible",
+      "316i xDrive Convertible"
     ],
     "yearFrom": 2005,
+    "yearTo": 2013
+  },
+  {
+    "platformId": "BMW-E90-N46-20",
+    "make": "BMW",
+    "models": [
+      "318i",
+      "318i xDrive",
+      "318i Touring",
+      "318i xDrive Touring",
+      "318i Coupé",
+      "318i xDrive Coupé",
+      "318i Convertible",
+      "318i xDrive Convertible",
+      "320i",
+      "320i xDrive",
+      "320i Touring",
+      "320i xDrive Touring",
+      "320i Coupé",
+      "320i xDrive Coupé",
+      "320i Convertible",
+      "320i xDrive Convertible"
+    ],
+    "yearFrom": 2005,
+    "yearTo": 2013
+  },
+  {
+    "platformId": "BMW-E90-N47",
+    "make": "BMW",
+    "models": [
+      "316d",
+      "316d xDrive",
+      "316d Touring",
+      "316d xDrive Touring",
+      "318d",
+      "318d xDrive",
+      "318d Touring",
+      "318d xDrive Touring",
+      "318d Coupé",
+      "318d xDrive Coupé",
+      "320d",
+      "320d xDrive",
+      "320d Touring",
+      "320d xDrive Touring",
+      "320d Coupé",
+      "320d xDrive Coupé",
+      "320d Convertible",
+      "320d xDrive Convertible"
+    ],
+    "yearFrom": 2007,
+    "yearTo": 2013
+  },
+  {
+    "platformId": "BMW-E90-N52-25",
+    "make": "BMW",
+    "models": [
+      "325i",
+      "325i xDrive",
+      "325i Touring",
+      "325i xDrive Touring",
+      "325i Coupé",
+      "325i xDrive Coupé",
+      "325i Convertible",
+      "325i xDrive Convertible"
+    ],
+    "yearFrom": 2005,
+    "yearTo": 2013
+  },
+  {
+    "platformId": "BMW-E90-N52-30",
+    "make": "BMW",
+    "models": [
+      "328i",
+      "328i xDrive",
+      "328i Touring",
+      "328i xDrive Touring",
+      "328i Coupé",
+      "328i xDrive Coupé",
+      "328i Convertible",
+      "328i xDrive Convertible",
+      "330i",
+      "330i xDrive",
+      "330i Touring",
+      "330i xDrive Touring",
+      "330i Coupé",
+      "330i xDrive Coupé",
+      "330i Convertible",
+      "330i xDrive Convertible"
+    ],
+    "yearFrom": 2005,
+    "yearTo": 2013
+  },
+  {
+    "platformId": "BMW-E90-N54",
+    "make": "BMW",
+    "models": [
+      "335i",
+      "335i xDrive",
+      "335i Touring",
+      "335i xDrive Touring",
+      "335i Coupé",
+      "335i xDrive Coupé",
+      "335i Convertible",
+      "335i xDrive Convertible"
+    ],
+    "yearFrom": 2007,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E90-N55",
+    "make": "BMW",
+    "models": [
+      "335i",
+      "335i xDrive",
+      "335i Touring",
+      "335i xDrive Touring",
+      "335i Coupé",
+      "335i xDrive Coupé",
+      "335i Convertible",
+      "335i xDrive Convertible"
+    ],
+    "yearFrom": 2010,
+    "yearTo": 2013
+  },
+  {
+    "platformId": "BMW-E90-N57",
+    "make": "BMW",
+    "models": [
+      "325d",
+      "325d xDrive",
+      "325d Touring",
+      "325d xDrive Touring",
+      "330d",
+      "330d xDrive",
+      "330d Touring",
+      "330d xDrive Touring",
+      "330d Coupé",
+      "330d xDrive Coupé",
+      "330d Convertible",
+      "330d xDrive Convertible",
+      "330xd",
+      "330xd Touring",
+      "330xd Coupé",
+      "335d",
+      "335d xDrive",
+      "335d Touring",
+      "335d xDrive Touring",
+      "335d Coupé",
+      "335d xDrive Coupé",
+      "335d Convertible",
+      "335d xDrive Convertible"
+    ],
+    "yearFrom": 2008,
+    "yearTo": 2013
+  },
+  {
+    "platformId": "BMW-E90-S65",
+    "make": "BMW",
+    "models": [
+      "M3",
+      "M3 Coupé",
+      "M3 Convertible"
+    ],
+    "yearFrom": 2007,
     "yearTo": 2013
   },
   {
@@ -463,52 +681,212 @@
     "yearTo": 2018
   },
   {
-    "platformId": "BMW-F30",
+    "platformId": "BMW-F30-330e",
     "make": "BMW",
     "models": [
-      "3 Series",
-      "3 Series Touring",
-      "3 Series Gran Turismo",
-      "M3",
-      "316i xDrive",
-      "318i xDrive",
-      "320i xDrive",
-      "328i xDrive",
-      "330i xDrive",
-      "335i xDrive",
-      "340i xDrive",
-      "316d xDrive",
-      "318d xDrive",
-      "320d xDrive",
-      "325d xDrive",
-      "330d xDrive",
-      "335d xDrive",
+      "330e",
       "330e xDrive",
-      "320i xDrive Touring",
-      "328i xDrive Touring",
-      "330i xDrive Touring",
-      "335i xDrive Touring",
-      "340i xDrive Touring",
+      "330e Touring",
+      "330e xDrive Touring"
+    ],
+    "yearFrom": 2016,
+    "yearTo": 2019
+  },
+  {
+    "platformId": "BMW-F30-B38",
+    "make": "BMW",
+    "models": [
+      "318i",
+      "318i xDrive",
+      "318i Touring",
+      "318i xDrive Touring",
+      "318i Gran Turismo",
+      "318i xDrive Gran Turismo"
+    ],
+    "yearFrom": 2015,
+    "yearTo": 2019
+  },
+  {
+    "platformId": "BMW-F30-B47",
+    "make": "BMW",
+    "models": [
+      "316d",
+      "316d xDrive",
+      "316d Touring",
       "316d xDrive Touring",
+      "316d Gran Turismo",
+      "316d xDrive Gran Turismo",
+      "318d",
+      "318d xDrive",
+      "318d Touring",
       "318d xDrive Touring",
-      "320d xDrive Touring",
-      "325d xDrive Touring",
-      "330d xDrive Touring",
-      "335d xDrive Touring",
-      "330e xDrive Touring",
-      "320i xDrive Gran Turismo",
-      "328i xDrive Gran Turismo",
-      "330i xDrive Gran Turismo",
-      "335i xDrive Gran Turismo",
-      "340i xDrive Gran Turismo",
+      "318d Gran Turismo",
       "318d xDrive Gran Turismo",
+      "320d",
+      "320d xDrive",
+      "320d Touring",
+      "320d xDrive Touring",
+      "320d Gran Turismo",
       "320d xDrive Gran Turismo",
-      "325d xDrive Gran Turismo",
+      "325d",
+      "325d xDrive",
+      "325d Touring",
+      "325d xDrive Touring",
+      "325d Gran Turismo",
+      "325d xDrive Gran Turismo"
+    ],
+    "yearFrom": 2015,
+    "yearTo": 2019
+  },
+  {
+    "platformId": "BMW-F30-B48",
+    "make": "BMW",
+    "models": [
+      "320i",
+      "320i xDrive",
+      "320i Touring",
+      "320i xDrive Touring",
+      "320i Gran Turismo",
+      "320i xDrive Gran Turismo",
+      "330i",
+      "330i xDrive",
+      "330i Touring",
+      "330i xDrive Touring",
+      "330i Gran Turismo",
+      "330i xDrive Gran Turismo"
+    ],
+    "yearFrom": 2015,
+    "yearTo": 2019
+  },
+  {
+    "platformId": "BMW-F30-B58",
+    "make": "BMW",
+    "models": [
+      "340i",
+      "340i xDrive",
+      "340i Touring",
+      "340i xDrive Touring",
+      "340i Gran Turismo",
+      "340i xDrive Gran Turismo"
+    ],
+    "yearFrom": 2015,
+    "yearTo": 2019
+  },
+  {
+    "platformId": "BMW-F30-N13",
+    "make": "BMW",
+    "models": [
+      "316i",
+      "316i xDrive",
+      "316i Touring",
+      "316i xDrive Touring",
+      "316i Gran Turismo",
+      "316i xDrive Gran Turismo",
+      "318i",
+      "318i xDrive",
+      "318i Touring",
+      "318i xDrive Touring",
+      "318i Gran Turismo",
+      "318i xDrive Gran Turismo"
+    ],
+    "yearFrom": 2012,
+    "yearTo": 2015
+  },
+  {
+    "platformId": "BMW-F30-N20",
+    "make": "BMW",
+    "models": [
+      "320i",
+      "320i xDrive",
+      "320i Touring",
+      "320i xDrive Touring",
+      "320i Gran Turismo",
+      "320i xDrive Gran Turismo",
+      "328i",
+      "328i xDrive",
+      "328i Touring",
+      "328i xDrive Touring",
+      "328i Gran Turismo",
+      "328i xDrive Gran Turismo"
+    ],
+    "yearFrom": 2012,
+    "yearTo": 2015
+  },
+  {
+    "platformId": "BMW-F30-N47",
+    "make": "BMW",
+    "models": [
+      "316d",
+      "316d xDrive",
+      "316d Touring",
+      "316d xDrive Touring",
+      "316d Gran Turismo",
+      "316d xDrive Gran Turismo",
+      "318d",
+      "318d xDrive",
+      "318d Touring",
+      "318d xDrive Touring",
+      "318d Gran Turismo",
+      "318d xDrive Gran Turismo",
+      "320d",
+      "320d xDrive",
+      "320d Touring",
+      "320d xDrive Touring",
+      "320d Gran Turismo",
+      "320d xDrive Gran Turismo",
+      "325d",
+      "325d xDrive",
+      "325d Touring",
+      "325d xDrive Touring",
+      "325d Gran Turismo",
+      "325d xDrive Gran Turismo"
+    ],
+    "yearFrom": 2012,
+    "yearTo": 2015
+  },
+  {
+    "platformId": "BMW-F30-N55",
+    "make": "BMW",
+    "models": [
+      "335i",
+      "335i xDrive",
+      "335i Touring",
+      "335i xDrive Touring",
+      "335i Gran Turismo",
+      "335i xDrive Gran Turismo"
+    ],
+    "yearFrom": 2012,
+    "yearTo": 2015
+  },
+  {
+    "platformId": "BMW-F30-N57",
+    "make": "BMW",
+    "models": [
+      "330d",
+      "330d xDrive",
+      "330d Touring",
+      "330d xDrive Touring",
+      "330d Gran Turismo",
       "330d xDrive Gran Turismo",
+      "335d",
+      "335d xDrive",
+      "335d Touring",
+      "335d xDrive Touring",
+      "335d Gran Turismo",
       "335d xDrive Gran Turismo"
     ],
-    "yearFrom": 2011,
+    "yearFrom": 2012,
     "yearTo": 2019
+  },
+  {
+    "platformId": "BMW-F30-S55",
+    "make": "BMW",
+    "models": [
+      "M3",
+      "M3 Competition"
+    ],
+    "yearFrom": 2014,
+    "yearTo": 2018
   },
   {
     "platformId": "BMW-F32",

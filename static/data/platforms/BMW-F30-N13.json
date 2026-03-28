@@ -1,0 +1,65 @@
+{
+  "id": "BMW-F30-N13",
+  "name": "BMW F30/F31/F34 3 Series (1.6L 4-cyl turbo petrol, N13)",
+  "years": "2012–2015",
+  "chassisCodes": ["F30", "F31", "F34", "F35"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "1.6L",
+  "cylinders": 4,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "316i",
+        "316i xDrive",
+        "316i Touring",
+        "316i xDrive Touring",
+        "316i Gran Turismo",
+        "316i xDrive Gran Turismo",
+        "318i",
+        "318i xDrive",
+        "318i Touring",
+        "318i xDrive Touring",
+        "318i Gran Turismo",
+        "318i xDrive Gran Turismo"
+      ],
+      "yearFrom": 2012,
+      "yearTo": 2015
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "ZF8 gearbox fluid", "km": 100000, "kind": "rec", "months": null },
+    { "task": "gearbox fluid", "km": 100000, "kind": "rec", "months": null },
+    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
+    { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null },
+    { "task": "intake carbon clean", "km": 120000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "BMW Condition Based Service (CBS) sets oil service from the vehicle display; 30,000 km is a typical EU maximum between oil services. Follow the service indicator. Sources: BMW EU service booklets for F30 N13, garage.wiki F30 maintenance summaries.",
+    "micro filter": "Cabin micro filter per CBS; 30,000 km aligns with common EU inspection planning.",
+    "brake fluid": "Replace every 24 months regardless of mileage (hygroscopic fluid).",
+    "air cleaner element": "Turbocharged direct-injection N13: air filter typically tied to CBS (~60,000 km planning interval). Confirm on the vehicle display.",
+    "spark plugs": "Petrol N13: iridium plugs commonly scheduled around every third oil service on CBS (~90,000 km). Verify in the owner’s literature.",
+    "check front brake pads": "Inspect per CBS wear sensors and workshop visits; 30,000 km is a reasonable inspection cadence.",
+    "check rear brake pads": "Inspect per CBS; 30,000 km is a reasonable inspection cadence.",
+    "vehicle check": "BMW CBS vehicle check / inspection service.",
+    "ZF8 gearbox fluid": "Applies to 8-speed automatic models. ZF often recommends fluid exchange around 100,000 km despite lifetime-fill wording.",
+    "gearbox fluid": "Manual gearbox: preventive oil exchange around 100,000 km is a common workshop recommendation.",
+    "xDrive transfer case fluid": "xDrive models only. Often labelled lifetime; many specialists recommend 60,000–100,000 km.",
+    "differential fluids": "xDrive models only. Often labelled lifetime; many specialists recommend 60,000–100,000 km.",
+    "coolant flush": "Preventive coolant exchange around 120,000 km maintains corrosion protection.",
+    "intake carbon clean": "Direct injection can cause intake valve deposits; walnut/chemical clean around 120,000 km is a common recommendation."
+  }
+}

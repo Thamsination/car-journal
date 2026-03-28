@@ -1,0 +1,65 @@
+{
+  "id": "BMW-E90-N52-30",
+  "name": "BMW E90/E91/E92/E93 3 Series (3.0L 6-cyl petrol, N52/N53)",
+  "years": "2005–2013",
+  "chassisCodes": ["E90", "E91", "E92", "E93"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "3.0L",
+  "cylinders": 6,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "328i",
+        "328i xDrive",
+        "328i Touring",
+        "328i xDrive Touring",
+        "328i Coupé",
+        "328i xDrive Coupé",
+        "328i Convertible",
+        "328i xDrive Convertible",
+        "330i",
+        "330i xDrive",
+        "330i Touring",
+        "330i xDrive Touring",
+        "330i Coupé",
+        "330i xDrive Coupé",
+        "330i Convertible",
+        "330i xDrive Convertible"
+      ],
+      "yearFrom": 2005,
+      "yearTo": 2013
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "gearbox fluid", "km": 100000, "kind": "rec", "months": null },
+    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
+    { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "N52/N53 3.0L six-cylinder (328i/330i naming varies by market). Direct-injection N53 may need earlier oil attention in some use cases. Sources: BMW E90 documentation, garage.wiki.",
+    "micro filter": "Cabin filter per schedule.",
+    "brake fluid": "24 months.",
+    "air cleaner element": "~60,000 km air filter.",
+    "spark plugs": "~90,000 km for six-cylinder long-life plugs.",
+    "check front brake pads": "30,000 km inspection.",
+    "check rear brake pads": "30,000 km inspection.",
+    "vehicle check": "BMW inspection service.",
+    "gearbox fluid": "Preventive ~100,000 km.",
+    "xDrive transfer case fluid": "328i xDrive / 330i xDrive only.",
+    "differential fluids": "AWD petrol variants only.",
+    "coolant flush": "Includes electric water pump circuit awareness on N52; preventive ~120,000 km."
+  }
+}
