@@ -38,12 +38,14 @@ Read these files to understand the target format:
 
 | Tier | Description | Acceptable for |
 |------|-------------|----------------|
-| **1** | Owner's manual PDF, manufacturer service portal (bmwtechinfo, ELSA, Renault Clip, Toyota TIS), official service bulletins (SIB/TSB) | MFR (preferred) |
+| **1** | Owner's manual PDF (with page/section reference), manufacturer service portal (bmwtechinfo, ELSA, Renault Clip, Toyota TIS), official service bulletins (SIB/TSB) | MFR (preferred) |
 | **2** | Structured interval databases with editorial oversight: garage.wiki, auto-abc.eu | MFR (acceptable) |
 | **3** | Specialist documentation (Haynes, Bentley), well-established marque forums with documented consensus (Bimmerpost, TDIClub, NASIOC) | REC only |
 | **Reject** | Generic blog posts, YouTube, AI-generated guides, undated articles without OEM references | Never use |
 
 **Rule: MFR intervals require a Tier 1 or Tier 2 source.** If you can only find Tier 3 for an MFR interval, flag it as needing verification but still add the source with a note.
+
+**Rule: "Owner's manual" requires specificity.** If you cite an owner's manual to **override** a Tier 2 source that disagrees, you must provide a specific page number, section heading, or linked scan/PDF URL. Writing "Mercedes-Benz W211 owner's manual EU" alone is NOT a valid Tier 1 citation when it contradicts a Tier 2 URL. Either find the actual document or treat the Tier 2 source as authoritative.
 
 ---
 
@@ -140,7 +142,7 @@ While adding sources, also check every MFR interval for a missing time component
 - **Engine oil** almost always has a time limit (typically 12 or 24 months). If `months` is null, investigate and fix it.
 - **Brake fluid** must always be `"months": 24` (or OEM-specified).
 - **Timing belts** often have a time limit (e.g., "every 5 years or 120,000 km").
-- **Coolant** sometimes has a time limit.
+- **Coolant** is time-degrading and must always have a `months` component. If the source gives km only, default to `60` (5 years). Do not leave coolant with `"months": null`.
 
 If the file has `"months": null` but the source shows a time component, fix it.
 
@@ -155,6 +157,20 @@ Batch 1 (E46) was reviewed and these mistakes were found. **Do not repeat them.*
 3. **Do not hedge in source citations.** Phrases like "verify printed maintenance table" and "confirm booklet" are not sources — they are deferred homework. If you cannot confirm a value, use Option A to fix it or Option C to flag it. Do not cite the owner's manual as a source while simultaneously saying you haven't confirmed it.
 
 4. **Pre-CBS BMW models (E46 and earlier) use fixed intervals, not CBS.** The E46 used BMW's Inspection I / Inspection II system. There is no "CBS ceiling" concept. MFR = the printed interval from the owner's manual. Do not apply CBS logic to pre-CBS platforms.
+
+### Lessons from batch 9 (Mercedes W210 + W211) — READ THIS
+
+Batch 9 was reviewed and these mistakes were found. **Do not repeat them.**
+
+1. **"Owner's manual EU" is not a blank check to override Tier 2 sources.** The W211 OM642 file had 4 MFR intervals that disagreed with auto-abc by 1.67x–6x. All were kept citing "Mercedes-Benz W211 owner's manual EU" without a URL, page number, or section reference. This is not a valid Tier 1 override. If you cite a manual to justify keeping a value that contradicts a Tier 2 URL, you MUST provide a specific page, section heading, or linked PDF. Otherwise, treat the Tier 2 source as authoritative and use Option A.
+
+2. **"NEEDS VERIFICATION" is banned.** The E55 AMG spark plugs source included "NEEDS VERIFICATION: enthusiast sources sometimes cite ~40,000 km — confirm AMG supplement." This is the same hedging pattern as "verify booklet." Banned phrases now include: "NEEDS VERIFICATION", "verify booklet", "confirm printed table", "cross-check", "confirm AMG supplement", and any similar deferred-homework language. Either state the value with its source, or use Option C.
+
+3. **Coolant must always have a `months` component.** W210 and W211 petrol files had coolant at 150,000–160,000 km with `months: null`. Coolant degrades with time regardless of mileage. If the source gives km only, default to `months: 60` (5 years). This rule applies to ALL platforms, not just CDI/diesel.
+
+4. **Do not treat W210 and W211 as having the same service system.** W210 (pre-2003) used a fixed-interval service schedule. W211 introduced ASSYST/ASSYST PLUS with flexible intervals. Their MFR ceilings are different — do not blindly copy W210 intervals to W211 or vice versa. Research each generation separately.
+
+5. **When auto-abc disagrees with your file by >25%, do NOT keep all file values by default.** In the W211 OM642 source table, engine air filter was 60,000 km in the file vs 10,000 km on auto-abc (6x gap) — kept without a verified counter-source. This violates the >25% Option A rule. Either find a real Tier 1 document confirming the file's value, or fix it.
 
 ### Step 6: Validate
 
@@ -239,7 +255,10 @@ Adjust groupings based on what actually exists — run `ls static/data/platforms
 - Change intervals without documenting the change and the source that motivated it
 - Default to Option B for every mismatch — Option B is for genuinely ambiguous cases only. If the discrepancy is >25%, investigate and use Option A.
 - Cite the owner's manual as a source without actually confirming the value — "BMW owner's manual E46" is not a source if followed by "verify printed table." Either confirm it or flag it as unverified.
+- Use "owner's manual EU" as a Tier 1 override against a Tier 2 URL without providing a page number, section, or linked PDF — vague manual citations do not outrank specific URLs.
 - Leave `months: null` on engine oil intervals — almost every manufacturer specifies a time limit (typically 12 months). Check and fix.
+- Leave `months: null` on coolant intervals — coolant is time-degrading. Default to 60 months (5 years) if the source gives km only.
+- Use banned hedging phrases: "NEEDS VERIFICATION", "verify booklet", "confirm printed table", "cross-check", "confirm supplement", or any similar language that defers confirmation to someone else. State the value and source, or use Option C.
 - Rush — accuracy over speed. A wrong source citation is worse than no citation.
 
 ---
