@@ -210,8 +210,9 @@
 
 	function vehicleTechLine(v: typeof $vehicleConfig): string {
 		if (!v) return '';
+		const engine = v.engine || ($platformConfig?.engines?.length === 1 ? $platformConfig.engines[0] : '');
 		const transLabel = v.transmission ? transmissionLabels[v.transmission] ?? '' : '';
-		return [v.chassis, v.engine, driveLabel(v.drivetrain), transLabel].filter(Boolean).join(', ');
+		return [v.chassis, engine, driveLabel(v.drivetrain), transLabel].filter(Boolean).join(', ');
 	}
 
 	function findLastService(interval: ServiceInterval): CarEvent | null {

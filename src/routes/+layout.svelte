@@ -130,6 +130,7 @@
 	});
 
 	const editChassisOptions = $derived($platformConfig?.chassisCodes ?? []);
+	const editEngineOptions = $derived($platformConfig?.engines ?? []);
 
 	$effect(() => {
 		if (editMakeOptions.length === 1 && editMake !== editMakeOptions[0]) {
@@ -140,6 +141,12 @@
 	$effect(() => {
 		if (editChassisOptions.length === 1 && editChassis !== editChassisOptions[0]) {
 			editChassis = editChassisOptions[0];
+		}
+	});
+
+	$effect(() => {
+		if (editEngineOptions.length === 1 && editEngine !== editEngineOptions[0]) {
+			editEngine = editEngineOptions[0];
 		}
 	});
 
@@ -305,7 +312,7 @@
 				make: addMake,
 				model: addModel,
 				chassis: platform.chassisCodes?.[0] ?? '',
-				engine: '',
+				engine: platform.engines?.length === 1 ? platform.engines[0] : '',
 				drivetrain: addDrivetrain || '',
 				transmission: trans as TransmissionType | null,
 				odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
@@ -757,8 +764,21 @@
 					<input class="field-input" type="text" bind:value={editChassis} />
 				{/if}
 
-				<label class="field-label">Engine</label>
-				<input class="field-input" type="text" bind:value={editEngine} disabled />
+				{#if editEngineOptions.length > 1}
+					<label class="field-label">Engine</label>
+					<select class="field-input" bind:value={editEngine}>
+						<option value="">—</option>
+						{#each editEngineOptions as e}
+							<option value={e}>{e}</option>
+						{/each}
+					</select>
+				{:else if editEngineOptions.length === 1}
+					<label class="field-label">Engine</label>
+					<input class="field-input" type="text" value={editEngineOptions[0]} disabled />
+				{:else}
+					<label class="field-label">Engine</label>
+					<input class="field-input" type="text" bind:value={editEngine} />
+				{/if}
 
 				<label class="field-label">Odometer (km)</label>
 				<input class="field-input" type="number" inputmode="numeric" placeholder="Tap to set km" bind:value={editOdometer} />
