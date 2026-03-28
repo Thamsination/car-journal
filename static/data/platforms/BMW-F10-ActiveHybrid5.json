@@ -22,7 +22,7 @@
     { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
     { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
     { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
     { "task": "check front brake pads", "km": 50000, "kind": "mfr", "months": null },
     { "task": "check rear brake pads", "km": 60000, "kind": "mfr", "months": null },
     { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
@@ -34,19 +34,30 @@
     { "task": "intake carbon clean", "km": 120000, "kind": "rec", "months": null }
   ],
   "serviceNotes": {
-    "engine oil": "Petrol engine follows CBS; hybrid use lowers engine km—follow months and the service display.",
-    "micro filter": "Cabin filter per CBS.",
-    "brake fluid": "24 months.",
-    "air cleaner element": "Petrol engine air filter when combustion mileage accumulates.",
-    "spark plugs": "Long-life plugs on petrol schedule (~90,000 km engine miles).",
+    "engine oil": "ActiveHybrid 5 PHEV: CBS petrol engine oil MFR 30,000 km / 12 months EU (hybrid low engine use; SIB B000214 / service display).",
+    "micro filter": "Interior filter at every engine oil change per garage.wiki F10/F18.",
+    "brake fluid": "Every 2 years; garage.wiki F10/F18 lists first change at 3 years for many variants.",
+    "air cleaner element": "Petrol engine air filter each second oil service (60,000 km at 30,000 km oil ceiling) per garage.wiki F10/F18.",
+    "spark plugs": "Changed from 90,000 km to 60,000 km: six plugs with each second engine oil change (garage.wiki F10/F18).",
     "check front brake pads": "Regen extends pad life; inspect per CBS.",
     "check rear brake pads": "Inspect per CBS.",
     "vehicle check": "Includes hybrid-specific checks; use HV-qualified workshops.",
-    "high-voltage battery coolant": "Cooled HV battery/e-drive circuit; confirm interval in HV supplement (~120,000 km common planning).",
+    "high-voltage battery coolant": "HV battery/e-drive cooling circuit; 120,000 km MFR per BMW ActiveHybrid 5 maintenance / HV supplement.",
     "ZF8 gearbox fluid": "Hybrid 8HP preventive ~100,000 km.",
     "xDrive transfer case fluid": "xDrive variants only.",
     "differential fluids": "xDrive only.",
     "coolant flush": "Engine cooling circuit preventive ~120,000 km.",
     "intake carbon clean": "Direct-injection petrol unit: ~120,000 km if combustion mileage is high."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals); BMW ActiveHybrid 5 owner's manual — 30,000 km / 12 months petrol engine oil typical",
+    "micro filter": "https://garage.wiki/bmw/5-series-sedan/sixth-generation-f10-f18/2012/service-intervals.html — interior filter at every engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/5-series-sedan/sixth-generation-f10-f18/2012/service-intervals.html — brake fluid table; BMW owner's manual ActiveHybrid 5",
+    "air cleaner element": "https://garage.wiki/bmw/5-series-sedan/sixth-generation-f10-f18/2012/service-intervals.html — air filter with each second engine oil change (60,000 km)",
+    "spark plugs": "Changed from 90,000 km to 60,000 km per https://garage.wiki/bmw/5-series-sedan/sixth-generation-f10-f18/2012/service-intervals.html — second engine oil change",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 50,000 km planning interval (F10 hybrid CBS in data)",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 60,000 km planning interval",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)",
+    "high-voltage battery coolant": "BMW ActiveHybrid 5 service information / HV supplement — battery coolant 120,000 km (EU maintenance table)"
   }
 }

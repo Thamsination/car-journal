@@ -21,12 +21,12 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": 24 },
     { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
     { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
     { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
     { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
     { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
     { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
     { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
@@ -39,11 +39,11 @@
     { "task": "timing chain inspection", "km": 100000, "kind": "rec", "months": null }
   ],
   "serviceNotes": {
-    "engine oil": "Turbo four CBS; ~30,000 km EU maximum typical.",
-    "micro filter": "Cabin filter per CBS.",
-    "brake fluid": "24 months.",
-    "air cleaner element": "~60,000 km air filter.",
-    "spark plugs": "Long-life plugs ~90,000 km.",
+    "engine oil": "CBS oil service MFR 30,000 km / 24 months EU maximum with Long-Life oil (SIB B000214 / service display).",
+    "micro filter": "Interior filter at every engine oil change per garage.wiki F10/F18.",
+    "brake fluid": "Every 2 years after first change; garage.wiki lists first brake fluid at 3 years for many F10 variants — follow manual.",
+    "air cleaner element": "Air filter each second engine oil service (60,000 km) per garage.wiki F10/F18.",
+    "spark plugs": "Changed from 90,000 km to 60,000 km: N20 on F10/F18 — extended/standard CBS row is second oil change (not every oil as on F30 3 Series); see garage.wiki.",
     "check front brake pads": "Inspect ~30,000 km.",
     "check rear brake pads": "Inspect ~30,000 km.",
     "vehicle check": "BMW CBS vehicle check.",
@@ -54,5 +54,15 @@
     "coolant flush": "Preventive ~120,000 km.",
     "intake carbon clean": "Direct injection: carbon clean ~120,000 km.",
     "timing chain inspection": "Turbo four timing assembly: specialist check ~100,000 km planning."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — 30,000 km / 24 months EU maximum. https://garage.wiki/bmw/5-series-sedan/sixth-generation-f10-f18/2012/service-intervals.html",
+    "micro filter": "https://garage.wiki/bmw/5-series-sedan/sixth-generation-f10-f18/2012/service-intervals.html — interior filter at every engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/5-series-sedan/sixth-generation-f10-f18/2012/service-intervals.html — brake fluid table; BMW owner's manual F10",
+    "air cleaner element": "https://garage.wiki/bmw/5-series-sedan/sixth-generation-f10-f18/2012/service-intervals.html — air filter with each second engine oil change (60,000 km)",
+    "spark plugs": "Changed from 90,000 km to 60,000 km per https://garage.wiki/bmw/5-series-sedan/sixth-generation-f10-f18/2012/service-intervals.html — N20 B20 A: extended/otherwise second oil change",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 30,000 km planning interval",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)"
   }
 }
