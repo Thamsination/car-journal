@@ -1,0 +1,165 @@
+{
+  "id": "Mercedes-EQ-EQE",
+  "name": "Mercedes-Benz EQE (electric, V295)",
+  "years": "2022\u20132026",
+  "chassisCodes": [
+    "V295"
+  ],
+  "drivetrains": [
+    "RWD",
+    "AWD"
+  ],
+  "transmissions": [
+    "ev"
+  ],
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "EQE 300",
+        "EQE 350",
+        "EQE 350 4MATIC",
+        "EQE 500 4MATIC",
+        "Mercedes-AMG EQE 53 4MATIC+"
+      ],
+      "yearFrom": 2022,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    {
+      "task": "dust filter",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pad thickness",
+      "km": 30000,
+      "months": null,
+      "kind": "mfr"
+    },
+    {
+      "task": "high-voltage battery coolant",
+      "km": 120000,
+      "months": null,
+      "kind": "mfr"
+    },
+    {
+      "task": "electric drivetrain coolant",
+      "km": 120000,
+      "months": null,
+      "kind": "mfr"
+    },
+    {
+      "task": "reduction gear oil",
+      "km": 120000,
+      "months": null,
+      "kind": "rec",
+      "transmission": [
+        "ev"
+      ]
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "months": null,
+      "kind": "rec"
+    }
+  ],
+  "serviceNotes": {
+    "dust filter": "Mercedes-Benz EQ maintenance booklet lists cabin (dust) filter replacement on a time and distance schedule similar to other current passenger cars (commonly every 24 months / 30,000 km in EU documentation).",
+    "brake fluid": "Brake fluid remains hygroscopic on EVs; Mercedes-Benz specifies two-year renewal on current EQ models per European operator and service literature pattern.",
+    "check brake pad thickness": "High regenerative braking reduces pad wear but periodic thickness checks are still required in the manufacturer inspection programme.",
+    "high-voltage battery coolant": "Traction battery thermal management coolant is specified in the EQ high-voltage maintenance supplement; renewal is typically required at long mileage (often around 120,000 km or time-based\u2014confirm for your VIN).",
+    "electric drivetrain coolant": "E-motor and power electronics cooling circuits use dedicated coolant with long but finite service life; Mercedes EQ service data commonly aligns major coolant work near 120,000 km\u2014verify workshop bulletin.",
+    "reduction gear oil": "Single-speed reduction gear oil is often labelled inspection-only officially; many specialists recommend fluid renewal around 120,000 km for long-term bearing health on EV drive units.",
+    "coolant flush": "If separate circuits are not renewed together, a full coolant exchange around 120,000 km restores additive packages for ancillary cooling loops."
+  },
+  "milestones": [
+    {
+      "km": 30000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter"
+      ]
+    },
+    {
+      "km": 90000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "check brake pad thickness",
+        "coolant flush",
+        "dust filter",
+        "electric drivetrain coolant",
+        "high-voltage battery coolant",
+        "reduction gear oil"
+      ]
+    },
+    {
+      "km": 150000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter"
+      ]
+    },
+    {
+      "km": 210000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "check brake pad thickness",
+        "coolant flush",
+        "dust filter",
+        "electric drivetrain coolant",
+        "high-voltage battery coolant",
+        "reduction gear oil"
+      ]
+    },
+    {
+      "km": 270000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter"
+      ]
+    }
+  ]
+}

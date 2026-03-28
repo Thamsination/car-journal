@@ -1,0 +1,361 @@
+{
+  "id": "Mercedes-E-W211-Petrol",
+  "name": "Mercedes-Benz E-Class W211/S211 (petrol)",
+  "years": "2002\u20132009",
+  "chassisCodes": [
+    "W211",
+    "S211"
+  ],
+  "drivetrains": [
+    "RWD",
+    "AWD"
+  ],
+  "transmissions": [
+    "manual",
+    "automatic"
+  ],
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 200 Kompressor",
+        "E 200 Kompressor Estate",
+        "E 230",
+        "E 230 Estate",
+        "E 240",
+        "E 240 Estate",
+        "E 280",
+        "E 280 Estate",
+        "E 280 4MATIC",
+        "E 280 4MATIC Estate",
+        "E 350",
+        "E 350 Estate",
+        "E 350 4MATIC",
+        "E 350 4MATIC Estate",
+        "E 500",
+        "E 500 Estate",
+        "E 500 4MATIC",
+        "E 500 4MATIC Estate",
+        "E 63 AMG",
+        "E 63 AMG Estate"
+      ],
+      "yearFrom": 2002,
+      "yearTo": 2009
+    }
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "dust filter",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "engine air filter",
+      "km": 60000,
+      "months": 48,
+      "kind": "mfr"
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pad thickness",
+      "km": 30000,
+      "months": null,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 60000,
+      "months": 48,
+      "kind": "mfr"
+    },
+    {
+      "task": "coolant",
+      "km": 150000,
+      "months": null,
+      "kind": "mfr"
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "automatic transmission fluid",
+      "km": 60000,
+      "months": null,
+      "kind": "rec",
+      "transmission": [
+        "automatic"
+      ]
+    },
+    {
+      "task": "manual transmission oil",
+      "km": 100000,
+      "months": null,
+      "kind": "rec",
+      "transmission": [
+        "manual"
+      ]
+    },
+    {
+      "task": "transfer case oil",
+      "km": 60000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "front axle differential oil",
+      "km": 60000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "rear axle differential oil",
+      "km": 60000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "poly-V belt",
+      "km": 100000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "intake carbon clean",
+      "km": 120000,
+      "months": null,
+      "kind": "rec"
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "Mfr row: W211 petrol models on the common European fixed maintenance plan specify engine oil and filter at 15,000 km or 12 months (oil-change.info and workshop summaries for W211 petrol). Rec row: 10,000 km is a conservative interval for turbocharged M271/M272 use in severe conditions.",
+    "dust filter": "Mercedes-Benz dust filter (cabin filter) replacement per EU maintenance booklet (typically every 24 months and/or 30,000 km with major services).",
+    "engine air filter": "Engine air filter follows Mercedes inspection mileage items (commonly 60,000 km or 48 months).",
+    "brake fluid": "Mercedes-Benz specifies brake fluid replacement every 24 months; time-based only per operator manual guidance.",
+    "check brake pad thickness": "Brake pad inspection at each scheduled service; 30,000 km mid-cycle reminder for high annual mileage.",
+    "spark plugs": "Spark plugs for M272/M273 V6 and related petrol engines are renewed at extended intervals on EU sheets (commonly 60,000 km or 48 months\u2014confirm for your engine code).",
+    "coolant": "Long-life coolant exchange appears in Mercedes maintenance tables around 150,000 km for this generation; verify printed service booklet.",
+    "automatic transmission fluid": "722.6/722.9 units are often lifetime-fill officially; ATF service near 60,000 km is a widely used preventive interval.",
+    "manual transmission oil": "Manual gearbox oil typically long-life; renewal near 100,000 km is a common workshop recommendation.",
+    "transfer case oil": "4MATIC models only. Preventive fluid renewal around 60,000 km when no OEM routine interval is listed.",
+    "front axle differential oil": "4MATIC models only. Coordinate with transfer case maintenance.",
+    "rear axle differential oil": "Preventive differential oil renewal around 60,000 km complements axle wear on AWD variants.",
+    "coolant flush": "Full coolant exchange around 120,000 km restores inhibitors if the OEM long interval has not yet occurred.",
+    "poly-V belt": "Accessory belt and tensioner near 100,000 km reduces risk of sudden ancillary failure.",
+    "intake carbon clean": "Direct-injection petrol engines (e.g. some CGI variants) can accumulate intake valve deposits; walnut or chemical cleaning around 120,000 km restores airflow where symptoms appear."
+  },
+  "milestones": [
+    {
+      "km": 15000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 30000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 45000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "automatic transmission fluid",
+        "check brake pad thickness",
+        "dust filter",
+        "engine air filter",
+        "engine oil",
+        "front axle differential oil",
+        "rear axle differential oil",
+        "spark plugs",
+        "transfer case oil"
+      ]
+    },
+    {
+      "km": 75000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 90000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 100000,
+      "tasks": [
+        "manual transmission oil",
+        "poly-V belt"
+      ]
+    },
+    {
+      "km": 105000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "automatic transmission fluid",
+        "check brake pad thickness",
+        "coolant flush",
+        "dust filter",
+        "engine air filter",
+        "engine oil",
+        "front axle differential oil",
+        "intake carbon clean",
+        "rear axle differential oil",
+        "spark plugs",
+        "transfer case oil"
+      ]
+    },
+    {
+      "km": 135000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 150000,
+      "tasks": [
+        "check brake pad thickness",
+        "coolant",
+        "dust filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 165000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "automatic transmission fluid",
+        "check brake pad thickness",
+        "dust filter",
+        "engine air filter",
+        "engine oil",
+        "front axle differential oil",
+        "rear axle differential oil",
+        "spark plugs",
+        "transfer case oil"
+      ]
+    },
+    {
+      "km": 195000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 200000,
+      "tasks": [
+        "manual transmission oil",
+        "poly-V belt"
+      ]
+    },
+    {
+      "km": 210000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 225000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "automatic transmission fluid",
+        "check brake pad thickness",
+        "coolant flush",
+        "dust filter",
+        "engine air filter",
+        "engine oil",
+        "front axle differential oil",
+        "intake carbon clean",
+        "rear axle differential oil",
+        "spark plugs",
+        "transfer case oil"
+      ]
+    },
+    {
+      "km": 255000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 270000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 285000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "automatic transmission fluid",
+        "check brake pad thickness",
+        "coolant",
+        "dust filter",
+        "engine air filter",
+        "engine oil",
+        "front axle differential oil",
+        "manual transmission oil",
+        "poly-V belt",
+        "rear axle differential oil",
+        "spark plugs",
+        "transfer case oil"
+      ]
+    }
+  ]
+}

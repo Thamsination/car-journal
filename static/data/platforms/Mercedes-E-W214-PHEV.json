@@ -1,0 +1,281 @@
+{
+  "id": "Mercedes-E-W214-PHEV",
+  "name": "Mercedes-Benz E-Class W214/S214 (plug-in hybrid)",
+  "years": "2024\u20132026",
+  "chassisCodes": [
+    "W214",
+    "S214"
+  ],
+  "drivetrains": [
+    "RWD",
+    "AWD"
+  ],
+  "transmissions": [
+    "automatic"
+  ],
+  "vehicles": [
+    {
+      "make": "Mercedes-Benz",
+      "models": [
+        "E 300 e",
+        "E 300 e Estate",
+        "E 400 e 4MATIC",
+        "E 400 e 4MATIC Estate"
+      ],
+      "yearFrom": 2024,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "dust filter",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "engine air filter",
+      "km": 60000,
+      "months": 48,
+      "kind": "mfr"
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pad thickness",
+      "km": 30000,
+      "months": null,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 60000,
+      "months": 48,
+      "kind": "mfr"
+    },
+    {
+      "task": "coolant",
+      "km": 150000,
+      "months": null,
+      "kind": "mfr"
+    },
+    {
+      "task": "high-voltage battery coolant",
+      "km": 120000,
+      "months": null,
+      "kind": "mfr"
+    },
+    {
+      "task": "engine oil",
+      "km": 10000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "automatic transmission fluid",
+      "km": 60000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "coolant flush",
+      "km": 120000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "intake carbon clean",
+      "km": 120000,
+      "months": null,
+      "kind": "rec"
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "W214 plug-in hybrids require petrol engine servicing per Mercedes EU ASSYST schedules (typically 15,000 km or 12 months when combustion-engine mileage accumulates).",
+    "dust filter": "Cabin dust filter per Mercedes maintenance booklet.",
+    "engine air filter": "Petrol engine air filter at standard inspection intervals.",
+    "brake fluid": "24-month brake fluid renewal per Mercedes-Benz European guidance.",
+    "check brake pad thickness": "Regenerative braking extends pad life; inspections remain mandatory.",
+    "spark plugs": "Spark plug service at extended intervals for the four-cylinder PHEV engine (60,000 km / 48 months orientation\u2014verify ASSYST).",
+    "coolant": "Engine coolant circuit per Mercedes long-life interval.",
+    "high-voltage battery coolant": "HV battery and power electronics coolant circuits are specified separately in the high-voltage supplement; 120,000 km is a typical major renewal point\u2014use a qualified workshop and confirm the exact interval for your model year.",
+    "automatic transmission fluid": "Hybrid-integrated automatic: preventive ATF service near 60,000 km is a common specialist recommendation.",
+    "coolant flush": "Supplementary engine coolant exchange at 120,000 km if not yet due.",
+    "intake carbon clean": "Direct-injection PHEV petrol engines may need intake cleaning around 120,000 km if carbon symptoms appear."
+  },
+  "milestones": [
+    {
+      "km": 15000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 30000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 45000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "automatic transmission fluid",
+        "check brake pad thickness",
+        "dust filter",
+        "engine air filter",
+        "engine oil",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 75000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 90000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 105000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "automatic transmission fluid",
+        "check brake pad thickness",
+        "coolant flush",
+        "dust filter",
+        "engine air filter",
+        "engine oil",
+        "high-voltage battery coolant",
+        "intake carbon clean",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 135000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 150000,
+      "tasks": [
+        "check brake pad thickness",
+        "coolant",
+        "dust filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 165000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "automatic transmission fluid",
+        "check brake pad thickness",
+        "dust filter",
+        "engine air filter",
+        "engine oil",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 195000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 210000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 225000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "automatic transmission fluid",
+        "check brake pad thickness",
+        "coolant flush",
+        "dust filter",
+        "engine air filter",
+        "engine oil",
+        "high-voltage battery coolant",
+        "intake carbon clean",
+        "spark plugs"
+      ]
+    },
+    {
+      "km": 255000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 270000,
+      "tasks": [
+        "check brake pad thickness",
+        "dust filter",
+        "engine oil"
+      ]
+    },
+    {
+      "km": 285000,
+      "tasks": [
+        "engine oil"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "automatic transmission fluid",
+        "check brake pad thickness",
+        "coolant",
+        "dust filter",
+        "engine air filter",
+        "engine oil",
+        "spark plugs"
+      ]
+    }
+  ]
+}
