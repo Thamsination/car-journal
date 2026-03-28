@@ -11,6 +11,12 @@
   "transmissions": [
     "automatic"
   ],
+  "engines": [
+    "M54",
+    "M57",
+    "M62",
+    "N62"
+  ],
   "vehicles": [
     {
       "make": "BMW",
