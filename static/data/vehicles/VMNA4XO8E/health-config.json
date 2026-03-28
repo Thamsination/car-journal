@@ -1,0 +1,112 @@
+{
+  "intervals": [
+    {
+      "id": "engine-oil",
+      "name": "Engine Oil",
+      "taskMatches": [
+        "engine oil"
+      ],
+      "intervalKm": 10000,
+      "intervalMonths": 6
+    },
+    {
+      "id": "cabin-air-filter",
+      "name": "Cabin Air Filter",
+      "taskMatches": [
+        "cabin air filter"
+      ],
+      "intervalKm": 30000,
+      "intervalMonths": 24
+    },
+    {
+      "id": "air-cleaner-element",
+      "name": "Air Cleaner Element",
+      "taskMatches": [
+        "air cleaner element"
+      ],
+      "intervalKm": 30000,
+      "intervalMonths": 24
+    },
+    {
+      "id": "spark-plugs",
+      "name": "Spark Plugs",
+      "taskMatches": [
+        "spark plugs"
+      ],
+      "intervalKm": 96000,
+      "intervalMonths": 72
+    },
+    {
+      "id": "brake-fluid",
+      "name": "Brake Fluid",
+      "taskMatches": [
+        "brake fluid"
+      ],
+      "intervalKm": null,
+      "intervalMonths": 24
+    },
+    {
+      "id": "inspect-disc-brake-pads",
+      "name": "Inspect Disc Brake Pads",
+      "taskMatches": [
+        "inspect disc brake pads"
+      ],
+      "intervalKm": 10000,
+      "intervalMonths": 6
+    },
+    {
+      "id": "front-differential-oil",
+      "name": "Front Differential Oil",
+      "taskMatches": [
+        "front differential oil"
+      ],
+      "intervalKm": 60000,
+      "intervalMonths": 48
+    },
+    {
+      "id": "rear-differential-oil",
+      "name": "Rear Differential Oil",
+      "taskMatches": [
+        "rear differential oil"
+      ],
+      "intervalKm": 60000,
+      "intervalMonths": 48
+    },
+    {
+      "id": "coolant",
+      "name": "Coolant",
+      "taskMatches": [
+        "coolant"
+      ],
+      "intervalKm": 120000,
+      "intervalMonths": 96
+    },
+    {
+      "id": "intake-carbon-clean",
+      "name": "Intake Carbon Clean",
+      "taskMatches": [
+        "intake carbon clean"
+      ],
+      "intervalKm": 120000,
+      "intervalMonths": null
+    },
+    {
+      "id": "cvt-fluid",
+      "name": "Cvt Fluid",
+      "taskMatches": [
+        "cvt fluid"
+      ],
+      "intervalKm": 60000,
+      "intervalMonths": null
+    },
+    {
+      "id": "manual-transmission-oil",
+      "name": "Manual Transmission Oil",
+      "taskMatches": [
+        "manual transmission oil"
+      ],
+      "intervalKm": 120000,
+      "intervalMonths": null
+    }
+  ]
+}
