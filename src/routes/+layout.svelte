@@ -156,12 +156,41 @@
 		}
 	}
 
+	const AWD_KEYWORDS = [
+		'xDrive', 'quattro', '4MATIC', '4MOTION', 'ALL4', 'Q4', 'ALLGRIP',
+		'4Drive', 'XWD', 'HYBRID4', 'Hybrid4', '4xe', 'GTX', 'e-4ORCE',
+		'XPower', 'Syncro', 'Dual Motor', 'HTRAC',
+	];
+	const AWD_KEYWORDS_CI = ['awd', '4wd', '4x4', 'xi', 'xd'];
+	const ALWAYS_AWD_MAKES = ['subaru', 'land rover'];
+
+	function detectAwdFromModel(make: string, model: string): boolean {
+		if (ALWAYS_AWD_MAKES.includes(make.toLowerCase())) return true;
+		for (const kw of AWD_KEYWORDS) {
+			if (model.includes(kw)) return true;
+		}
+		const ml = model.toLowerCase();
+		for (const kw of AWD_KEYWORDS_CI) {
+			if (ml.includes(kw)) return true;
+		}
+		return false;
+	}
+
 	function autoSelectFromPlatform() {
 		const ts = addPlatformData?.transmissions;
 		addTransmission = (ts && ts.length === 1) ? ts[0] : '';
 
 		const dts = addPlatformData?.drivetrains;
-		addDrivetrain = (dts && dts.length === 1) ? dts[0] : '';
+		if (dts && dts.length === 1) {
+			addDrivetrain = dts[0];
+		} else if (dts && dts.includes('AWD') && detectAwdFromModel(addMake, addModel)) {
+			addDrivetrain = 'AWD';
+		} else if (dts && dts.length > 1 && !detectAwdFromModel(addMake, addModel)) {
+			const nonAwd = dts.filter(d => d !== 'AWD');
+			addDrivetrain = nonAwd.length === 1 ? nonAwd[0] : '';
+		} else {
+			addDrivetrain = '';
+		}
 	}
 
 	function goBackStep() {
