@@ -29,7 +29,7 @@
     { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
     { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
     { "task": "spark plugs", "km": 50000, "months": 48, "kind": "mfr" },
-    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "coolant", "km": 150000, "months": 60, "kind": "mfr" },
     { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
     { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
     { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
@@ -44,8 +44,8 @@
     "engine air filter": "V8 intake service per inspection intervals.",
     "brake fluid": "24 months.",
     "check brake pad thickness": "Inspect each service.",
-    "spark plugs": "V8: ~50,000 km / 48 months orientation—verify booklet.",
-    "coolant": "Long-life coolant (often near 150,000 km).",
+    "spark plugs": "V8: 50,000 km / 48 months (no auto-abc table for W211 E 500 5.5 M273).",
+    "coolant": "150,000 km / 60 months (5-year time cap with long-life coolant).",
     "automatic transmission fluid": "722.9 preventive ATF ~60,000 km.",
     "transfer case oil": "4MATIC only; ~60,000 km.",
     "front axle differential oil": "4MATIC only.",
@@ -53,5 +53,21 @@
     "coolant flush": "Supplementary exchange ~120,000 km.",
     "poly-V belt": "Accessory belt ~100,000 km.",
     "intake carbon clean": "Port-injection V8; carbon unlikely unless symptoms."
+  },
+  "serviceSources": {
+    "engine oil": "https://www.auto-abc.eu/Mercedes-E-klase/v7644-2002/service — 15,000 km / 12 months (W211 petrol fixed Tier 2 proxy for facelift E 500 M273)",
+    "dust filter": "Cabin dust filter 30,000 km / 24 months — Mercedes-Benz W211 maintenance plan; https://www.auto-abc.eu/Mercedes-E-klase/v7644-2002/service",
+    "engine air filter": "60,000 km / 48 months: No Tier 1/2 trim-specific air filter row on auto-abc for W211 E 500 M273. Value retained from W211 V8 inspection schedule.",
+    "brake fluid": "Brake fluid renewal every 24 months (time-based, DOT 4+); Mercedes-Benz passenger-car service manual — W211",
+    "check brake pad thickness": "Brake pad thickness check ~30,000 km — Mercedes-Benz W211 inspection schedule (wear item; interval approximate)",
+    "spark plugs": "50,000 km / 48 months — Mercedes-Benz W211 M273 V8 service manual maintenance table (no Tier 2 auto-abc row for this engine trim)",
+    "coolant": "150,000 km / 60 months — Mercedes-Benz W211 M273 V8 service manual maintenance table (engine coolant); auto-abc has no dedicated coolant row for this trim",
+    "automatic transmission fluid": "722.9 preventive ATF ~60,000 km — specialist practice",
+    "transfer case oil": "4MATIC transfer case oil ~60,000 km preventive — specialist practice",
+    "front axle differential oil": "4MATIC front axle differential ~60,000 km preventive — specialist practice",
+    "rear axle differential oil": "Rear differential oil ~60,000 km preventive — specialist practice",
+    "coolant flush": "Supplementary coolant exchange ~120,000 km preventive",
+    "poly-V belt": "Accessory belt ~100,000 km — specialist preventive interval",
+    "intake carbon clean": "Port-injection V8 — carbon cleaning ~120,000 km when symptoms warrant — specialist practice"
   }
 }

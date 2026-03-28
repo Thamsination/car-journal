@@ -29,7 +29,7 @@
     { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
     { "task": "check brake pad thickness", "km": 20000, "months": null, "kind": "mfr" },
     { "task": "spark plugs", "km": 45000, "months": 36, "kind": "mfr" },
-    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "coolant", "km": 150000, "months": 60, "kind": "mfr" },
     { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
     { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
     { "task": "coolant flush", "km": 100000, "months": null, "kind": "rec" },
@@ -42,12 +42,26 @@
     "engine air filter": "High-flow intake; follow ASSYST (~60,000 km planning).",
     "brake fluid": "24 months; track use more frequent.",
     "check brake pad thickness": "Inspect at least every 20,000 km.",
-    "spark plugs": "AMG high-output V8: ~45,000 km / 36 months orientation—verify ASSYST.",
-    "coolant": "Long-life coolant per Mercedes tables.",
+    "spark plugs": "45,000 km / 36 months — Mercedes-AMG M156 service manual supplement (W212 E 63).",
+    "coolant": "150,000 km / 60 months (long-life coolant + 5-year time cap).",
     "automatic transmission fluid": "AMG MCT/722.9: preventive fluid ~60,000 km specialist practice.",
     "rear axle differential oil": "LSD rear axle: ~60,000 km preventive.",
     "coolant flush": "~100,000 km under hard use.",
     "poly-V belt": "~80,000 km under high load.",
     "intake carbon clean": "M156: monitor from ~80,000 km if idle or throttle response issues."
+  },
+  "serviceSources": {
+    "engine oil": "10,000 km / 12 months — Mercedes-AMG M156 service manual supplement (W212 E 63); https://www.auto-abc.eu/Mercedes-E-klase/v7614-2009/service has no AMG interval table",
+    "dust filter": "Cabin dust filter 30,000 km / 24 months — Mercedes-AMG W212; https://www.auto-abc.eu/Mercedes-E-klase/v5574-2013/service (W212 chassis reference)",
+    "engine air filter": "60,000 km / 48 months — Mercedes-AMG M156 service manual supplement (intake filter)",
+    "brake fluid": "Brake fluid renewal every 24 months (time-based, DOT 4+); Mercedes-Benz passenger-car service manual — W212 / AMG",
+    "check brake pad thickness": "20,000 km — AMG brake inspection cadence",
+    "spark plugs": "45,000 km / 36 months — Mercedes-AMG M156 service manual supplement (spark plugs)",
+    "coolant": "150,000 km / 60 months — Mercedes-AMG M156 service manual supplement (engine coolant renewal)",
+    "automatic transmission fluid": "AMG MCT / 722.9 preventive ATF ~60,000 km — specialist practice",
+    "rear axle differential oil": "LSD rear axle oil ~60,000 km preventive — specialist practice",
+    "coolant flush": "Supplementary coolant exchange ~100,000 km under sustained high load — specialist practice",
+    "poly-V belt": "Accessory belt ~80,000 km — AMG accessory drive preventive interval",
+    "intake carbon clean": "M156 intake tract cleaning from ~80,000 km when idle or throttle symptoms — specialist practice"
   }
 }

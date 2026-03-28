@@ -34,36 +34,52 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 25000, "months": 12, "kind": "mfr" },
-    { "task": "engine oil", "km": 15000, "months": null, "kind": "rec" },
+    { "task": "engine oil", "km": 10000, "months": 12, "kind": "mfr" },
+    { "task": "engine oil", "km": 8000, "months": null, "kind": "rec" },
     { "task": "dust filter", "km": 30000, "months": 24, "kind": "mfr" },
-    { "task": "engine air filter", "km": 60000, "months": 48, "kind": "mfr" },
+    { "task": "engine air filter", "km": 10000, "months": null, "kind": "mfr" },
     { "task": "brake fluid", "km": null, "months": 24, "kind": "mfr" },
     { "task": "check brake pad thickness", "km": 30000, "months": null, "kind": "mfr" },
-    { "task": "fuel filter", "km": 60000, "months": null, "kind": "mfr" },
-    { "task": "coolant", "km": 150000, "months": null, "kind": "mfr" },
+    { "task": "fuel filter", "km": 30000, "months": null, "kind": "mfr" },
+    { "task": "coolant", "km": 90000, "months": 60, "kind": "mfr" },
     { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
     { "task": "manual transmission oil", "km": 100000, "months": null, "kind": "rec", "transmission": ["manual"] },
     { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
     { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
     { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
     { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
-    { "task": "poly-V belt", "km": 100000, "months": null, "kind": "rec" }
+    { "task": "poly-V belt", "km": 90000, "months": null, "kind": "rec" }
   ],
   "serviceNotes": {
-    "engine oil": "OM651 four-cylinder diesel: ASSYST flexible EU plans up to 25,000 km or 12 months; rec 15,000 km severe use.",
+    "engine oil": "Updated to 10,000 km / 12 months per https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service (E 250 CDI W212 OM651 Tier 2). Rec 8,000 km severe use.",
     "dust filter": "Dust filter per Mercedes EU booklet.",
-    "engine air filter": "Inspection intervals (commonly 60,000 km / 48 months).",
+    "engine air filter": "Updated to 10,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service (was 60,000 km / 48 months).",
     "brake fluid": "24 months.",
     "check brake pad thickness": "Inspect each visit; 30,000 km reminder.",
-    "fuel filter": "Diesel fuel filter ~60,000 km—confirm ASSYST.",
-    "coolant": "Long-life coolant (often near 150,000 km).",
+    "fuel filter": "Updated to 30,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service (was 60,000 km).",
+    "coolant": "Updated to 90,000 km / 60 months per https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service (90,000 km or 5 years).",
     "automatic transmission fluid": "7G/9G preventive ATF ~60,000 km.",
     "manual transmission oil": "Manual gear oil ~100,000 km preventive.",
     "transfer case oil": "4MATIC only; ~60,000 km.",
     "front axle differential oil": "4MATIC only.",
     "rear axle differential oil": "AWD preventive ~60,000 km.",
     "coolant flush": "Supplementary exchange ~120,000 km.",
-    "poly-V belt": "Accessory belt ~100,000 km."
+    "poly-V belt": "Serpentine belt 90,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service (preventive REC)."
+  },
+  "serviceSources": {
+    "engine oil": "Changed from 25,000 km / 12 months to 10,000 km / 12 months per https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service (Mercedes E 250 2013 CDI Automatic W212 OM651, Tier 2)",
+    "dust filter": "Cabin dust / pollen filter 30,000 km / 24 months — Mercedes-Benz W212 scheduled maintenance item; related OM651 intervals: https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service",
+    "engine air filter": "Changed from 60,000 km / 48 months to 10,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service",
+    "brake fluid": "Brake fluid renewal every 24 months (time-based, DOT 4+); Mercedes-Benz passenger-car service manual — W212",
+    "check brake pad thickness": "Brake pad thickness check ~30,000 km — Mercedes-Benz W212 inspection schedule (wear item; interval approximate)",
+    "fuel filter": "Changed from 60,000 km to 30,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service",
+    "coolant": "Changed from 150,000 km to 90,000 km / 60 months per https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service (90,000 km or 5 years, whichever first)",
+    "automatic transmission fluid": "722.9 preventive ATF ~60,000 km — specialist practice",
+    "manual transmission oil": "Manual gearbox oil ~100,000 km preventive — specialist practice",
+    "transfer case oil": "4MATIC transfer case oil ~60,000 km preventive — specialist practice",
+    "front axle differential oil": "4MATIC front axle differential ~60,000 km preventive — specialist practice",
+    "rear axle differential oil": "Rear differential oil ~60,000 km preventive — specialist practice",
+    "coolant flush": "Supplementary coolant exchange ~120,000 km preventive between OEM coolant renewals",
+    "poly-V belt": "Changed REC from 100,000 km to 90,000 km per https://www.auto-abc.eu/Mercedes-E-klase/v7583-2013/service (serpentine / drive belt)"
   }
 }
