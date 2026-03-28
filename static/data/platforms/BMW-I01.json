@@ -1,12 +1,15 @@
 {
   "id": "BMW-I01",
   "name": "BMW i3 (I01)",
-  "years": "2013\u20132022",
+  "years": "2013–2022",
   "chassisCodes": [
     "I01"
   ],
   "drivetrains": [
     "RWD"
+  ],
+  "transmissions": [
+    "ev"
   ],
   "vehicles": [
     {
@@ -57,12 +60,12 @@
     }
   ],
   "serviceNotes": {
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
     "check front brake pads": "BMW CBS-style pad inspection; 30,000 km is a reasonable cadence between major services. Strong regen on i3 BEV often extends front pad life.",
     "check rear brake pads": "BMW CBS-style pad inspection; 30,000 km is a reasonable cadence between major services. Strong regen on i3 BEV often extends rear pad life.",
-    "coolant flush": "High-voltage battery and e-drive cooling circuit: BMW publishes time/distance-based coolant service for EVs; 60,000 km is a planning proxy\u2014interval estimated, confirm official service data. Range Extender (REx) models additionally require petrol engine oil, spark plugs, and air filter per the REx supplement\u2014follow BMW i service data.",
-    "gearbox fluid": "Reduction gear / drive unit fluid: officially often \"lifetime\"; 100,000 km mfr row is interval estimated for long-term wear metals in oil\u2014specialist preventive change.",
-    "micro filter": "Microfilter per BMW i maintenance programme; 20,000 km planning interval\u2014verify display and regional booklet."
+    "coolant flush": "High-voltage battery and e-drive cooling circuit: BMW publishes time/distance-based coolant service for EVs; 60,000 km is a planning proxy—interval estimated, confirm official service data. Range Extender (REx) models additionally require petrol engine oil, spark plugs, and air filter per the REx supplement—follow BMW i service data.",
+    "gearbox fluid": "Reduction gear / drive unit fluid: officially often \"lifetime\"; 100,000 km mfr row is interval estimated for long-term wear metals in oil—specialist preventive change.",
+    "micro filter": "Microfilter per BMW i maintenance programme; 20,000 km planning interval—verify display and regional booklet."
   },
   "milestones": [
     {

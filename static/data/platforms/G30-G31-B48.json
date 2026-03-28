@@ -1,7 +1,7 @@
 {
   "id": "G30-G31-B48",
   "name": "BMW G30/G31 5 Series (B48 2.0i)",
-  "years": "2017\u20132020",
+  "years": "2017–2020",
   "chassisCodes": [
     "G30",
     "G31"
@@ -9,6 +9,9 @@
   "drivetrains": [
     "RWD",
     "AWD"
+  ],
+  "transmissions": [
+    "automatic"
   ],
   "vehicles": [
     {
@@ -118,7 +121,7 @@
   "serviceNotes": {
     "engine oil": "BMW CBS scheduled service. The B48 turbocharged direct-injection engine is sensitive to oil quality. CBS calculates the interval based on driving conditions; 30,000 km is the maximum distance between services.",
     "micro filter": "BMW CBS scheduled service. The cabin micro filter traps pollen, dust and pollutants. A clogged filter reduces airflow and cabin air quality.",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
     "air cleaner element": "BMW CBS scheduled service. The engine air filter ensures clean air enters the combustion chamber. A dirty filter reduces performance and fuel efficiency on the turbocharged B48.",
     "spark plugs": "BMW CBS scheduled service (approximately every 6th oil service). The B48 uses iridium-tipped spark plugs. Replacement at ~90,000 km (60,000 miles) per CBS SIB documentation for standard petrol engines.",
     "check front brake pads": "BMW CBS wear-based reminder. Brake pad thickness should be inspected to ensure safe braking performance.",

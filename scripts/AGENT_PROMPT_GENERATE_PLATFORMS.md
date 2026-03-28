@@ -175,6 +175,7 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
   "years": "<production years as text>",
   "chassisCodes": ["<code1>", "<code2>"],
   "drivetrains": ["<FWD|RWD|AWD>"],
+  "transmissions": ["<manual|automatic|dct|cvt|ev>"],
   "vehicles": [
     {
       "make": "<Make>",
@@ -253,6 +254,38 @@ The `drivetrains` array declares which drivetrain layouts are available on this 
 ```
 
 When a platform has only one drivetrain, the app auto-selects it. When multiple exist, the user picks from a dropdown filtered to only the valid options.
+
+#### `transmissions` field rules
+
+The `transmissions` array declares which transmission types are available on this platform. The app uses this to show a filtered transmission picker when adding or editing a vehicle, and to auto-select when only one option exists.
+
+**Valid values:** `"manual"`, `"automatic"`, `"dct"`, `"cvt"`, `"ev"`
+
+**Rules:**
+- List **all transmission types available** on this platform
+- Automatic-only platforms (modern BMW, Audi): `["automatic"]`
+- Manual + automatic platforms (older BMW E90, VW Golf): `["manual", "automatic"]`
+- Manual + DCT platforms (VW Golf DSG): `["manual", "dct"]`
+- Manual + CVT platforms (Subaru WRX): `["manual", "cvt"]`
+- EV platforms (BMW i3, iX): `["ev"]`
+- Manual-only platforms (Subaru WRX STI): `["manual"]`
+
+**Examples:**
+```json
+"transmissions": ["automatic"]
+"transmissions": ["manual", "automatic"]
+"transmissions": ["manual", "dct"]
+"transmissions": ["ev"]
+```
+
+**How to determine the correct values:**
+- If the platform covers vehicles sold with a conventional torque-converter automatic: include `"automatic"`
+- If the platform covers vehicles with a dual-clutch gearbox (DSG, PDK, M-DCT, DCT): use `"dct"` not `"automatic"`
+- If the platform covers vehicles with a CVT: use `"cvt"` not `"automatic"`
+- If the platform is a BEV (battery EV) with a single-speed reduction gear: use `"ev"`
+- PHEVs with a conventional automatic transmission: use `"automatic"` (the EV motor is integrated into the auto gearbox)
+
+When a platform has only one transmission, the app auto-selects it. When multiple exist, the user picks from a dropdown filtered to only the valid options.
 
 #### `serviceIntervals` field rules
 
@@ -377,6 +410,7 @@ Before moving to the next platform, verify your output:
 19. **Validate every `rec` task against the qualifying criteria** — each `rec` entry must (a) service a physical wear item or fluid, (b) have a documented engineering reason specific to this platform/engine, and (c) have a specific km or month interval from specialist consensus. If any `rec` task is an additive, consumable product, or "nice to have" without a documented failure mode, remove it.
 20. **Check model names identify the engine variant** — no bare series names like `"3 Series"`, `"5 Series"`, `"Golf"`. Every model entry must include the engine designation (e.g., `"320d"`, `"520i xDrive"`, `"Golf TDI"`). If a user cannot tell from the model name alone which engine it refers to, the entry is invalid.
 21. **Check body style completeness** — if the platform covers multiple body styles (sedan + Touring/wagon, coupé + convertible), verify that every engine/drivetrain model name has a variant for each body style. For example, a G30/G31 platform must list both `"520d"` (sedan) and `"520d Touring"` (wagon), not just `"520d"`.
+22. **Check `transmissions` array** — must be present and contain at least one of `"manual"`, `"automatic"`, `"dct"`, `"cvt"`, `"ev"`. Use `"dct"` for dual-clutch (DSG, PDK), `"cvt"` for CVT, `"ev"` for BEV single-speed, `"automatic"` for conventional torque-converter auto. BEV platforms should be `["ev"]`, not `["automatic"]`.
 
 If any check fails, go back and fix it before proceeding.
 
@@ -420,6 +454,10 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Include transmission-specific fluid tasks (CVT fluid, DSG fluid, manual gearbox fluid) without a `"transmission"` tag when the platform covers multiple transmission types — a manual-only owner should not see CVT fluid reminders and vice versa
 - Omit the `"transmission"` tag on transmission fluid tasks when the platform covers both manual and automatic/CVT/DCT variants
 - Omit the `drivetrains` array — every platform must declare its available drivetrain layouts
+- Omit the `transmissions` array — every platform must declare its available transmission types
+- Use `"automatic"` for dual-clutch (DSG, PDK, M-DCT) — use `"dct"` instead
+- Use `"automatic"` for CVT — use `"cvt"` instead
+- Use `"automatic"` for BEV single-speed reduction gear — use `"ev"` instead
 - Use `"RWD"` for FWD-based platforms — BMW F40/F44/F45/F48/F39 are FWD-based (UKL/FAAR), not RWD. VW, Renault, Toyota, etc. are FWD.
 - Add fuel system additives, engine flush, or any consumable product as a `rec` task — these are not wear-item services and do not belong in a maintenance schedule
 - Add `rec` tasks based on generic forum advice without a documented engineering justification specific to the engine/platform — "some people recommend it" is not sufficient

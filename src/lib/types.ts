@@ -128,6 +128,7 @@ export interface PlatformConfig {
 	years: string;
 	chassisCodes: string[];
 	drivetrains?: DrivetrainType[];
+	transmissions?: TransmissionType[];
 	serviceIntervals: PlatformServiceInterval[];
 	serviceNotes: Record<string, string>;
 	milestones: { km: number; tasks: string[] }[];

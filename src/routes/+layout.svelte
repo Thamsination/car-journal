@@ -50,27 +50,16 @@
 		{ value: 'ev', label: 'EV (single-speed)' },
 	];
 
-	function platformTransmissions(pc: PlatformConfig | null): TransmissionType[] {
-		if (!pc) return [];
-		const types = new Set<TransmissionType>();
-		for (const si of pc.serviceIntervals) {
-			if (si.transmission) {
-				for (const t of si.transmission) types.add(t);
-			}
-		}
-		return [...types];
-	}
-
 	const addTransmissionOptions = $derived.by(() => {
-		const available = platformTransmissions(addPlatformData);
-		if (available.length === 0) return allTransmissionOptions;
-		return allTransmissionOptions.filter((o) => available.includes(o.value));
+		const ts = addPlatformData?.transmissions;
+		if (!ts || ts.length === 0) return allTransmissionOptions;
+		return allTransmissionOptions.filter((o) => ts.includes(o.value));
 	});
 
 	const editTransmissionOptions = $derived.by(() => {
-		const available = platformTransmissions($platformConfig);
-		if (available.length === 0) return allTransmissionOptions;
-		return allTransmissionOptions.filter((o) => available.includes(o.value));
+		const ts = $platformConfig?.transmissions;
+		if (!ts || ts.length === 0) return allTransmissionOptions;
+		return allTransmissionOptions.filter((o) => ts.includes(o.value));
 	});
 
 	const allDrivetrainOptions: { value: DrivetrainType; label: string }[] = [
@@ -168,8 +157,8 @@
 	}
 
 	function autoSelectFromPlatform() {
-		const availableTrans = platformTransmissions(addPlatformData);
-		addTransmission = availableTrans.length === 1 ? availableTrans[0] : '';
+		const ts = addPlatformData?.transmissions;
+		addTransmission = (ts && ts.length === 1) ? ts[0] : '';
 
 		const dts = addPlatformData?.drivetrains;
 		addDrivetrain = (dts && dts.length === 1) ? dts[0] : '';

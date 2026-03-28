@@ -9,6 +9,9 @@
     "RWD",
     "AWD"
   ],
+  "transmissions": [
+    "automatic"
+  ],
   "vehicles": [
     {
       "make": "BMW",

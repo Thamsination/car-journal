@@ -1,13 +1,16 @@
 {
   "id": "BMW-I20",
   "name": "BMW iX (I20)",
-  "years": "2021\u20132026",
+  "years": "2021–2026",
   "chassisCodes": [
     "I20"
   ],
   "drivetrains": [
     "RWD",
     "AWD"
+  ],
+  "transmissions": [
+    "ev"
   ],
   "vehicles": [
     {
@@ -61,12 +64,12 @@
     }
   ],
   "serviceNotes": {
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
-    "check front brake pads": "BMW CBS-style front axle pad inspection; strong regen on BEV often extends pad life\u2014inspections still required.",
-    "check rear brake pads": "BMW CBS-style rear axle pad inspection; strong regen on BEV often extends pad life\u2014inspections still required.",
-    "coolant flush": "High-voltage battery and e-drive cooling circuit: BMW publishes time/distance-based coolant service for EVs; 60,000 km is a planning proxy\u2014interval estimated, confirm official service data.",
-    "gearbox fluid": "Reduction gear / drive unit fluid (BEV): officially often \"lifetime\"; 100,000 km mfr row is interval estimated for long-term wear metals in oil\u2014specialist preventive change. \"xDrive\" on iX denotes electric all-wheel drive\u2014there is no ICE xDrive transfer case or conventional differential oil service like petrol/diesel BMWs.",
-    "micro filter": "Microfilter replacement per BMW iX EU maintenance information; 20,000 km is a common planning interval\u2014verify CBS and regional booklet."
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
+    "check front brake pads": "BMW CBS-style front axle pad inspection; strong regen on BEV often extends pad life—inspections still required.",
+    "check rear brake pads": "BMW CBS-style rear axle pad inspection; strong regen on BEV often extends pad life—inspections still required.",
+    "coolant flush": "High-voltage battery and e-drive cooling circuit: BMW publishes time/distance-based coolant service for EVs; 60,000 km is a planning proxy—interval estimated, confirm official service data.",
+    "gearbox fluid": "Reduction gear / drive unit fluid (BEV): officially often \"lifetime\"; 100,000 km mfr row is interval estimated for long-term wear metals in oil—specialist preventive change. \"xDrive\" on iX denotes electric all-wheel drive—there is no ICE xDrive transfer case or conventional differential oil service like petrol/diesel BMWs.",
+    "micro filter": "Microfilter replacement per BMW iX EU maintenance information; 20,000 km is a common planning interval—verify CBS and regional booklet."
   },
   "milestones": [
     {

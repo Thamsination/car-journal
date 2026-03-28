@@ -68,7 +68,7 @@ Good sources:
 - **Do NOT modify `serviceNotes`** — notes stay exactly as they are
 - **Do NOT modify `milestones`** — milestones stay exactly as they are (no rebuild needed since intervals didn't change)
 - **Do NOT split files by engine** — keep the single-file-per-chassis structure
-- **Do NOT modify the `id`, `name`, `years`, `chassisCodes`, or `drivetrains` fields**
+- **Do NOT modify the `id`, `name`, `years`, `chassisCodes`, `drivetrains`, or `transmissions` fields**
 - **Do NOT modify any non-BMW platform files**
 
 The ONLY change is to the `vehicles[].models` arrays.

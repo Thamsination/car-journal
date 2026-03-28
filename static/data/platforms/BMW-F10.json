@@ -11,6 +11,10 @@
     "RWD",
     "AWD"
   ],
+  "transmissions": [
+    "manual",
+    "automatic"
+  ],
   "vehicles": [
     {
       "make": "BMW",

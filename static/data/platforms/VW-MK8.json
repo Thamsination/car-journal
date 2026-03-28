@@ -8,6 +8,10 @@
   "drivetrains": [
     "FWD"
   ],
+  "transmissions": [
+    "manual",
+    "dct"
+  ],
   "vehicles": [
     {
       "make": "Volkswagen",

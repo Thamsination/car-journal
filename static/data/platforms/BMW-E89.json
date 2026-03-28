@@ -8,6 +8,10 @@
   "drivetrains": [
     "RWD"
   ],
+  "transmissions": [
+    "manual",
+    "automatic"
+  ],
   "vehicles": [
     {
       "make": "BMW",

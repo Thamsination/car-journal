@@ -8,6 +8,10 @@
   "drivetrains": [
     "FWD"
   ],
+  "transmissions": [
+    "manual",
+    "automatic"
+  ],
   "vehicles": [
     {
       "make": "Fiat",

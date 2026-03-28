@@ -8,6 +8,10 @@
   "drivetrains": [
     "FWD"
   ],
+  "transmissions": [
+    "manual",
+    "cvt"
+  ],
   "vehicles": [
     {
       "make": "Toyota",
