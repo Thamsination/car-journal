@@ -1,0 +1,59 @@
+{
+  "id": "BMW-F32-S55",
+  "name": "BMW M4 (3.0L 6-cyl twin-turbo petrol)",
+  "years": "2014–2020",
+  "chassisCodes": ["F82", "F83"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["manual", "dct"],
+  "displacement": "3.0L",
+  "cylinders": 6,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "M4",
+        "M4 Competition",
+        "M4 Convertible",
+        "M4 Competition Convertible",
+        "M4 xDrive",
+        "M4 Competition xDrive"
+      ],
+      "yearFrom": 2014,
+      "yearTo": 2020
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": 12 },
+    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 20000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 20000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "M-DCT gearbox fluid", "km": 60000, "kind": "rec", "months": null, "transmission": ["dct"] },
+    { "task": "manual gearbox fluid", "km": 60000, "kind": "rec", "months": null, "transmission": ["manual"] },
+    { "task": "xDrive transfer case fluid", "km": 60000, "kind": "rec", "months": null },
+    { "task": "differential fluids", "km": 60000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 100000, "kind": "rec", "months": null },
+    { "task": "intake carbon clean", "km": 80000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "M twin-turbo I6: shorter oil intervals than standard 4 Series (often 15,000 km / 12 months EU); track use ~10,000 km.",
+    "micro filter": "Cabin filter per M schedule.",
+    "brake fluid": "24 months; more frequent for track.",
+    "air cleaner element": "High-flow intake; ~60,000 km filter planning.",
+    "spark plugs": "High-output engine: ~60,000 km plugs; confirm M supplement.",
+    "check front brake pads": "Inspect at least every 20,000 km or before track days.",
+    "check rear brake pads": "Inspect every 20,000 km.",
+    "vehicle check": "M-specific inspection intervals.",
+    "M-DCT gearbox fluid": "M DCT: fluid/filter service ~60,000 km for shift quality and clutch health.",
+    "manual gearbox fluid": "Six-speed manual: gear oil ~60,000 km under M use.",
+    "xDrive transfer case fluid": "M4 xDrive Competition only; specialist interval ~60,000 km.",
+    "differential fluids": "M differential(s); fresh fluid ~60,000 km recommended.",
+    "coolant flush": "High thermal load; preventive ~100,000 km.",
+    "intake carbon clean": "Direct injection: inspect/clean from ~80,000 km if idle or power issues."
+  }
+}

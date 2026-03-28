@@ -1,0 +1,52 @@
+{
+  "id": "BMW-F10-S63",
+  "name": "BMW F10/F11 M5 (4.4L V8 twin-turbo petrol)",
+  "years": "2011–2017",
+  "chassisCodes": ["F10", "F11"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["manual", "dct"],
+  "displacement": "4.4L",
+  "cylinders": 8,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": ["M5", "M5 Competition", "M5 Touring", "M5 Competition Touring"],
+      "yearFrom": 2011,
+      "yearTo": 2017
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": 12 },
+    { "task": "engine oil", "km": 8000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 20000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 20000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "M-DCT gearbox fluid", "km": 60000, "kind": "rec", "months": null, "transmission": ["dct"] },
+    { "task": "manual gearbox fluid", "km": 60000, "kind": "rec", "months": null, "transmission": ["manual"] },
+    { "task": "xDrive transfer case fluid", "km": 60000, "kind": "rec", "months": null },
+    { "task": "differential fluids", "km": 60000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 100000, "kind": "rec", "months": null },
+    { "task": "intake carbon clean", "km": 80000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "M twin-turbo V8: shorter intervals than standard 5 Series; track use ~8,000 km.",
+    "micro filter": "Cabin filter per M schedule.",
+    "brake fluid": "24 months; more frequent for track.",
+    "air cleaner element": "Twin-turbo V8 intake; two filters ~60,000 km.",
+    "spark plugs": "Eight plugs; confirm M supplement (~60,000 km).",
+    "check front brake pads": "Inspect at least every 20,000 km.",
+    "check rear brake pads": "Inspect every 20,000 km.",
+    "vehicle check": "M-specific inspection intervals.",
+    "M-DCT gearbox fluid": "M DCT: fluid service ~60,000 km.",
+    "manual gearbox fluid": "Six-speed manual: gear oil ~60,000 km.",
+    "xDrive transfer case fluid": "M5 xDrive only (later models).",
+    "differential fluids": "M differentials; ~60,000 km fluid refresh.",
+    "coolant flush": "High thermal load; preventive ~100,000 km.",
+    "intake carbon clean": "Direct injection: inspect from ~80,000 km if needed."
+  }
+}

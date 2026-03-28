@@ -1,0 +1,46 @@
+{
+  "id": "BMW-E39-M52B20",
+  "name": "BMW E39 5 Series (2.0L 6-cyl petrol)",
+  "years": "1995–2000",
+  "chassisCodes": ["E39"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "2.0L",
+  "cylinders": 6,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": ["520i", "520i Touring"],
+      "yearFrom": 1995,
+      "yearTo": 2000
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "automatic transmission fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["automatic"] },
+    { "task": "manual gearbox fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["manual"] },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "Fixed-interval EU oil service ~15,000 km typical for this generation.",
+    "micro filter": "Pollen filter per BMW booklet.",
+    "brake fluid": "24 months.",
+    "air cleaner element": "~30,000 km engine air filter typical.",
+    "spark plugs": "Six-cylinder petrol plugs ~60,000 km.",
+    "check front brake pads": "Inspect every 15,000 km with service pattern.",
+    "check rear brake pads": "Inspect every 15,000 km.",
+    "vehicle check": "Scheduled inspection.",
+    "automatic transmission fluid": "Automatic: preventive ATF ~100,000 km.",
+    "manual gearbox fluid": "Manual: preventive gear oil ~100,000 km.",
+    "coolant flush": "Preventive ~120,000 km."
+  }
+}

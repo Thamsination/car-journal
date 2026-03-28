@@ -1,0 +1,46 @@
+{
+  "id": "BMW-E39-28L-I6",
+  "name": "BMW E39 5 Series (2.8L 6-cyl petrol)",
+  "years": "1995–2003",
+  "chassisCodes": ["E39"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "2.8L",
+  "cylinders": 6,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": ["528i", "528i Touring"],
+      "yearFrom": 1995,
+      "yearTo": 2003
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "automatic transmission fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["automatic"] },
+    { "task": "manual gearbox fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["manual"] },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "2.8L inline-six; fixed-interval oil ~15,000 km.",
+    "micro filter": "Pollen filter per booklet.",
+    "brake fluid": "24 months.",
+    "air cleaner element": "~30,000 km air filter.",
+    "spark plugs": "Six plugs ~60,000 km.",
+    "check front brake pads": "15,000 km inspection.",
+    "check rear brake pads": "15,000 km inspection.",
+    "vehicle check": "Scheduled inspection.",
+    "automatic transmission fluid": "Automatic: preventive ATF ~100,000 km.",
+    "manual gearbox fluid": "Manual: preventive gear oil ~100,000 km.",
+    "coolant flush": "Preventive ~120,000 km."
+  }
+}
