@@ -121,9 +121,10 @@ When in doubt about OEM terminology, default to the most common English term fou
 | Engine oil + filter | 10,000–30,000 km | Every manufacturer specifies this |
 | Cabin / pollen filter | 15,000–60,000 km | Every manufacturer specifies this |
 | Air filter | 30,000–90,000 km | Every manufacturer specifies this |
-| Brake fluid | Time-based: 24–48 months | Every manufacturer specifies this — always time-based, not km |
+| Brake fluid | Time-based: 24 months (default) | Always time-based, not km. Use `"km": null, "months": 24`. Only deviate if you find a verified OEM document specifying a different period — 24 months is the industry standard. |
 | Brake pad inspection | 15,000–30,000 km | Every manufacturer includes brake inspection |
-| Spark plugs | 30,000–90,000 km | All petrol engines require this |
+| Spark plugs | 30,000–120,000 km | All petrol engines require this |
+| Coolant | 80,000–200,000 km or time-based | Every engine has coolant — if the OEM specifies a replacement interval, use MFR. If "lifetime" or unspecified, add as REC at ~120,000 km. Never omit coolant. |
 
 Use the **OEM task name** for each (see Step 3), not the generic category name in this table.
 
@@ -134,7 +135,6 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
 | Fuel filter | Diesel engines (always MFR); some petrol engines too |
 | Timing belt | Belt-driven engines (MFR — failure is catastrophic) |
 | Auxiliary / drive belt | If manufacturer specifies replacement interval |
-| Coolant flush | If manufacturer specifies (otherwise add as REC ~120,000 km) |
 | Gearbox / transmission fluid | DSG/DCT/CVT — often REC since manufacturers say "lifetime" |
 | Intake carbon clean | Direct-injection engines — REC |
 | Transfer case / differential fluids | AWD/4WD vehicles |
@@ -238,17 +238,18 @@ python3 scripts/build_platform_index.py
 
 Before moving to the next platform, verify your output:
 
-1. **Count MFR tasks** — must be ≥ 6 for ICE, ≥ 3 for EV
-2. **Check for brake fluid** — must be present with `"km": null, "months": 24` (or OEM-specified months). If it has a `km` value instead of null, fix it.
-3. **Check for brake pad inspection** — if missing, you have a problem
-4. **Check for duplicate task names** — no task should appear more than once per `kind` (mfr or rec)
-5. **Check `vehicles` array** — must have at least one entry with `make`, `models` (≥1 model), `yearFrom`, and `yearTo`
-6. **Check model completeness** — did you include all body style variants? (e.g., sedan AND touring/wagon if both exist)
-7. **Check multi-brand** — if this platform is shared across brands, did you list all brand names?
-8. **Verify engine specificity** — does the file only include tasks relevant to this engine family? (no spark plugs on diesels, no fuel filter on petrol if N/A, no engine oil on EVs)
-9. **Cross-check against other files for the same chassis** — if you generated both a petrol and diesel variant, verify the intervals are actually different where they should be (fuel filter, spark plugs, timing)
-10. **Compare intervals to web search results** — do the numbers match what you found?
-11. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
+1. **Count MFR tasks** — must be ≥ 7 for ICE (oil, cabin filter, air filter, brake fluid, brake pads, spark plugs, coolant), ≥ 3 for EV
+2. **Check for brake fluid** — must be present with `"km": null, "months": 24`. Only use a different months value if a verified OEM document explicitly states a non-standard period. Never use a `km` value.
+3. **Check for coolant** — every ICE platform must have a coolant entry (MFR if OEM-specified, REC at ~120,000 km if not)
+4. **Check for brake pad inspection** — if missing, you have a problem
+5. **Check for duplicate task names** — no task should appear more than once per `kind` (mfr or rec)
+6. **Check `vehicles` array** — must have at least one entry with `make`, `models` (≥1 model), `yearFrom`, and `yearTo`
+7. **Check model completeness** — did you include all body style variants? (e.g., sedan AND touring/wagon if both exist)
+8. **Check multi-brand** — if this platform is shared across brands, did you list all brand names?
+9. **Verify engine specificity** — does the file only include tasks relevant to this engine family? (no spark plugs on diesels, no fuel filter on petrol if N/A, no engine oil on EVs)
+10. **Cross-check against other files for the same chassis** — if you generated multiple variants (petrol/diesel, different generations), verify: (a) intervals differ where expected (fuel filter, spark plugs, timing), (b) shared tasks like coolant and brake fluid appear on ALL variants, (c) task names are consistent within the same brand (don't use "cabin air filter" on one and "interior ventilation filter" on another unless the OEM actually changed terminology between generations)
+11. **Compare intervals to web search results** — do the numbers match what you found?
+12. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
 
 If any check fails, go back and fix it before proceeding.
 
@@ -279,7 +280,9 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Include spark plugs on diesel or EV platforms
 - Include fuel filter on petrol platforms where not applicable
 - Assign a `km` value to brake fluid — it is always time-based (`"km": null, "months": 24`)
+- Omit coolant from any ICE platform — every engine needs coolant service
 - Omit the `months` field from any `serviceIntervals` entry — every entry needs both `km` and `months` (set to null when not applicable)
+- Use inconsistent task names across engine variants of the same brand — if Subaru calls it "cabin air filter" on one generation, use the same name on other generations unless the OEM verifiably changed the terminology
 - Generate milestones manually — always use the Python script
 - Modify or rename existing platform files unless explicitly told to
 - Commit without self-validating
