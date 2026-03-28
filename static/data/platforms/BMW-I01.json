@@ -1,0 +1,262 @@
+{
+  "id": "BMW-I01",
+  "name": "BMW i3 (I01)",
+  "years": "2013\u20132022",
+  "chassisCodes": [
+    "I01"
+  ],
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "i3"
+      ],
+      "yearFrom": 2013,
+      "yearTo": 2022
+    }
+  ],
+  "serviceIntervals": [
+    {
+      "task": "cabin filter",
+      "km": 20000,
+      "kind": "mfr"
+    },
+    {
+      "task": "brake fluid",
+      "km": 30000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pads",
+      "km": 15000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check brake pads",
+      "km": 30000,
+      "kind": "mfr"
+    },
+    {
+      "task": "coolant flush",
+      "km": 60000,
+      "kind": "mfr"
+    },
+    {
+      "task": "gearbox fluid",
+      "km": 100000,
+      "kind": "mfr"
+    }
+  ],
+  "serviceNotes": {
+    "cabin filter": "Microfilter per BMW i maintenance programme; 20,000 km planning interval\u2014verify display and regional booklet.",
+    "brake fluid": "BMW specifies brake fluid replacement every 2 years (first change at 3 years on some models per BMW maintenance SIBs). Distance equivalent uses ~30,000 km/year as a planning proxy; always respect the time limit. See BMW X5 service documentation summary at bmwx5info.com (brake fluid change interval every 2 years).",
+    "check brake pads": "Brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services. Strong regen on i3 BEV often extends pad life.",
+    "coolant flush": "High-voltage battery and e-drive cooling circuit: BMW publishes time/distance-based coolant service for EVs; 60,000 km is a planning proxy\u2014interval estimated, confirm official service data. Range Extender (REx) models additionally require petrol engine oil, spark plugs, and air filter per the REx supplement\u2014follow BMW i service data.",
+    "gearbox fluid": "Reduction gear / drive unit fluid: officially often \"lifetime\"; 100,000 km mfr row is interval estimated for long-term wear metals in oil\u2014specialist preventive change."
+  },
+  "milestones": [
+    {
+      "km": 15000,
+      "tasks": [
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 20000,
+      "tasks": [
+        "cabin filter"
+      ]
+    },
+    {
+      "km": 30000,
+      "tasks": [
+        "brake fluid",
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 40000,
+      "tasks": [
+        "cabin filter"
+      ]
+    },
+    {
+      "km": 45000,
+      "tasks": [
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 60000,
+      "tasks": [
+        "brake fluid",
+        "cabin filter",
+        "check brake pads",
+        "coolant flush"
+      ]
+    },
+    {
+      "km": 75000,
+      "tasks": [
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 80000,
+      "tasks": [
+        "cabin filter"
+      ]
+    },
+    {
+      "km": 90000,
+      "tasks": [
+        "brake fluid",
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 100000,
+      "tasks": [
+        "cabin filter",
+        "gearbox fluid"
+      ]
+    },
+    {
+      "km": 105000,
+      "tasks": [
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 120000,
+      "tasks": [
+        "brake fluid",
+        "cabin filter",
+        "check brake pads",
+        "coolant flush"
+      ]
+    },
+    {
+      "km": 135000,
+      "tasks": [
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 140000,
+      "tasks": [
+        "cabin filter"
+      ]
+    },
+    {
+      "km": 150000,
+      "tasks": [
+        "brake fluid",
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 160000,
+      "tasks": [
+        "cabin filter"
+      ]
+    },
+    {
+      "km": 165000,
+      "tasks": [
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 180000,
+      "tasks": [
+        "brake fluid",
+        "cabin filter",
+        "check brake pads",
+        "coolant flush"
+      ]
+    },
+    {
+      "km": 195000,
+      "tasks": [
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 200000,
+      "tasks": [
+        "cabin filter",
+        "gearbox fluid"
+      ]
+    },
+    {
+      "km": 210000,
+      "tasks": [
+        "brake fluid",
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 220000,
+      "tasks": [
+        "cabin filter"
+      ]
+    },
+    {
+      "km": 225000,
+      "tasks": [
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 240000,
+      "tasks": [
+        "brake fluid",
+        "cabin filter",
+        "check brake pads",
+        "coolant flush"
+      ]
+    },
+    {
+      "km": 255000,
+      "tasks": [
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 260000,
+      "tasks": [
+        "cabin filter"
+      ]
+    },
+    {
+      "km": 270000,
+      "tasks": [
+        "brake fluid",
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 280000,
+      "tasks": [
+        "cabin filter"
+      ]
+    },
+    {
+      "km": 285000,
+      "tasks": [
+        "check brake pads"
+      ]
+    },
+    {
+      "km": 300000,
+      "tasks": [
+        "brake fluid",
+        "cabin filter",
+        "check brake pads",
+        "coolant flush",
+        "gearbox fluid"
+      ]
+    }
+  ]
+}

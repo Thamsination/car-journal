@@ -1,5 +1,477 @@
 [
   {
+    "platformId": "BMW-E38",
+    "make": "BMW",
+    "models": [
+      "7 Series"
+    ],
+    "yearFrom": 1998,
+    "yearTo": 2001
+  },
+  {
+    "platformId": "BMW-E39",
+    "make": "BMW",
+    "models": [
+      "5 Series",
+      "5 Series Touring"
+    ],
+    "yearFrom": 1995,
+    "yearTo": 2003
+  },
+  {
+    "platformId": "BMW-E46",
+    "make": "BMW",
+    "models": [
+      "3 Series",
+      "3 Series Touring",
+      "3 Series Coup\u00e9",
+      "3 Series Convertible",
+      "M3",
+      "M3 Convertible"
+    ],
+    "yearFrom": 1998,
+    "yearTo": 2006
+  },
+  {
+    "platformId": "BMW-E53",
+    "make": "BMW",
+    "models": [
+      "X5"
+    ],
+    "yearFrom": 1999,
+    "yearTo": 2006
+  },
+  {
+    "platformId": "BMW-E60",
+    "make": "BMW",
+    "models": [
+      "5 Series",
+      "5 Series Touring",
+      "M5",
+      "M5 Touring"
+    ],
+    "yearFrom": 2003,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E63",
+    "make": "BMW",
+    "models": [
+      "6 Series",
+      "6 Series Convertible",
+      "M6",
+      "M6 Convertible"
+    ],
+    "yearFrom": 2003,
+    "yearTo": 2011
+  },
+  {
+    "platformId": "BMW-E65",
+    "make": "BMW",
+    "models": [
+      "7 Series"
+    ],
+    "yearFrom": 2001,
+    "yearTo": 2008
+  },
+  {
+    "platformId": "BMW-E70",
+    "make": "BMW",
+    "models": [
+      "X5",
+      "X5 M"
+    ],
+    "yearFrom": 2006,
+    "yearTo": 2013
+  },
+  {
+    "platformId": "BMW-E71",
+    "make": "BMW",
+    "models": [
+      "X6",
+      "X6 ActiveHybrid"
+    ],
+    "yearFrom": 2007,
+    "yearTo": 2014
+  },
+  {
+    "platformId": "BMW-E83",
+    "make": "BMW",
+    "models": [
+      "X3"
+    ],
+    "yearFrom": 2003,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E84",
+    "make": "BMW",
+    "models": [
+      "X1"
+    ],
+    "yearFrom": 2009,
+    "yearTo": 2015
+  },
+  {
+    "platformId": "BMW-E89",
+    "make": "BMW",
+    "models": [
+      "Z4"
+    ],
+    "yearFrom": 2009,
+    "yearTo": 2016
+  },
+  {
+    "platformId": "BMW-E90",
+    "make": "BMW",
+    "models": [
+      "3 Series",
+      "3 Series Touring",
+      "3 Series Coup\u00e9",
+      "3 Series Convertible",
+      "M3",
+      "M3 Coup\u00e9",
+      "M3 Convertible"
+    ],
+    "yearFrom": 2005,
+    "yearTo": 2013
+  },
+  {
+    "platformId": "BMW-F01",
+    "make": "BMW",
+    "models": [
+      "7 Series"
+    ],
+    "yearFrom": 2008,
+    "yearTo": 2015
+  },
+  {
+    "platformId": "BMW-F06",
+    "make": "BMW",
+    "models": [
+      "6 Series",
+      "6 Series Convertible",
+      "6 Series Gran Coup\u00e9",
+      "M6",
+      "M6 Convertible",
+      "M6 Gran Coup\u00e9"
+    ],
+    "yearFrom": 2011,
+    "yearTo": 2018
+  },
+  {
+    "platformId": "BMW-F10",
+    "make": "BMW",
+    "models": [
+      "5 Series",
+      "5 Series Touring",
+      "M5",
+      "M5 Touring"
+    ],
+    "yearFrom": 2010,
+    "yearTo": 2017
+  },
+  {
+    "platformId": "BMW-F15",
+    "make": "BMW",
+    "models": [
+      "X5",
+      "X5 M"
+    ],
+    "yearFrom": 2013,
+    "yearTo": 2018
+  },
+  {
+    "platformId": "BMW-F16",
+    "make": "BMW",
+    "models": [
+      "X6",
+      "X6 M"
+    ],
+    "yearFrom": 2014,
+    "yearTo": 2019
+  },
+  {
+    "platformId": "BMW-F20",
+    "make": "BMW",
+    "models": [
+      "1 Series"
+    ],
+    "yearFrom": 2011,
+    "yearTo": 2019
+  },
+  {
+    "platformId": "BMW-F22",
+    "make": "BMW",
+    "models": [
+      "2 Series",
+      "2 Series Convertible",
+      "M2"
+    ],
+    "yearFrom": 2014,
+    "yearTo": 2021
+  },
+  {
+    "platformId": "BMW-F25",
+    "make": "BMW",
+    "models": [
+      "X3"
+    ],
+    "yearFrom": 2010,
+    "yearTo": 2017
+  },
+  {
+    "platformId": "BMW-F26",
+    "make": "BMW",
+    "models": [
+      "X4"
+    ],
+    "yearFrom": 2014,
+    "yearTo": 2018
+  },
+  {
+    "platformId": "BMW-F30",
+    "make": "BMW",
+    "models": [
+      "3 Series",
+      "3 Series Touring",
+      "3 Series Gran Turismo",
+      "M3"
+    ],
+    "yearFrom": 2011,
+    "yearTo": 2019
+  },
+  {
+    "platformId": "BMW-F32",
+    "make": "BMW",
+    "models": [
+      "4 Series",
+      "4 Series Convertible",
+      "4 Series Gran Coup\u00e9",
+      "M4",
+      "M4 Convertible"
+    ],
+    "yearFrom": 2013,
+    "yearTo": 2020
+  },
+  {
+    "platformId": "BMW-F39",
+    "make": "BMW",
+    "models": [
+      "X2"
+    ],
+    "yearFrom": 2017,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-F40",
+    "make": "BMW",
+    "models": [
+      "1 Series"
+    ],
+    "yearFrom": 2019,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-F44",
+    "make": "BMW",
+    "models": [
+      "2 Series Gran Coup\u00e9"
+    ],
+    "yearFrom": 2019,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-F45",
+    "make": "BMW",
+    "models": [
+      "2 Series Active Tourer",
+      "2 Series Gran Tourer"
+    ],
+    "yearFrom": 2014,
+    "yearTo": 2021
+  },
+  {
+    "platformId": "BMW-F48",
+    "make": "BMW",
+    "models": [
+      "X1"
+    ],
+    "yearFrom": 2015,
+    "yearTo": 2022
+  },
+  {
+    "platformId": "BMW-G01",
+    "make": "BMW",
+    "models": [
+      "X3",
+      "X3 M"
+    ],
+    "yearFrom": 2017,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G02",
+    "make": "BMW",
+    "models": [
+      "X4",
+      "X4 M"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G05",
+    "make": "BMW",
+    "models": [
+      "X5",
+      "X5 M"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G06",
+    "make": "BMW",
+    "models": [
+      "X6",
+      "X6 M"
+    ],
+    "yearFrom": 2019,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G07",
+    "make": "BMW",
+    "models": [
+      "X7"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G09",
+    "make": "BMW",
+    "models": [
+      "XM"
+    ],
+    "yearFrom": 2022,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G11",
+    "make": "BMW",
+    "models": [
+      "7 Series"
+    ],
+    "yearFrom": 2015,
+    "yearTo": 2022
+  },
+  {
+    "platformId": "BMW-G14",
+    "make": "BMW",
+    "models": [
+      "8 Series",
+      "8 Series Convertible",
+      "8 Series Gran Coup\u00e9",
+      "M8",
+      "M8 Convertible",
+      "M8 Gran Coup\u00e9"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G20",
+    "make": "BMW",
+    "models": [
+      "3 Series",
+      "3 Series Touring",
+      "M3"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G22",
+    "make": "BMW",
+    "models": [
+      "4 Series",
+      "4 Series Convertible",
+      "4 Series Gran Coup\u00e9",
+      "i4",
+      "M4",
+      "M4 Convertible"
+    ],
+    "yearFrom": 2020,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G29",
+    "make": "BMW",
+    "models": [
+      "Z4"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G32",
+    "make": "BMW",
+    "models": [
+      "6 Series Gran Turismo"
+    ],
+    "yearFrom": 2017,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G42",
+    "make": "BMW",
+    "models": [
+      "2 Series",
+      "M2"
+    ],
+    "yearFrom": 2021,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G70",
+    "make": "BMW",
+    "models": [
+      "7 Series",
+      "i7"
+    ],
+    "yearFrom": 2022,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-I01",
+    "make": "BMW",
+    "models": [
+      "i3"
+    ],
+    "yearFrom": 2013,
+    "yearTo": 2022
+  },
+  {
+    "platformId": "BMW-I15",
+    "make": "BMW",
+    "models": [
+      "i8"
+    ],
+    "yearFrom": 2014,
+    "yearTo": 2020
+  },
+  {
+    "platformId": "BMW-I20",
+    "make": "BMW",
+    "models": [
+      "iX"
+    ],
+    "yearFrom": 2021,
+    "yearTo": 2026
+  },
+  {
     "platformId": "Dacia-SANDERO-3",
     "make": "Dacia",
     "models": [
@@ -34,6 +506,8 @@
     "platformId": "G30-G31",
     "make": "BMW",
     "models": [
+      "5 Series",
+      "5 Series Touring",
       "520d",
       "520d xDrive",
       "520i",
@@ -47,7 +521,7 @@
       "M550i xDrive"
     ],
     "yearFrom": 2017,
-    "yearTo": 2020
+    "yearTo": 2026
   },
   {
     "platformId": "Opel-CORSA-F",
