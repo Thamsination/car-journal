@@ -9,5 +9,6 @@
   "chassis": "VA",
   "engine": "",
   "drivetrain": "",
-  "odometer": 5000
+  "odometer": 5000,
+  "transmission": "manual"
 }
