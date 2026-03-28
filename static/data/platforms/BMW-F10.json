@@ -15,6 +15,17 @@
     "manual",
     "automatic"
   ],
+  "engines": [
+    "B47",
+    "Electric",
+    "N20",
+    "N47",
+    "N52",
+    "N53",
+    "N55",
+    "N57",
+    "N63"
+  ],
   "vehicles": [
     {
       "make": "BMW",
