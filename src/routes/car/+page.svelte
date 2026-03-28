@@ -5,7 +5,7 @@
 	import { tick } from 'svelte';
 	import {
 		token, events, latestOdometer, healthIntervals, dailyAverageKm,
-		vehicleConfig, tireConfig, tireStatus, tireSwapEvents
+		vehicleConfig, tireConfig, tireStatus, tireSwapEvents, platformConfig
 	} from '$lib/stores';
 	import { saveEvents, saveHealthConfig, saveTireConfig, saveVehicleConfig } from '$lib/github';
 	import { formatDate, formatDateISO } from '$lib/utils';
