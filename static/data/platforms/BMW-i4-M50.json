@@ -1,0 +1,42 @@
+{
+  "id": "BMW-i4-M50",
+  "name": "BMW i4 M50 (dual-motor electric)",
+  "years": "2021–2026",
+  "chassisCodes": ["G26"],
+  "drivetrains": ["AWD"],
+  "transmissions": ["ev"],
+  "displacement": null,
+  "cylinders": 0,
+  "fuelType": "electric",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "i4 M50",
+        "i4 M50 xDrive"
+      ],
+      "yearFrom": 2021,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "high-voltage battery coolant", "km": 120000, "kind": "mfr", "months": null },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null },
+    { "task": "gearbox fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["ev"] }
+  ],
+  "serviceNotes": {
+    "micro filter": "Cabin filter per BMW i4 M maintenance planning.",
+    "brake fluid": "24 months; track-style driving may warrant more frequent checks.",
+    "check front brake pads": "M-level braking with strong regen; inspect per CBS.",
+    "check rear brake pads": "Inspect per CBS.",
+    "vehicle check": "M Performance electric vehicle inspection; HV-qualified workshop.",
+    "high-voltage battery coolant": "Performance e-drive and battery cooling; follow BMW HV coolant intervals—120,000 km is a common EU planning proxy.",
+    "coolant flush": "E-drive cooling circuit; confirm M supplement for your year.",
+    "gearbox fluid": "Front and rear drive units: preventive reduction-gear fluid ~100,000 km is a common specialist recommendation despite lifetime claims."
+  }
+}

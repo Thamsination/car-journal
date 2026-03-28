@@ -1664,29 +1664,93 @@
     "yearTo": 2026
   },
   {
-    "platformId": "BMW-G22",
+    "platformId": "BMW-G22-B47",
     "make": "BMW",
     "models": [
-      "4 Series",
-      "4 Series Convertible",
-      "4 Series Gran Coupé",
-      "i4",
-      "M4",
-      "M4 Convertible",
-      "420i xDrive",
-      "430i xDrive",
-      "M440i xDrive",
+      "418d",
+      "418d xDrive",
+      "418d Convertible",
+      "418d xDrive Convertible",
+      "418d Gran Coupé",
+      "418d xDrive Gran Coupé",
+      "420d",
       "420d xDrive",
-      "430d xDrive",
-      "420i xDrive Convertible",
-      "430i xDrive Convertible",
-      "M440i xDrive Convertible",
-      "420i xDrive Gran Coupé",
-      "430i xDrive Gran Coupé",
-      "M440i xDrive Gran Coupé",
-      "i4 M50"
+      "420d Convertible",
+      "420d xDrive Convertible",
+      "420d Gran Coupé",
+      "420d xDrive Gran Coupé",
+      "425d",
+      "425d xDrive",
+      "425d Convertible",
+      "425d xDrive Convertible",
+      "425d Gran Coupé",
+      "425d xDrive Gran Coupé"
     ],
     "yearFrom": 2020,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G22-B48",
+    "make": "BMW",
+    "models": [
+      "420i",
+      "420i xDrive",
+      "420i Convertible",
+      "420i xDrive Convertible",
+      "420i Gran Coupé",
+      "420i xDrive Gran Coupé",
+      "430i",
+      "430i xDrive",
+      "430i Convertible",
+      "430i xDrive Convertible",
+      "430i Gran Coupé",
+      "430i xDrive Gran Coupé"
+    ],
+    "yearFrom": 2020,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G22-B57",
+    "make": "BMW",
+    "models": [
+      "430d",
+      "430d xDrive",
+      "430d Convertible",
+      "430d xDrive Convertible",
+      "430d Gran Coupé",
+      "430d xDrive Gran Coupé",
+      "M440d",
+      "M440d xDrive",
+      "M440d Convertible",
+      "M440d xDrive Convertible",
+      "M440d Gran Coupé",
+      "M440d xDrive Gran Coupé"
+    ],
+    "yearFrom": 2020,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G22-B58",
+    "make": "BMW",
+    "models": [
+      "M440i",
+      "M440i xDrive",
+      "M440i Convertible",
+      "M440i xDrive Convertible",
+      "M440i Gran Coupé",
+      "M440i xDrive Gran Coupé"
+    ],
+    "yearFrom": 2020,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G26-430e",
+    "make": "BMW",
+    "models": [
+      "430e Gran Coupé",
+      "430e xDrive Gran Coupé"
+    ],
+    "yearFrom": 2024,
     "yearTo": 2026
   },
   {
@@ -1754,6 +1818,23 @@
     "yearTo": 2026
   },
   {
+    "platformId": "BMW-G82-S58",
+    "make": "BMW",
+    "models": [
+      "M4",
+      "M4 Competition",
+      "M4 xDrive",
+      "M4 Competition xDrive",
+      "M4 Convertible",
+      "M4 Competition Convertible",
+      "M4 xDrive Convertible",
+      "M4 Competition xDrive Convertible",
+      "M4 CS"
+    ],
+    "yearFrom": 2021,
+    "yearTo": 2026
+  },
+  {
     "platformId": "BMW-I01",
     "make": "BMW",
     "models": [
@@ -1779,6 +1860,28 @@
       "iX xDrive40",
       "iX xDrive50",
       "iX M60"
+    ],
+    "yearFrom": 2021,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-i4-M50",
+    "make": "BMW",
+    "models": [
+      "i4 M50",
+      "i4 M50 xDrive"
+    ],
+    "yearFrom": 2021,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-i4-eDrive",
+    "make": "BMW",
+    "models": [
+      "i4",
+      "i4 eDrive35",
+      "i4 eDrive40",
+      "i4 xDrive40"
     ],
     "yearFrom": 2021,
     "yearTo": 2026

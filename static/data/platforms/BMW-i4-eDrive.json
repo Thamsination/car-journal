@@ -1,0 +1,44 @@
+{
+  "id": "BMW-i4-eDrive",
+  "name": "BMW i4 (single-motor electric, eDrive)",
+  "years": "2021–2026",
+  "chassisCodes": ["G26"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["ev"],
+  "displacement": null,
+  "cylinders": 0,
+  "fuelType": "electric",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "i4",
+        "i4 eDrive35",
+        "i4 eDrive40",
+        "i4 xDrive40"
+      ],
+      "yearFrom": 2021,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "high-voltage battery coolant", "km": 120000, "kind": "mfr", "months": null },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null },
+    { "task": "gearbox fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["ev"] }
+  ],
+  "serviceNotes": {
+    "micro filter": "Cabin (micro) filter per BMW i4 EU maintenance / CBS planning—confirm regional booklet.",
+    "brake fluid": "24 months; hygroscopic fluid still ages despite strong regenerative braking.",
+    "check front brake pads": "Strong regen extends pad life; inspections still required per CBS.",
+    "check rear brake pads": "Inspect per CBS.",
+    "vehicle check": "BMW inspection service for high-voltage vehicles; use a qualified workshop.",
+    "high-voltage battery coolant": "Battery and e-drive cooling circuits; BMW specifies periodic coolant service—120,000 km is a common EU planning figure; confirm HV supplement.",
+    "coolant flush": "E-drive cooling circuit preventive planning; confirm official data for your model year.",
+    "gearbox fluid": "Reduction gear / drive unit: often labelled lifetime; ~100,000 km preventive exchange is a specialist recommendation. Electric AWD uses motor-driven axles—no ICE-style transfer case fluid."
+  }
+}
