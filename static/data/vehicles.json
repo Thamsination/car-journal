@@ -11,7 +11,11 @@
     {
       "id": "VMNA67W71",
       "label": "520d xDrive test"
+    },
+    {
+      "id": "VMNA89Y55",
+      "label": "STIBert"
     }
   ],
-  "activeVehicle": "VMNA67W71"
+  "activeVehicle": "VMNA89Y55"
 }
