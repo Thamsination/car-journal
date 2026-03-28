@@ -12,6 +12,10 @@
   "transmissions": [
     "automatic"
   ],
+  "engines": [
+    "B48",
+    "B58"
+  ],
   "vehicles": [
     {
       "make": "BMW",

@@ -12,6 +12,9 @@
   "transmissions": [
     "ev"
   ],
+  "engines": [
+    "Electric"
+  ],
   "vehicles": [
     {
       "make": "BMW",
