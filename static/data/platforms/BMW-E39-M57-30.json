@@ -17,12 +17,12 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": 12 },
     { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
     { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
     { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
     { "task": "air cleaner element", "km": 30000, "kind": "mfr", "months": null },
-    { "task": "fuel filter", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "fuel filter", "km": 45000, "kind": "mfr", "months": null },
     { "task": "check front brake pads", "km": 15000, "kind": "mfr", "months": null },
     { "task": "check rear brake pads", "km": 15000, "kind": "mfr", "months": null },
     { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
@@ -32,11 +32,11 @@
     { "task": "EGR / intake clean", "km": 120000, "kind": "rec", "months": null }
   ],
   "serviceNotes": {
-    "engine oil": "3.0L six-cylinder diesel; fixed-interval oil ~15,000 km.",
+    "engine oil": "M57D30 EU: Oil Service 15,000 km or 12 months per https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service (BMW 330d M57).",
     "micro filter": "Pollen filter per booklet.",
     "brake fluid": "24 months.",
     "air cleaner element": "~30,000 km air filter.",
-    "fuel filter": "Diesel fuel filter ~60,000 km.",
+    "fuel filter": "Changed from 60,000 km to 45,000 km per https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service (M57 3.0 diesel fuel filter).",
     "check front brake pads": "15,000 km inspection.",
     "check rear brake pads": "15,000 km inspection.",
     "vehicle check": "Scheduled inspection.",
@@ -44,5 +44,19 @@
     "manual gearbox fluid": "Manual: preventive gear oil ~100,000 km.",
     "coolant flush": "Preventive ~120,000 km.",
     "EGR / intake clean": "Six-cylinder diesel EGR/intake soot; ~120,000 km when needed."
+  },
+  "serviceSources": {
+    "engine oil": "https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service — 15,000 km / 12 months (BMW 330d 3.0 diesel); E39 530d same M57 family; BMW owner's manual E39 530d",
+    "micro filter": "BMW owner's manual E39 (EU) — microfilter at Inspection II, 30,000 km",
+    "brake fluid": "BMW owner's manual E39 — brake fluid every 24 months (DOT 4 LV)",
+    "air cleaner element": "https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service — 30,000 km diesel air filter; BMW owner's manual E39 530d",
+    "fuel filter": "Changed from 60,000 km to 45,000 km per https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service (M57 3.0 diesel fuel filter)",
+    "check front brake pads": "BMW owner's manual E39 — brake pad inspection every 15,000 km with Oil Service",
+    "check rear brake pads": "BMW owner's manual E39 — brake pad inspection every 15,000 km with Oil Service",
+    "vehicle check": "BMW owner's manual E39 (EU) — Inspection II / vehicle check 60,000 km",
+    "automatic transmission fluid": "Haynes BMW 5 Series E39 — ATF exchange REC",
+    "manual gearbox fluid": "Haynes BMW 5 Series E39 — manual gearbox oil REC 100,000 km",
+    "coolant flush": "https://www.auto-abc.eu/BMW-3-serija/v2178-2001/service — coolant 60,000 km or 4 years OEM; REC extended 120,000 km",
+    "EGR / intake clean": "Diesel workshop practice — EGR/intake cleaning; REC only"
   }
 }

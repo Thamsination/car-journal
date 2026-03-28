@@ -17,7 +17,7 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": 12 },
     { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
     { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
     { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
@@ -32,7 +32,7 @@
     { "task": "EGR / intake clean", "km": 120000, "kind": "rec", "months": null }
   ],
   "serviceNotes": {
-    "engine oil": "2.5L six-cylinder diesel (td/tds); fixed-interval oil ~15,000 km.",
+    "engine oil": "M51 EU Inspection I/II: Oil Service 15,000 km or 12 months, standard diesel engine oil.",
     "micro filter": "Pollen filter per booklet.",
     "brake fluid": "24 months.",
     "air cleaner element": "~30,000 km air filter.",
@@ -44,5 +44,19 @@
     "manual gearbox fluid": "Manual: preventive gear oil ~100,000 km.",
     "coolant flush": "Preventive ~120,000 km.",
     "EGR / intake clean": "Older diesel EGR/intake deposits; clean when drivability suffers (~120,000 km planning)."
+  },
+  "serviceSources": {
+    "engine oil": "BMW owner's manual E39 (EU) — Oil Service 15,000 km or 12 months, M51 525td/s diesel; Inspection I/II (pre-CBS)",
+    "micro filter": "BMW owner's manual E39 (EU) — microfilter at Inspection II, 30,000 km",
+    "brake fluid": "BMW owner's manual E39 — brake fluid every 24 months (DOT 4 LV)",
+    "air cleaner element": "BMW owner's manual E39 (EU) — diesel air filter at Inspection II, 30,000 km",
+    "fuel filter": "BMW owner's manual E39 (M51 diesel) — fuel filter 60,000 km Inspection II",
+    "check front brake pads": "BMW owner's manual E39 — brake pad inspection every 15,000 km with Oil Service",
+    "check rear brake pads": "BMW owner's manual E39 — brake pad inspection every 15,000 km with Oil Service",
+    "vehicle check": "BMW owner's manual E39 (EU) — Inspection II / vehicle check 60,000 km",
+    "automatic transmission fluid": "Haynes BMW 5 Series E39 — ATF exchange REC",
+    "manual gearbox fluid": "Haynes BMW 5 Series E39 — manual gearbox oil REC 100,000 km",
+    "coolant flush": "BMW owner's manual E39 diesel — coolant per schedule; REC preventive 120,000 km",
+    "EGR / intake clean": "Diesel workshop practice — EGR/intake cleaning; REC only"
   }
 }

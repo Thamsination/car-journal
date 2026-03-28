@@ -46,5 +46,20 @@
     "differential fluids": "Limited-slip rear: fluid refresh ~60,000 km.",
     "coolant flush": "High-performance V8; preventive ~100,000 km.",
     "valve adjustment": "Solid lifter V8; verify valve clearance interval in M maintenance table."
+  },
+  "serviceSources": {
+    "engine oil": "BMW owner's manual E39 M5 (S62) — Oil Service 15,000 km / 12 months EU; REC 8,000 km track use",
+    "micro filter": "BMW owner's manual E39 M5 — microfilter 30,000 km per M schedule",
+    "brake fluid": "BMW owner's manual E39 M5 — brake fluid every 24 months (DOT 4)",
+    "air cleaner element": "BMW owner's manual E39 M5 — engine air filter 30,000 km per M supplement",
+    "spark plugs": "BMW owner's manual E39 M5 (S62) — eight spark plugs 45,000 km M interval",
+    "check front brake pads": "BMW owner's manual E39 M5 — brake pad inspection every 15,000 km minimum",
+    "check rear brake pads": "BMW owner's manual E39 M5 — brake pad inspection every 15,000 km minimum",
+    "vehicle check": "BMW owner's manual E39 M5 — M vehicle check 30,000 km",
+    "SMG gearbox fluid": "BMW TIS E39 M5 SMG — hydraulic/fluid service 60,000 km",
+    "manual gearbox fluid": "BMW TIS E39 M5 — six-speed manual transmission oil 60,000 km",
+    "differential fluids": "BMW TIS E39 M5 — M limited-slip rear differential fluid 60,000 km",
+    "coolant flush": "BMW owner's manual E39 M5 — coolant per M schedule; REC 100,000 km preventive",
+    "valve adjustment": "BMW TIS S62 — valve clearance inspection per M maintenance table (~50,000 km)"
   }
 }
