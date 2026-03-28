@@ -5,9 +5,10 @@
   "platform": "G30-G31-B47",
   "year": 2017,
   "make": "BMW",
-  "model": "520d xDrive",
+  "model": "520d xDrive Touring",
   "chassis": "G31",
   "engine": "B47",
-  "drivetrain": "xDrive",
-  "odometer": 187191
+  "drivetrain": "AWD",
+  "odometer": 187191,
+  "transmission": null
 }
