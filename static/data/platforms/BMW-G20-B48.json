@@ -1,0 +1,60 @@
+{
+  "id": "BMW-G20-B48",
+  "name": "BMW G20/G21/G28 3 Series (2.0L 4-cyl turbo petrol)",
+  "years": "2018–2026",
+  "chassisCodes": ["G20", "G21", "G28"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "2.0L",
+  "cylinders": 4,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "318i", "318i xDrive",
+        "318i Touring", "318i xDrive Touring",
+        "320i", "320i xDrive",
+        "320i Touring", "320i xDrive Touring",
+        "330i", "330i xDrive",
+        "330i Touring", "330i xDrive Touring",
+        "320Li", "330Li"
+      ],
+      "yearFrom": 2018,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 50000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "ZF8 gearbox fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["automatic"] },
+    { "task": "manual gearbox fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["manual"] },
+    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
+    { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null },
+    { "task": "intake carbon clean", "km": 120000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "B48 turbo four CBS; ~30,000 km EU maximum typical.",
+    "micro filter": "Cabin filter per CBS.",
+    "brake fluid": "24 months.",
+    "air cleaner element": "~60,000 km air filter.",
+    "spark plugs": "Long-life plugs ~90,000 km typical.",
+    "check front brake pads": "CBS ~50,000 km planning.",
+    "check rear brake pads": "CBS ~60,000 km planning.",
+    "vehicle check": "BMW CBS vehicle check.",
+    "ZF8 gearbox fluid": "8HP preventive ~100,000 km.",
+    "manual gearbox fluid": "Manual preventive ~100,000 km.",
+    "xDrive transfer case fluid": "xDrive only.",
+    "differential fluids": "xDrive only.",
+    "coolant flush": "Preventive ~120,000 km.",
+    "intake carbon clean": "Direct injection: carbon clean ~120,000 km. Some markets use a smaller three-cylinder 318i—verify displacement via VIN if unsure."
+  }
+}

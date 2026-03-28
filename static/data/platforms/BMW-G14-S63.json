@@ -1,0 +1,63 @@
+{
+  "id": "BMW-G14-S63",
+  "name": "BMW G14/G15/G16 M8 (4.4L V8 twin-turbo petrol)",
+  "years": "2019–2026",
+  "chassisCodes": ["G14", "G15", "G16"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["automatic"],
+  "displacement": "4.4L",
+  "cylinders": 8,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "M8",
+        "M8 Competition",
+        "M8 xDrive",
+        "M8 Competition xDrive",
+        "M8 Convertible",
+        "M8 Competition Convertible",
+        "M8 xDrive Convertible",
+        "M8 Competition xDrive Convertible",
+        "M8 Gran Coupé",
+        "M8 Competition Gran Coupé",
+        "M8 xDrive Gran Coupé",
+        "M8 Competition xDrive Gran Coupé"
+      ],
+      "yearFrom": 2019,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": 12 },
+    { "task": "engine oil", "km": 8000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 20000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 20000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "ZF8 gearbox fluid", "km": 60000, "kind": "rec", "months": null, "transmission": ["automatic"] },
+    { "task": "xDrive transfer case fluid", "km": 60000, "kind": "rec", "months": null },
+    { "task": "differential fluids", "km": 60000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 100000, "kind": "rec", "months": null },
+    { "task": "intake carbon clean", "km": 80000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "M twin-turbo V8; shorter intervals than 840i; track use ~8,000 km.",
+    "micro filter": "Cabin filter per M schedule.",
+    "brake fluid": "24 months; more frequent for track.",
+    "air cleaner element": "M intake; two filters ~60,000 km.",
+    "spark plugs": "Eight plugs; confirm M supplement (~60,000 km).",
+    "check front brake pads": "Inspect at least every 20,000 km.",
+    "check rear brake pads": "Inspect every 20,000 km.",
+    "vehicle check": "M-specific inspection intervals.",
+    "ZF8 gearbox fluid": "M Steptronic 8-speed: preventive fluid ~60,000 km despite lifetime wording.",
+    "xDrive transfer case fluid": "M8 xDrive models only.",
+    "differential fluids": "M differentials; ~60,000 km fluid refresh.",
+    "coolant flush": "High thermal load; preventive ~100,000 km.",
+    "intake carbon clean": "Direct injection: inspect from ~80,000 km if needed."
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "id": "BMW-E60-M47",
+  "name": "BMW E60/E61 5 Series (2.0L 4-cyl diesel)",
+  "years": "2005–2010",
+  "chassisCodes": ["E60", "E61"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "2.0L",
+  "cylinders": 4,
+  "fuelType": "diesel",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "520d", "520d xDrive",
+        "520d Touring", "520d xDrive Touring"
+      ],
+      "yearFrom": 2005,
+      "yearTo": 2010
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "fuel filter", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "automatic transmission fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["automatic"] },
+    { "task": "manual gearbox fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["manual"] },
+    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
+    { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
+    { "task": "timing chain", "km": 200000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null },
+    { "task": "EGR / intake clean", "km": 120000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "N47 diesel CBS; ~30,000 km EU maximum typical.",
+    "micro filter": "Cabin micro filter per CBS.",
+    "brake fluid": "24 months.",
+    "air cleaner element": "~60,000 km diesel air filter.",
+    "fuel filter": "Diesel fuel filter ~60,000 km.",
+    "check front brake pads": "Inspect ~30,000 km.",
+    "check rear brake pads": "Inspect ~30,000 km.",
+    "vehicle check": "BMW CBS vehicle check.",
+    "automatic transmission fluid": "Automatic: preventive ATF ~100,000 km.",
+    "manual gearbox fluid": "Manual: preventive gear oil ~100,000 km.",
+    "xDrive transfer case fluid": "xDrive models only.",
+    "differential fluids": "xDrive only.",
+    "timing chain": "N47 chain: monitor noise at high mileage.",
+    "coolant flush": "Preventive ~120,000 km.",
+    "EGR / intake clean": "Diesel EGR/intake soot; ~120,000 km when needed."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "BMW-E60-S85",
+  "name": "BMW E60/E61 M5 (5.0L V10 petrol)",
+  "years": "2004–2010",
+  "chassisCodes": ["E60", "E61"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["manual", "dct"],
+  "displacement": "5.0L",
+  "cylinders": 10,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": ["M5", "M5 Touring"],
+      "yearFrom": 2004,
+      "yearTo": 2010
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": 12 },
+    { "task": "engine oil", "km": 8000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 45000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 15000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "SMG gearbox fluid", "km": 60000, "kind": "rec", "months": null, "transmission": ["dct"] },
+    { "task": "manual gearbox fluid", "km": 60000, "kind": "rec", "months": null, "transmission": ["manual"] },
+    { "task": "differential fluids", "km": 60000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 100000, "kind": "rec", "months": null },
+    { "task": "valve adjustment", "km": 50000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "S85 V10: short oil intervals; track use ~8,000 km.",
+    "micro filter": "Cabin filter per M schedule.",
+    "brake fluid": "24 months; more frequent for track.",
+    "air cleaner element": "V10 intake; frequent replacement ~30,000 km planning.",
+    "spark plugs": "Ten plugs; high-performance interval—confirm M table.",
+    "check front brake pads": "Inspect at least every 15,000 km.",
+    "check rear brake pads": "Inspect every 15,000 km.",
+    "vehicle check": "M-specific inspection interval.",
+    "SMG gearbox fluid": "SMG single-clutch automated manual: hydraulic/fluid service ~60,000 km.",
+    "manual gearbox fluid": "Six-speed manual: gear oil ~60,000 km.",
+    "differential fluids": "M rear axle: fluid refresh ~60,000 km.",
+    "coolant flush": "High-rev V10; preventive ~100,000 km.",
+    "valve adjustment": "Solid lifter V10; verify valve clearance schedule in M literature."
+  }
+}

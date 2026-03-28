@@ -1,0 +1,51 @@
+{
+  "id": "BMW-E60-N62-48",
+  "name": "BMW E60/E61 5 Series (4.8L V8 petrol)",
+  "years": "2005–2010",
+  "chassisCodes": ["E60", "E61"],
+  "drivetrains": ["RWD", "AWD"],
+  "transmissions": ["automatic"],
+  "displacement": "4.8L",
+  "cylinders": 8,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "BMW",
+      "models": [
+        "550i", "550i xDrive",
+        "550i Touring", "550i xDrive Touring"
+      ],
+      "yearFrom": 2005,
+      "yearTo": 2010
+    }
+  ],
+  "serviceIntervals": [
+    { "task": "engine oil", "km": 15000, "kind": "mfr", "months": 12 },
+    { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
+    { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
+    { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "check front brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "check rear brake pads", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
+    { "task": "automatic transmission fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["automatic"] },
+    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
+    { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
+    { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null }
+  ],
+  "serviceNotes": {
+    "engine oil": "Large V8; CBS often caps ~15,000 km / 12 months—confirm display.",
+    "micro filter": "Cabin filter per CBS.",
+    "brake fluid": "24 months.",
+    "air cleaner element": "V8: two air filters; replace together ~60,000 km.",
+    "spark plugs": "Eight plugs ~60,000 km typical.",
+    "check front brake pads": "Inspect ~30,000 km.",
+    "check rear brake pads": "Inspect ~30,000 km.",
+    "vehicle check": "BMW CBS vehicle check.",
+    "automatic transmission fluid": "Automatic: preventive ATF ~100,000 km.",
+    "xDrive transfer case fluid": "xDrive only.",
+    "differential fluids": "xDrive only.",
+    "coolant flush": "Preventive ~120,000 km."
+  }
+}

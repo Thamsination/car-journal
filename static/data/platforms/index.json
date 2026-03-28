@@ -289,32 +289,117 @@
     "yearTo": 2006
   },
   {
-    "platformId": "BMW-E60",
+    "platformId": "BMW-E60-25L-I6",
     "make": "BMW",
     "models": [
-      "5 Series",
-      "5 Series Touring",
-      "M5",
-      "M5 Touring",
-      "520d xDrive",
-      "525d xDrive",
-      "530d xDrive",
-      "530xd",
-      "535d xDrive",
-      "528i xDrive",
-      "530i xDrive",
-      "535i xDrive",
-      "550i xDrive",
-      "520d xDrive Touring",
-      "525d xDrive Touring",
-      "530d xDrive Touring",
-      "535d xDrive Touring",
-      "528i xDrive Touring",
-      "530i xDrive Touring",
-      "535i xDrive Touring",
-      "550i xDrive Touring"
+      "523i",
+      "523i Touring",
+      "525i",
+      "525i Touring"
     ],
     "yearFrom": 2003,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E60-30L-I6",
+    "make": "BMW",
+    "models": [
+      "528i",
+      "528i xDrive",
+      "528i Touring",
+      "528i xDrive Touring",
+      "530i",
+      "530i xDrive",
+      "530i Touring",
+      "530i xDrive Touring"
+    ],
+    "yearFrom": 2005,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E60-M47",
+    "make": "BMW",
+    "models": [
+      "520d",
+      "520d xDrive",
+      "520d Touring",
+      "520d xDrive Touring"
+    ],
+    "yearFrom": 2005,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E60-M57-25",
+    "make": "BMW",
+    "models": [
+      "525d",
+      "525d xDrive",
+      "525d Touring",
+      "525d xDrive Touring"
+    ],
+    "yearFrom": 2006,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E60-M57-30",
+    "make": "BMW",
+    "models": [
+      "530d",
+      "530d xDrive",
+      "530d Touring",
+      "530d xDrive Touring",
+      "530xd",
+      "530xd Touring",
+      "535d",
+      "535d xDrive",
+      "535d Touring",
+      "535d xDrive Touring"
+    ],
+    "yearFrom": 2003,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E60-N46-20",
+    "make": "BMW",
+    "models": [
+      "520i",
+      "520i Touring"
+    ],
+    "yearFrom": 2005,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E60-N54",
+    "make": "BMW",
+    "models": [
+      "535i",
+      "535i xDrive",
+      "535i Touring",
+      "535i xDrive Touring"
+    ],
+    "yearFrom": 2006,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E60-N62-48",
+    "make": "BMW",
+    "models": [
+      "550i",
+      "550i xDrive",
+      "550i Touring",
+      "550i xDrive Touring"
+    ],
+    "yearFrom": 2005,
+    "yearTo": 2010
+  },
+  {
+    "platformId": "BMW-E60-S85",
+    "make": "BMW",
+    "models": [
+      "M5",
+      "M5 Touring"
+    ],
+    "yearFrom": 2004,
     "yearTo": 2010
   },
   {
@@ -1438,54 +1523,142 @@
     "yearTo": 2022
   },
   {
-    "platformId": "BMW-G14",
+    "platformId": "BMW-G14-B57",
     "make": "BMW",
     "models": [
-      "8 Series",
-      "8 Series Convertible",
-      "8 Series Gran Coupé",
-      "M8",
-      "M8 Convertible",
-      "M8 Gran Coupé",
-      "840i xDrive",
+      "840d",
       "840d xDrive",
-      "M850i xDrive",
-      "M8 xDrive",
-      "M8 Competition xDrive",
-      "840i xDrive Convertible",
-      "M850i xDrive Convertible",
-      "M8 xDrive Convertible",
-      "M8 Competition xDrive Convertible",
-      "840i xDrive Gran Coupé",
-      "M850i xDrive Gran Coupé",
-      "M8 xDrive Gran Coupé",
-      "M8 Competition xDrive Gran Coupé"
+      "840d Convertible",
+      "840d xDrive Convertible",
+      "840d Gran Coupé",
+      "840d xDrive Gran Coupé"
     ],
     "yearFrom": 2018,
     "yearTo": 2026
   },
   {
-    "platformId": "BMW-G20",
+    "platformId": "BMW-G14-B58",
     "make": "BMW",
     "models": [
-      "3 Series",
-      "3 Series Touring",
-      "M3",
-      "318i xDrive",
-      "318d xDrive",
-      "320i xDrive",
-      "320d xDrive",
-      "330i xDrive",
-      "330d xDrive",
+      "840i",
+      "840i xDrive",
+      "840i Convertible",
+      "840i xDrive Convertible",
+      "840i Gran Coupé",
+      "840i xDrive Gran Coupé"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G14-N63",
+    "make": "BMW",
+    "models": [
+      "M850i",
+      "M850i xDrive",
+      "M850i Convertible",
+      "M850i xDrive Convertible",
+      "M850i Gran Coupé",
+      "M850i xDrive Gran Coupé"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G14-S63",
+    "make": "BMW",
+    "models": [
+      "M8",
+      "M8 Competition",
+      "M8 xDrive",
+      "M8 Competition xDrive",
+      "M8 Convertible",
+      "M8 Competition Convertible",
+      "M8 xDrive Convertible",
+      "M8 Competition xDrive Convertible",
+      "M8 Gran Coupé",
+      "M8 Competition Gran Coupé",
+      "M8 xDrive Gran Coupé",
+      "M8 Competition xDrive Gran Coupé"
+    ],
+    "yearFrom": 2019,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G20-330e",
+    "make": "BMW",
+    "models": [
+      "330e",
       "330e xDrive",
-      "M340i xDrive",
-      "M3 xDrive",
-      "320i xDrive Touring",
-      "330i xDrive Touring",
+      "330e Touring",
+      "330e xDrive Touring"
+    ],
+    "yearFrom": 2019,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G20-B47",
+    "make": "BMW",
+    "models": [
+      "318d",
+      "318d xDrive",
+      "318d Touring",
+      "318d xDrive Touring",
+      "320d",
+      "320d xDrive",
+      "320d Touring",
       "320d xDrive Touring",
-      "330d xDrive Touring",
-      "330e xDrive Touring",
-      "M340i xDrive Touring"
+      "320Ld",
+      "320d Li",
+      "318d Li"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G20-B48",
+    "make": "BMW",
+    "models": [
+      "318i",
+      "318i xDrive",
+      "318i Touring",
+      "318i xDrive Touring",
+      "320i",
+      "320i xDrive",
+      "320i Touring",
+      "320i xDrive Touring",
+      "330i",
+      "330i xDrive",
+      "330i Touring",
+      "330i xDrive Touring",
+      "320Li",
+      "330Li"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G20-B57",
+    "make": "BMW",
+    "models": [
+      "330d",
+      "330d xDrive",
+      "330d Touring",
+      "330d xDrive Touring"
+    ],
+    "yearFrom": 2018,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G20-B58",
+    "make": "BMW",
+    "models": [
+      "M340i",
+      "M340i xDrive",
+      "M340i Touring",
+      "M340i xDrive Touring",
+      "M340Li",
+      "M340Li xDrive"
     ],
     "yearFrom": 2018,
     "yearTo": 2026
@@ -1564,6 +1737,20 @@
       "i7 M70 xDrive"
     ],
     "yearFrom": 2022,
+    "yearTo": 2026
+  },
+  {
+    "platformId": "BMW-G80-S58",
+    "make": "BMW",
+    "models": [
+      "M3",
+      "M3 Competition",
+      "M3 xDrive",
+      "M3 Competition xDrive",
+      "M3 Touring",
+      "M3 Competition Touring"
+    ],
+    "yearFrom": 2021,
     "yearTo": 2026
   },
   {
