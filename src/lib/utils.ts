@@ -164,7 +164,6 @@ interface TaskAction {
 }
 
 const TASK_ACTIONS: Record<string, TaskAction> = {
-	'fuel system cleanse (additive)': { verb: 'add', summary: 'fuel additive', why: 'to prepare for oil change' },
 	'engine oil': { verb: 'change', summary: 'engine oil', why: 'to protect engine internals' },
 	'micro filter': { verb: 'replace', summary: 'micro filter', why: 'for cabin air quality' },
 	'air cleaner element': { verb: 'replace', summary: 'air cleaner element', why: 'for clean combustion air' },
@@ -412,29 +411,6 @@ export function computeRecMilestones(events: CarEvent[], serviceIntervals: Servi
 		const mfrTasks = mfrTasksByKm.get(ms.km);
 		if (mfrTasks) {
 			ms.tasks = ms.tasks.filter((t) => !mfrTasks.has(t));
-		}
-	}
-
-	const mfrOilKms = mfrMilestones
-		.filter((ms) => ms.tasks.includes('engine oil'))
-		.map((ms) => ms.km);
-	const recOilKms = recMilestones
-		.filter((ms) => ms.tasks.includes('engine oil'))
-		.map((ms) => ms.km);
-	const allOilKms = [...mfrOilKms, ...recOilKms];
-
-	for (const oilKm of allOilKms) {
-		const cleanseKm = oilKm - 1000;
-		if (cleanseKm > 0 && cleanseKm <= MAX_SERVICE_KM) {
-			const existing = recMilestones.find((ms) => ms.km === cleanseKm);
-			if (existing) {
-				if (!existing.tasks.includes('fuel system cleanse (additive)')) {
-					existing.tasks.push('fuel system cleanse (additive)');
-					existing.tasks.sort();
-				}
-			} else {
-				recMilestones.push({ km: cleanseKm, tasks: ['fuel system cleanse (additive)'], kind: 'rec' });
-			}
 		}
 	}
 
