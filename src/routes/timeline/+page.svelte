@@ -5,7 +5,7 @@
 	import { goto } from '$app/navigation';
 	import { token, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm, platformConfig, vehicleConfig } from '$lib/stores';
 	import { receiptUrl } from '$lib/github';
-	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask, getServiceIntervals, computeTimeMilestones } from '$lib/utils';
+	import { formatCost, formatDate, formatDateISO, deriveStatus, isEffectivelyCompleted, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask, getServiceIntervals, computeTimeMilestones } from '$lib/utils';
 	import type { TaskWithStatus, TimeMilestone } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
 
@@ -194,7 +194,7 @@
 		const eventEntries: TimelineEntry[] = sortedEvents.map((evt) => {
 			const evtKm = evt.km ?? 0;
 			const matched: ServiceMilestone[] = [];
-			if (evt.completed && evtKm > 0) {
+			if (isEffectivelyCompleted(evt, odoKm) && evtKm > 0) {
 				const rawEvtTasks = (evt.tasks && evt.tasks.length > 0 ? evt.tasks : [evt.event])
 					.map((t) => t.toLowerCase().trim());
 				const evtTasks = new Set([
@@ -445,16 +445,16 @@
 					use:anchorAction={isFocus || (!focusId && isNext)}
 				>
 					<div class="tl-ruler">
-						<div class="ruler-line" class:completed-line={evt.completed}></div>
+						<div class="ruler-line" class:completed-line={status === 'completed'}></div>
 						{#if evt.km}
-							<div class="ruler-km" class:completed-km={evt.completed}>
+							<div class="ruler-km" class:completed-km={status === 'completed'}>
 								{evt.kmEstimated ? '~' : ''}{evt.km.toLocaleString()}
 							</div>
 						{:else}
 							<div class="ruler-km no-km">—</div>
 						{/if}
-						<div class="ruler-dot" class:completed-dot={evt.completed} class:next-dot={isNext}></div>
-						<div class="ruler-line" class:completed-line={evt.completed}></div>
+						<div class="ruler-dot" class:completed-dot={status === 'completed'} class:next-dot={isNext}></div>
+						<div class="ruler-line" class:completed-line={status === 'completed'}></div>
 					</div>
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<!-- svelte-ignore a11y_click_events_have_key_events -->

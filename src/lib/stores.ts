@@ -1,6 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import type { CarEvent, Part, DerivedStatus, ServiceInterval as HealthInterval, VehicleConfig, TireConfig, TireProfile, VehicleRegistryEntry, PlatformConfig } from './types';
-import { deriveStatus, eventCategory } from './utils';
+import { deriveStatus, isEffectivelyCompleted, eventCategory } from './utils';
 
 function persistedWritable<T>(key: string, initial: T) {
 	const stored = typeof localStorage !== 'undefined' ? localStorage.getItem(key) : null;
@@ -52,61 +52,6 @@ function sortByDateDesc(a: CarEvent, b: CarEvent): number {
 	return bKm - aKm;
 }
 
-export const completedEvents = derived(events, ($events) => {
-	return $events.filter((e) => e.completed).sort(sortByDateDesc);
-});
-
-export const totalSpent = derived(events, ($events) => {
-	return $events
-		.filter((e) => e.completed)
-		.reduce((sum, e) => sum + (e.cost || 0), 0);
-});
-
-export const totalPlanned = derived(events, ($events) => {
-	return $events
-		.filter((e) => !e.completed)
-		.reduce((sum, e) => sum + (e.cost || 0), 0);
-});
-
-const dashboardCategoryMap: Record<string, string> = {
-	'purchase': 'Purchases',
-	'warranty': 'Warranty',
-	'replacement': 'Replacement',
-	'official-service': 'Service',
-	'other-service': 'Service',
-	'inspection': 'Service',
-	'tire-swap': 'Purchases'
-};
-
-const dashboardCategoryOrder = ['Car', 'Purchases', 'Service', 'Replacement', 'Warranty'];
-
-export const costByCategory = derived(events, ($events) => {
-	const buckets: Record<string, number> = {};
-	for (const e of $events.filter((ev) => ev.completed)) {
-		const isCarPurchase = e.event.toLowerCase() === 'car';
-		const label = isCarPurchase
-			? 'Car'
-			: dashboardCategoryMap[eventCategory(e.event, e.category)] || 'Service';
-		buckets[label] = (buckets[label] || 0) + (e.cost || 0);
-	}
-	return dashboardCategoryOrder
-		.filter((name) => (buckets[name] || 0) > 0)
-		.map((name) => ({ name, total: buckets[name] }));
-});
-
-export const upcomingEvents = derived(events, ($events) => {
-	return $events
-		.filter((e) => !e.completed)
-		.sort(sortByKmAsc);
-});
-
-export const lastCompletedKm = derived(events, ($events) => {
-	const completed = $events
-		.filter((e) => e.completed && e.km !== null)
-		.sort((a, b) => (b.km ?? 0) - (a.km ?? 0));
-	return completed.length > 0 ? completed[0].km! : 0;
-});
-
 export const dailyAverageKm = derived(events, ($events) => {
 	const withBoth = $events
 		.filter((e) => e.completed && e.km !== null && e.date)
@@ -143,15 +88,70 @@ export const latestOdometer = derived(
 	}
 );
 
+export const completedEvents = derived([events, latestOdometer], ([$events, $odo]) => {
+	return $events.filter((e) => isEffectivelyCompleted(e, $odo.km)).sort(sortByDateDesc);
+});
+
+export const totalSpent = derived([events, latestOdometer], ([$events, $odo]) => {
+	return $events
+		.filter((e) => isEffectivelyCompleted(e, $odo.km))
+		.reduce((sum, e) => sum + (e.cost || 0), 0);
+});
+
+export const totalPlanned = derived([events, latestOdometer], ([$events, $odo]) => {
+	return $events
+		.filter((e) => !isEffectivelyCompleted(e, $odo.km))
+		.reduce((sum, e) => sum + (e.cost || 0), 0);
+});
+
+const dashboardCategoryMap: Record<string, string> = {
+	'purchase': 'Purchases',
+	'warranty': 'Warranty',
+	'replacement': 'Replacement',
+	'official-service': 'Service',
+	'other-service': 'Service',
+	'inspection': 'Service',
+	'tire-swap': 'Purchases'
+};
+
+const dashboardCategoryOrder = ['Car', 'Purchases', 'Service', 'Replacement', 'Warranty'];
+
+export const costByCategory = derived([events, latestOdometer], ([$events, $odo]) => {
+	const buckets: Record<string, number> = {};
+	for (const e of $events.filter((ev) => isEffectivelyCompleted(ev, $odo.km))) {
+		const isCarPurchase = e.event.toLowerCase() === 'car';
+		const label = isCarPurchase
+			? 'Car'
+			: dashboardCategoryMap[eventCategory(e.event, e.category)] || 'Service';
+		buckets[label] = (buckets[label] || 0) + (e.cost || 0);
+	}
+	return dashboardCategoryOrder
+		.filter((name) => (buckets[name] || 0) > 0)
+		.map((name) => ({ name, total: buckets[name] }));
+});
+
+export const upcomingEvents = derived([events, latestOdometer], ([$events, $odo]) => {
+	return $events
+		.filter((e) => !isEffectivelyCompleted(e, $odo.km))
+		.sort(sortByKmAsc);
+});
+
+export const lastCompletedKm = derived([events, latestOdometer], ([$events, $odo]) => {
+	const completed = $events
+		.filter((e) => isEffectivelyCompleted(e, $odo.km) && e.km !== null)
+		.sort((a, b) => (b.km ?? 0) - (a.km ?? 0));
+	return completed.length > 0 ? completed[0].km! : 0;
+});
+
 export const scheduleEvents = derived([events, statusFilter, latestOdometer], ([$events, $filter, $odo]) => {
-	const nonCompleted = $events.filter((e) => !e.completed).sort(sortByKmAsc);
+	const nonCompleted = $events.filter((e) => !isEffectivelyCompleted(e, $odo.km)).sort(sortByKmAsc);
 	if ($filter === 'all') return nonCompleted;
 	return nonCompleted.filter((e) => deriveStatus(e, $odo.km) === $filter);
 });
 
-export const nextScheduledEvent = derived(events, ($events) => {
+export const nextScheduledEvent = derived([events, latestOdometer], ([$events, $odo]) => {
 	const upcoming = $events
-		.filter((e) => !e.completed)
+		.filter((e) => !isEffectivelyCompleted(e, $odo.km))
 		.sort(sortByKmAsc);
 	return upcoming[0] ?? null;
 });
@@ -179,7 +179,7 @@ export const componentHealthMap = derived(
 		const now = Date.now();
 
 		for (const interval of $intervals) {
-			const lastEvent = findLastServiceForInterval($events, interval);
+			const lastEvent = findLastServiceForInterval($events, interval, odoKm);
 			const lastKm = lastEvent?.km ?? null;
 			const lastDate = lastEvent?.date ?? '';
 
@@ -226,9 +226,9 @@ export const componentHealthMap = derived(
 	}
 );
 
-function findLastServiceForInterval(evts: CarEvent[], interval: HealthInterval): CarEvent | null {
+function findLastServiceForInterval(evts: CarEvent[], interval: HealthInterval, currentOdometer: number): CarEvent | null {
 	const matches = evts.filter((e) => {
-		if (!e.completed) return false;
+		if (!isEffectivelyCompleted(e, currentOdometer)) return false;
 		const tasks = e.tasks ?? [e.event];
 		return tasks.some((t) =>
 			interval.taskMatches.some((m) => t.toLowerCase().includes(m.toLowerCase()))
@@ -267,9 +267,9 @@ function detectSeason(evt: CarEvent): 'summer' | 'winter' | 'all-year' | null {
 	return null;
 }
 
-export const tireSwapEvents = derived(events, ($events) => {
+export const tireSwapEvents = derived([events, latestOdometer], ([$events, $odo]) => {
 	return $events
-		.filter((e) => e.completed && e.category === 'tire-swap' && e.km !== null)
+		.filter((e) => isEffectivelyCompleted(e, $odo.km) && e.category === 'tire-swap' && e.km !== null)
 		.sort((a, b) => {
 			const diff = (b.km ?? 0) - (a.km ?? 0);
 			if (diff !== 0) return diff;

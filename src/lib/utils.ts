@@ -34,10 +34,14 @@ function todayISO(): string {
 	return formatDateISO(new Date());
 }
 
+export function isEffectivelyCompleted(evt: CarEvent, currentOdometer: number): boolean {
+	if (evt.completed) return true;
+	return evt.km !== null && currentOdometer > 0 && evt.km <= currentOdometer;
+}
+
 export function deriveStatus(evt: CarEvent, currentOdometer = 0): DerivedStatus {
-	if (evt.completed) return 'completed';
+	if (isEffectivelyCompleted(evt, currentOdometer)) return 'completed';
 	const today = todayISO();
-	if (evt.km !== null && currentOdometer > 0 && currentOdometer > evt.km) return 'overdue';
 	if (evt.date && evt.date < today) return 'overdue';
 	return 'scheduled';
 }
