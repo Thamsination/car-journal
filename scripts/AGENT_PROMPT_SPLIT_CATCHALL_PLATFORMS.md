@@ -6,6 +6,55 @@
 
 ---
 
+## Lessons from batch 1 review — READ THIS FIRST
+
+Batch 1 (F30, E90, E46) was reviewed and these mistakes were found. **Do not repeat them.**
+
+### 1. `name` field must NOT contain engine codes
+
+Every file had the engine code appended to the name, e.g. `"BMW F30/F31 3 Series (2.0L 4-cyl turbo petrol, N20)"`. The trailing `, N20)` is wrong.
+
+**Correct format:** `"BMW F30/F31 3 Series (2.0L 4-cyl turbo petrol)"`
+
+The engine code is already in the **filename** (`BMW-F30-N20.json`). The `name` field is displayed to users — use human-readable mechanical specs only. No engine family codes (N20, B47, S55, M54, etc.) anywhere in the `name` value.
+
+### 2. M-car transmissions must use `"dct"`, not `"automatic"`
+
+BMW M cars with SMG (E46 M3) or M-DCT (E90 M3, F80 M3, F82 M4) use dual-clutch / automated manual gearboxes, not conventional torque-converter automatics.
+
+- E46 M3: `"transmissions": ["manual", "dct"]` (SMG-II maps to dct)
+- E9x M3: `"transmissions": ["manual", "dct"]` (M-DCT)
+- F8x M3/M4: `"transmissions": ["manual", "dct"]` (M-DCT)
+
+### 3. M-car gearbox fluid tasks must be specific
+
+Do NOT use generic `"gearbox fluid"` or `"ZF8 gearbox fluid"` for M-cars. M3/M4 do not use ZF 8HP transmissions.
+
+- Use `"M-DCT gearbox fluid"` with `"transmission": ["dct"]` for DCT-equipped M cars
+- Use `"SMG gearbox fluid"` with `"transmission": ["dct"]` for SMG-equipped M cars (E46 M3)
+- Use `"manual gearbox fluid"` with `"transmission": ["manual"]` for manual variants
+- Each gets its own `serviceNotes` entry
+
+### 4. When both manual and automatic are offered, tag gearbox fluid tasks
+
+If `"transmissions"` lists both `"manual"` and `"automatic"` (or `"dct"`), every gearbox fluid service task MUST have a `"transmission"` tag. A manual owner should not see ZF8 fluid reminders.
+
+### 5. Diesel engines: use "EGR / intake clean", not "intake carbon clean"
+
+"Intake carbon clean" is a petrol direct-injection term (walnut blasting intake valves). Diesels get carbon/soot buildup in the EGR valve and intake manifold — use `"EGR / intake clean"` with appropriate diesel-specific notes. Or omit entirely if there's no documented engineering justification for the specific engine.
+
+### 6. Don't omit body styles / niche models
+
+- E46 N42 1.6L was missing the **316ti Compact** — a major variant
+- E46 M54 2.2L only had Coupé/Convertible but the 320i sedan/Touring also used 2.2L M54 in many markets
+- Always cross-check: "Was this engine used in sedan, Touring, Coupé, Convertible, Compact, Gran Turismo?" for each chassis
+
+### 7. Pre-xDrive era: E46 used "xi" branding
+
+Model names in `vehicles` arrays were correctly using "xi" (325xi, 330xi). Good. But if you encounter older platforms (E46, E39, E38, E53), they did NOT have "xDrive" marketing — that started with E60/E83. Service task names like `xDrive transfer case fluid` are kept for app consistency, but model names must use "xi" for pre-2004 platforms.
+
+---
+
 ## Before you start
 
 ```bash
@@ -146,17 +195,18 @@ Start with the platforms most likely to be used (highest model count), working d
 
 ### Priority order
 
-**Batch 1–5: BMW (biggest catch-alls)**
-1. `BMW-F30.json` (40 models) — F30/F31/F34 3 Series
-2. `BMW-E90.json` (34 models) — E90/E91/E92/E93 3 Series
-3. `BMW-E46.json` (44 models) — E46 3 Series
+**Batch 1–3: DONE** (F30, E90, E46 — already split and reviewed)
+
+**Batch 4–5: BMW (next up)**
 4. `BMW-F32.json` (29 models) — F32/F33/F36 4 Series
 5. `BMW-E39.json` (25 models) — E39 5 Series
 
-**Batch 6–10: BMW continued**
+**Batch 6–8: BMW continued**
 6. `BMW-F10.json` (24 models) — F10/F11 5 Series
 7. `BMW-E60.json` (21 models) — E60/E61 5 Series
 8. `BMW-G14.json` (19 models) — G14/G15/G16 8 Series
+
+**Batch 9–10: BMW continued**
 9. `BMW-G20.json` (18 models) — G20/G21 3 Series
 10. `BMW-G22.json` (18 models) — G22/G23/G26 4 Series
 
