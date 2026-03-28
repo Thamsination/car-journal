@@ -159,7 +159,7 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
 | Fuel filter | Diesel engines (always MFR); some petrol engines too |
 | Timing belt | Belt-driven engines (MFR — failure is catastrophic) |
 | Auxiliary / drive belt | If manufacturer specifies replacement interval |
-| Gearbox / transmission fluid | DSG/DCT/CVT — often REC since manufacturers say "lifetime" |
+| Gearbox / transmission fluid | DSG/DCT/CVT/manual — often REC since manufacturers say "lifetime". **Must include `transmission` tag** (see below). |
 | Intake carbon clean | Direct-injection engines — REC |
 | Transfer case fluid | AWD/4WD vehicles — **mandatory** if any model on the platform ships with AWD. Use MFR if the manufacturer specifies an interval, REC if "lifetime". Add a service note: "xDrive/AWD models only" if mixed RWD+AWD platform. |
 | Front/rear differential fluid | AWD/4WD vehicles — same rule as transfer case. On exclusively AWD platforms (X-series, Subaru), these are standard MFR/REC tasks. On mixed platforms, add as REC with a note. |
@@ -185,7 +185,9 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
   "serviceIntervals": [
     { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "mfr" },
     { "task": "<OEM task name>", "km": null, "months": <interval>, "kind": "mfr" },
-    { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec" }
+    { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec" },
+    { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec", "transmission": ["manual"] },
+    { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec", "transmission": ["dct"] }
   ],
   "serviceNotes": {
     "<OEM task name>": "<Why this matters + platform/engine-specific context + source>"
@@ -243,6 +245,46 @@ This array is how the app matches a user's car to a platform. Get it right.
 - serviceNotes should mention the source (e.g., "per BMW CBS SIB documentation" or "garage.wiki interval table")
 - Each task name must appear **at most once per `kind`** — no duplicate entries
 
+#### `transmission` field rules (transmission-specific tasks)
+
+Many platforms cover vehicles sold with different transmission types (manual, automatic, DSG/DCT, CVT). Transmission fluid service tasks differ by type — a car with a manual gearbox doesn't need CVT fluid and vice versa.
+
+**When to use the `transmission` field:**
+
+Any `serviceIntervals` entry for a transmission-specific fluid task MUST include a `transmission` array specifying which transmission type(s) the task applies to. The app filters tasks at runtime based on the vehicle's configured transmission.
+
+**Valid `transmission` values:** `"manual"`, `"automatic"`, `"cvt"`, `"dct"`, `"ev"`
+
+**Rules:**
+
+1. **Manual gearbox fluid** → `"transmission": ["manual"]`
+2. **DSG / dual-clutch fluid** → `"transmission": ["dct"]`
+3. **CVT fluid** → `"transmission": ["cvt"]`
+4. **Torque converter automatic transmission fluid** → `"transmission": ["automatic"]`
+5. **Generic "gearbox fluid" that applies to all conventional transmissions** → omit the `transmission` field entirely (it applies to everyone). This is the case for BMW's generic "gearbox fluid" entry where the same ZF unit is used regardless of whether a manual or automatic was optioned — the task name and interval are the same.
+6. **EV reduction gear / drive unit fluid** → `"transmission": ["ev"]` if only applicable to EV models; otherwise omit.
+7. If a platform ONLY comes with one transmission type (e.g., all modern BMW models are automatic-only), you may omit the `transmission` field since there is no ambiguity. Only tag when the platform covers **multiple transmission types**.
+8. **Tasks without a `transmission` field** apply to ALL vehicles on the platform (this is the default and applies to most tasks: oil, filters, brakes, coolant, etc.)
+
+**Examples:**
+
+VW Golf Mk7 (offered with manual and DSG):
+```json
+{ "task": "DSG gearbox fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["dct"] },
+{ "task": "manual gearbox fluid", "km": 50000, "months": null, "kind": "rec", "transmission": ["manual"] }
+```
+
+Subaru WRX (offered with manual and CVT):
+```json
+{ "task": "CVT fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["cvt"] },
+{ "task": "manual transmission oil", "km": 120000, "months": null, "kind": "rec", "transmission": ["manual"] }
+```
+
+BMW (ZF8 automatic only on modern platforms — no tag needed):
+```json
+{ "task": "gearbox fluid", "km": 100000, "months": null, "kind": "rec" }
+```
+
 ### Step 6: Build milestones and index
 
 After writing each JSON file, run the milestone builder:
@@ -279,6 +321,7 @@ Before moving to the next platform, verify your output:
 14. **Compare intervals to web search results** — do the numbers match what you found?
 15. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
 16. **Check that model names belong to this platform** — no models from other platforms (e.g., i4 belongs to G26, not G20; M5 belongs to F10/G30 M, not the standard chassis file)
+17. **Check transmission-specific tasks** — if the platform covers vehicles with multiple transmission types (manual + automatic, manual + CVT, etc.), verify that each transmission-specific fluid task has a `"transmission"` array tag. If the platform only comes with one transmission type, the tag may be omitted. Never include both `CVT fluid` and `manual transmission oil` without tagging each with the appropriate `transmission` value.
 
 If any check fails, go back and fix it before proceeding.
 
@@ -317,6 +360,8 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Omit coolant from any ICE platform — every engine needs coolant service
 - Omit the `months` field from any `serviceIntervals` entry — every entry needs both `km` and `months` (set to null when not applicable)
 - Use inconsistent task names across engine variants of the same brand — if Subaru calls it "cabin air filter" on one generation, use the same name on other generations unless the OEM verifiably changed the terminology
+- Include transmission-specific fluid tasks (CVT fluid, DSG fluid, manual gearbox fluid) without a `"transmission"` tag when the platform covers multiple transmission types — a manual-only owner should not see CVT fluid reminders and vice versa
+- Omit the `"transmission"` tag on transmission fluid tasks when the platform covers both manual and automatic/CVT/DCT variants
 - Generate milestones manually — always use the Python script
 - Modify or rename existing platform files unless explicitly told to
 - Commit without self-validating

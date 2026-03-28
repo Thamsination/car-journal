@@ -70,7 +70,10 @@
       "task": "DSG gearbox fluid",
       "km": 60000,
       "kind": "rec",
-      "months": null
+      "months": null,
+      "transmission": [
+        "dct"
+      ]
     },
     {
       "task": "coolant flush",

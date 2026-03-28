@@ -7,6 +7,7 @@
 	import { getPendingWrites, flushPendingWrites } from '$lib/offline';
 	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, type PlatformIndexEntry } from '$lib/github';
 	import { generateHealthConfig } from '$lib/utils';
+	import type { TransmissionType } from '$lib/types';
 
 	let { children } = $props();
 	let pendingCount = $state(0);
@@ -24,6 +25,7 @@
 	let addLicensePlate = $state('');
 	let addName = $state('');
 	let addOdometer = $state('');
+	let addTransmission = $state<TransmissionType | ''>('');
 	let addSaving = $state(false);
 	let addError = $state('');
 
@@ -32,6 +34,7 @@
 	let editName = $state('');
 	let editPlate = $state('');
 	let editOdometer = $state('');
+	let editTransmission = $state<TransmissionType | ''>('');
 	let editSaving = $state(false);
 	let editError = $state('');
 	let confirmDelete = $state(false);
@@ -78,6 +81,7 @@
 		addLicensePlate = '';
 		addName = '';
 		addOdometer = '';
+		addTransmission = '';
 		addError = '';
 		addSaving = false;
 	}
@@ -128,6 +132,7 @@
 			const label = addName.trim() || `${addMake} ${addModel}`;
 
 			const odoVal = parseInt(addOdometer, 10);
+			const trans = addTransmission || null;
 			const config = {
 				name: label,
 				licensePlate: addLicensePlate.trim().toUpperCase(),
@@ -139,10 +144,11 @@
 				chassis: platform.chassisCodes?.[0] ?? '',
 				engine: '',
 				drivetrain: '',
+				transmission: trans as TransmissionType | null,
 				odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
 			};
 
-			const healthCfg = generateHealthConfig(platform);
+			const healthCfg = generateHealthConfig(platform, trans as TransmissionType | null);
 
 			await createVehicleFiles(vehicleId, config, healthCfg);
 
@@ -177,6 +183,7 @@
 		editName = entry?.label ?? '';
 		editPlate = id;
 		editOdometer = '';
+		editTransmission = '';
 		editError = '';
 		editSaving = false;
 		confirmDelete = false;
@@ -185,6 +192,7 @@
 			editName = $vehicleConfig.name;
 			editPlate = $vehicleConfig.licensePlate;
 			editOdometer = $vehicleConfig.odometer ? String($vehicleConfig.odometer) : '';
+			editTransmission = $vehicleConfig.transmission ?? '';
 		}
 		editVehicleOpen = true;
 	}
@@ -200,10 +208,12 @@
 
 			if ($vehicleConfig) {
 				const odoVal = parseInt(editOdometer, 10);
+				const trans = editTransmission || null;
 				const updated = {
 					...$vehicleConfig,
 					name: editName.trim() || $vehicleConfig.name,
 					licensePlate: editPlate.trim().toUpperCase(),
+					transmission: trans as TransmissionType | null,
 					odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
 				};
 				$vehicleConfig = updated;
@@ -510,6 +520,16 @@
 				<label class="field-label">Odometer (km)</label>
 				<input class="field-input" type="number" inputmode="numeric" placeholder="Tap to set km" bind:value={editOdometer} />
 
+				<label class="field-label">Transmission</label>
+				<select class="field-input" bind:value={editTransmission}>
+					<option value="">Unknown</option>
+					<option value="manual">Manual</option>
+					<option value="automatic">Automatic (torque converter)</option>
+					<option value="dct">DCT / Dual-clutch</option>
+					<option value="cvt">CVT</option>
+					<option value="ev">EV (single-speed)</option>
+				</select>
+
 				{#if editError}
 					<p class="add-error">{editError}</p>
 				{/if}
@@ -622,6 +642,16 @@
 
 					<label class="field-label">Current odometer <span class="optional">(recommended)</span></label>
 					<input class="field-input" type="number" inputmode="numeric" placeholder="e.g. 85000" bind:value={addOdometer} />
+
+					<label class="field-label">Transmission <span class="optional">(recommended)</span></label>
+					<select class="field-input" bind:value={addTransmission}>
+						<option value="">Unknown</option>
+						<option value="manual">Manual</option>
+						<option value="automatic">Automatic (torque converter)</option>
+						<option value="dct">DCT / Dual-clutch</option>
+						<option value="cvt">CVT</option>
+						<option value="ev">EV (single-speed)</option>
+					</select>
 
 					{#if addError}
 						<p class="add-error">{addError}</p>

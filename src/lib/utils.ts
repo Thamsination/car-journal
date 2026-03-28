@@ -1,4 +1,4 @@
-import type { DerivedStatus, EventCategory, CarEvent, PlatformConfig, HealthConfig } from './types';
+import type { DerivedStatus, EventCategory, CarEvent, PlatformConfig, HealthConfig, TransmissionType, PlatformServiceInterval } from './types';
 export type { EventCategory } from './types';
 
 export function generateId(prefix: string): string {
@@ -141,9 +141,20 @@ export function getServiceNotes(platform: PlatformConfig | null): Record<string,
 	return platform?.serviceNotes ?? {};
 }
 
-export function getServiceIntervals(platform: PlatformConfig | null): ServiceInterval[] {
+export function filterByTransmission(
+	intervals: PlatformServiceInterval[],
+	transmission: TransmissionType | null | undefined
+): PlatformServiceInterval[] {
+	return intervals.filter((i) => {
+		if (!i.transmission || i.transmission.length === 0) return true;
+		if (!transmission) return true;
+		return i.transmission.includes(transmission);
+	});
+}
+
+export function getServiceIntervals(platform: PlatformConfig | null, transmission?: TransmissionType | null): ServiceInterval[] {
 	if (!platform) return [];
-	return platform.serviceIntervals;
+	return filterByTransmission(platform.serviceIntervals, transmission);
 }
 
 interface TaskAction {
@@ -518,10 +529,11 @@ export function computeTimeMilestones(
 	return results;
 }
 
-export function generateHealthConfig(platform: PlatformConfig): HealthConfig {
+export function generateHealthConfig(platform: PlatformConfig, transmission?: TransmissionType | null): HealthConfig {
+	const filtered = filterByTransmission(platform.serviceIntervals, transmission);
 	const taskMap = new Map<string, { km: number | null; months: number | null }>();
 
-	for (const si of platform.serviceIntervals) {
+	for (const si of filtered) {
 		const key = si.task.toLowerCase();
 		const existing = taskMap.get(key);
 		if (!existing) {

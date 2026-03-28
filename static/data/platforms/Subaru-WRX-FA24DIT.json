@@ -82,13 +82,19 @@
       "task": "CVT fluid",
       "km": 60000,
       "months": null,
-      "kind": "rec"
+      "kind": "rec",
+      "transmission": [
+        "cvt"
+      ]
     },
     {
       "task": "manual transmission oil",
       "km": 120000,
       "months": null,
-      "kind": "rec"
+      "kind": "rec",
+      "transmission": [
+        "manual"
+      ]
     }
   ],
   "serviceNotes": {

@@ -2,14 +2,14 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
-	import { events, platformConfig } from '$lib/stores';
+	import { events, platformConfig, vehicleConfig } from '$lib/stores';
 	import { computeMfrMilestones, computeRecMilestones, getServiceNotes, getServiceIntervals } from '$lib/utils';
 	import type { ServiceMilestone } from '$lib/types';
 
 	const kind = $derived($page.url.searchParams.get('kind') as 'mfr' | 'rec' | null);
 	const km = $derived(Number($page.url.searchParams.get('km')) || 0);
 
-	const serviceIntervals = $derived(getServiceIntervals($platformConfig));
+	const serviceIntervals = $derived(getServiceIntervals($platformConfig, $vehicleConfig?.transmission));
 	const serviceNotes = $derived(getServiceNotes($platformConfig));
 
 	const milestone = $derived.by(() => {

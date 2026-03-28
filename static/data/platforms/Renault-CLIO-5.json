@@ -45,7 +45,10 @@
       "task": "CVT fluid",
       "km": 60000,
       "kind": "rec",
-      "months": null
+      "months": null,
+      "transmission": [
+        "cvt"
+      ]
     },
     {
       "task": "coolant flush",

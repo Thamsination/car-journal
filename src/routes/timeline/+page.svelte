@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { token, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm, platformConfig } from '$lib/stores';
+	import { token, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm, platformConfig, vehicleConfig } from '$lib/stores';
 	import { receiptUrl } from '$lib/github';
 	import { formatCost, formatDate, formatDateISO, deriveStatus, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask, getServiceIntervals, computeTimeMilestones } from '$lib/utils';
 	import type { TaskWithStatus, TimeMilestone } from '$lib/utils';
@@ -69,7 +69,7 @@
 		{ value: 'overdue', label: 'Overdue' }
 	];
 
-	const serviceIntervals = $derived(getServiceIntervals($platformConfig));
+	const serviceIntervals = $derived(getServiceIntervals($platformConfig, $vehicleConfig?.transmission));
 
 	onMount(async () => {
 		if (!$token) {

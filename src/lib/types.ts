@@ -64,6 +64,8 @@ export interface ServiceSchedule {
 	milestones: ServiceMilestone[];
 }
 
+export type TransmissionType = 'manual' | 'automatic' | 'cvt' | 'dct' | 'ev';
+
 export interface VehicleConfig {
 	name: string;
 	licensePlate: string;
@@ -75,6 +77,7 @@ export interface VehicleConfig {
 	chassis: string;
 	engine: string;
 	drivetrain: string;
+	transmission?: TransmissionType | null;
 	odometer?: number | null;
 }
 
@@ -114,6 +117,7 @@ export interface PlatformServiceInterval {
 	km: number | null;
 	months: number | null;
 	kind: MilestoneKind;
+	transmission?: TransmissionType[] | null;
 }
 
 export interface PlatformConfig {

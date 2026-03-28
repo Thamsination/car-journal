@@ -85,7 +85,10 @@
       "task": "manual transmission oil",
       "km": 120000,
       "months": null,
-      "kind": "rec"
+      "kind": "rec",
+      "transmission": [
+        "manual"
+      ]
     }
   ],
   "serviceNotes": {
@@ -95,7 +98,7 @@
     "spark plugs": "For turbocharged EJ engines, North American Subaru maintenance literature commonly cites spark plug renewal around 60,000 miles (approximately 96,000 km) with a multi-year cap; intervals vary by model year and plug type\u2014use your booklet.",
     "timing belt": "EJ turbo WRX engines use a timing belt. Independent maintenance references and Subaru specialist guidance commonly cite replacement at 105,000 km or 105 months (whichever comes first), with inspection intervals in some booklets\u2014always follow your official schedule.",
     "fuel filter": "Subaru specifies periodic fuel filter replacement on many petrol turbo applications; North American schedules often place replacement around 60,000 miles (~96,000 km)\u2014confirm for your exact year and emissions package.",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
     "inspect disc brake pads": "Subaru scheduled maintenance includes inspection of disc brake pads and rotors at each routine service visit (typically every oil-change interval under km/time-based schedules).",
     "coolant": "Subaru Long Life Coolant is formulated for extended service; official booklets specify first coolant change at high mileage/time (commonly around 120,000 km / 11 years on many models, then a repeat interval)\u2014verify your year\u2019s maintenance table.",
     "intake carbon clean": "Port-injection EJ turbo engines are less prone than direct-injection-only layouts, but throttle bodies and intake tracts still foul; many specialists recommend cleaning around 120,000 km if drivability issues appear.",

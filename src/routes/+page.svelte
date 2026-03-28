@@ -31,7 +31,7 @@
 		}
 	});
 
-	const serviceIntervals = $derived(getServiceIntervals($platformConfig));
+	const serviceIntervals = $derived(getServiceIntervals($platformConfig, $vehicleConfig?.transmission));
 
 	function vehicleDisplayName(v: typeof $vehicleConfig): string {
 		if (!v) return 'Vehicle';
@@ -43,11 +43,16 @@
 		return [v.year, v.make, v.model].filter(Boolean).join(', ');
 	}
 
+	const transmissionLabels: Record<string, string> = {
+		manual: 'Manual', automatic: 'Auto', cvt: 'CVT', dct: 'DCT', ev: 'EV'
+	};
+
 	function vehicleTechLine(v: typeof $vehicleConfig): string {
 		if (!v) return '';
 		const awd = ['xdrive', 'quattro', 'awd', '4wd', '4matic', '4motion', 'sh-awd'];
 		const driveLabel = awd.includes((v.drivetrain || '').toLowerCase()) ? '4WD' : '2WD';
-		return [v.chassis, v.engine, driveLabel].filter(Boolean).join(', ');
+		const transLabel = v.transmission ? transmissionLabels[v.transmission] ?? '' : '';
+		return [v.chassis, v.engine, driveLabel, transLabel].filter(Boolean).join(', ');
 	}
 
 	async function startOdoEdit() {
