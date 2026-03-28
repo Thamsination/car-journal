@@ -24,12 +24,12 @@
     }
   ],
   "serviceIntervals": [
-    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": null },
+    { "task": "engine oil", "km": 30000, "kind": "mfr", "months": 24 },
     { "task": "engine oil", "km": 10000, "kind": "rec", "months": null },
     { "task": "micro filter", "km": 30000, "kind": "mfr", "months": null },
     { "task": "brake fluid", "km": null, "kind": "mfr", "months": 24 },
     { "task": "air cleaner element", "km": 60000, "kind": "mfr", "months": null },
-    { "task": "spark plugs", "km": 90000, "kind": "mfr", "months": null },
+    { "task": "spark plugs", "km": 60000, "kind": "mfr", "months": null },
     { "task": "check front brake pads", "km": 50000, "kind": "mfr", "months": null },
     { "task": "check rear brake pads", "km": 60000, "kind": "mfr", "months": null },
     { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
@@ -41,11 +41,11 @@
     { "task": "intake carbon clean", "km": 120000, "kind": "rec", "months": null }
   ],
   "serviceNotes": {
-    "engine oil": "B48 LCI-era CBS; ~30,000 km EU maximum typical.",
-    "micro filter": "Cabin filter per CBS.",
-    "brake fluid": "24 months.",
-    "air cleaner element": "~60,000 km air filter.",
-    "spark plugs": "~90,000 km long-life plugs.",
+    "engine oil": "CBS oil service MFR 30,000 km / 24 months EU maximum with Long-Life oil (SIB B000214 / service display).",
+    "micro filter": "Interior filter at every engine oil change per garage.wiki 4 Series F32 LCI.",
+    "brake fluid": "Every 2 years after first change; garage.wiki lists first change at 3 years.",
+    "air cleaner element": "Air filter each second engine oil service (60,000 km) per garage.wiki 4 Series.",
+    "spark plugs": "Changed from 90,000 km to 60,000 km: spark plugs with each second engine oil change (garage.wiki 4 Series F32).",
     "check front brake pads": "CBS LCI ~50,000 km planning.",
     "check rear brake pads": "CBS ~60,000 km planning.",
     "vehicle check": "BMW CBS vehicle check.",
@@ -55,5 +55,15 @@
     "differential fluids": "xDrive only.",
     "coolant flush": "Preventive ~120,000 km.",
     "intake carbon clean": "Direct injection: carbon clean ~120,000 km."
+  },
+  "serviceSources": {
+    "engine oil": "BMW SIB B000214 Attachment 2 (CBS intervals) — 30,000 km / 24 months EU maximum. https://garage.wiki/bmw/4-series-coupe/first-generation-lci-f32/2017/service-intervals.html",
+    "micro filter": "https://garage.wiki/bmw/4-series-coupe/first-generation-lci-f32/2017/service-intervals.html — interior filter at every engine oil change",
+    "brake fluid": "https://garage.wiki/bmw/4-series-coupe/first-generation-lci-f32/2017/service-intervals.html — first change 3 years then every 2 years; BMW owner's manual F32",
+    "air cleaner element": "https://garage.wiki/bmw/4-series-coupe/first-generation-lci-f32/2017/service-intervals.html — air filter with each second engine oil change (60,000 km)",
+    "spark plugs": "Changed from 90,000 km to 60,000 km per https://garage.wiki/bmw/4-series-coupe/first-generation-lci-f32/2017/service-intervals.html — second engine oil change",
+    "check front brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 50,000 km planning interval (F32 LCI)",
+    "check rear brake pads": "BMW SIB B000214 Attachment 2 (CBS brake service); 60,000 km planning interval (F32 LCI)",
+    "vehicle check": "BMW SIB B000214 Attachment 2 — vehicle check every second engine oil service (60,000 km)"
   }
 }
