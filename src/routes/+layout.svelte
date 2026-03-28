@@ -27,6 +27,7 @@
 	let addOdometer = $state('');
 	let addTransmission = $state<TransmissionType | ''>('');
 	let addDrivetrain = $state<DrivetrainType | ''>('');
+	let addDrivetrainDetected = $state(false);
 	let addPlatformData = $state<PlatformConfig | null>(null);
 	let addSaving = $state(false);
 	let addError = $state('');
@@ -125,6 +126,7 @@
 		addOdometer = '';
 		addTransmission = '';
 		addDrivetrain = '';
+		addDrivetrainDetected = false;
 		addError = '';
 		addSaving = false;
 	}
@@ -183,13 +185,22 @@
 		const dts = addPlatformData?.drivetrains;
 		if (dts && dts.length === 1) {
 			addDrivetrain = dts[0];
+			addDrivetrainDetected = true;
 		} else if (dts && dts.includes('AWD') && detectAwdFromModel(addMake, addModel)) {
 			addDrivetrain = 'AWD';
+			addDrivetrainDetected = true;
 		} else if (dts && dts.length > 1 && !detectAwdFromModel(addMake, addModel)) {
 			const nonAwd = dts.filter(d => d !== 'AWD');
-			addDrivetrain = nonAwd.length === 1 ? nonAwd[0] : '';
+			if (nonAwd.length === 1) {
+				addDrivetrain = nonAwd[0];
+				addDrivetrainDetected = true;
+			} else {
+				addDrivetrain = '';
+				addDrivetrainDetected = false;
+			}
 		} else {
 			addDrivetrain = '';
+			addDrivetrainDetected = false;
 		}
 	}
 
@@ -759,7 +770,10 @@
 						<input class="field-input" type="text" value={addTransmissionOptions[0].label} disabled />
 					{/if}
 
-					{#if addDrivetrainOptions.length > 1}
+					{#if addDrivetrainDetected}
+						<label class="field-label">Drivetrain</label>
+						<input class="field-input" type="text" value={allDrivetrainOptions.find(o => o.value === addDrivetrain)?.label ?? addDrivetrain} disabled />
+					{:else if addDrivetrainOptions.length > 1}
 						<label class="field-label">Drivetrain <span class="optional">(recommended)</span></label>
 						<select class="field-input" bind:value={addDrivetrain}>
 							<option value="">Unknown</option>
