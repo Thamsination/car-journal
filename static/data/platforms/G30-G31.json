@@ -1,7 +1,7 @@
 {
   "id": "G30-G31",
-  "name": "BMW G30/G31 5 Series",
-  "years": "2017\u20132026",
+  "name": "BMW G30/G31 5 Series (B47 Diesel)",
+  "years": "2017–2020",
   "chassisCodes": [
     "G30",
     "G31"
@@ -10,22 +10,16 @@
     {
       "make": "BMW",
       "models": [
-        "5 Series",
-        "5 Series Touring",
         "520d",
         "520d xDrive",
-        "520i",
-        "530i",
-        "530i xDrive",
+        "525d",
+        "525d xDrive",
         "530d",
         "530d xDrive",
-        "540i",
-        "540i xDrive",
-        "530e",
-        "M550i xDrive"
+        "M550d xDrive"
       ],
       "yearFrom": 2017,
-      "yearTo": 2026
+      "yearTo": 2020
     }
   ],
   "serviceIntervals": [

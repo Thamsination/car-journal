@@ -32,12 +32,12 @@
       "kind": "rec"
     },
     {
-      "task": "cabin filter",
+      "task": "micro filter",
       "km": 30000,
       "kind": "mfr"
     },
     {
-      "task": "air filter",
+      "task": "air cleaner element",
       "km": 30000,
       "kind": "mfr"
     },
@@ -47,7 +47,12 @@
       "kind": "mfr"
     },
     {
-      "task": "check brake pads",
+      "task": "check front brake pads",
+      "km": 15000,
+      "kind": "mfr"
+    },
+    {
+      "task": "check rear brake pads",
       "km": 15000,
       "kind": "mfr"
     },
@@ -79,68 +84,75 @@
   ],
   "serviceNotes": {
     "engine oil": "Pre-CBS EU maintenance booklets commonly used fixed oil change intervals around 15,000 km for many petrol and diesel models; verify against the service indicator or printed schedule for your model year.",
-    "cabin filter": "Pollen/cabin filter replacement per BMW maintenance booklet for this generation (typically every 2nd oil service or fixed km).",
-    "air filter": "Engine air filter replacement is typically scheduled at fixed km in older EU booklets; 30,000\u201360,000 km is common\u2014verify your printed maintenance table.",
     "brake fluid": "BMW specifies brake fluid replacement every 2 years (first change at 3 years on some models per BMW maintenance SIBs). Distance equivalent uses ~30,000 km/year as a planning proxy; always respect the time limit. See BMW X5 service documentation summary at bmwx5info.com (brake fluid change interval every 2 years).",
-    "check brake pads": "Brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services.",
     "spark plugs": "Petrol spark plug renewal per BMW maintenance schedule for this generation.",
     "fuel filter": "Diesel fuel filter replacement per BMW fixed-interval schedules for this generation (verify engine code).",
     "gearbox fluid": "Automatic and manual gear oil is often labelled lifetime; many specialists recommend exchange around 100,000 km for long-term health.",
     "coolant flush": "Coolant inhibitor effectiveness declines with age; preventive full exchange around 120,000 km is a common workshop recommendation.",
-    "intake carbon clean": "Direct-injection turbo engines can accumulate intake valve deposits; walnut or chemical cleaning around 120,000 km restores airflow."
+    "intake carbon clean": "Direct-injection turbo engines can accumulate intake valve deposits; walnut or chemical cleaning around 120,000 km restores airflow.",
+    "micro filter": "Pollen/cabin filter replacement per BMW maintenance booklet for this generation (typically every 2nd oil service or fixed km).",
+    "air cleaner element": "Engine air filter replacement is typically scheduled at fixed km in older EU booklets; 30,000\u201360,000 km is common\u2014verify your printed maintenance table.",
+    "check front brake pads": "Front brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services.",
+    "check rear brake pads": "Rear brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services."
   },
   "milestones": [
     {
       "km": 15000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil"
       ]
     },
     {
       "km": 30000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
-        "check brake pads",
-        "engine oil"
+        "check front brake pads",
+        "check rear brake pads",
+        "engine oil",
+        "micro filter"
       ]
     },
     {
       "km": 45000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil"
       ]
     },
     {
       "km": 60000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
         "fuel filter",
+        "micro filter",
         "spark plugs"
       ]
     },
     {
       "km": 75000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil"
       ]
     },
     {
       "km": 90000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
-        "check brake pads",
-        "engine oil"
+        "check front brake pads",
+        "check rear brake pads",
+        "engine oil",
+        "micro filter"
       ]
     },
     {
@@ -152,64 +164,71 @@
     {
       "km": 105000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil"
       ]
     },
     {
       "km": 120000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "coolant flush",
         "engine oil",
         "fuel filter",
         "intake carbon clean",
+        "micro filter",
         "spark plugs"
       ]
     },
     {
       "km": 135000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil"
       ]
     },
     {
       "km": 150000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
-        "check brake pads",
-        "engine oil"
+        "check front brake pads",
+        "check rear brake pads",
+        "engine oil",
+        "micro filter"
       ]
     },
     {
       "km": 165000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil"
       ]
     },
     {
       "km": 180000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
         "fuel filter",
+        "micro filter",
         "spark plugs"
       ]
     },
     {
       "km": 195000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil"
       ]
     },
@@ -222,68 +241,75 @@
     {
       "km": 210000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
-        "check brake pads",
-        "engine oil"
+        "check front brake pads",
+        "check rear brake pads",
+        "engine oil",
+        "micro filter"
       ]
     },
     {
       "km": 225000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil"
       ]
     },
     {
       "km": 240000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "coolant flush",
         "engine oil",
         "fuel filter",
         "intake carbon clean",
+        "micro filter",
         "spark plugs"
       ]
     },
     {
       "km": 255000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil"
       ]
     },
     {
       "km": 270000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
-        "check brake pads",
-        "engine oil"
+        "check front brake pads",
+        "check rear brake pads",
+        "engine oil",
+        "micro filter"
       ]
     },
     {
       "km": 285000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil"
       ]
     },
     {
       "km": 300000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
         "fuel filter",
         "gearbox fluid",
+        "micro filter",
         "spark plugs"
       ]
     }

@@ -17,18 +17,13 @@
   ],
   "serviceIntervals": [
     {
-      "task": "cabin filter",
+      "task": "micro filter",
       "km": 20000,
       "kind": "mfr"
     },
     {
       "task": "brake fluid",
       "km": 30000,
-      "kind": "mfr"
-    },
-    {
-      "task": "check brake pads",
-      "km": 15000,
       "kind": "mfr"
     },
     {
@@ -48,23 +43,17 @@
     }
   ],
   "serviceNotes": {
-    "cabin filter": "Microfilter replacement per BMW iX EU maintenance information; 20,000 km is a common planning interval\u2014verify CBS and regional booklet.",
     "brake fluid": "BMW specifies brake fluid replacement every 2 years (first change at 3 years on some models per BMW maintenance SIBs). Distance equivalent uses ~30,000 km/year as a planning proxy; always respect the time limit. See BMW X5 service documentation summary at bmwx5info.com (brake fluid change interval every 2 years).",
     "check brake pads": "Brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services. Strong regen on BEV often extends pad life; inspections still required.",
     "coolant flush": "High-voltage battery and e-drive cooling circuit: BMW publishes time/distance-based coolant service for EVs; 60,000 km is a planning proxy\u2014interval estimated, confirm official service data.",
-    "gearbox fluid": "Reduction gear / drive unit fluid: officially often \"lifetime\"; 100,000 km mfr row is interval estimated for long-term wear metals in oil\u2014specialist preventive change."
+    "gearbox fluid": "Reduction gear / drive unit fluid: officially often \"lifetime\"; 100,000 km mfr row is interval estimated for long-term wear metals in oil\u2014specialist preventive change.",
+    "micro filter": "Microfilter replacement per BMW iX EU maintenance information; 20,000 km is a common planning interval\u2014verify CBS and regional booklet."
   },
   "milestones": [
     {
-      "km": 15000,
-      "tasks": [
-        "check brake pads"
-      ]
-    },
-    {
       "km": 20000,
       "tasks": [
-        "cabin filter"
+        "micro filter"
       ]
     },
     {
@@ -77,34 +66,22 @@
     {
       "km": 40000,
       "tasks": [
-        "cabin filter"
-      ]
-    },
-    {
-      "km": 45000,
-      "tasks": [
-        "check brake pads"
+        "micro filter"
       ]
     },
     {
       "km": 60000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
-        "coolant flush"
-      ]
-    },
-    {
-      "km": 75000,
-      "tasks": [
-        "check brake pads"
+        "coolant flush",
+        "micro filter"
       ]
     },
     {
       "km": 80000,
       "tasks": [
-        "cabin filter"
+        "micro filter"
       ]
     },
     {
@@ -117,35 +94,23 @@
     {
       "km": 100000,
       "tasks": [
-        "cabin filter",
-        "gearbox fluid"
-      ]
-    },
-    {
-      "km": 105000,
-      "tasks": [
-        "check brake pads"
+        "gearbox fluid",
+        "micro filter"
       ]
     },
     {
       "km": 120000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
-        "coolant flush"
-      ]
-    },
-    {
-      "km": 135000,
-      "tasks": [
-        "check brake pads"
+        "coolant flush",
+        "micro filter"
       ]
     },
     {
       "km": 140000,
       "tasks": [
-        "cabin filter"
+        "micro filter"
       ]
     },
     {
@@ -158,35 +123,23 @@
     {
       "km": 160000,
       "tasks": [
-        "cabin filter"
-      ]
-    },
-    {
-      "km": 165000,
-      "tasks": [
-        "check brake pads"
+        "micro filter"
       ]
     },
     {
       "km": 180000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
-        "coolant flush"
-      ]
-    },
-    {
-      "km": 195000,
-      "tasks": [
-        "check brake pads"
+        "coolant flush",
+        "micro filter"
       ]
     },
     {
       "km": 200000,
       "tasks": [
-        "cabin filter",
-        "gearbox fluid"
+        "gearbox fluid",
+        "micro filter"
       ]
     },
     {
@@ -199,34 +152,22 @@
     {
       "km": 220000,
       "tasks": [
-        "cabin filter"
-      ]
-    },
-    {
-      "km": 225000,
-      "tasks": [
-        "check brake pads"
+        "micro filter"
       ]
     },
     {
       "km": 240000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
-        "coolant flush"
-      ]
-    },
-    {
-      "km": 255000,
-      "tasks": [
-        "check brake pads"
+        "coolant flush",
+        "micro filter"
       ]
     },
     {
       "km": 260000,
       "tasks": [
-        "cabin filter"
+        "micro filter"
       ]
     },
     {
@@ -239,23 +180,17 @@
     {
       "km": 280000,
       "tasks": [
-        "cabin filter"
-      ]
-    },
-    {
-      "km": 285000,
-      "tasks": [
-        "check brake pads"
+        "micro filter"
       ]
     },
     {
       "km": 300000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
         "coolant flush",
-        "gearbox fluid"
+        "gearbox fluid",
+        "micro filter"
       ]
     }
   ]

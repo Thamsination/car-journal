@@ -28,12 +28,12 @@
       "kind": "rec"
     },
     {
-      "task": "cabin filter",
+      "task": "micro filter",
       "km": 30000,
       "kind": "mfr"
     },
     {
-      "task": "air filter",
+      "task": "air cleaner element",
       "km": 90000,
       "kind": "mfr"
     },
@@ -75,44 +75,44 @@
   ],
   "serviceNotes": {
     "engine oil": "BMW Condition Based Service (CBS) sets engine oil and filter replacement from the service display based on driving conditions, cold starts, and fuel quality\u2014not a single fixed km figure. A 30,000 km mfr row models the typical maximum distance before the display calls for an oil service on many EU models; follow the vehicle display and annual minimums. garage.wiki BMW E90 interval tables list oil as \"according to service display\".",
-    "cabin filter": "Cabin (micro) filter replacement is driven by the service display on CBS vehicles; 30,000 km is a typical planning interval when aligning with major services.",
-    "air filter": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature.",
     "brake fluid": "BMW specifies brake fluid replacement every 2 years (first change at 3 years on some models per BMW maintenance SIBs). Distance equivalent uses ~30,000 km/year as a planning proxy; always respect the time limit. See BMW X5 service documentation summary at bmwx5info.com (brake fluid change interval every 2 years).",
     "check brake pads": "Brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services.",
     "spark plugs": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature.",
     "fuel filter": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature. Diesel fuel filter applies to diesel engines.",
     "gearbox fluid": "Automatic and manual gear oil is often labelled lifetime; many specialists recommend exchange around 100,000 km for long-term health.",
     "coolant flush": "Coolant inhibitor effectiveness declines with age; preventive full exchange around 120,000 km is a common workshop recommendation.",
-    "intake carbon clean": "Direct-injection turbo engines can accumulate intake valve deposits; walnut or chemical cleaning around 120,000 km restores airflow."
+    "intake carbon clean": "Direct-injection turbo engines can accumulate intake valve deposits; walnut or chemical cleaning around 120,000 km restores airflow.",
+    "micro filter": "Cabin (micro) filter replacement is driven by the service display on CBS vehicles; 30,000 km is a typical planning interval when aligning with major services.",
+    "air cleaner element": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature."
   },
   "milestones": [
     {
       "km": 30000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
-        "engine oil"
+        "engine oil",
+        "micro filter"
       ]
     },
     {
       "km": 60000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
-        "engine oil"
+        "engine oil",
+        "micro filter"
       ]
     },
     {
       "km": 90000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
         "check brake pads",
         "engine oil",
         "fuel filter",
+        "micro filter",
         "spark plugs"
       ]
     },
@@ -126,31 +126,31 @@
       "km": 120000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
         "coolant flush",
         "engine oil",
-        "intake carbon clean"
+        "intake carbon clean",
+        "micro filter"
       ]
     },
     {
       "km": 150000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
-        "engine oil"
+        "engine oil",
+        "micro filter"
       ]
     },
     {
       "km": 180000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
         "check brake pads",
         "engine oil",
         "fuel filter",
+        "micro filter",
         "spark plugs"
       ]
     },
@@ -164,31 +164,31 @@
       "km": 210000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
-        "engine oil"
+        "engine oil",
+        "micro filter"
       ]
     },
     {
       "km": 240000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
         "coolant flush",
         "engine oil",
-        "intake carbon clean"
+        "intake carbon clean",
+        "micro filter"
       ]
     },
     {
       "km": 270000,
       "tasks": [
-        "air filter",
+        "air cleaner element",
         "brake fluid",
-        "cabin filter",
         "check brake pads",
         "engine oil",
         "fuel filter",
+        "micro filter",
         "spark plugs"
       ]
     },
@@ -196,10 +196,10 @@
       "km": 300000,
       "tasks": [
         "brake fluid",
-        "cabin filter",
         "check brake pads",
         "engine oil",
-        "gearbox fluid"
+        "gearbox fluid",
+        "micro filter"
       ]
     }
   ]
