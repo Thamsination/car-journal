@@ -12,6 +12,11 @@
     "manual",
     "automatic"
   ],
+  "engines": [
+    "N20",
+    "N52",
+    "N54"
+  ],
   "vehicles": [
     {
       "make": "BMW",
