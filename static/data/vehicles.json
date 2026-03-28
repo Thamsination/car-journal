@@ -3,7 +3,11 @@
     {
       "id": "EJ39063",
       "label": "Kaisern"
+    },
+    {
+      "id": "VMNAEA1KS",
+      "label": "Fortbert"
     }
   ],
-  "activeVehicle": "EJ39063"
+  "activeVehicle": "VMNAEA1KS"
 }
