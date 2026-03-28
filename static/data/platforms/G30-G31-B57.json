@@ -1,7 +1,7 @@
 {
   "id": "G30-G31-B57",
   "name": "BMW G30/G31 5 Series (B57 3.0d)",
-  "years": "2017–2020",
+  "years": "2017\u20132020",
   "chassisCodes": [
     "G30",
     "G31"
@@ -15,9 +15,13 @@
       "make": "BMW",
       "models": [
         "530d",
+        "530d Touring",
         "530d xDrive",
+        "530d xDrive Touring",
         "540d xDrive",
-        "M550d xDrive"
+        "540d xDrive Touring",
+        "M550d xDrive",
+        "M550d xDrive Touring"
       ],
       "yearFrom": 2017,
       "yearTo": 2020
@@ -118,7 +122,7 @@
   "serviceNotes": {
     "engine oil": "BMW CBS scheduled service. The B57 inline-6 diesel has a larger sump capacity than the B47 but follows the same CBS oil service regime. 30,000 km is the maximum distance between services.",
     "micro filter": "BMW CBS scheduled service. The cabin micro filter traps pollen, dust and pollutants.",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
     "air cleaner element": "BMW CBS scheduled service. Clean air is critical for the B57 twin-turbo diesel system. A dirty filter reduces performance and increases turbo wear.",
     "fuel filter": "BMW CBS scheduled service. The fuel filter removes contaminants from diesel fuel before it reaches the high-pressure common-rail injectors, preventing damage to the fuel system.",
     "check front brake pads": "BMW CBS wear-based reminder. The heavier 530d/540d with inline-6 increases front brake wear compared to 4-cylinder variants.",

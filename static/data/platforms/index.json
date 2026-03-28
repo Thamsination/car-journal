@@ -862,9 +862,13 @@
     "make": "BMW",
     "models": [
       "520d",
+      "520d Touring",
       "520d xDrive",
+      "520d xDrive Touring",
       "525d",
-      "525d xDrive"
+      "525d Touring",
+      "525d xDrive",
+      "525d xDrive Touring"
     ],
     "yearFrom": 2017,
     "yearTo": 2020
@@ -874,10 +878,15 @@
     "make": "BMW",
     "models": [
       "520i",
+      "520i Touring",
       "530i",
+      "530i Touring",
       "530i xDrive",
+      "530i xDrive Touring",
       "530e",
-      "530e xDrive"
+      "530e Touring",
+      "530e xDrive",
+      "530e xDrive Touring"
     ],
     "yearFrom": 2017,
     "yearTo": 2020
@@ -887,9 +896,13 @@
     "make": "BMW",
     "models": [
       "530d",
+      "530d Touring",
       "530d xDrive",
+      "530d xDrive Touring",
       "540d xDrive",
-      "M550d xDrive"
+      "540d xDrive Touring",
+      "M550d xDrive",
+      "M550d xDrive Touring"
     ],
     "yearFrom": 2017,
     "yearTo": 2020
@@ -899,8 +912,11 @@
     "make": "BMW",
     "models": [
       "540i",
+      "540i Touring",
       "540i xDrive",
-      "M550i xDrive"
+      "540i xDrive Touring",
+      "M550i xDrive",
+      "M550i xDrive Touring"
     ],
     "yearFrom": 2017,
     "yearTo": 2020

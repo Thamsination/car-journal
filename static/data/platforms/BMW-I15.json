@@ -1,7 +1,7 @@
 {
   "id": "BMW-I15",
   "name": "BMW i8 (I12/I15)",
-  "years": "2014–2020",
+  "years": "2014\u20132020",
   "chassisCodes": [
     "I12",
     "I15"
@@ -52,19 +52,19 @@
       "months": 24
     },
     {
-      "task": "check brake pads",
+      "task": "check front brake pads",
+      "km": 30000,
+      "kind": "mfr",
+      "months": null
+    },
+    {
+      "task": "check rear brake pads",
       "km": 30000,
       "kind": "mfr",
       "months": null
     },
     {
       "task": "spark plugs",
-      "km": 90000,
-      "kind": "mfr",
-      "months": null
-    },
-    {
-      "task": "fuel filter",
       "km": 90000,
       "kind": "mfr",
       "months": null
@@ -89,22 +89,23 @@
     }
   ],
   "serviceNotes": {
-    "engine oil": "BMW Condition Based Service (CBS) sets engine oil and filter replacement from the service display based on driving conditions, cold starts, and fuel quality—not a single fixed km figure. A 30,000 km mfr row models the typical maximum distance before the display calls for an oil service on many EU models; follow the vehicle display and annual minimums. garage.wiki BMW E90 interval tables list oil as \"according to service display\".",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
-    "check brake pads": "Brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services.",
-    "spark plugs": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature.",
-    "fuel filter": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature. Diesel fuel filter applies to diesel engines.",
+    "engine oil": "BMW Condition Based Service (CBS) sets engine oil and filter replacement from the service display based on driving conditions, cold starts, and fuel quality\u2014not a single fixed km figure. A 30,000 km mfr row models the typical maximum distance before the display calls for an oil service on many EU models; follow the vehicle display and annual minimums. garage.wiki BMW E90 interval tables list oil as \"according to service display\".",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
+    "check front brake pads": "BMW CBS-style front axle pad inspection; 30,000 km is a reasonable cadence between major services for the i8 hybrid.",
+    "check rear brake pads": "BMW CBS-style rear axle pad inspection; 30,000 km is a reasonable cadence between major services for the i8 hybrid.",
+    "spark plugs": "Petrol 3-cylinder engine: spark plug replacement per BMW CBS / service display. A 90,000 km row aligns with typical \"every third oil service\" planning at ~30,000 km oil intervals\u2014confirm with your vehicle display and owner's literature.",
     "gearbox fluid": "Automatic and manual gear oil is often labelled lifetime; many specialists recommend exchange around 100,000 km for long-term health.",
     "coolant flush": "Coolant inhibitor effectiveness declines with age; preventive full exchange around 120,000 km is a common workshop recommendation.",
     "intake carbon clean": "Direct-injection turbo engines can accumulate intake valve deposits; walnut or chemical cleaning around 120,000 km restores airflow.",
     "micro filter": "Cabin (micro) filter replacement is driven by the service display on CBS vehicles; 30,000 km is a typical planning interval when aligning with major services.",
-    "air cleaner element": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature."
+    "air cleaner element": "Petrol engine air cleaner element: typically tied to major service intervals; 90,000 km is a planning proxy at typical CBS oil cadence\u2014confirm with your service display and owner's literature."
   },
   "milestones": [
     {
       "km": 30000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
         "micro filter"
       ]
@@ -112,7 +113,8 @@
     {
       "km": 60000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
         "micro filter"
       ]
@@ -121,9 +123,9 @@
       "km": 90000,
       "tasks": [
         "air cleaner element",
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
-        "fuel filter",
         "micro filter",
         "spark plugs"
       ]
@@ -137,7 +139,8 @@
     {
       "km": 120000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "coolant flush",
         "engine oil",
         "intake carbon clean",
@@ -147,7 +150,8 @@
     {
       "km": 150000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
         "micro filter"
       ]
@@ -156,9 +160,9 @@
       "km": 180000,
       "tasks": [
         "air cleaner element",
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
-        "fuel filter",
         "micro filter",
         "spark plugs"
       ]
@@ -172,7 +176,8 @@
     {
       "km": 210000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
         "micro filter"
       ]
@@ -180,7 +185,8 @@
     {
       "km": 240000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "coolant flush",
         "engine oil",
         "intake carbon clean",
@@ -191,9 +197,9 @@
       "km": 270000,
       "tasks": [
         "air cleaner element",
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
-        "fuel filter",
         "micro filter",
         "spark plugs"
       ]
@@ -201,7 +207,8 @@
     {
       "km": 300000,
       "tasks": [
-        "check brake pads",
+        "check front brake pads",
+        "check rear brake pads",
         "engine oil",
         "gearbox fluid",
         "micro filter"
