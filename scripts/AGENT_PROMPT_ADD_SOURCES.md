@@ -2,7 +2,7 @@
 
 ## Goal
 
-139 platform files already have the correct structure (one engine per file, `displacement`/`cylinders`/`fuelType` set, proper `serviceIntervals`). They are missing `serviceSources` — the field that records where each MFR interval came from.
+129 platform files already have the correct structure (one engine per file, `displacement`/`cylinders`/`fuelType` set, proper `serviceIntervals`). They are missing `serviceSources` — the field that records where each MFR interval came from.
 
 Your job is to:
 1. Research the intervals in each file against primary sources
@@ -184,8 +184,8 @@ Mercedes-E-W211-Petrol-M113, Mercedes-E-W211-Petrol-M156, Mercedes-E-W211-Petrol
 **Batch 11: Mercedes W212 remainder + W213 + W214 + EQE (15 files)**
 Mercedes-E-W212-Petrol-M276-E400, Mercedes-E-W213-Diesel-OM654, Mercedes-E-W213-Diesel-OM656, Mercedes-E-W213-Petrol-M177, Mercedes-E-W213-Petrol-M256, Mercedes-E-W213-Petrol-M264, Mercedes-E-W213-Petrol-M276, Mercedes-E-W213-PHEV-2.0, Mercedes-E-W214-Diesel-OM654, Mercedes-E-W214-Diesel-OM656, Mercedes-E-W214-Petrol-M254, Mercedes-E-W214-Petrol-M256, Mercedes-E-W214-PHEV-2.0, Mercedes-E-W214-PHEV-3.0, Mercedes-EQ-EQE
 
-**Batch 12: Subaru + VW + other brands (13 files)**
-Subaru-WRX-EJ-turbo, Subaru-WRX-FA20DIT, Subaru-WRX-FA24DIT, VW-MK7, VW-MK8, VW-Polo-AW, Skoda-OCTAVIA-3, Dacia-SANDERO-3, Fiat-500-312, Opel-CORSA-F, Peugeot-208-II, Renault-CLIO-5, Toyota-YARIS-XP210
+**Batch 12: Subaru (3 files)**
+Subaru-WRX-EJ-turbo, Subaru-WRX-FA20DIT, Subaru-WRX-FA24DIT
 
 Adjust groupings based on what actually exists — run `ls static/data/platforms/BMW-E46-*.json` etc. to confirm file names before starting each batch.
 

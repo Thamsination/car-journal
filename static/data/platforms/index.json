@@ -1887,37 +1887,6 @@
     "yearTo": 2026
   },
   {
-    "platformId": "Dacia-SANDERO-3",
-    "make": "Dacia",
-    "models": [
-      "Sandero",
-      "Sandero Stepway"
-    ],
-    "yearFrom": 2020,
-    "yearTo": 2026
-  },
-  {
-    "platformId": "Fiat-500-312",
-    "make": "Fiat",
-    "models": [
-      "500",
-      "500C",
-      "500 Hybrid"
-    ],
-    "yearFrom": 2015,
-    "yearTo": 2026
-  },
-  {
-    "platformId": "Fiat-500-312",
-    "make": "Abarth",
-    "models": [
-      "595",
-      "695"
-    ],
-    "yearFrom": 2015,
-    "yearTo": 2023
-  },
-  {
     "platformId": "G30-G31-B47",
     "make": "BMW",
     "models": [
@@ -2581,70 +2550,6 @@
     "yearTo": 2026
   },
   {
-    "platformId": "Opel-CORSA-F",
-    "make": "Opel",
-    "models": [
-      "Corsa",
-      "Corsa-e"
-    ],
-    "yearFrom": 2019,
-    "yearTo": 2026
-  },
-  {
-    "platformId": "Opel-CORSA-F",
-    "make": "Vauxhall",
-    "models": [
-      "Corsa",
-      "Corsa-e"
-    ],
-    "yearFrom": 2019,
-    "yearTo": 2026
-  },
-  {
-    "platformId": "Peugeot-208-II",
-    "make": "Peugeot",
-    "models": [
-      "208",
-      "e-208"
-    ],
-    "yearFrom": 2019,
-    "yearTo": 2026
-  },
-  {
-    "platformId": "Renault-CLIO-5",
-    "make": "Renault",
-    "models": [
-      "Clio",
-      "Clio E-Tech"
-    ],
-    "yearFrom": 2019,
-    "yearTo": 2026
-  },
-  {
-    "platformId": "Skoda-OCTAVIA-3",
-    "make": "Škoda",
-    "models": [
-      "Octavia",
-      "Octavia Combi",
-      "Octavia Scout",
-      "Octavia RS"
-    ],
-    "yearFrom": 2012,
-    "yearTo": 2020
-  },
-  {
-    "platformId": "Skoda-OCTAVIA-3",
-    "make": "Skoda",
-    "models": [
-      "Octavia",
-      "Octavia Combi",
-      "Octavia Scout",
-      "Octavia RS"
-    ],
-    "yearFrom": 2012,
-    "yearTo": 2020
-  },
-  {
     "platformId": "Subaru-WRX-EJ-turbo",
     "make": "Subaru",
     "models": [
@@ -2693,58 +2598,6 @@
       "WRX GT"
     ],
     "yearFrom": 2022,
-    "yearTo": 2026
-  },
-  {
-    "platformId": "Toyota-YARIS-XP210",
-    "make": "Toyota",
-    "models": [
-      "Yaris",
-      "Yaris Hybrid",
-      "Yaris Cross",
-      "Yaris Cross Hybrid"
-    ],
-    "yearFrom": 2020,
-    "yearTo": 2026
-  },
-  {
-    "platformId": "VW-MK7",
-    "make": "Volkswagen",
-    "models": [
-      "Golf",
-      "Golf Variant",
-      "Golf Alltrack",
-      "Golf GTE",
-      "Golf GTI",
-      "Golf GTD",
-      "Golf R",
-      "Golf Sportsvan"
-    ],
-    "yearFrom": 2012,
-    "yearTo": 2020
-  },
-  {
-    "platformId": "VW-MK8",
-    "make": "Volkswagen",
-    "models": [
-      "Golf",
-      "Golf Variant",
-      "Golf GTE",
-      "Golf GTI",
-      "Golf GTD",
-      "Golf R"
-    ],
-    "yearFrom": 2019,
-    "yearTo": 2026
-  },
-  {
-    "platformId": "VW-Polo-AW",
-    "make": "Volkswagen",
-    "models": [
-      "Polo",
-      "Polo GTI"
-    ],
-    "yearFrom": 2017,
     "yearTo": 2026
   }
 ]
