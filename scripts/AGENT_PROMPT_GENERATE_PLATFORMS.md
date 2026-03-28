@@ -24,16 +24,16 @@ Your task is to generate platform service schedule JSON files for specific car m
 
 Before generating anything, read these files to understand the exact schema and quality bar:
 
-1. `static/data/platforms/G30-G31-N63.json` — the primary reference file (new schema with `displacement`/`cylinders`/`fuelType`, no `engines`, no `milestones`)
-2. `static/data/platforms/G30-G31-B58.json` — another example (3.0L 6-cyl petrol, new schema)
+1. `static/data/platforms/BMW-G30-N63.json` — the primary reference file (new schema with `displacement`/`cylinders`/`fuelType`, no `engines`, no `milestones`)
+2. `static/data/platforms/BMW-G30-B58.json` — another example (3.0L 6-cyl petrol, new schema)
 3. `static/data/platforms/VW-MK7.json` — a corrected batch-1 example (may still use old schema — adapt to new)
 4. `scripts/build_platform_index.py` — the index builder script
 
 Also compare the engine-family variants for the G30/G31 5 Series to see how diesel vs petrol files differ:
-5. `static/data/platforms/G30-G31-B47.json` — I4 diesel (has fuel filter + timing chain, no spark plugs)
-6. `static/data/platforms/G30-G31-B48.json` — I4 petrol (has spark plugs, no fuel filter)
-7. `static/data/platforms/G30-G31-B57.json` — I6 diesel (has fuel filter + timing chain, no spark plugs)
-8. `static/data/platforms/G30-G31-B58.json` — I6 petrol (has spark plugs, no fuel filter)
+5. `static/data/platforms/BMW-G30-B47.json` — I4 diesel (has fuel filter + timing chain, no spark plugs)
+6. `static/data/platforms/BMW-G30-B48.json` — I4 petrol (has spark plugs, no fuel filter)
+7. `static/data/platforms/BMW-G30-B57.json` — I6 diesel (has fuel filter + timing chain, no spark plugs)
+8. `static/data/platforms/BMW-G30-B58.json` — I6 petrol (has spark plugs, no fuel filter)
 
 Study these files carefully — note that every `serviceIntervals` entry has both a `km` and `months` field (one may be null). Your output must match the same schema and level of completeness.
 
@@ -72,9 +72,7 @@ Many platforms cover models sold in both RWD/FWD and AWD variants (e.g., BMW 3 S
 
 Never add AWD model names without also adding the corresponding drivetrain service tasks. The model names tell the app *which cars match*; the service tasks tell the app *what maintenance those cars need*. One without the other is incomplete.
 
-**Platform ID format:** `<MAKE>-<CHASSIS>-<ENGINE/FUEL>` for new platforms.
-
-> **Note:** Some legacy BMW files use older naming conventions (e.g., `G30-G31-B47.json` without a `BMW-` prefix, or `BMW-E90.json` without an engine suffix). Do NOT rename existing files — use the new format for all newly created platforms only.
+**Platform ID format:** `<MAKE>-<CHASSIS>-<ENGINE/FUEL>`.
 
 Examples by brand:
 - BMW: `BMW-F30-N20`, `BMW-F30-B47`, `BMW-G20-B48` (use engine code)
@@ -269,7 +267,7 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
 
 - Every MFR task must have a corresponding entry in `serviceSources` with a URL or specific document reference
 - REC tasks should also have sources where possible, but are not required
-- Acceptable formats: `"https://garage.wiki/BMW/G30/520d#service-schedule"`, `"BMW owner's manual G30 (2017), p.247"`, `"Inherited: G30-G31-B47"`
+- Acceptable formats: `"https://garage.wiki/BMW/G30/520d#service-schedule"`, `"BMW owner's manual G30 (2017), p.247"`, `"Inherited: BMW-G30-B47"`
 - The app ignores this field at runtime — it exists for audit and regeneration only
 
 **Important schema changes (no `engines`, no `milestones`):**

@@ -63,9 +63,9 @@ cd /home/thamsination/car-journal && git pull
 
 Read these files to understand the target schema and quality bar:
 
-1. `static/data/platforms/G30-G31-N63.json` — reference format (displacement/cylinders/fuelType, no engines, no milestones)
-2. `static/data/platforms/G30-G31-B47.json` — diesel example
-3. `static/data/platforms/G30-G31-B58.json` — petrol example
+1. `static/data/platforms/BMW-G30-N63.json` — reference format (displacement/cylinders/fuelType, no engines, no milestones)
+2. `static/data/platforms/BMW-G30-B47.json` — diesel example
+3. `static/data/platforms/BMW-G30-B58.json` — petrol example
 4. `scripts/AGENT_PROMPT_GENERATE_PLATFORMS.md` — **the full generation rules** (task naming, mandatory minimum tasks, self-validation checklist, etc.) — follow all of them
 
 ---

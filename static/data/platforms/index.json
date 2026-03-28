@@ -1763,6 +1763,78 @@
     "yearTo": 2026
   },
   {
+    "platformId": "BMW-G30-B47",
+    "make": "BMW",
+    "models": [
+      "520d",
+      "520d Touring",
+      "520d xDrive",
+      "520d xDrive Touring",
+      "525d",
+      "525d Touring",
+      "525d xDrive",
+      "525d xDrive Touring"
+    ],
+    "yearFrom": 2017,
+    "yearTo": 2020
+  },
+  {
+    "platformId": "BMW-G30-B48",
+    "make": "BMW",
+    "models": [
+      "520i",
+      "520i Touring",
+      "530i",
+      "530i Touring",
+      "530i xDrive",
+      "530i xDrive Touring",
+      "530e",
+      "530e Touring",
+      "530e xDrive",
+      "530e xDrive Touring"
+    ],
+    "yearFrom": 2017,
+    "yearTo": 2020
+  },
+  {
+    "platformId": "BMW-G30-B57",
+    "make": "BMW",
+    "models": [
+      "530d",
+      "530d Touring",
+      "530d xDrive",
+      "530d xDrive Touring",
+      "540d xDrive",
+      "540d xDrive Touring",
+      "M550d xDrive",
+      "M550d xDrive Touring"
+    ],
+    "yearFrom": 2017,
+    "yearTo": 2020
+  },
+  {
+    "platformId": "BMW-G30-B58",
+    "make": "BMW",
+    "models": [
+      "540i",
+      "540i Touring",
+      "540i xDrive",
+      "540i xDrive Touring"
+    ],
+    "yearFrom": 2017,
+    "yearTo": 2020
+  },
+  {
+    "platformId": "BMW-G30-N63",
+    "make": "BMW",
+    "models": [
+      "M550i xDrive",
+      "M550i xDrive Touring"
+    ],
+    "yearFrom": 2017,
+    "yearTo": 2020
+  },
+  {
     "platformId": "BMW-G32",
     "make": "BMW",
     "models": [
@@ -1885,78 +1957,6 @@
     ],
     "yearFrom": 2021,
     "yearTo": 2026
-  },
-  {
-    "platformId": "G30-G31-B47",
-    "make": "BMW",
-    "models": [
-      "520d",
-      "520d Touring",
-      "520d xDrive",
-      "520d xDrive Touring",
-      "525d",
-      "525d Touring",
-      "525d xDrive",
-      "525d xDrive Touring"
-    ],
-    "yearFrom": 2017,
-    "yearTo": 2020
-  },
-  {
-    "platformId": "G30-G31-B48",
-    "make": "BMW",
-    "models": [
-      "520i",
-      "520i Touring",
-      "530i",
-      "530i Touring",
-      "530i xDrive",
-      "530i xDrive Touring",
-      "530e",
-      "530e Touring",
-      "530e xDrive",
-      "530e xDrive Touring"
-    ],
-    "yearFrom": 2017,
-    "yearTo": 2020
-  },
-  {
-    "platformId": "G30-G31-B57",
-    "make": "BMW",
-    "models": [
-      "530d",
-      "530d Touring",
-      "530d xDrive",
-      "530d xDrive Touring",
-      "540d xDrive",
-      "540d xDrive Touring",
-      "M550d xDrive",
-      "M550d xDrive Touring"
-    ],
-    "yearFrom": 2017,
-    "yearTo": 2020
-  },
-  {
-    "platformId": "G30-G31-B58",
-    "make": "BMW",
-    "models": [
-      "540i",
-      "540i Touring",
-      "540i xDrive",
-      "540i xDrive Touring"
-    ],
-    "yearFrom": 2017,
-    "yearTo": 2020
-  },
-  {
-    "platformId": "G30-G31-N63",
-    "make": "BMW",
-    "models": [
-      "M550i xDrive",
-      "M550i xDrive Touring"
-    ],
-    "yearFrom": 2017,
-    "yearTo": 2020
   },
   {
     "platformId": "Mercedes-E-W210-Diesel-OM611",

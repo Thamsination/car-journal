@@ -46,25 +46,25 @@ function reorderPlatformKeys(data) {
 
 /** @type {Record<string, { displacement?: string | null; cylinders?: number; fuelType?: string; name?: string }>} */
 const EXPLICIT = {
-	"G30-G31-B47": {
+	"BMW-G30-B47": {
 		displacement: "2.0L",
 		cylinders: 4,
 		fuelType: "diesel",
 		name: "BMW G30/G31 5 Series (2.0L 4-cyl diesel)",
 	},
-	"G30-G31-B48": {
+	"BMW-G30-B48": {
 		displacement: "2.0L",
 		cylinders: 4,
 		fuelType: "petrol",
 		name: "BMW G30/G31 5 Series (2.0L 4-cyl petrol)",
 	},
-	"G30-G31-B57": {
+	"BMW-G30-B57": {
 		displacement: "3.0L",
 		cylinders: 6,
 		fuelType: "diesel",
 		name: "BMW G30/G31 5 Series (3.0L 6-cyl diesel)",
 	},
-	"G30-G31-B58": {
+	"BMW-G30-B58": {
 		name: "BMW G30/G31 5 Series (3.0L 6-cyl petrol)",
 	},
 	"Mercedes-EQ-EQE": {

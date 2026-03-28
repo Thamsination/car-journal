@@ -4,7 +4,7 @@
 
 Update every platform JSON file in `static/data/platforms/` to replace manufacturer engine codes with human-verifiable mechanical specifications. Also remove the static `milestones` array (it is computed at runtime and never read).
 
-The file `G30-G31-N63.json` has already been updated and serves as the reference format.
+The file `BMW-G30-N63.json` has already been updated and serves as the reference format.
 
 ## Changes per file
 
@@ -80,7 +80,7 @@ If the script does not exist, manually update `index.json` to match the current 
 
 ## Reference file
 
-See `static/data/platforms/G30-G31-N63.json` for the completed format.
+See `static/data/platforms/BMW-G30-N63.json` for the completed format.
 
 ## Do NOT
 

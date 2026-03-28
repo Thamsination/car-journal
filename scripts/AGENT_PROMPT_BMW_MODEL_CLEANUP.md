@@ -28,7 +28,7 @@ For each file listed below, replace every bare series name with the **full list 
 
 Before making any changes, read these files to understand the schema and existing patterns:
 
-1. `static/data/platforms/G30-G31-B47.json` — reference example of correct model naming (engine-specific, includes Touring and xDrive Touring variants)
+1. `static/data/platforms/BMW-G30-B47.json` — reference example of correct model naming (engine-specific, includes Touring and xDrive Touring variants)
 2. `scripts/AGENT_PROMPT_GENERATE_PLATFORMS.md` — the full platform generation rules (especially the `vehicles` array rules section)
 
 ### Step 1: Research BEFORE writing

@@ -27,7 +27,7 @@ Add an `"engines"` array to every platform JSON file in `static/data/platforms/`
 Before making any changes, read these files:
 
 1. `src/lib/types.ts` — understand the `PlatformConfig` interface. You will add `engines?: string[];` to it.
-2. `static/data/platforms/G30-G31-B47.json` — engine-specific platform (engine = `B47`)
+2. `static/data/platforms/BMW-G30-B47.json` — engine-specific platform (engine = `B47`)
 3. `static/data/platforms/BMW-E90.json` — catch-all platform (covers many engines)
 4. `static/data/platforms/Subaru-WRX-EJ-turbo.json` — non-BMW example
 5. `static/data/platforms/Mercedes-EQ-EQE.json` — EV example
@@ -59,7 +59,7 @@ Use the **manufacturer's internal engine code** — the same codes enthusiasts a
 
 #### Rules
 
-1. **Engine-specific platforms** (like `G30-G31-B47`) — the array has one entry: `["B47"]`.
+1. **Engine-specific platforms** (like `BMW-G30-B47`) — the array has one entry: `["B47"]`.
 2. **Catch-all platforms** (like `BMW-E90`) — list ALL engine codes that were offered in that generation on the European market. Research via web search. Sort alphabetically.
 3. **EV platforms** — use `["Electric"]`.
 4. **PHEV platforms** — list the combustion engine code(s) plus `"Electric"`, e.g. `["M264", "Electric"]`.
@@ -126,10 +126,10 @@ After the **final batch**, also:
 ### Files to update (76 total, excluding index.json)
 
 **Batch 1 — BMW engine-specific G30/G31:**
-- `G30-G31-B47.json` — `["B47"]`
-- `G30-G31-B48.json` — `["B48"]`
-- `G30-G31-B57.json` — `["B57"]`
-- `G30-G31-B58.json` — `["B58"]`
+- `BMW-G30-B47.json` — `["B47"]`
+- `BMW-G30-B48.json` — `["B48"]`
+- `BMW-G30-B57.json` — `["B57"]`
+- `BMW-G30-B58.json` — `["B58"]`
 - `BMW-I01.json` — i3 (research: BEV + optional REx)
 
 **Batch 2 — BMW EVs and special:**

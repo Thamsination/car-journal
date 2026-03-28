@@ -21,8 +21,8 @@ cd /home/thamsination/car-journal && git pull
 
 Read these files to understand the target format:
 
-1. `static/data/platforms/G30-G31-B47.json` — reference file WITH `serviceSources` already added
-2. `static/data/platforms/G30-G31-N63.json` — another sourced reference (petrol V8)
+1. `static/data/platforms/BMW-G30-B47.json` — reference file WITH `serviceSources` already added
+2. `static/data/platforms/BMW-G30-N63.json` — another sourced reference (petrol V8)
 3. `scripts/AGENT_PROMPT_GENERATE_PLATFORMS.md` — the full generation rules (source tier system, MFR/REC definitions)
 
 ---
@@ -173,7 +173,7 @@ BMW-F10-30L-I6, BMW-F10-ActiveHybrid5, BMW-F10-B47, BMW-F10-N20, BMW-F10-N47, BM
 BMW-F32-B47, BMW-F32-B48, BMW-F32-B58, BMW-F32-N20, BMW-F32-N47, BMW-F32-N55, BMW-F32-N57, BMW-F32-S55, BMW-G22-B47, BMW-G22-B48, BMW-G22-B57, BMW-G22-B58
 
 **Batch 8: G20/G80 + G30/G31 + G14 (12 files)**
-BMW-G20-B47, BMW-G20-B48, BMW-G20-B57, BMW-G20-B58, BMW-G20-330e, BMW-G80-S58, G30-G31-B48, G30-G31-B58, BMW-G14-B57, BMW-G14-B58, BMW-G14-N63, BMW-G14-S63
+BMW-G20-B47, BMW-G20-B48, BMW-G20-B57, BMW-G20-B58, BMW-G20-330e, BMW-G80-S58, BMW-G30-B48, BMW-G30-B58, BMW-G14-B57, BMW-G14-B58, BMW-G14-N63, BMW-G14-S63
 
 **Batch 9: Mercedes W210 + W211 (15 files)**
 Mercedes-E-W210-Diesel-OM611, Mercedes-E-W210-Diesel-OM612, Mercedes-E-W210-Diesel-OM613, Mercedes-E-W210-Petrol-M111, Mercedes-E-W210-Petrol-M112-24, Mercedes-E-W210-Petrol-M112-28, Mercedes-E-W210-Petrol-M112-32, Mercedes-E-W210-Petrol-M113-43, Mercedes-E-W210-Petrol-M113-55K, Mercedes-E-W211-Diesel-OM628, Mercedes-E-W211-Diesel-OM642, Mercedes-E-W211-Diesel-OM646, Mercedes-E-W211-Diesel-OM647, Mercedes-E-W211-Diesel-OM648, Mercedes-E-W211-Petrol-M112-26
