@@ -202,17 +202,17 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
 This array is how the app matches a user's car to a platform. Get it right.
 
 - **`make`**: The brand name as the user would type it. Use title case: `"Volkswagen"` not `"VW"`, `"BMW"` not `"Bmw"`.
-- **`models`**: Every model name **actually sold** on this engine-platform combination. Include body style variants **and drivetrain variants** if they have different names (e.g., `["520d", "520d xDrive"]` for a BMW diesel platform, or `["Golf", "Golf Variant"]` for VW). Always list both the base and AWD model name when the manufacturer markets them separately (BMW: `"320i"` and `"320i xDrive"`, Audi: `"A4 2.0 TFSI"` and `"A4 2.0 TFSI quattro"`). Do NOT include chassis codes or generation numbers — users don't know those. **Verify model names exist** — not every generation/chassis offered AWD. For example, BMW E39 (1995–2003) had NO xDrive/xi variants; those started with the E60. Adding fictional model names breaks user trust.
+- **`models`**: Every model name **actually sold** on this engine-platform combination. **Every entry must identify the engine variant** — bare series names like `"3 Series"`, `"5 Series"`, or `"Golf"` are NOT valid because they don't tell the app which engine the user has. Use the full model designation: `"320d"`, `"520d"`, `"Golf TDI"`, etc. Include body style variants **and drivetrain variants** if they have different market names (e.g., `["520d", "520d Touring", "520d xDrive", "520d xDrive Touring"]` for a BMW diesel platform covering sedan and wagon). Always list both the base and AWD model name when the manufacturer markets them separately (BMW: `"320i"` and `"320i xDrive"`, Audi: `"A4 2.0 TFSI"` and `"A4 2.0 TFSI quattro"`). For platforms covering both sedan and Touring/wagon body styles (BMW G30 sedan + G31 Touring, E60 sedan + E61 Touring), every model that is sold as a Touring must have a separate `"... Touring"` entry — a user with a `520d xDrive Touring` must find that exact name, not just `"520d xDrive"`. Do NOT include chassis codes or generation numbers — users don't know those. **Verify model names exist** — not every generation/chassis offered AWD. For example, BMW E39 (1995–2003) had NO xDrive/xi variants; those started with the E60. Adding fictional model names breaks user trust.
 - **`yearFrom`**: First model year this engine-platform combination was produced (integer).
 - **`yearTo`**: Last model year, or the current year (2026) if still in production (integer).
 - **Multi-brand platforms**: If the same platform is sold under different brands, add a separate entry per brand.
 
-**Example — BMW G30/G31 diesel:**
+**Example — BMW G30/G31 diesel (sedan + Touring):**
 ```json
 "vehicles": [
   {
     "make": "BMW",
-    "models": ["520d", "520d xDrive", "525d", "525d xDrive", "530d", "530d xDrive"],
+    "models": ["520d", "520d Touring", "520d xDrive", "520d xDrive Touring", "525d", "525d Touring", "525d xDrive", "525d xDrive Touring"],
     "yearFrom": 2017,
     "yearTo": 2020
   }
@@ -375,6 +375,8 @@ Before moving to the next platform, verify your output:
 17. **Check transmission-specific tasks** — if the platform covers vehicles with multiple transmission types (manual + automatic, manual + CVT, etc.), verify that each transmission-specific fluid task has a `"transmission"` array tag. If the platform only comes with one transmission type, the tag may be omitted. Never include both `CVT fluid` and `manual transmission oil` without tagging each with the appropriate `transmission` value.
 18. **Check `drivetrains` array** — must be present and contain at least one of `"FWD"`, `"RWD"`, `"AWD"`. If the platform includes AWD models (xDrive, quattro, etc.), `"AWD"` must be in the array. If the platform is exclusively AWD (X-series, Subaru), it should be `["AWD"]` only. FWD-based platforms with optional AWD should be `["FWD", "AWD"]`, not `["RWD", "AWD"]`.
 19. **Validate every `rec` task against the qualifying criteria** — each `rec` entry must (a) service a physical wear item or fluid, (b) have a documented engineering reason specific to this platform/engine, and (c) have a specific km or month interval from specialist consensus. If any `rec` task is an additive, consumable product, or "nice to have" without a documented failure mode, remove it.
+20. **Check model names identify the engine variant** — no bare series names like `"3 Series"`, `"5 Series"`, `"Golf"`. Every model entry must include the engine designation (e.g., `"320d"`, `"520i xDrive"`, `"Golf TDI"`). If a user cannot tell from the model name alone which engine it refers to, the entry is invalid.
+21. **Check body style completeness** — if the platform covers multiple body styles (sedan + Touring/wagon, coupé + convertible), verify that every engine/drivetrain model name has a variant for each body style. For example, a G30/G31 platform must list both `"520d"` (sedan) and `"520d Touring"` (wagon), not just `"520d"`.
 
 If any check fails, go back and fix it before proceeding.
 
@@ -401,6 +403,8 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Copy intervals from one chassis generation to another without verifying — a G20 may differ from an F30
 - Use generic task names when the OEM has specific terminology — use `"micro filter"` for BMW, not `"cabin filter"`
 - Create duplicate task entries — each task name appears at most once per `kind`
+- Use bare series names (`"3 Series"`, `"5 Series"`, `"Golf"`, `"Clio"`) as model entries — every model name must identify the specific engine variant (e.g., `"320d"`, `"Golf TDI"`)
+- Omit body style suffixes when the platform covers multiple body styles — if the chassis includes a Touring/wagon (G31, E61, F11), every model sold as a Touring must have a `"... Touring"` entry alongside the sedan entry
 - Leave the `vehicles` array empty or with models that don't match the engine family
 - Omit xDrive/quattro/AWD model names from the `vehicles` array when the manufacturer sells them as distinct models — users with AWD cars must be able to find their vehicle
 - Omit transfer case and differential fluid tasks on platforms that cover AWD/4WD models — every AWD vehicle has these components and they need servicing
