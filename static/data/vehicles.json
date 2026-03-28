@@ -2,11 +2,13 @@
   "vehicles": [
     {
       "id": "EJ39063",
-      "label": "Kaisern"
+      "label": "Kaisern",
+      "model": "520d xDrive Touring"
     },
     {
       "id": "VMNAEA1KS",
-      "label": "Fortbert"
+      "label": "Fortbert",
+      "model": "WRX STI"
     }
   ],
   "activeVehicle": "VMNAEA1KS"

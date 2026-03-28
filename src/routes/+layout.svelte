@@ -343,7 +343,7 @@
 			await createVehicleFiles(vehicleId, config, healthCfg);
 
 			const registry = await loadVehiclesRegistry();
-			registry.vehicles.push({ id: vehicleId, label });
+			registry.vehicles.push({ id: vehicleId, label, model: addModel });
 			registry.activeVehicle = vehicleId;
 			await saveVehiclesRegistry(registry, `Register vehicle: ${label}`);
 
@@ -433,6 +433,7 @@
 			const entry = registry.vehicles.find((v) => v.id === editVehicleId);
 			if (entry) {
 				entry.label = editName.trim() || entry.label;
+				entry.model = editModel.trim() || entry.model;
 				await saveVehiclesRegistry(registry, `Update registry: ${entry.label}`);
 				$vehicleList = registry.vehicles;
 			}
@@ -607,9 +608,9 @@
 		dropdownOpen = false;
 	}
 
-	const activeLabel = $derived(
-		$vehicleList.find((v) => v.id === $activeVehicleId)?.label || $activeVehicleId || 'Select Vehicle'
-	);
+	const activeEntry = $derived($vehicleList.find((v) => v.id === $activeVehicleId));
+	const activeLabel = $derived(activeEntry?.label || 'Select Vehicle');
+	const activeModel = $derived(activeEntry?.model || '');
 
 	const navItems = [
 		{ href: `${base}/`, label: 'Dashboard', icon: '◎' },
@@ -638,8 +639,8 @@
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<div class="selector-trigger" onclick={handleDropdownClick}>
-					<span class="selector-plate">{$activeVehicleId || 'Vehicle'}</span>
-					<span class="selector-label">{activeLabel}</span>
+					<span class="selector-name">{activeLabel}</span>
+					{#if activeModel}<span class="selector-model">{activeModel}</span>{/if}
 					<span class="selector-arrow">{dropdownOpen ? '▲' : '▼'}</span>
 				</div>
 				{#if dropdownOpen}
@@ -652,8 +653,8 @@
 							class:dropdown-item-active={v.id === $activeVehicleId}
 							onclick={() => switchVehicle(v.id)}
 						>
-							<span class="dropdown-plate">{v.id}</span>
-							<span class="dropdown-label">{v.label}</span>
+							<span class="dropdown-name">{v.label}</span>
+							<span class="dropdown-model">{v.model || ''}</span>
 							<span class="dropdown-edit" onclick={(e) => { e.stopPropagation(); openEditVehicle(v.id); }}>⚙</span>
 						</div>
 					{/each}
@@ -662,7 +663,7 @@
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<div class="dropdown-item dropdown-item-add" onclick={openAddVehicle}>
 						<span class="dropdown-add-icon">+</span>
-						<span class="dropdown-label">Add Vehicle</span>
+						<span class="dropdown-name">Add Vehicle</span>
 					</div>
 					</div>
 				{/if}
@@ -1033,13 +1034,13 @@
 		background: rgba(142, 142, 147, 0.12);
 	}
 
-	.selector-plate {
+	.selector-name {
 		font-size: 15px;
 		font-weight: 700;
 		letter-spacing: 0.5px;
 	}
 
-	.selector-label {
+	.selector-model {
 		font-size: 13px;
 		color: var(--color-text-secondary);
 		font-weight: 500;
@@ -1081,14 +1082,13 @@
 		background: rgba(0, 122, 255, 0.08);
 	}
 
-	.dropdown-plate {
+	.dropdown-name {
 		font-size: 14px;
 		font-weight: 700;
 		letter-spacing: 0.3px;
-		min-width: 70px;
 	}
 
-	.dropdown-label {
+	.dropdown-model {
 		font-size: 13px;
 		color: var(--color-text-secondary);
 	}

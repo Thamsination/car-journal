@@ -105,6 +105,7 @@ export interface TireConfig {
 export interface VehicleRegistryEntry {
 	id: string;
 	label: string;
+	model?: string;
 }
 
 export interface VehiclesRegistry {
