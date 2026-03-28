@@ -93,6 +93,18 @@
       "km": 60000,
       "kind": "mfr",
       "months": null
+    },
+    {
+      "task": "xDrive transfer case fluid",
+      "km": 80000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "differential fluids",
+      "km": 80000,
+      "months": null,
+      "kind": "rec"
     }
   ],
   "serviceNotes": {
@@ -107,7 +119,9 @@
     "air cleaner element": "garage.wiki BMW maintenance tables tie engine air filter, fuel filter (diesel), and spark plugs (petrol) to \"with each third engine oil change\". At a ~30,000 km CBS oil cadence this implies roughly 90,000 km; this platform uses 90,000 km as the mfr-aligned distance. Confirm with your service display and owner's literature.",
     "check front brake pads": "Front brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services.",
     "check rear brake pads": "Rear brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services.",
-    "vehicle check": "BMW CBS scheduled inspection. A comprehensive check covering braking systems, vehicle diagnostics, and technical components."
+    "vehicle check": "BMW CBS scheduled inspection. A comprehensive check covering braking systems, vehicle diagnostics, and technical components.",
+    "xDrive transfer case fluid": "BMW considers xDrive transfer case fluid lifetime fill. Specialists recommend replacement at 60,000\u2013100,000 km to prevent wear and ensure smooth AWD operation. 80,000 km is a common preventive interval.",
+    "differential fluids": "BMW considers differential fluid lifetime fill. Specialists recommend replacement at 60,000\u2013100,000 km. Both front and rear differentials should be serviced. 80,000 km is a common preventive interval."
   },
   "milestones": [
     {
@@ -127,6 +141,13 @@
         "engine oil",
         "micro filter",
         "vehicle check"
+      ]
+    },
+    {
+      "km": 80000,
+      "tasks": [
+        "differential fluids",
+        "xDrive transfer case fluid"
       ]
     },
     {
@@ -169,6 +190,13 @@
       ]
     },
     {
+      "km": 160000,
+      "tasks": [
+        "differential fluids",
+        "xDrive transfer case fluid"
+      ]
+    },
+    {
       "km": 180000,
       "tasks": [
         "air cleaner element",
@@ -202,10 +230,12 @@
         "check front brake pads",
         "check rear brake pads",
         "coolant flush",
+        "differential fluids",
         "engine oil",
         "intake carbon clean",
         "micro filter",
-        "vehicle check"
+        "vehicle check",
+        "xDrive transfer case fluid"
       ]
     },
     {

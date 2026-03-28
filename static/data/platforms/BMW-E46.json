@@ -1,7 +1,7 @@
 {
   "id": "BMW-E46",
   "name": "BMW E46 3 Series",
-  "years": "1998–2006",
+  "years": "1998\u20132006",
   "chassisCodes": [
     "E46"
   ],
@@ -11,21 +11,14 @@
       "models": [
         "3 Series",
         "3 Series Touring",
-        "3 Series Coupé",
+        "3 Series Coup\u00e9",
         "3 Series Convertible",
         "M3",
         "M3 Convertible",
         "325xi",
         "330xi",
-        "330xd",
-        "320xd",
         "325xi Touring",
-        "330xi Touring",
-        "330xd Touring",
-        "320xd Touring",
-        "325xi Coupé",
-        "330xi Coupé",
-        "330xd Coupé"
+        "330xi Touring"
       ],
       "yearFrom": 1998,
       "yearTo": 2006
@@ -103,20 +96,34 @@
       "km": 120000,
       "kind": "rec",
       "months": null
+    },
+    {
+      "task": "xDrive transfer case fluid",
+      "km": 80000,
+      "months": null,
+      "kind": "rec"
+    },
+    {
+      "task": "differential fluids",
+      "km": 80000,
+      "months": null,
+      "kind": "rec"
     }
   ],
   "serviceNotes": {
     "engine oil": "Pre-CBS EU maintenance booklets commonly used fixed oil change intervals around 15,000 km for many petrol and diesel models; verify against the service indicator or printed schedule for your model year.",
-    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based — typically every 2 years regardless of mileage.",
+    "brake fluid": "Brake fluid is hygroscopic and absorbs moisture over time, reducing its boiling point and braking effectiveness. Replacement is time-based, not distance-based \u2014 typically every 2 years regardless of mileage.",
     "spark plugs": "Petrol spark plug renewal per BMW maintenance schedule for this generation.",
     "fuel filter": "Diesel fuel filter replacement per BMW fixed-interval schedules for this generation (verify engine code).",
     "gearbox fluid": "Automatic and manual gear oil is often labelled lifetime; many specialists recommend exchange around 100,000 km for long-term health.",
     "coolant flush": "Coolant inhibitor effectiveness declines with age; preventive full exchange around 120,000 km is a common workshop recommendation.",
     "intake carbon clean": "Direct-injection turbo engines can accumulate intake valve deposits; walnut or chemical cleaning around 120,000 km restores airflow.",
     "micro filter": "Pollen/cabin filter replacement per BMW maintenance booklet for this generation (typically every 2nd oil service or fixed km).",
-    "air cleaner element": "Engine air filter replacement is typically scheduled at fixed km in older EU booklets; 30,000–60,000 km is common—verify your printed maintenance table.",
+    "air cleaner element": "Engine air filter replacement is typically scheduled at fixed km in older EU booklets; 30,000\u201360,000 km is common\u2014verify your printed maintenance table.",
     "check front brake pads": "Front brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services.",
-    "check rear brake pads": "Rear brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services."
+    "check rear brake pads": "Rear brake pad thickness is monitored via CBS wear sensors and inspection at scheduled services; 30,000 km is a reasonable inspection cadence between major services.",
+    "xDrive transfer case fluid": "xDrive models only. BMW considers transfer case fluid lifetime fill. Specialists recommend replacement at 60,000\u2013100,000 km for xDrive-equipped vehicles. Does not apply to rear-wheel drive models.",
+    "differential fluids": "xDrive models only. BMW considers differential fluid lifetime fill. Specialists recommend replacement at 60,000\u2013100,000 km for xDrive-equipped vehicles. Does not apply to rear-wheel drive models."
   },
   "milestones": [
     {
@@ -163,6 +170,13 @@
         "check front brake pads",
         "check rear brake pads",
         "engine oil"
+      ]
+    },
+    {
+      "km": 80000,
+      "tasks": [
+        "differential fluids",
+        "xDrive transfer case fluid"
       ]
     },
     {
@@ -219,6 +233,13 @@
         "check rear brake pads",
         "engine oil",
         "micro filter"
+      ]
+    },
+    {
+      "km": 160000,
+      "tasks": [
+        "differential fluids",
+        "xDrive transfer case fluid"
       ]
     },
     {
@@ -280,11 +301,13 @@
         "check front brake pads",
         "check rear brake pads",
         "coolant flush",
+        "differential fluids",
         "engine oil",
         "fuel filter",
         "intake carbon clean",
         "micro filter",
-        "spark plugs"
+        "spark plugs",
+        "xDrive transfer case fluid"
       ]
     },
     {

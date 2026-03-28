@@ -13,13 +13,7 @@
     "make": "BMW",
     "models": [
       "5 Series",
-      "5 Series Touring",
-      "525xi",
-      "530xi",
-      "530xd",
-      "525xi Touring",
-      "530xi Touring",
-      "530xd Touring"
+      "5 Series Touring"
     ],
     "yearFrom": 1995,
     "yearTo": 2003
@@ -36,15 +30,8 @@
       "M3 Convertible",
       "325xi",
       "330xi",
-      "330xd",
-      "320xd",
       "325xi Touring",
-      "330xi Touring",
-      "330xd Touring",
-      "320xd Touring",
-      "325xi Coup\u00e9",
-      "330xi Coup\u00e9",
-      "330xd Coup\u00e9"
+      "330xi Touring"
     ],
     "yearFrom": 1998,
     "yearTo": 2006
@@ -427,7 +414,6 @@
       "330d xDrive",
       "335d xDrive",
       "330e xDrive",
-      "ActiveHybrid 3 xDrive",
       "320i xDrive Touring",
       "328i xDrive Touring",
       "330i xDrive Touring",
@@ -729,8 +715,7 @@
       "320d xDrive Touring",
       "330d xDrive Touring",
       "330e xDrive Touring",
-      "M340i xDrive Touring",
-      "i4 M50"
+      "M340i xDrive Touring"
     ],
     "yearFrom": 2018,
     "yearTo": 2026

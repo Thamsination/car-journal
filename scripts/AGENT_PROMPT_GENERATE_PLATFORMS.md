@@ -67,6 +67,12 @@ Many platforms cover models sold in both RWD/FWD and AWD variants (e.g., BMW 3 S
 
 **Important:** The `vehicles` array must list xDrive/AWD model names explicitly when the manufacturer markets them as distinct models. For example, BMW sells `"320d"` and `"320d xDrive"` as separate models — both must appear. Similarly, Audi sells `"A4 2.0 TFSI"` and `"A4 2.0 TFSI quattro"`. Omitting the AWD variant means users with that car cannot find it in the app.
 
+**Critical: Adding AWD model names requires BOTH:**
+1. Adding the model names to the `vehicles` array
+2. Adding the drivetrain service tasks (`xDrive transfer case fluid`, `differential fluids`) to `serviceIntervals`
+
+Never add AWD model names without also adding the corresponding drivetrain service tasks. The model names tell the app *which cars match*; the service tasks tell the app *what maintenance those cars need*. One without the other is incomplete.
+
 **Platform ID format:** `<MAKE>-<CHASSIS>-<ENGINE/FUEL>` for new platforms.
 
 > **Note:** Some legacy BMW files use older naming conventions (e.g., `G30-G31-B47.json` without a `BMW-` prefix, or `BMW-E90.json` without an engine suffix). Do NOT rename existing files — use the new format for all newly created platforms only.
@@ -193,7 +199,7 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
 This array is how the app matches a user's car to a platform. Get it right.
 
 - **`make`**: The brand name as the user would type it. Use title case: `"Volkswagen"` not `"VW"`, `"BMW"` not `"Bmw"`.
-- **`models`**: Every model name sold on this engine-platform combination. Include body style variants **and drivetrain variants** if they have different names (e.g., `["520d", "520d xDrive"]` for a BMW diesel platform, or `["Golf", "Golf Variant"]` for VW). Always list both the base and AWD model name when the manufacturer markets them separately (BMW: `"320i"` and `"320i xDrive"`, Audi: `"A4 2.0 TFSI"` and `"A4 2.0 TFSI quattro"`). Do NOT include chassis codes or generation numbers — users don't know those.
+- **`models`**: Every model name **actually sold** on this engine-platform combination. Include body style variants **and drivetrain variants** if they have different names (e.g., `["520d", "520d xDrive"]` for a BMW diesel platform, or `["Golf", "Golf Variant"]` for VW). Always list both the base and AWD model name when the manufacturer markets them separately (BMW: `"320i"` and `"320i xDrive"`, Audi: `"A4 2.0 TFSI"` and `"A4 2.0 TFSI quattro"`). Do NOT include chassis codes or generation numbers — users don't know those. **Verify model names exist** — not every generation/chassis offered AWD. For example, BMW E39 (1995–2003) had NO xDrive/xi variants; those started with the E60. Adding fictional model names breaks user trust.
 - **`yearFrom`**: First model year this engine-platform combination was produced (integer).
 - **`yearTo`**: Last model year, or the current year (2026) if still in production (integer).
 - **Multi-brand platforms**: If the same platform is sold under different brands, add a separate entry per brand.
@@ -268,9 +274,11 @@ Before moving to the next platform, verify your output:
 9. **Verify engine specificity** — does the file only include tasks relevant to this engine family? (no spark plugs on diesels, no fuel filter on petrol if N/A, no engine oil on EVs)
 10. **Check AWD/4WD drivetrain tasks** — if any model in the `vehicles` array is an AWD/4WD variant (xDrive, quattro, 4MATIC, etc.), verify that transfer case and differential fluid tasks are present. If the platform covers exclusively AWD models (X-series, Subaru, etc.), these should be MFR or REC. If mixed RWD+AWD, they should be REC with a service note.
 11. **Check AWD model name completeness** — if the chassis is offered with optional AWD (e.g., BMW xDrive, Audi quattro), verify that both the base and AWD model names appear in the `vehicles.models` array. For example, a BMW G20 3 Series platform should list both `"320i"` and `"320i xDrive"` if both are sold.
-12. **Cross-check against other files for the same chassis** — if you generated multiple variants (petrol/diesel, different generations), verify: (a) intervals differ where expected (fuel filter, spark plugs, timing), (b) shared tasks like coolant and brake fluid appear on ALL variants, (c) task names are consistent within the same brand (don't use "cabin air filter" on one and "interior ventilation filter" on another unless the OEM actually changed terminology between generations)
-13. **Compare intervals to web search results** — do the numbers match what you found?
-14. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
+12. **Verify model names are historically accurate** — confirm via web search that every model name in the `vehicles` array was actually produced for this generation. AWD availability varies by generation: BMW xDrive was not available on E39 5 Series, E38 7 Series, or E63 6 Series. Adding models that never existed is worse than omitting real ones. If unsure, leave it out.
+13. **Cross-check against other files for the same chassis** — if you generated multiple variants (petrol/diesel, different generations), verify: (a) intervals differ where expected (fuel filter, spark plugs, timing), (b) shared tasks like coolant and brake fluid appear on ALL variants, (c) task names are consistent within the same brand (don't use "cabin air filter" on one and "interior ventilation filter" on another unless the OEM actually changed terminology between generations)
+14. **Compare intervals to web search results** — do the numbers match what you found?
+15. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
+16. **Check that model names belong to this platform** — no models from other platforms (e.g., i4 belongs to G26, not G20; M5 belongs to F10/G30 M, not the standard chassis file)
 
 If any check fails, go back and fix it before proceeding.
 
@@ -300,6 +308,9 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Leave the `vehicles` array empty or with models that don't match the engine family
 - Omit xDrive/quattro/AWD model names from the `vehicles` array when the manufacturer sells them as distinct models — users with AWD cars must be able to find their vehicle
 - Omit transfer case and differential fluid tasks on platforms that cover AWD/4WD models — every AWD vehicle has these components and they need servicing
+- Add AWD model names to the `vehicles` array without also adding drivetrain service tasks to `serviceIntervals` — model names without matching tasks means missing maintenance reminders
+- Invent model names that never existed — verify via web search that each AWD variant was actually produced for this generation (e.g., BMW E39 never had xDrive; E46 xi was petrol-only, no xd diesel AWD)
+- Add models from a different platform to the wrong file — the i4 belongs to G26/G22, not G20; keep model lists accurate to the chassis
 - Include spark plugs on diesel or EV platforms
 - Include fuel filter on petrol platforms where not applicable
 - Assign a `km` value to brake fluid — it is always time-based (`"km": null, "months": 24`)
