@@ -141,10 +141,17 @@
 			if (selectedCategory) form.category = selectedCategory;
 			form.provider = resolveProvider();
 			syncFormEvent();
+			if (form.km !== null && $latestOdometer.km > 0 && form.km <= $latestOdometer.km) {
+				form.completed = true;
+			}
 			const updated = [...$events, { ...form }];
 
 			if (isOnline()) {
-				await loadEvents();
+				try {
+					await loadEvents();
+				} catch {
+					await loadEvents();
+				}
 				await saveEvents(updated, `Add: ${form.event}`);
 			} else {
 				await queueWrite('events', updated, `Add: ${form.event}`);
@@ -153,7 +160,8 @@
 			$events = updated;
 			goto(`${base}/timeline`);
 		} catch (e: unknown) {
-			saveError = e instanceof Error ? e.message : 'Failed to save';
+			const msg = e instanceof Error ? e.message : String(e);
+			saveError = msg.includes('API error') ? 'Save failed — please try again' : msg;
 		} finally {
 			saving = false;
 		}

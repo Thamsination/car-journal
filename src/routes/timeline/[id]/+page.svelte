@@ -141,7 +141,11 @@
 			const updated = $events.map((e) => (e.id === form.id ? { ...form } : e));
 
 			if (isOnline()) {
-				await loadEvents();
+				try {
+					await loadEvents();
+				} catch {
+					await loadEvents();
+				}
 				await saveEvents(updated, `Update: ${form.event}`);
 			} else {
 				await queueWrite('events', updated, `Update: ${form.event}`);
@@ -151,7 +155,8 @@
 			event = { ...form };
 			editing = false;
 		} catch (e: unknown) {
-			saveError = e instanceof Error ? e.message : 'Failed to save';
+			const msg = e instanceof Error ? e.message : String(e);
+			saveError = msg.includes('API error') ? 'Save failed — please try again' : msg;
 		} finally {
 			saving = false;
 		}
@@ -172,7 +177,11 @@
 			);
 
 			if (isOnline()) {
-				await loadEvents();
+				try {
+					await loadEvents();
+				} catch {
+					await loadEvents();
+				}
 				await saveEvents(updated, `Complete: ${form.event}`);
 			} else {
 				await queueWrite('events', updated, `Complete: ${form.event}`);
@@ -181,7 +190,8 @@
 			showCompleteModal = false;
 			goto(`${base}/timeline`);
 		} catch (e: unknown) {
-			saveError = e instanceof Error ? e.message : 'Failed to mark as completed';
+			const msg = e instanceof Error ? e.message : String(e);
+			saveError = msg.includes('API error') ? 'Failed to complete — please try again' : msg;
 		} finally {
 			completing = false;
 		}
@@ -194,7 +204,11 @@
 			const updated = $events.filter((e) => e.id !== form.id);
 
 			if (isOnline()) {
-				await loadEvents();
+				try {
+					await loadEvents();
+				} catch {
+					await loadEvents();
+				}
 				await saveEvents(updated, `Delete: ${form.event}`);
 			} else {
 				await queueWrite('events', updated, `Delete: ${form.event}`);
