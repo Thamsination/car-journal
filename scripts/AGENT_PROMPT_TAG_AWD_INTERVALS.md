@@ -29,7 +29,8 @@ Only platforms whose `drivetrains` array contains **both** `"RWD"` and `"AWD"` n
 
 - **Skip** platforms with `"drivetrains": ["AWD"]` — every vehicle on these platforms is AWD, so no filter is needed.
 - **Skip** platforms with `"drivetrains": ["RWD"]` — these should not have AWD-specific tasks at all. If they do, flag it as an anomaly but do NOT add a drivetrain filter.
-- **Skip** Subaru platforms — all Subaru models are AWD. Their differential tasks apply to every vehicle.
+- **Skip** Subaru WRX platforms (`Subaru-WRX-*`) — all WRX models are AWD-only. Their differential tasks apply to every vehicle.
+- **Skip** Subaru BRZ platforms (`Subaru-BRZ-*`) and their Toyota twins (`Toyota-86-*`, `Toyota-GR86-*`) — these are RWD-only and have no AWD-specific tasks.
 - **Skip** platforms with `"drivetrains": ["FWD", "AWD"]` or any combination NOT containing `"RWD"` alongside `"AWD"` — these follow the same logic (only mixed RWD+AWD platforms need filtering).
 
 ### Which tasks are AWD-specific
