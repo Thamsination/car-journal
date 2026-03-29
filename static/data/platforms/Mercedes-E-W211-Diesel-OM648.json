@@ -33,8 +33,8 @@
     { "task": "fuel filter", "km": 60000, "months": null, "kind": "mfr" },
     { "task": "coolant", "km": 150000, "months": 60, "kind": "mfr" },
     { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
-    { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
-    { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec", "drivetrain": ["AWD"] },
+    { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec", "drivetrain": ["AWD"] },
     { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
     { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
     { "task": "poly-V belt", "km": 100000, "months": null, "kind": "rec" }
