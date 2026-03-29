@@ -162,12 +162,23 @@
 		const odoKm = $latestOdometer.km;
 
 		const allMilestones: ServiceMilestone[] = [];
-		if (showMfr) allMilestones.push(...mfrMilestones);
+
+		function hasVisibleTasks(ms: ServiceMilestone): boolean {
+			if (ms.km >= odoKm) return true;
+			const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
+			return stats.some((ts) => ts.status === 'amber' || ts.status === 'red');
+		}
+
+		if (showMfr) {
+			for (const ms of mfrMilestones) {
+				if (hasVisibleTasks(ms)) allMilestones.push(ms);
+			}
+		}
 		if (showRec) {
 			for (const ms of recMilestones) {
 				const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
 				const card = milestoneCardStatus(stats);
-				if (card === 'red' || ms.km >= odoKm) {
+				if ((card === 'red' || ms.km >= odoKm) && hasVisibleTasks(ms)) {
 					allMilestones.push(ms);
 				}
 			}
