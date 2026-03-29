@@ -54,17 +54,32 @@ function sortByDateDesc(a: CarEvent, b: CarEvent): number {
 	return bKm - aKm;
 }
 
-export const dailyAverageKm = derived(events, ($events) => {
+export const dailyAverageKm = derived([events, vehicleConfig], ([$events, $vc]) => {
 	const withBoth = $events
 		.filter((e) => e.completed && e.km !== null && e.date)
 		.sort((a, b) => (a.date!).localeCompare(b.date!));
-	if (withBoth.length < 2) return 0;
-	const earliest = withBoth[0];
-	const latest = withBoth[withBoth.length - 1];
-	const kmDiff = (latest.km ?? 0) - (earliest.km ?? 0);
-	const daysDiff = (new Date(latest.date!).getTime() - new Date(earliest.date!).getTime()) / 86400000;
-	if (daysDiff <= 0 || kmDiff <= 0) return 0;
-	return Math.round((kmDiff / daysDiff) * 10) / 10;
+
+	if (withBoth.length >= 2) {
+		const earliest = withBoth[0];
+		const latest = withBoth[withBoth.length - 1];
+		const kmDiff = (latest.km ?? 0) - (earliest.km ?? 0);
+		const daysDiff = (new Date(latest.date!).getTime() - new Date(earliest.date!).getTime()) / 86400000;
+		if (daysDiff > 0 && kmDiff > 0) {
+			return Math.round((kmDiff / daysDiff) * 10) / 10;
+		}
+	}
+
+	const odoKm = $vc?.odometer ?? (withBoth.length > 0 ? (withBoth[withBoth.length - 1].km ?? 0) : 0);
+	const year = $vc?.year;
+	if (odoKm > 0 && year && year > 1900) {
+		const startDate = new Date(`${year}-06-01T00:00:00`);
+		const daysSinceStart = (Date.now() - startDate.getTime()) / 86400000;
+		if (daysSinceStart > 0) {
+			return Math.round((odoKm / daysSinceStart) * 10) / 10;
+		}
+	}
+
+	return 0;
 });
 
 export const latestOdometer = derived(
