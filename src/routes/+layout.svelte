@@ -6,9 +6,9 @@
 	import { session, activeVehicleId, vehicleList, vehicleListLoaded, requestAddVehicle, events, parts, healthIntervals, vehicleConfig, tireConfig, platformConfig } from '$lib/stores';
 	import { supabase } from '$lib/supabase';
 	import { getPendingWrites, flushPendingWrites } from '$lib/offline';
-	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, setUserId, type PlatformIndexEntry } from '$lib/data';
-	import { generateHealthConfig } from '$lib/utils';
-	import type { TransmissionType, DrivetrainType, PlatformConfig } from '$lib/types';
+	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, saveEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, setUserId, type PlatformIndexEntry } from '$lib/data';
+	import { generateHealthConfig, generateId, buildEventString, computeMfrMilestones, getServiceIntervals } from '$lib/utils';
+	import type { TransmissionType, DrivetrainType, PlatformConfig, CarEvent } from '$lib/types';
 
 	let { children } = $props();
 	let pendingCount = $state(0);
@@ -32,6 +32,7 @@
 	let addPlatformData = $state<PlatformConfig | null>(null);
 	let addSaving = $state(false);
 	let addError = $state('');
+	let addServiceFollowed = $state(false);
 
 	let editVehicleOpen = $state(false);
 	let editVehicleId = $state('');
@@ -208,6 +209,7 @@
 		addDrivetrainDetected = false;
 		addError = '';
 		addSaving = false;
+		addServiceFollowed = false;
 	}
 
 	async function openAddVehicle() {
@@ -341,7 +343,32 @@
 			$vehicleList = registry.vehicles;
 			$activeVehicleId = vehicleId;
 
-			$events = [];
+			let initialEvents: CarEvent[] = [];
+			if (addServiceFollowed && config.odometer && config.odometer > 0) {
+				const intervals = getServiceIntervals(platform, trans as TransmissionType | null, (addDrivetrain || null) as DrivetrainType | null);
+				const milestones = computeMfrMilestones([], intervals, config.odometer);
+				initialEvents = milestones
+					.filter(ms => ms.km <= config.odometer!)
+					.map(ms => ({
+						id: generateId('evt'),
+						km: ms.km,
+						date: '',
+						event: buildEventString(ms.tasks),
+						cost: 0,
+						currency: '',
+						provider: '',
+						notes: '',
+						completed: true,
+						category: 'official-service' as const,
+						tasks: [...ms.tasks],
+						invoiceNr: ''
+					}));
+				if (initialEvents.length > 0) {
+					await saveEvents(initialEvents, 'Pre-populate MFR service history');
+				}
+			}
+
+			$events = initialEvents;
 			$parts = [];
 			$healthIntervals = healthCfg.intervals;
 			$vehicleConfig = config;
@@ -950,6 +977,15 @@
 					<label class="field-label">Current odometer <span class="optional">(recommended)</span></label>
 					<input class="field-input" type="number" inputmode="numeric" placeholder="e.g. 85000" bind:value={addOdometer} />
 
+					<!-- svelte-ignore a11y_label_has_associated_control -->
+					<label class="checkbox-row">
+						<input type="checkbox" bind:checked={addServiceFollowed} />
+						<span>Service history has been followed</span>
+					</label>
+					{#if addServiceFollowed}
+						<p class="checkbox-hint">MFR service events up to the current odometer will be pre-populated as completed Official Service entries.</p>
+					{/if}
+
 					{#if addTransmissionOptions.length > 1}
 						<label class="field-label">Transmission <span class="optional">(recommended)</span></label>
 						<select class="field-input" bind:value={addTransmission}>
@@ -1271,6 +1307,32 @@
 	.optional {
 		font-weight: 400;
 		color: var(--color-text-tertiary, #999);
+	}
+
+	.checkbox-row {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-top: 16px;
+		font-size: 14px;
+		font-weight: 500;
+		cursor: pointer;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	.checkbox-row input[type="checkbox"] {
+		width: 20px;
+		height: 20px;
+		accent-color: var(--color-accent);
+		cursor: pointer;
+		flex-shrink: 0;
+	}
+
+	.checkbox-hint {
+		font-size: 12px;
+		color: var(--color-text-tertiary, #999);
+		margin: 6px 0 0;
+		line-height: 1.4;
 	}
 
 	.field-select,
