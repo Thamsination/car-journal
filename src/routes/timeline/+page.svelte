@@ -344,7 +344,6 @@
 							<div class="ruler-km odo-km">
 								{$latestOdometer.source === 'estimated' ? '~' : ''}{entry.km.toLocaleString()}{$latestOdometer.source === 'event' ? '+' : ''} km
 							</div>
-							<div class="odo-dot"></div>
 							<div class="ruler-line"></div>
 						</div>
 					<a class="odo-marker" href="{base}/timeline/new?km={$latestOdometer.km}">
@@ -385,7 +384,6 @@
 				<div class="tl-ruler">
 					<div class="ruler-line ruler-line-ms"></div>
 					<div class="ruler-km ms-km">{ms.km.toLocaleString()}</div>
-					<div class="ruler-dot ms-dot" class:ms-dot-covered={cardStatus === 'covered'} class:ms-dot-amber={cardStatus === 'amber'} class:ms-dot-red={cardStatus === 'red'}></div>
 					<div class="ruler-line ruler-line-ms"></div>
 				</div>
 				<a
@@ -426,7 +424,6 @@
 				<div class="tl-ruler">
 					<div class="ruler-line ruler-line-ms"></div>
 					<div class="ruler-km ms-km">~{tm.estimatedKm.toLocaleString()}</div>
-					<div class="ruler-dot ms-dot" class:ms-dot-covered={tm.status === 'covered'}></div>
 					<div class="ruler-line ruler-line-ms"></div>
 				</div>
 				<div
@@ -474,7 +471,6 @@
 						{:else}
 							<div class="ruler-km no-km">—</div>
 						{/if}
-						<div class="ruler-dot" class:completed-dot={status === 'completed'} class:next-dot={isNext}></div>
 						<div class="ruler-line" class:completed-line={status === 'completed'}></div>
 					</div>
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -632,12 +628,18 @@
 	}
 
 	.ruler-km {
-		font-size: 10px;
-		font-weight: 600;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-size: 11px;
+		font-weight: 700;
 		color: var(--color-text-secondary);
 		white-space: nowrap;
-		padding: 2px 0;
+		padding: 2px 4px;
 		text-align: center;
+		background: var(--color-bg);
+		z-index: 1;
 	}
 
 	.ruler-km.completed-km {
@@ -650,42 +652,12 @@
 	}
 
 	.ruler-km.odo-km {
-		font-size: 11px;
+		font-size: 12px;
 		font-weight: 700;
 		color: var(--color-accent);
 		background: var(--color-bg);
 		padding: 2px 6px;
 		border-radius: 8px;
-	}
-
-	.ruler-dot {
-		width: 10px;
-		height: 10px;
-		border-radius: 50%;
-		background: var(--color-border);
-		flex-shrink: 0;
-	}
-
-	.ruler-dot.completed-dot {
-		background: var(--color-accent);
-		opacity: 0.6;
-	}
-
-	.ruler-dot.next-dot {
-		width: 14px;
-		height: 14px;
-		background: var(--color-accent);
-		opacity: 1;
-		box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
-	}
-
-	.odo-dot {
-		width: 14px;
-		height: 14px;
-		border-radius: 50%;
-		background: var(--color-success);
-		flex-shrink: 0;
-		box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.25);
 	}
 
 	/* ---- Odometer "you are here" marker ---- */
@@ -1046,15 +1018,8 @@
 
 	.ms-km {
 		color: #8e8e93 !important;
-		font-weight: 500 !important;
+		font-weight: 600 !important;
 		opacity: 0.7;
-	}
-
-	.ms-dot {
-		width: 8px !important;
-		height: 8px !important;
-		background: #c7c7cc !important;
-		border: 1px dashed #8e8e93;
 	}
 
 	.ms-card {
@@ -1141,22 +1106,6 @@
 		border-style: solid;
 	}
 
-	.ms-dot-covered {
-		background: #8e8e93 !important;
-		border-style: solid !important;
-	}
-
-	.ms-dot-amber {
-		background: #f59e0b !important;
-		border-color: #f59e0b !important;
-		border-style: solid !important;
-	}
-
-	.ms-dot-red {
-		background: #ff3b30 !important;
-		border-color: #ff3b30 !important;
-		border-style: solid !important;
-	}
 
 	.ms-covered-mark {
 		color: #8e8e93;
