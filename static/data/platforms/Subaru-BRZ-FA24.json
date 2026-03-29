@@ -1,0 +1,107 @@
+{
+  "id": "Subaru-BRZ-FA24",
+  "name": "Subaru BRZ (2.4L 4-cyl petrol)",
+  "years": "2022–",
+  "chassisCodes": ["ZD8"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "2.4L",
+  "cylinders": 4,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "Subaru",
+      "models": ["BRZ", "BRZ tS"],
+      "yearFrom": 2022,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "interior ventilation filter",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "air cleaner element",
+      "km": 45000,
+      "months": 36,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 120000,
+      "months": 120,
+      "kind": "mfr"
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "inspect disc brake pads",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "rear differential oil",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "automatic transmission fluid",
+      "km": 75000,
+      "months": 60,
+      "kind": "mfr",
+      "transmission": ["automatic"]
+    },
+    {
+      "task": "coolant",
+      "km": 120000,
+      "months": 96,
+      "kind": "mfr"
+    },
+    {
+      "task": "manual transmission oil",
+      "km": 120000,
+      "months": null,
+      "kind": "rec",
+      "transmission": ["manual"]
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "Model Year 2022 onwards BRZ scheduled maintenance is every 12 months or 15,000 km (whichever occurs first); engine oil and oil filter are marked replace (R) at every A–H service in Subaru Australia’s MY22+ BRZ/WRX Warranty and Service Handbook.",
+    "interior ventilation filter": "The handbook lists interior ventilation filter as inspect (I) at each A–H service. This entry uses 30,000 km / 24 months as a practical replacement cadence between inspections under normal driving; replace sooner if airflow is reduced or odours persist.",
+    "air cleaner element": "Maintenance table shows air cleaner inspect/replace pattern I I R I I R I I across services A–H (replace at 45,000 km / 36 months and 90,000 km / 72 months in the repeating 120,000 km cycle).",
+    "spark plugs": "Handbook maintenance schedule includes spark plug replacement (R) for MY22+ BRZ; interval recorded as 120,000 km / 120 months to match the long-life iridium replace row in the same BRZ/WRX handbook table (after 96 months / 120,000 km the sequence repeats).",
+    "brake fluid": "Brake fluid shows replace (R) on every second scheduled service (I R I R…) on the 15,000 km / 12 month service rhythm, equivalent to every 24 months.",
+    "inspect disc brake pads": "Disc brake pads and discs are inspected (I) at each scheduled maintenance interval under normal driving conditions.",
+    "rear differential oil": "Rear differential oil (Subaru BRZ only) follows I R I R across A–H services — replace every 30,000 km / 24 months on the published normal driving schedule.",
+    "automatic transmission fluid": "Automatic transmission fluid (Subaru BRZ only) is replace (R) at the E service (75,000 km / 60 months) in the MY22+ handbook grid; inspect (I) at other listed services.",
+    "coolant": "Coolant replacement (R) appears at the H service (120,000 km / 96 months) with Subaru Genuine Long Life coolant only; other intervals show inspect (I).",
+    "manual transmission oil": "Manual transmission oil is inspect (I) at each A–H service in the handbook; many owners exchange fluid near 120,000 km after track use or if oil condition is poor."
+  },
+  "serviceSources": {
+    "engine oil": "https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — MY22+ Subaru BRZ/WRX: 12 months or 15,000 km service intervals; engine oil & filter R each scheduled service. https://www.subaru.com.au/servicing/scheduled-service-intervals",
+    "interior ventilation filter": "https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — interior ventilation filter I each A–H service; 30,000 km / 24 months replacement cadence between inspections for normal use.",
+    "air cleaner element": "https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — air cleaner element I I R I I R I I across maintenance services A–H.",
+    "spark plugs": "https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — MY22+ maintenance schedule table, spark plugs R per published BRZ row (120,000 km / 120 months in repeating cycle).",
+    "brake fluid": "https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — brake fluid I R I R on A–H grid (replace every second service ≈ 24 months).",
+    "inspect disc brake pads": "https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — disc brake pads and discs I each scheduled service.",
+    "rear differential oil": "https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — rear differential oil (Subaru BRZ only) I R I R across services A–H.",
+    "automatic transmission fluid": "https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — automatic transmission fluid (Subaru BRZ only) replace at E service (75,000 km / 60 months).",
+    "coolant": "https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — coolant R at H service (120,000 km / 96 months), Subaru Genuine Longlife coolant only.",
+    "manual transmission oil": "https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — manual transmission oil I each service; 120,000 km exchange is preventive when fluid degrades or after track use."
+  }
+}

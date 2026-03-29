@@ -1,0 +1,115 @@
+{
+  "id": "Toyota-GR86-FA24",
+  "name": "Toyota GR86 (2.4L 4-cyl petrol)",
+  "years": "2022–",
+  "chassisCodes": ["ZN8"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "2.4L",
+  "cylinders": 4,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "Toyota",
+      "models": ["GR86"],
+      "yearFrom": 2022,
+      "yearTo": 2026
+    }
+  ],
+  "serviceIntervals": [
+    {
+      "task": "Engine oil & filter",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "Cabin air filter",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "Air filter element",
+      "km": 45000,
+      "months": 36,
+      "kind": "mfr"
+    },
+    {
+      "task": "Spark plugs (Iridium type)",
+      "km": 90000,
+      "months": 72,
+      "kind": "mfr"
+    },
+    {
+      "task": "Brake and clutch fluid (DOT4)",
+      "km": null,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "Front brake pads and discs",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "Rear brake pads and discs - park brake drums / shoes",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "Rear diff oil",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "Auto transmission fluid",
+      "km": 90000,
+      "months": 72,
+      "kind": "mfr",
+      "transmission": ["automatic"]
+    },
+    {
+      "task": "Engine / Heater Coolant",
+      "km": 150000,
+      "months": 120,
+      "kind": "mfr"
+    },
+    {
+      "task": "Manual transmission oil",
+      "km": 120000,
+      "months": null,
+      "kind": "rec",
+      "transmission": ["manual"]
+    }
+  ],
+  "serviceNotes": {
+    "Engine oil & filter": "Toyota New Zealand GR86 (ZN8) service requirements: service by age or km whichever first; engine oil & filter replaced at each ‘A’ interval (15,000 km / 12 months) under normal conditions.",
+    "Cabin air filter": "The published GR86 ‘A’ service lists cabin air filter as inspect (¤ dealer may recommend replacement if unable to clean). This entry uses 30,000 km / 24 months as a normal replacement cadence when the schedule does not specify a fixed replace kilometrage for GR86.",
+    "Air filter element": "‘C’ service package (45,000 km / 36 months) includes air filter element replacement on the GR86 normal-condition schedule.",
+    "Spark plugs (Iridium type)": "‘D’ service package (90,000 km / 72 months) includes spark plug replacement for GR86; iridium plugs are replaced at the specified kilometres unless the service plan states otherwise.",
+    "Brake and clutch fluid (DOT4)": "‘B’ service (30,000 km / 24 months) includes brake and clutch fluid replacement; the pattern repeats with subsequent B-type services on the published km plan.",
+    "Front brake pads and discs": "Inspected at each ‘A’ service (15,000 km / 12 months) under the GR86 normal driving checklist.",
+    "Rear brake pads and discs - park brake drums / shoes": "Inspected at each ‘A’ service (15,000 km / 12 months) on the same checklist as the front axle.",
+    "Rear diff oil": "‘B’ service (30,000 km / 24 months) includes rear differential oil replacement for GR86.",
+    "Auto transmission fluid": "Automatic transmission fluid replacement is listed under the ‘D’ package for GR86 only (90,000 km / 72 months on the published normal-condition table).",
+    "Engine / Heater Coolant": "First engine/heater coolant replacement appears under the ‘E’ package at 150,000 km (year 10); Toyota then specifies repeat every 75,000 km / 5 years — this entry records the initial 150,000 km / 120 month event.",
+    "Manual transmission oil": "Scheduled ‘A’ services list manual transmission oil as inspect for GR86; preventive oil exchange near 120,000 km is a common recommendation if the oil darkens or after repeated track use."
+  },
+  "serviceSources": {
+    "Engine oil & filter": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — GR86 (ZN8) normal service table: 15,000 km ‘A’ service includes engine oil & filter R.",
+    "Cabin air filter": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — ‘A’ service: cabin air filter inspect (¤); 30,000 km / 24 months replacement cadence for normal driving when no fixed replace km is listed for GR86.",
+    "Air filter element": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — ‘C’ service (45,000 km): air filter element R.",
+    "Spark plugs (Iridium type)": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — ‘D’ service (90,000 km): spark plugs (Iridium type) R.",
+    "Brake and clutch fluid (DOT4)": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — ‘B’ service: brake and clutch fluid (DOT4) R (repeats on subsequent B-type intervals).",
+    "Front brake pads and discs": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — ‘A’ service checklist: front brake pads and discs I.",
+    "Rear brake pads and discs - park brake drums / shoes": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — ‘A’ service checklist: rear brake pads and discs I.",
+    "Rear diff oil": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — ‘B’ service: rear diff oil R.",
+    "Auto transmission fluid": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — ‘D’ service: auto transmission fluid — GR86 only R.",
+    "Engine / Heater Coolant": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — ‘E’ package at 150,000 km: engine/heater coolant R (then every 75,000 km / 5 years per document).",
+    "Manual transmission oil": "https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — ‘A’ service: manual transmission oil I for GR86; 120,000 km exchange is preventive workshop guidance when fluid condition warrants it."
+  }
+}
