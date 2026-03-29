@@ -25,8 +25,8 @@
   "serviceIntervals": [
     {
       "task": "Engine oil & filter",
-      "km": 12000,
-      "months": 8,
+      "km": 15000,
+      "months": 12,
       "kind": "mfr"
     },
     {
@@ -37,8 +37,8 @@
     },
     {
       "task": "Air filter element",
-      "km": 48000,
-      "months": 30,
+      "km": 45000,
+      "months": 36,
       "kind": "mfr"
     },
     {
@@ -55,14 +55,14 @@
     },
     {
       "task": "Front brake pads and discs",
-      "km": 12000,
-      "months": 8,
+      "km": 15000,
+      "months": 12,
       "kind": "mfr"
     },
     {
       "task": "Rear brake pads and discs - park brake drums / shoes",
-      "km": 12000,
-      "months": 8,
+      "km": 15000,
+      "months": 12,
       "kind": "mfr"
     },
     {
@@ -80,8 +80,8 @@
     },
     {
       "task": "Engine / Heater Coolant",
-      "km": 217000,
-      "months": 132,
+      "km": 120000,
+      "months": 96,
       "kind": "mfr"
     },
     {
@@ -92,38 +92,38 @@
     },
     {
       "task": "Auto transmission fluid",
-      "km": 96500,
-      "months": 72,
+      "km": 77000,
+      "months": 48,
       "kind": "rec",
       "transmission": ["automatic"]
     }
   ],
   "serviceNotes": {
-    "Engine oil & filter": "Toyota North America Warranty & Maintenance Guide for 86: obtain scheduled maintenance every 7,500 miles or seven and a half months, whichever comes first; engine oil & filter are replaced on that rhythm (7,500 mi ≈ 12,070 km; 7.5 months stored as 8 months in this file).",
-    "Cabin air filter": "Toyota booklet: replace at specified intervals; special cases (high humidity, mountainous areas) may require 15,000-mile replacement — default 30,000 km / 24 months when no fixed km is cited for normal driving.",
-    "Air filter element": "Scheduled maintenance chart: first engine air filter replacement typically appears around the 30,000-mile column on the normal schedule (≈48,000 km / 30 months); inspect more often in dust per booklet notes.",
-    "Spark plugs (Iridium type)": "Aligned to the same FA20 boxer as Subaru BRZ: North American schedules commonly specify spark plug replacement near 60,000 miles (~96,500 km); confirm in your in-service maintenance log chart.",
-    "Brake and clutch fluid (DOT4)": "Toyota scheduled log marks brake fluid service on a repeating cycle; 24-month time basis is retained for DOT4 fluid (consistent with Toyota practice and the Subaru BRZ twin footnote).",
-    "Front brake pads and discs": "Inspected on each scheduled maintenance visit (7,500 mi / 7.5 months normal schedule).",
-    "Rear brake pads and discs - park brake drums / shoes": "Inspected on each scheduled maintenance visit alongside the front axle checklist.",
-    "Rear diff oil": "Matched to Subaru BRZ (FA20) North American 48-month / 48,000-mile rear differential service for this shared rear-drive layout.",
-    "Manual transmission oil": "Matched to Subaru BRZ manual gearbox oil interval (48 months / 48,000 miles) used on the Toyota–Subaru ZN6/ZC6 platform.",
-    "Engine / Heater Coolant": "Toyota USA maintenance guide: engine coolant first replacement at 135,000 miles or 132 months, then every 75,000 miles or 72 months (135,000 mi ≈ 217,000 km).",
-    "Fuel filter": "Matched to Subaru BRZ FA20 North American fuel filter replacement at 48 months / 48,000 miles for the shared D-4S fuel system hardware.",
-    "Auto transmission fluid": "Booklet text: inspect or replace automatic transmission fluid at specified intervals in the log; many owners exchange near the 60,000-mile major service on this platform when fluid darkens."
+    "Engine oil & filter": "Changed from 12,000 km / 8 months (Toyota North America 7,500 mi / 7.5 month guide) to 15,000 km / 12 months for EU priority: matches Subaru Europe policy and Toyota’s European 15,000 km / 10,000 mi oil-change wording for the GT86 family. North American owners should follow the printed Toyota USA maintenance guide if it specifies shorter intervals.",
+    "Cabin air filter": "30,000 km / 24 months replacement cadence under normal driving (aligned with Subaru-BRZ-FA20 / FA24 pattern for the twin).",
+    "Air filter element": "Changed from 48,000 km / 30 months to 45,000 km / 36 months to match Subaru ZD8/FA24 first air-cleaner replace rhythm and Toyota NZ ‘C’-service pattern on the later twin; appropriate EU-aligned interval for FA20 ZN6.",
+    "Spark plugs (Iridium type)": "96,500 km / 72 months: same FA20 specification as Subaru BRZ North American ~60,000-mile iridium interval (KBB BRZ).",
+    "Brake and clutch fluid (DOT4)": "24-month time basis for DOT4; EU and Toyota/Subaru twin practice.",
+    "Front brake pads and discs": "Inspect each 15,000 km / 12 month service (EU-aligned rhythm).",
+    "Rear brake pads and discs - park brake drums / shoes": "Inspect each 15,000 km / 12 month service alongside the front axle.",
+    "Rear diff oil": "77,000 km / 48 months: Subaru of North America BRZ specification (48 months / 48,000 miles) for the shared ZN6/ZC6 rear axle.",
+    "Manual transmission oil": "77,000 km / 48 months: Subaru of North America BRZ manual gearbox oil interval for the shared transmission.",
+    "Engine / Heater Coolant": "Changed from 217,000 km / 132 months (Toyota USA 135,000-mile first replace) to 120,000 km / 96 months per Subaru MY22+ BRZ/WRX handbook coolant R at H service, applied to FA20 BRZ/86 long-life coolant specification for EU-aligned tracking.",
+    "Fuel filter": "77,000 km / 48 months: Subaru of North America BRZ fuel filter interval (shared D-4S application).",
+    "Auto transmission fluid": "Subaru of North America BRZ lists ATF inspect at 48 months / 48,000 miles; preventive exchange at 77,000 km / 48 months when fluid is dark (REC)."
   },
   "serviceSources": {
-    "Engine oil & filter": "https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — Toyota 86 Warranty & Maintenance Guide: maintenance every 7,500 miles or 7.5 months; engine oil & filter per scheduled log.",
-    "Cabin air filter": "https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — cabin air filter replacement conditions and scheduled log (86).",
-    "Air filter element": "https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — engine air filter inspect/replace per scheduled maintenance log (normal schedule column ~30,000 miles first replacement).",
-    "Spark plugs (Iridium type)": "https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — spark plugs replace at specified intervals in maintenance log. https://www.kbb.com/subaru/brz/2018/spark-plug-replacement/ — BRZ FA20 twin: ~60,000-mile spark service (converted to km).",
-    "Brake and clutch fluid (DOT4)": "https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — brake fluid per scheduled maintenance log; 24-month DOT4 cadence for time-based tracking.",
-    "Front brake pads and discs": "https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — brake pads and discs inspection each scheduled service (86).",
-    "Rear brake pads and discs - park brake drums / shoes": "https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — rear brake inspection each scheduled service (86).",
-    "Rear diff oil": "https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — Subaru BRZ rear differential gear oil 48 months / 48,000 miles (ZN6/ZC6 shared architecture).",
-    "Manual transmission oil": "https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — Subaru BRZ transmission gear oil 48 months / 48,000 miles (manual).",
-    "Engine / Heater Coolant": "https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — engine coolant: first replace at 135,000 miles or 132 months, then every 75,000 miles or 72 months.",
-    "Fuel filter": "https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — Subaru BRZ fuel filter 48 months / 48,000 miles (shared FA20 application).",
-    "Auto transmission fluid": "https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — automatic transmission fluid inspect/replace at specified intervals; preventive exchange ~60,000 miles when fluid condition warrants."
+    "Engine oil & filter": "https://www.subaru.eu/service — EU: 12 months or 15,000 km (whichever comes first) for European Subaru (ZD8/ZC6 twin policy). https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — North America 86: 7,500 miles / 7.5 months (superseded for this file by EU 15,000 km / 12 month priority).",
+    "Cabin air filter": "https://www.subaru.eu/service — EU: cabin filter per manual. https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — Toyota 86 cabin air filter conditions and scheduled log.",
+    "Air filter element": "https://www.subaru.eu/service — EU: engine air filter per manual. https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — BRZ air cleaner first R at 45,000 km / 36 months (FA platform pattern). https://www.toyota.co.nz/globalassets/owners/servicing-your-toyota/gr-yaris-gr-corolla-gr86-service-requirements.pdf — GR86 ‘C’ 45,000 km air filter (twin lineage).",
+    "Spark plugs (Iridium type)": "https://www.subaru.eu/service — EU: spark plugs per manual. https://www.kbb.com/subaru/brz/2018/spark-plug-replacement/ — BRZ FA20 ~60,000 miles (~96,500 km / 72 months). https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — Toyota 86 spark plugs at specified log intervals.",
+    "Brake and clutch fluid (DOT4)": "https://www.subaru.eu/service — EU: brake fluid per authorised repairer. https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — Toyota 86 brake fluid per maintenance log; 24-month DOT4 cadence.",
+    "Front brake pads and discs": "https://www.subaru.eu/service — EU: brake inspection each 15,000 km service. https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — Toyota 86 brake pads and discs inspection each scheduled service.",
+    "Rear brake pads and discs - park brake drums / shoes": "https://www.subaru.eu/service — EU: brake inspection each scheduled service. https://www.toyota.com/content/dam/toyota/brochures/pdf/2023/T-MMS-23_86.pdf — Toyota 86 rear brake inspection each scheduled service.",
+    "Rear diff oil": "https://www.subaru.eu/service — EU: differential per manual. https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — BRZ rear differential 48 months / 48,000 miles (~77,000 km / 48 months, ZN6/ZC6).",
+    "Manual transmission oil": "https://www.subaru.eu/service — EU: gearbox oil per manual. https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — BRZ manual transmission oil 48 months / 48,000 miles (~77,000 km / 48 months).",
+    "Engine / Heater Coolant": "https://www.subaru.eu/service — EU: coolant per manual. https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf — BRZ coolant R 120,000 km / 96 months (supersedes Toyota USA 135,000-mile first replace for EU-aligned FA twin).",
+    "Fuel filter": "https://www.subaru.eu/service — EU: fuel filter per manual. https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — BRZ fuel filter 48 months / 48,000 miles (~77,000 km / 48 months).",
+    "Auto transmission fluid": "https://www.subaru.eu/service — EU: ATF per manual. https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — BRZ ATF inspect 48 months / 48,000 miles; preventive exchange at same km (REC)."
   }
 }
