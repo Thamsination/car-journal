@@ -35,7 +35,7 @@
     { "task": "vehicle check", "km": 60000, "kind": "mfr", "months": null },
     { "task": "ZF8 gearbox fluid", "km": 100000, "kind": "rec", "months": null, "transmission": ["automatic"] },
     { "task": "manual gearbox fluid", "km": 80000, "kind": "rec", "months": null, "transmission": ["manual"] },
-    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "months": null },
+    { "task": "xDrive transfer case fluid", "km": 80000, "kind": "rec", "drivetrain": ["AWD"], "months": null },
     { "task": "differential fluids", "km": 80000, "kind": "rec", "months": null },
     { "task": "timing chain", "km": 200000, "kind": "rec", "months": null },
     { "task": "coolant flush", "km": 120000, "kind": "rec", "months": null },

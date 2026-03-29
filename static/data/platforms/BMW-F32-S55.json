@@ -35,7 +35,7 @@
     { "task": "vehicle check", "km": 30000, "kind": "mfr", "months": null },
     { "task": "M-DCT gearbox fluid", "km": 60000, "kind": "rec", "months": null, "transmission": ["dct"] },
     { "task": "manual gearbox fluid", "km": 60000, "kind": "rec", "months": null, "transmission": ["manual"] },
-    { "task": "xDrive transfer case fluid", "km": 60000, "kind": "rec", "months": null },
+    { "task": "xDrive transfer case fluid", "km": 60000, "kind": "rec", "drivetrain": ["AWD"], "months": null },
     { "task": "differential fluids", "km": 60000, "kind": "rec", "months": null },
     { "task": "coolant flush", "km": 100000, "kind": "rec", "months": null },
     { "task": "intake carbon clean", "km": 80000, "kind": "rec", "months": null }
