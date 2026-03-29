@@ -5,7 +5,8 @@
 	import { tick } from 'svelte';
 	import {
 		session, events, latestOdometer, healthIntervals, dailyAverageKm,
-		vehicleConfig, tireConfig, tireStatus, tireSwapEvents, platformConfig
+		vehicleConfig, tireConfig, tireStatus, tireSwapEvents, platformConfig,
+		vehicleList, vehicleListLoaded
 	} from '$lib/stores';
 	import { saveEvents, saveHealthConfig, saveTireConfig, saveVehicleConfig } from '$lib/data';
 	import { formatDate, formatDateISO, isEffectivelyCompleted } from '$lib/utils';
@@ -471,7 +472,20 @@
 		<div class="loading">Loading car data...</div>
 	{:else if loadError}
 		<div class="error-state">{loadError}</div>
+	{:else if $vehicleListLoaded && $vehicleList.length === 0}
+		<div class="onboarding-empty">
+			<span class="onboarding-empty-icon">🚘</span>
+			<h3 class="onboarding-empty-title">No vehicle yet</h3>
+			<p class="onboarding-empty-desc">Add a vehicle from the dashboard to see health tracking and component status.</p>
+		</div>
 	{:else}
+		{#if $events.length === 0 && $vehicleConfig}
+			<div class="car-onboarding-hint">
+				<p class="car-hint-text">
+					Health status is based on your service history and odometer. Log service events in the <a href="{base}/timeline/new">Timeline</a> to see accurate health tracking.
+				</p>
+			</div>
+		{/if}
 		<!-- Vehicle Info + Health -->
 		<div class="vehicle-card">
 			<div class="vehicle-header">
@@ -1501,5 +1515,53 @@
 		text-align: center;
 		padding: 48px 16px;
 		color: var(--color-text-secondary);
+	}
+
+	.onboarding-empty {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 48px 16px;
+	}
+
+	.onboarding-empty-icon {
+		font-size: 40px;
+		margin-bottom: 12px;
+		line-height: 1;
+	}
+
+	.onboarding-empty-title {
+		font-size: 18px;
+		font-weight: 700;
+		margin-bottom: 8px;
+	}
+
+	.onboarding-empty-desc {
+		font-size: 14px;
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+		max-width: 320px;
+	}
+
+	.car-onboarding-hint {
+		background: var(--color-surface);
+		border: 1px solid var(--color-accent);
+		border-radius: var(--radius-md);
+		padding: 12px 16px;
+		margin-bottom: 12px;
+	}
+
+	.car-hint-text {
+		font-size: 13px;
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	.car-hint-text a {
+		color: var(--color-accent);
+		font-weight: 600;
+		text-decoration: none;
 	}
 </style>

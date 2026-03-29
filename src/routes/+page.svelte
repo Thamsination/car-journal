@@ -6,7 +6,8 @@
 		session, events, totalSpent, totalPlanned, costByCategory,
 		nextBatchEvents, latestOdometer, lastCompletedKm, dailyAverageKm,
 		nextScheduledEvent,
-		vehicleConfig, healthIntervals, tireConfig, tireStatus, platformConfig
+		vehicleConfig, healthIntervals, tireConfig, tireStatus, platformConfig,
+		vehicleList, vehicleListLoaded, requestAddVehicle, onboardingDismissed
 	} from '$lib/stores';
 	import { saveVehicleConfig } from '$lib/data';
 	import {
@@ -23,7 +24,19 @@
 	let odoInput = $state('');
 	let odoInputEl = $state<HTMLInputElement | null>(null);
 
-	const loading = $derived(!$session || ($events.length === 0 && !$vehicleConfig));
+	const showWelcome = $derived($session && $vehicleListLoaded && $vehicleList.length === 0);
+	const loading = $derived(!$session || (!showWelcome && $events.length === 0 && !$vehicleConfig));
+	const showGettingStarted = $derived(
+		$vehicleConfig && $events.length === 0 && !$onboardingDismissed
+	);
+
+	function handleAddVehicle() {
+		$requestAddVehicle = true;
+	}
+
+	function dismissOnboarding() {
+		$onboardingDismissed = true;
+	}
 
 	onMount(() => {
 		if (!$session) {
@@ -239,9 +252,79 @@
 </svelte:head>
 
 <div class="container">
-	{#if loading}
+	{#if showWelcome}
+		<div class="welcome-screen">
+			<div class="welcome-icon">🚗</div>
+			<h1 class="welcome-title">Welcome to Car Journal</h1>
+			<p class="welcome-subtitle">
+				Track maintenance, monitor vehicle health, and never miss a service interval.
+			</p>
+			<div class="welcome-features">
+				<div class="welcome-feature">
+					<span class="feature-icon">⏱</span>
+					<div class="feature-text">
+						<span class="feature-name">Service Timeline</span>
+						<span class="feature-desc">Log service history and see upcoming milestones based on manufacturer and recommended intervals.</span>
+					</div>
+				</div>
+				<div class="welcome-feature">
+					<span class="feature-icon">◎</span>
+					<div class="feature-text">
+						<span class="feature-name">Health Tracking</span>
+						<span class="feature-desc">Per-component health status with warnings when parts are due for service.</span>
+					</div>
+				</div>
+				<div class="welcome-feature">
+					<span class="feature-icon">🚘</span>
+					<div class="feature-text">
+						<span class="feature-name">Multi-Vehicle</span>
+						<span class="feature-desc">Manage all your vehicles in one place with platform-specific service data.</span>
+					</div>
+				</div>
+			</div>
+			<button class="welcome-cta" onclick={handleAddVehicle}>
+				Add Your First Vehicle
+			</button>
+			<p class="welcome-hint">Supports BMW, Mercedes, and Subaru with 175 engine-specific platform configurations.</p>
+		</div>
+	{:else if loading}
 		<div class="loading">Loading dashboard...</div>
 	{:else}
+		{#if showGettingStarted}
+			<div class="getting-started">
+				<div class="gs-header">
+					<span class="gs-title">Getting Started</span>
+					<button class="gs-dismiss" onclick={dismissOnboarding} aria-label="Dismiss">&times;</button>
+				</div>
+				<p class="gs-desc">Your vehicle is set up with service intervals. Here's what to do next:</p>
+				<div class="gs-steps">
+					{#if !$vehicleConfig?.odometer || $vehicleConfig.odometer <= 0}
+						<div class="gs-step">
+							<span class="gs-step-num">1</span>
+							<div class="gs-step-body">
+								<span class="gs-step-label">Set your odometer</span>
+								<span class="gs-step-detail">Tap the km reading above to enter your current mileage. This enables accurate health tracking.</span>
+							</div>
+						</div>
+					{/if}
+					<div class="gs-step">
+						<span class="gs-step-num">{!$vehicleConfig?.odometer || $vehicleConfig.odometer <= 0 ? '2' : '1'}</span>
+						<a href="{base}/timeline/new" class="gs-step-body gs-step-link">
+							<span class="gs-step-label">Log your first service event</span>
+							<span class="gs-step-detail">Add past oil changes, brake services, or inspections to build your history.</span>
+						</a>
+					</div>
+					<div class="gs-step">
+						<span class="gs-step-num">{!$vehicleConfig?.odometer || $vehicleConfig.odometer <= 0 ? '3' : '2'}</span>
+						<a href="{base}/car" class="gs-step-body gs-step-link">
+							<span class="gs-step-label">Check your car's health</span>
+							<span class="gs-step-detail">View per-component health status and service interval breakdown.</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		{/if}
+
 		<!-- 1. Vehicle Info + Odometer + Health -->
 		<div class="hero-card">
 			<div class="vehicle-header">
@@ -940,5 +1023,206 @@
 		text-align: center;
 		padding: 48px 16px;
 		color: var(--color-text-secondary);
+	}
+
+	/* Welcome screen */
+	.welcome-screen {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 48px 8px 32px;
+		min-height: 70dvh;
+		justify-content: center;
+	}
+
+	.welcome-icon {
+		font-size: 56px;
+		margin-bottom: 16px;
+		line-height: 1;
+	}
+
+	.welcome-title {
+		font-size: 28px;
+		font-weight: 800;
+		letter-spacing: -0.5px;
+		margin-bottom: 10px;
+	}
+
+	.welcome-subtitle {
+		font-size: 15px;
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+		max-width: 320px;
+		margin-bottom: 32px;
+	}
+
+	.welcome-features {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		width: 100%;
+		max-width: 380px;
+		margin-bottom: 32px;
+		text-align: left;
+	}
+
+	.welcome-feature {
+		display: flex;
+		gap: 14px;
+		align-items: flex-start;
+	}
+
+	.feature-icon {
+		font-size: 22px;
+		line-height: 1;
+		flex-shrink: 0;
+		width: 32px;
+		text-align: center;
+		padding-top: 2px;
+	}
+
+	.feature-text {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.feature-name {
+		font-size: 14px;
+		font-weight: 700;
+	}
+
+	.feature-desc {
+		font-size: 13px;
+		color: var(--color-text-secondary);
+		line-height: 1.4;
+	}
+
+	.welcome-cta {
+		width: 100%;
+		max-width: 320px;
+		padding: 14px 24px;
+		background: var(--color-accent);
+		color: #fff;
+		border-radius: var(--radius-md);
+		font-size: 17px;
+		font-weight: 700;
+		cursor: pointer;
+		border: none;
+		transition: background 0.15s;
+	}
+
+	.welcome-cta:active {
+		background: var(--color-accent-hover);
+	}
+
+	.welcome-hint {
+		margin-top: 16px;
+		font-size: 12px;
+		color: var(--color-text-secondary);
+		opacity: 0.7;
+		max-width: 300px;
+	}
+
+	/* Getting started card */
+	.getting-started {
+		background: var(--color-surface);
+		border: 1px solid var(--color-accent);
+		border-radius: var(--radius-lg);
+		padding: 16px;
+		margin-bottom: 16px;
+	}
+
+	.gs-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 8px;
+	}
+
+	.gs-title {
+		font-size: 15px;
+		font-weight: 700;
+		color: var(--color-accent);
+	}
+
+	.gs-dismiss {
+		font-size: 20px;
+		line-height: 1;
+		color: var(--color-text-secondary);
+		background: none;
+		border: none;
+		padding: 2px 6px;
+		cursor: pointer;
+		border-radius: var(--radius-sm);
+	}
+
+	.gs-dismiss:active {
+		background: rgba(142, 142, 147, 0.12);
+	}
+
+	.gs-desc {
+		font-size: 13px;
+		color: var(--color-text-secondary);
+		line-height: 1.4;
+		margin-bottom: 14px;
+	}
+
+	.gs-steps {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.gs-step {
+		display: flex;
+		gap: 12px;
+		align-items: flex-start;
+	}
+
+	.gs-step-num {
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		background: var(--color-accent);
+		color: #fff;
+		font-size: 13px;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.gs-step-body {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 0;
+	}
+
+	.gs-step-link {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.gs-step-link:active {
+		opacity: 0.7;
+	}
+
+	.gs-step-label {
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.gs-step-link .gs-step-label {
+		color: var(--color-accent);
+	}
+
+	.gs-step-detail {
+		font-size: 12px;
+		color: var(--color-text-secondary);
+		line-height: 1.4;
 	}
 </style>

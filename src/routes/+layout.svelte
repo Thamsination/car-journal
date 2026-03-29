@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
-	import { session, activeVehicleId, vehicleList, events, parts, healthIntervals, vehicleConfig, tireConfig, platformConfig } from '$lib/stores';
+	import { session, activeVehicleId, vehicleList, vehicleListLoaded, requestAddVehicle, events, parts, healthIntervals, vehicleConfig, tireConfig, platformConfig } from '$lib/stores';
 	import { supabase } from '$lib/supabase';
 	import { getPendingWrites, flushPendingWrites } from '$lib/offline';
 	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, setUserId, type PlatformIndexEntry } from '$lib/data';
@@ -584,20 +584,21 @@
 			});
 			authUnsub = () => subscription.unsubscribe();
 
-			if ($session) {
-				try {
-					const registry = await loadVehiclesRegistry();
-					$vehicleList = registry.vehicles;
-					if (!$activeVehicleId && registry.activeVehicle) {
-						$activeVehicleId = registry.activeVehicle;
-					}
-					if ($activeVehicleId) {
-						await loadVehicleData();
-					}
-				} catch {
-					// registry may not exist yet
+		if ($session) {
+			try {
+				const registry = await loadVehiclesRegistry();
+				$vehicleList = registry.vehicles;
+				$vehicleListLoaded = true;
+				if (!$activeVehicleId && registry.activeVehicle) {
+					$activeVehicleId = registry.activeVehicle;
 				}
+				if ($activeVehicleId) {
+					await loadVehicleData();
+				}
+			} catch {
+				$vehicleListLoaded = true;
 			}
+		}
 		})();
 
 		return () => {
@@ -615,6 +616,15 @@
 	function closeDropdown() {
 		dropdownOpen = false;
 	}
+
+	const showOnboarding = $derived($session && $vehicleListLoaded && $vehicleList.length === 0);
+
+	$effect(() => {
+		if ($requestAddVehicle) {
+			$requestAddVehicle = false;
+			openAddVehicle();
+		}
+	});
 
 	const activeEntry = $derived($vehicleList.find((v) => v.id === $activeVehicleId));
 	const activeLabel = $derived(activeEntry?.label || 'Select Vehicle');
@@ -641,6 +651,7 @@
 {/if}
 
 <div class="app-shell">
+	{#if !showOnboarding}
 	<header class="top-bar">
 		<div class="container top-bar-inner">
 			<div class="vehicle-selector">
@@ -681,6 +692,7 @@
 		{/if}
 		</div>
 	</header>
+	{/if}
 
 	{#if switching}
 		<div class="sync-banner">
@@ -703,7 +715,7 @@
 		{/key}
 	</main>
 
-	{#if $session}
+	{#if $session && !showOnboarding}
 		<nav class="bottom-nav">
 			{#each navItems as item}
 				<a

@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { session, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm, platformConfig, vehicleConfig } from '$lib/stores';
+	import { session, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm, platformConfig, vehicleConfig, vehicleList, vehicleListLoaded } from '$lib/stores';
 	import { receiptUrl } from '$lib/data';
 	import { formatCost, formatDate, formatDateISO, deriveStatus, isEffectivelyCompleted, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask, getServiceIntervals, computeTimeMilestones } from '$lib/utils';
 	import type { TaskWithStatus, TimeMilestone } from '$lib/utils';
@@ -310,6 +310,17 @@
 		<div class="loading">Loading timeline...</div>
 	{:else if loadError}
 		<div class="error-state">{loadError}</div>
+	{:else if $vehicleListLoaded && $vehicleList.length === 0}
+		<div class="empty-state">Add a vehicle to see your timeline.</div>
+	{:else if timelineEntries.length === 0 && $events.length === 0}
+		<div class="onboarding-empty">
+			<span class="onboarding-empty-icon">⏱</span>
+			<h3 class="onboarding-empty-title">Your timeline is empty</h3>
+			<p class="onboarding-empty-desc">
+				Add past and upcoming service events to build your vehicle's history. The timeline shows events alongside OEM and recommended service milestones.
+			</p>
+			<a href="{base}/timeline/new" class="onboarding-empty-cta">Add Your First Event</a>
+		</div>
 	{:else if timelineEntries.length === 0}
 		<div class="empty-state">No events found</div>
 	{:else}
@@ -1155,5 +1166,48 @@
 		text-align: center;
 		padding: 48px 16px;
 		color: var(--color-text-secondary);
+	}
+
+	.onboarding-empty {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 48px 16px;
+	}
+
+	.onboarding-empty-icon {
+		font-size: 40px;
+		margin-bottom: 12px;
+		line-height: 1;
+	}
+
+	.onboarding-empty-title {
+		font-size: 18px;
+		font-weight: 700;
+		margin-bottom: 8px;
+	}
+
+	.onboarding-empty-desc {
+		font-size: 14px;
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+		max-width: 320px;
+		margin-bottom: 20px;
+	}
+
+	.onboarding-empty-cta {
+		padding: 12px 24px;
+		background: var(--color-accent);
+		color: #fff;
+		border-radius: var(--radius-sm);
+		font-size: 15px;
+		font-weight: 600;
+		text-decoration: none;
+		transition: background 0.15s;
+	}
+
+	.onboarding-empty-cta:active {
+		background: var(--color-accent-hover);
 	}
 </style>

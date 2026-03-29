@@ -18,6 +18,9 @@ function persistedWritable<T>(key: string, initial: T) {
 export const session = writable<Session | null>(null);
 export const activeVehicleId = persistedWritable<string>('active_vehicle', '');
 export const vehicleList = writable<VehicleRegistryEntry[]>([]);
+export const vehicleListLoaded = writable(false);
+export const requestAddVehicle = writable(false);
+export const onboardingDismissed = persistedWritable<boolean>('onboarding_dismissed', false);
 
 export const events = writable<CarEvent[]>([]);
 export const parts = writable<Part[]>([]);
