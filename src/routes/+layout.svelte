@@ -329,7 +329,7 @@
 				odometer: (!isNaN(odoVal) && odoVal > 0) ? odoVal : null
 			};
 
-			const healthCfg = generateHealthConfig(platform, trans as TransmissionType | null);
+			const healthCfg = generateHealthConfig(platform, trans as TransmissionType | null, (addDrivetrain || null) as import('$lib/types').DrivetrainType | null);
 
 			await createVehicleFiles(vehicleId, config, healthCfg);
 

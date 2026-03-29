@@ -9,7 +9,7 @@
 	const kind = $derived($page.url.searchParams.get('kind') as 'mfr' | 'rec' | null);
 	const km = $derived(Number($page.url.searchParams.get('km')) || 0);
 
-	const serviceIntervals = $derived(getServiceIntervals($platformConfig, $vehicleConfig?.transmission));
+	const serviceIntervals = $derived(getServiceIntervals($platformConfig, $vehicleConfig?.transmission, ($vehicleConfig?.drivetrain || null) as import('$lib/types').DrivetrainType | null));
 	const serviceNotes = $derived(getServiceNotes($platformConfig));
 
 	const milestone = $derived.by(() => {

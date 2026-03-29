@@ -69,7 +69,7 @@
 		{ value: 'overdue', label: 'Overdue' }
 	];
 
-	const serviceIntervals = $derived(getServiceIntervals($platformConfig, $vehicleConfig?.transmission));
+	const serviceIntervals = $derived(getServiceIntervals($platformConfig, $vehicleConfig?.transmission, ($vehicleConfig?.drivetrain || null) as import('$lib/types').DrivetrainType | null));
 
 	onMount(async () => {
 		if (!$session) {

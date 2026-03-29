@@ -1,4 +1,4 @@
-import type { DerivedStatus, EventCategory, CarEvent, PlatformConfig, HealthConfig, TransmissionType, PlatformServiceInterval } from './types';
+import type { DerivedStatus, EventCategory, CarEvent, PlatformConfig, HealthConfig, TransmissionType, DrivetrainType, PlatformServiceInterval } from './types';
 export type { EventCategory } from './types';
 
 export function generateId(prefix: string): string {
@@ -156,9 +156,21 @@ export function filterByTransmission(
 	});
 }
 
-export function getServiceIntervals(platform: PlatformConfig | null, transmission?: TransmissionType | null): ServiceInterval[] {
+export function filterByDrivetrain(
+	intervals: PlatformServiceInterval[],
+	drivetrain: DrivetrainType | null | undefined
+): PlatformServiceInterval[] {
+	return intervals.filter((i) => {
+		if (!i.drivetrain || i.drivetrain.length === 0) return true;
+		if (!drivetrain) return true;
+		return i.drivetrain.includes(drivetrain);
+	});
+}
+
+export function getServiceIntervals(platform: PlatformConfig | null, transmission?: TransmissionType | null, drivetrain?: DrivetrainType | null): PlatformServiceInterval[] {
 	if (!platform) return [];
-	return filterByTransmission(platform.serviceIntervals, transmission);
+	const byTrans = filterByTransmission(platform.serviceIntervals, transmission);
+	return filterByDrivetrain(byTrans, drivetrain);
 }
 
 interface TaskAction {
@@ -298,7 +310,7 @@ function mergedDoneKms(completed: Map<string, number[]>, task: string): number[]
 }
 
 function computeIntervalMilestones(
-	intervals: ServiceInterval[],
+	intervals: PlatformServiceInterval[],
 	events: CarEvent[],
 	kind: MilestoneKind,
 	currentOdometer: number,
@@ -345,7 +357,7 @@ export function milestoneTaskStatuses(
 	ms: ServiceMilestone,
 	events: CarEvent[],
 	currentOdometer: number,
-	serviceIntervals: ServiceInterval[] = []
+	serviceIntervals: PlatformServiceInterval[] = []
 ): TaskWithStatus[] {
 	const completed = completedByTaskMap(events, currentOdometer);
 
@@ -398,11 +410,11 @@ export function milestoneCardStatus(taskStatuses: TaskWithStatus[]): TaskStatus 
 	return 'covered';
 }
 
-export function computeMfrMilestones(events: CarEvent[], serviceIntervals: ServiceInterval[] = [], currentOdometer = 0): ServiceMilestone[] {
+export function computeMfrMilestones(events: CarEvent[], serviceIntervals: PlatformServiceInterval[] = [], currentOdometer = 0): ServiceMilestone[] {
 	return computeIntervalMilestones(serviceIntervals, events, 'mfr', currentOdometer);
 }
 
-export function computeRecMilestones(events: CarEvent[], serviceIntervals: ServiceInterval[] = [], currentOdometer = 0): ServiceMilestone[] {
+export function computeRecMilestones(events: CarEvent[], serviceIntervals: PlatformServiceInterval[] = [], currentOdometer = 0): ServiceMilestone[] {
 	const recMilestones = computeIntervalMilestones(serviceIntervals, events, 'rec', currentOdometer);
 	const mfrMilestones = computeMfrMilestones(events, serviceIntervals, currentOdometer);
 
@@ -439,7 +451,7 @@ export interface TimeMilestone {
 }
 
 export function computeTimeMilestones(
-	intervals: ServiceInterval[],
+	intervals: PlatformServiceInterval[],
 	evts: CarEvent[],
 	currentOdometer: number,
 	dailyAvgKm: number,
@@ -510,8 +522,8 @@ export function computeTimeMilestones(
 	return results;
 }
 
-export function generateHealthConfig(platform: PlatformConfig, transmission?: TransmissionType | null): HealthConfig {
-	const filtered = filterByTransmission(platform.serviceIntervals, transmission);
+export function generateHealthConfig(platform: PlatformConfig, transmission?: TransmissionType | null, drivetrain?: DrivetrainType | null): HealthConfig {
+	const filtered = filterByDrivetrain(filterByTransmission(platform.serviceIntervals, transmission), drivetrain);
 	const taskMap = new Map<string, { km: number | null; months: number | null }>();
 
 	for (const si of filtered) {

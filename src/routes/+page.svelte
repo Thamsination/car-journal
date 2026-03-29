@@ -31,7 +31,7 @@
 		}
 	});
 
-	const serviceIntervals = $derived(getServiceIntervals($platformConfig, $vehicleConfig?.transmission));
+	const serviceIntervals = $derived(getServiceIntervals($platformConfig, $vehicleConfig?.transmission, ($vehicleConfig?.drivetrain || null) as import('$lib/types').DrivetrainType | null));
 
 	function vehicleDisplayName(v: typeof $vehicleConfig): string {
 		if (!v) return 'Vehicle';

@@ -124,6 +124,7 @@ export interface PlatformServiceInterval {
 	months: number | null;
 	kind: MilestoneKind;
 	transmission?: TransmissionType[] | null;
+	drivetrain?: DrivetrainType[] | null;
 }
 
 export type DrivetrainType = 'FWD' | 'RWD' | 'AWD';
