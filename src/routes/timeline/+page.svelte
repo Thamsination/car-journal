@@ -184,7 +184,7 @@
 			for (const ms of recMilestones) {
 				const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
 				const card = milestoneCardStatus(stats);
-				if (card === 'covered' || card === 'amber' || card === 'red' || ms.km > odoKm) {
+				if (card === 'red' || ms.km >= odoKm) {
 					allMilestones.push(ms);
 				}
 			}
