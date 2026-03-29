@@ -124,6 +124,7 @@
       "task": "xDrive transfer case fluid",
       "km": 80000,
       "kind": "rec",
+      "drivetrain": ["AWD"],
       "months": null
     },
     {
