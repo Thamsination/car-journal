@@ -30,8 +30,8 @@
     { "task": "coolant", "km": 150000, "months": 60, "kind": "mfr" },
     { "task": "high-voltage battery coolant", "km": 120000, "months": 60, "kind": "mfr" },
     { "task": "automatic transmission fluid", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"] },
-    { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec" },
-    { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec" },
+    { "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec", "drivetrain": ["AWD"] },
+    { "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec", "drivetrain": ["AWD"] },
     { "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" },
     { "task": "coolant flush", "km": 120000, "months": null, "kind": "rec" },
     { "task": "intake carbon clean", "km": 120000, "months": null, "kind": "rec" }
