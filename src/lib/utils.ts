@@ -238,7 +238,9 @@ export function milestoneActionText(tasks: string[]): string {
 	return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-const COVER_TOLERANCE_KM = 1000;
+function coverToleranceKm(intervalKm: number): number {
+	return Math.max(2000, Math.round(intervalKm * 0.10));
+}
 
 const WEAR_BASED_TASKS = new Set(['check front brake pads', 'check rear brake pads']);
 
@@ -277,14 +279,15 @@ function buildRollingChain(
 	doneKms: number[]
 ): RollingMilestone[] {
 	const milestones: RollingMilestone[] = [];
+	const tolerance = coverToleranceKm(intervalKm);
 	let nextDueKm = intervalKm;
 
 	for (const dkm of doneKms) {
-		while (nextDueKm <= MAX_SERVICE_KM && nextDueKm + COVER_TOLERANCE_KM < dkm) {
+		while (nextDueKm <= MAX_SERVICE_KM && nextDueKm + tolerance < dkm) {
 			milestones.push({ km: nextDueKm, task, covered: false });
 			nextDueKm += intervalKm;
 		}
-		if (nextDueKm <= MAX_SERVICE_KM && dkm <= nextDueKm + COVER_TOLERANCE_KM) {
+		if (nextDueKm <= MAX_SERVICE_KM && dkm <= nextDueKm + tolerance) {
 			milestones.push({ km: dkm, task, covered: true });
 			nextDueKm = dkm + intervalKm;
 		}
@@ -372,7 +375,7 @@ export function milestoneTaskStatuses(
 
 		const interval = allIntervals.find((i) => i.task === task);
 		if (!interval || interval.km == null) {
-			const hasCoveringService = doneKms.some((dkm) => dkm <= ms.km + COVER_TOLERANCE_KM);
+			const hasCoveringService = doneKms.some((dkm) => dkm <= ms.km + 2000);
 			if (hasCoveringService) {
 				return { task, status: 'covered' as TaskStatus, overdueKm: 0 };
 			}
@@ -394,8 +397,10 @@ export function milestoneTaskStatuses(
 			return { task, status: 'scheduled' as TaskStatus, overdueKm: 0 };
 		}
 
-		const overdueKm = currentOdometer - earliestUncovered;
 		const hasLaterService = doneKms.some((dkm) => dkm > ms.km);
+		const overdueKm = hasLaterService
+			? (doneKms.find((dkm) => dkm > ms.km)! - earliestUncovered)
+			: (currentOdometer - earliestUncovered);
 		if (hasLaterService || overdueKm <= 10000) {
 			return { task, status: 'amber' as TaskStatus, overdueKm };
 		}
