@@ -6,7 +6,7 @@
 	import { session, activeVehicleId, vehicleList, vehicleListLoaded, requestAddVehicle, events, parts, healthIntervals, vehicleConfig, tireConfig, platformConfig } from '$lib/stores';
 	import { supabase } from '$lib/supabase';
 	import { getPendingWrites, flushPendingWrites } from '$lib/offline';
-	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, saveEvents, loadParts, loadHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, setUserId, type PlatformIndexEntry } from '$lib/data';
+	import { loadVehiclesRegistry, saveVehiclesRegistry, loadEvents, saveEvents, loadParts, loadHealthConfig, saveHealthConfig, loadVehicleConfig, loadTireConfig, loadPlatform, clearShaCache, loadPlatformIndex, createVehicleFiles, saveVehicleConfig, deleteVehicleFiles, setUserId, type PlatformIndexEntry } from '$lib/data';
 	import { generateHealthConfig, generateId, buildEventString, computeMfrMilestones, getServiceIntervals } from '$lib/utils';
 	import type { TransmissionType, DrivetrainType, PlatformConfig, CarEvent } from '$lib/types';
 
@@ -425,6 +425,10 @@
 			}
 
 			if ($vehicleConfig) {
+				const oldPlatform = $vehicleConfig.platform;
+				const oldTransmission = $vehicleConfig.transmission;
+				const oldDrivetrain = $vehicleConfig.drivetrain;
+
 				const odoVal = parseInt(editOdometer, 10);
 				const trans = editTransmission || null;
 				const yearVal = parseInt(editYear, 10);
@@ -445,6 +449,21 @@
 				};
 				$vehicleConfig = updated;
 				await saveVehicleConfig(updated, `Update vehicle: ${updated.name}`);
+
+				const healthFieldsChanged =
+					updated.platform !== oldPlatform ||
+					updated.transmission !== oldTransmission ||
+					updated.drivetrain !== oldDrivetrain;
+
+				if (healthFieldsChanged && $platformConfig) {
+					const newHealthCfg = generateHealthConfig(
+						$platformConfig,
+						updated.transmission,
+						updated.drivetrain as DrivetrainType | null
+					);
+					await saveHealthConfig(newHealthCfg, `Regenerate health config: ${updated.name}`);
+					$healthIntervals = newHealthCfg.intervals;
+				}
 			}
 
 			const registry = await loadVehiclesRegistry();
