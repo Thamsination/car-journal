@@ -1,0 +1,115 @@
+{
+  "id": "Subaru-BRZ-FA20",
+  "name": "Subaru BRZ (2.0L 4-cyl petrol)",
+  "years": "2012–2020",
+  "chassisCodes": ["ZC6"],
+  "drivetrains": ["RWD"],
+  "transmissions": ["manual", "automatic"],
+  "displacement": "2.0L",
+  "cylinders": 4,
+  "fuelType": "petrol",
+  "vehicles": [
+    {
+      "make": "Subaru",
+      "models": ["BRZ", "BRZ tS"],
+      "yearFrom": 2012,
+      "yearTo": 2020
+    }
+  ],
+  "serviceIntervals": [
+    {
+      "task": "engine oil",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "interior ventilation filter",
+      "km": 30000,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "air cleaner element",
+      "km": 38500,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "spark plugs",
+      "km": 96500,
+      "months": 72,
+      "kind": "mfr"
+    },
+    {
+      "task": "brake fluid",
+      "km": null,
+      "months": 24,
+      "kind": "mfr"
+    },
+    {
+      "task": "inspect disc brake pads",
+      "km": 15000,
+      "months": 12,
+      "kind": "mfr"
+    },
+    {
+      "task": "fuel filter",
+      "km": 77000,
+      "months": 48,
+      "kind": "mfr"
+    },
+    {
+      "task": "rear differential oil",
+      "km": 77000,
+      "months": 48,
+      "kind": "mfr"
+    },
+    {
+      "task": "manual transmission oil",
+      "km": 77000,
+      "months": 48,
+      "kind": "mfr",
+      "transmission": ["manual"]
+    },
+    {
+      "task": "coolant",
+      "km": 120000,
+      "months": 96,
+      "kind": "mfr"
+    },
+    {
+      "task": "automatic transmission fluid",
+      "km": 77000,
+      "months": 48,
+      "kind": "rec",
+      "transmission": ["automatic"]
+    }
+  ],
+  "serviceNotes": {
+    "engine oil": "Subaru Europe states routine servicing every 12 months or 15,000 km (whichever comes first). Subaru of North America’s model-year maintenance summaries for BRZ often specify 6,000 mi / 6 months (~9,650 km / 6 months) — follow the warranty and maintenance booklet for your market.",
+    "interior ventilation filter": "Replace cadence between annual inspections is not always printed as a fixed km interval in older booklets; 30,000 km / 24 months matches typical Subaru cabin-filter practice (see also Subaru-BRZ-FA24 note pattern).",
+    "air cleaner element": "Subaru of North America maintenance schedule for BRZ lists air cleaner element replacement at 24 months / 24,000 miles (converted to ~38,500 km / 24 months).",
+    "spark plugs": "North American BRZ maintenance booklets commonly specify spark plug replacement at 60,000 miles for this engine (~96,500 km); the generic 2017 Subaru 24,000-mile spark line in some pamphlets does not match BRZ iridium service in dealer booklets — 60,000-mile specification is used here.",
+    "brake fluid": "Subaru of North America: replace brake fluid every 24 months regardless of mileage (see maintenance schedule footnotes for BRZ).",
+    "inspect disc brake pads": "Inspect at least on each normal scheduled service visit (aligned with 15,000 km / 12 month European service rhythm).",
+    "fuel filter": "Subaru of North America: fuel filter replacement for BRZ at 48 months / 48,000 miles (~77,000 km / 48 months).",
+    "rear differential oil": "Subaru of North America: rear differential gear oil replacement for BRZ at 48 months / 48,000 miles (~77,000 km / 48 months).",
+    "manual transmission oil": "Subaru of North America lists transmission gear oil replacement for BRZ (manual gearbox) at 48 months / 48,000 miles (~77,000 km / 48 months).",
+    "coolant": "Interval inherited from Subaru-BRZ-FA24 (120,000 km / 96 months) — not independently verified against a first-gen BRZ EU booklet in this file; confirm in your owner’s manual.",
+    "automatic transmission fluid": "Subaru of North America schedule lists automatic transmission fluid inspect (I) for BRZ at 48 months / 48,000 miles; many owners exchange fluid at the same milestone when towing or tracking — treat as preventive when fluid is dark."
+  },
+  "serviceSources": {
+    "engine oil": "https://www.subaru.eu/service — correct service intervals: 12 months or 15,000 km (whichever comes first). https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — North America: engine oil & filter every 6 months / 6,000 miles for reference.",
+    "interior ventilation filter": "https://www.subaru.eu/service — follow owner’s manual for itemised work; 30,000 km / 24 months replacement cadence between inspections (Subaru cabin filter practice; compare Subaru-BRZ-FA24).",
+    "air cleaner element": "https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — 2017 Subaru maintenance recommendations: air cleaner element replace at 24 months / 24,000 miles (converted to kilometres).",
+    "spark plugs": "https://www.kbb.com/subaru/brz/2018/spark-plug-replacement/ — scheduled spark plug replacement interval for Subaru BRZ (North American specification, ~60,000 miles / ~96,500 km for FA20).",
+    "brake fluid": "https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — brake fluid replace every 24 months; also listed at 24 months / 24,000 miles in scheduled table.",
+    "inspect disc brake pads": "https://www.subaru.eu/service — steering, brakes and other items per owner’s manual at each scheduled service; 15,000 km / 12 months inspection cadence matches European service interval.",
+    "fuel filter": "https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — fuel filter replace at 48 months / 48,000 miles; BRZ row in North American maintenance schedule.",
+    "rear differential oil": "https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — rear differential gear oil (BRZ) replace at 48 months / 48,000 miles.",
+    "manual transmission oil": "https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — transmission gear oil (BRZ) replace at 48 months / 48,000 miles.",
+    "coolant": "Inherited: Subaru-BRZ-FA24 — https://docs.subaru.com.au/MY22%20onwards%20Subaru%20BRZ_WRX%20Warranty%20and%20Service%20Handbook.pdf (same FA-family cooling system practice until owner supplies first-gen BRZ EU coolant row).",
+    "automatic transmission fluid": "https://subarucustomersupport.powerappsportals.com/knowledgebase/article/1001834/en-us — ATF (BRZ) inspect at 48 months / 48,000 miles; fluid exchange at same km when condition warrants (independent preventive guidance)."
+  }
+}

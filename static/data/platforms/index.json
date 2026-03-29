@@ -2550,6 +2550,16 @@
     "yearTo": 2026
   },
   {
+    "platformId": "Subaru-BRZ-FA20",
+    "make": "Subaru",
+    "models": [
+      "BRZ",
+      "BRZ tS"
+    ],
+    "yearFrom": 2012,
+    "yearTo": 2020
+  },
+  {
     "platformId": "Subaru-BRZ-FA24",
     "make": "Subaru",
     "models": [
@@ -2609,6 +2619,25 @@
     ],
     "yearFrom": 2022,
     "yearTo": 2026
+  },
+  {
+    "platformId": "Toyota-86-FA20",
+    "make": "Toyota",
+    "models": [
+      "86",
+      "GT86"
+    ],
+    "yearFrom": 2012,
+    "yearTo": 2020
+  },
+  {
+    "platformId": "Toyota-86-FA20",
+    "make": "Scion",
+    "models": [
+      "FR-S"
+    ],
+    "yearFrom": 2013,
+    "yearTo": 2016
   },
   {
     "platformId": "Toyota-GR86-FA24",
