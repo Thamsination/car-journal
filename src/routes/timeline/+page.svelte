@@ -118,7 +118,16 @@
 				}
 			}
 		}
-		return result;
+
+		const scheduledTasks = new Set<string>();
+		for (const evt of $events) {
+			if (isEffectivelyCompleted(evt, odoKm)) continue;
+			const tasks = (evt.tasks && evt.tasks.length > 0 ? evt.tasks : [evt.event])
+				.map((t) => t.toLowerCase().trim());
+			for (const t of tasks) scheduledTasks.add(t);
+		}
+
+		return result.filter((t) => !scheduledTasks.has(t.toLowerCase().trim()));
 	});
 
 	const PX_PER_KM = 0.004;
@@ -339,7 +348,6 @@
 							<div class="ruler-line"></div>
 						</div>
 					<a class="odo-marker" href="{base}/timeline/new?km={$latestOdometer.km}">
-						<span class="odo-date">{formatDate(formatDateISO(new Date()))}</span>
 						{#if nextMilestone?.type === 'km'}
 							{@const remaining = nextMilestone.ms.km - $latestOdometer.km}
 							{#if remaining > 0}
@@ -365,6 +373,7 @@
 								</ul>
 							</div>
 						{/if}
+						<span class="odo-date">{formatDate(formatDateISO(new Date()))}</span>
 						<span class="odo-tap-hint">Tap to add entry</span>
 					</a>
 					</div>
@@ -697,6 +706,8 @@
 	}
 
 	.odo-date {
+		display: block;
+		margin-top: 8px;
 		font-size: 11px;
 		color: var(--color-text-secondary);
 		opacity: 0.7;
