@@ -174,8 +174,16 @@
 		}
 
 		const attachedMsIds = new Set<string>();
+		const today = new Date(formatDateISO(new Date()) + 'T00:00:00');
 		const eventEntries: TimelineEntry[] = sortedEvents.map((evt) => {
-			const evtKm = evt.km ?? 0;
+			let evtKm = evt.km ?? 0;
+			if (evtKm === 0 && evt.date && $dailyAverageKm > 0) {
+				const target = new Date(evt.date + 'T00:00:00');
+				const daysAway = (target.getTime() - today.getTime()) / 86400000;
+				if (daysAway > 0) {
+					evtKm = Math.round(odoKm + daysAway * $dailyAverageKm);
+				}
+			}
 			const matched: ServiceMilestone[] = [];
 			if (isEffectivelyCompleted(evt, odoKm) && evtKm > 0) {
 				const rawEvtTasks = (evt.tasks && evt.tasks.length > 0 ? evt.tasks : [evt.event])
@@ -452,6 +460,8 @@
 							<div class="ruler-km" class:completed-km={status === 'completed'}>
 								{evt.kmEstimated ? '~' : ''}{evt.km.toLocaleString()}
 							</div>
+						{:else if entry.km > 0}
+							<div class="ruler-km">~{entry.km.toLocaleString()}</div>
 						{:else}
 							<div class="ruler-km no-km">—</div>
 						{/if}
