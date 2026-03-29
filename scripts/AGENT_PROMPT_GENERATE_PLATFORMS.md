@@ -60,17 +60,18 @@ When a facelifted generation (LCI, FL, Phase 2, etc.) has **different service in
 
 **AWD/4WD drivetrain handling:**
 
-Many platforms cover models sold in both RWD/FWD and AWD variants (e.g., BMW 3 Series comes in both RWD and xDrive). Rather than creating separate files per drivetrain, include the AWD-specific service tasks (transfer case fluid, front/additional differential fluid) as `rec` entries in the platform file, with a service note clarifying they apply to AWD/4WD models only.
+Many platforms cover models sold in both RWD/FWD and AWD variants (e.g., BMW 3 Series comes in both RWD and xDrive). Rather than creating separate files per drivetrain, include the AWD-specific service tasks (transfer case fluid, front/additional differential fluid) as `rec` entries in the platform file, with a service note clarifying they apply to AWD/4WD models only. **These tasks MUST include a `"drivetrain": ["AWD"]` tag** so the app filters them at runtime (see the `drivetrain` field rules section below).
 
-**However**, if a platform covers **exclusively AWD/4WD models** (e.g., BMW X5, Subaru WRX, Audi Q5), the drivetrain fluid tasks should be `mfr` if the manufacturer specifies them, or `rec` if they recommend "lifetime fill".
+**However**, if a platform covers **exclusively AWD/4WD models** (e.g., BMW X5, Subaru WRX, Audi Q5), the drivetrain fluid tasks should be `mfr` if the manufacturer specifies them, or `rec` if they recommend "lifetime fill". No `drivetrain` tag is needed on single-drivetrain platforms since there is no ambiguity.
 
 **Important:** The `vehicles` array must list xDrive/AWD model names explicitly when the manufacturer markets them as distinct models. For example, BMW sells `"320d"` and `"320d xDrive"` as separate models — both must appear. Similarly, Audi sells `"A4 2.0 TFSI"` and `"A4 2.0 TFSI quattro"`. Omitting the AWD variant means users with that car cannot find it in the app.
 
-**Critical: Adding AWD model names requires BOTH:**
+**Critical: Adding AWD model names requires THREE things:**
 1. Adding the model names to the `vehicles` array
 2. Adding the drivetrain service tasks (`xDrive transfer case fluid`, `differential fluids`) to `serviceIntervals`
+3. Adding `"drivetrain": ["AWD"]` to those tasks so RWD/FWD users don't see them
 
-Never add AWD model names without also adding the corresponding drivetrain service tasks. The model names tell the app *which cars match*; the service tasks tell the app *what maintenance those cars need*. One without the other is incomplete.
+Never add AWD model names without also adding the corresponding drivetrain service tasks AND their `drivetrain` tags. The model names tell the app *which cars match*; the service tasks tell the app *what maintenance those cars need*; the drivetrain tags tell the app *which users see those tasks*. Any one missing breaks the experience.
 
 **Platform ID format:** `<MAKE>-<CHASSIS>-<ENGINE/FUEL>`.
 
@@ -252,7 +253,8 @@ Use the **OEM task name** for each (see Step 3), not the generic category name i
     { "task": "<OEM task name>", "km": null, "months": <interval>, "kind": "mfr" },
     { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec" },
     { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec", "transmission": ["manual"] },
-    { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec", "transmission": ["dct"] }
+    { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec", "transmission": ["dct"] },
+    { "task": "<OEM task name>", "km": <interval>, "months": null, "kind": "rec", "drivetrain": ["AWD"] }
   ],
   "serviceNotes": {
     "<OEM task name>": "<Why this matters + platform/engine-specific context>"
@@ -488,6 +490,72 @@ BMW (ZF8 automatic only on modern platforms — no tag needed):
 { "task": "gearbox fluid", "km": 100000, "months": null, "kind": "rec" }
 ```
 
+#### `drivetrain` field rules (drivetrain-specific tasks)
+
+Many platforms cover vehicles sold with different drivetrains (RWD+AWD, FWD+AWD). Certain service tasks only apply to specific drivetrains — a RWD car doesn't need transfer case fluid, and a FWD car doesn't have a rear differential.
+
+**When to use the `drivetrain` field:**
+
+Any `serviceIntervals` entry for a drivetrain-specific task MUST include a `drivetrain` array specifying which drivetrain(s) the task applies to. The app filters tasks at runtime based on the vehicle's configured drivetrain.
+
+**Valid `drivetrain` values:** `"FWD"`, `"RWD"`, `"AWD"`
+
+**Rules:**
+
+1. **Only tag tasks on mixed-drivetrain platforms** — if the platform has a single drivetrain (e.g., `"drivetrains": ["RWD"]` or `"drivetrains": ["AWD"]`), no `drivetrain` tag is needed on any task since there is no ambiguity.
+2. **Tasks without a `drivetrain` field** apply to ALL vehicles on the platform (this is the default and applies to most tasks: oil, filters, brakes, coolant, etc.)
+3. Which tasks are drivetrain-specific **depends on the platform's drivetrain combination** — see the tables below.
+
+**On `["RWD", "AWD"]` platforms:**
+
+| Task type | Tag with | Reasoning |
+|---|---|---|
+| Transfer case fluid (xDrive, 4MATIC, etc.) | `["AWD"]` | Transfer case only exists in AWD drivetrain |
+| Front axle differential oil / front differential oil | `["AWD"]` | RWD cars have no powered front differential |
+| Differential fluids (generic) | **No tag** | RWD cars have a rear differential — applies to all |
+| Rear axle differential oil / rear differential oil | **No tag** | Both RWD and AWD have rear differentials |
+
+**On `["FWD", "AWD"]` platforms:**
+
+| Task type | Tag with | Reasoning |
+|---|---|---|
+| Transfer case fluid (xDrive, 4MATIC, etc.) | `["AWD"]` | Transfer case only exists in AWD drivetrain |
+| Front axle differential oil / front differential oil | `["AWD"]` | FWD diff is inside the transaxle — this refers to a separate AWD unit |
+| Differential fluids (generic) | `["AWD"]` | FWD diff is inside the transaxle (serviced via transmission fluid) — separate diff fluid is AWD-specific |
+| Rear axle differential oil / rear differential oil | `["AWD"]` | FWD cars have no rear axle — any rear diff task is AWD-specific |
+
+**Examples:**
+
+BMW G20 3 Series (RWD + AWD — transfer case is AWD-only, differential fluids apply to all):
+```json
+{ "task": "xDrive transfer case fluid", "km": 80000, "months": null, "kind": "rec", "drivetrain": ["AWD"] },
+{ "task": "differential fluids", "km": 80000, "months": null, "kind": "rec" }
+```
+
+BMW F40 1 Series (FWD + AWD — both transfer case AND differential fluids are AWD-only):
+```json
+{ "task": "xDrive transfer case fluid", "km": 80000, "months": null, "kind": "rec", "drivetrain": ["AWD"] },
+{ "task": "differential fluids", "km": 80000, "months": null, "kind": "rec", "drivetrain": ["AWD"] }
+```
+
+Mercedes W213 E-Class (RWD + AWD — transfer case and front diff are AWD-only, rear diff applies to all):
+```json
+{ "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec", "drivetrain": ["AWD"] },
+{ "task": "front axle differential oil", "km": 60000, "months": null, "kind": "rec", "drivetrain": ["AWD"] },
+{ "task": "rear axle differential oil", "km": 60000, "months": null, "kind": "rec" }
+```
+
+Subaru WRX (AWD only — no tag needed, single drivetrain):
+```json
+{ "task": "front differential oil", "km": 60000, "months": 48, "kind": "mfr" },
+{ "task": "rear differential oil", "km": 60000, "months": 48, "kind": "mfr" }
+```
+
+**A task can have both `transmission` and `drivetrain` tags** when it is specific to both:
+```json
+{ "task": "transfer case oil", "km": 60000, "months": null, "kind": "rec", "transmission": ["automatic"], "drivetrain": ["AWD"] }
+```
+
 ### Step 6: Build index and validate sources
 
 After completing a batch, rebuild the platform index and validate source coverage:
@@ -520,28 +588,29 @@ Before moving to the next platform, verify your output:
 7. **Check model completeness** — did you include all body style variants? (e.g., sedan AND touring/wagon if both exist)
 8. **Check multi-brand** — if this platform is shared across brands, did you list all brand names?
 9. **Verify engine specificity** — does the file only include tasks relevant to this engine family? (no spark plugs on diesels, no fuel filter on petrol if N/A, no engine oil on EVs)
-10. **Check AWD/4WD drivetrain tasks** — if any model in the `vehicles` array is an AWD/4WD variant (xDrive, quattro, 4MATIC, etc.), verify that transfer case and differential fluid tasks are present. If the platform covers exclusively AWD models (X-series, Subaru, etc.), these should be MFR or REC. If mixed RWD+AWD, they should be REC with a service note.
+10. **Check AWD/4WD drivetrain tasks** — if any model in the `vehicles` array is an AWD/4WD variant (xDrive, quattro, 4MATIC, etc.), verify that transfer case and differential fluid tasks are present. If the platform covers exclusively AWD models (X-series, Subaru, etc.), these should be MFR or REC. If mixed RWD+AWD or FWD+AWD, they should be REC with a service note.
 11. **Check AWD model name completeness** — if the chassis is offered with optional AWD (e.g., BMW xDrive, Audi quattro), verify that both the base and AWD model names appear in the `vehicles.models` array. For example, a BMW G20 3 Series platform should list both `"320i"` and `"320i xDrive"` if both are sold.
-12. **Verify model names are historically accurate** — confirm via web search that every model name in the `vehicles` array was actually produced for this generation. AWD availability varies by generation: BMW xDrive was not available on E39 5 Series, E38 7 Series, or E63 6 Series. Adding models that never existed is worse than omitting real ones. If unsure, leave it out.
-13. **Cross-check against other files for the same chassis** — if you generated multiple variants (petrol/diesel, different generations), verify: (a) intervals differ where expected (fuel filter, spark plugs, timing), (b) shared tasks like coolant and brake fluid appear on ALL variants, (c) task names are consistent within the same brand (don't use "cabin air filter" on one and "interior ventilation filter" on another unless the OEM actually changed terminology between generations)
-14. **Compare intervals to web search results** — do the numbers match what you found?
-15. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
-16. **Check that model names belong to this platform** — no models from other platforms (e.g., i4 belongs to G26, not G20; M5 belongs to F10/G30 M, not the standard chassis file)
-17. **Check transmission-specific tasks** — if the platform covers vehicles with multiple transmission types (manual + automatic, manual + CVT, etc.), verify that each transmission-specific fluid task has a `"transmission"` array tag. If the platform only comes with one transmission type, the tag may be omitted. Never include both `CVT fluid` and `manual transmission oil` without tagging each with the appropriate `transmission` value.
-18. **Check `drivetrains` array** — must be present and contain at least one of `"FWD"`, `"RWD"`, `"AWD"`. If the platform includes AWD models (xDrive, quattro, etc.), `"AWD"` must be in the array. If the platform is exclusively AWD (X-series, Subaru), it should be `["AWD"]` only. FWD-based platforms with optional AWD should be `["FWD", "AWD"]`, not `["RWD", "AWD"]`.
-19. **Validate every `rec` task against the qualifying criteria** — each `rec` entry must (a) service a physical wear item or fluid, (b) have a documented engineering reason specific to this platform/engine, and (c) have a specific km or month interval from specialist consensus. If any `rec` task is an additive, consumable product, or "nice to have" without a documented failure mode, remove it.
-20. **Check model names identify the engine variant** — no bare series names like `"3 Series"`, `"5 Series"`, `"Golf"`. Every model entry must include the engine designation (e.g., `"320d"`, `"520i xDrive"`, `"Golf TDI"`). If a user cannot tell from the model name alone which engine it refers to, the entry is invalid.
-21. **Check body style completeness** — if the platform covers multiple body styles (sedan + Touring/wagon, coupé + convertible), verify that every engine/drivetrain model name has a variant for each body style. For example, a G30/G31 platform must list both `"520d"` (sedan) and `"520d Touring"` (wagon), not just `"520d"`.
-22. **Check `transmissions` array** — must be present and contain at least one of `"manual"`, `"automatic"`, `"dct"`, `"cvt"`, `"ev"`. Use `"dct"` for dual-clutch (DSG, PDK), `"cvt"` for CVT, `"ev"` for BEV single-speed, `"automatic"` for conventional torque-converter auto. BEV platforms should be `["ev"]`, not `["automatic"]`.
-23. **Check `displacement`, `cylinders`, `fuelType`** — all three must be present at the platform level (use `null`/`0` for EV). Verify that the displacement and cylinder count match the specs for ALL models listed in the `vehicles` array. If models have different specs, the file must be split.
-24. **Cross-check displacement/cylinders against models** — if displacement is `"4.4L"` and cylinders is `8`, the platform should NOT contain models known to have I6 engines, and vice versa. If displacement is `"2.0L"` and cylinders is `4`, no V6 or V8 models should be listed.
-25. **Check per-entry `chassisCodes` on vehicles entries** — if the platform spans multiple chassis generations (e.g., different chassis codes for different year ranges), each `vehicles` entry must have per-entry `chassisCodes` arrays scoped to that entry's year range. A 2016 WRX STI user should only see chassis `VA`, not all codes from 2000–2021. Per-entry arrays must be subsets of the platform-level arrays.
-26. **No `engines` field** — verify there is no `engines` field at platform level or in any `vehicles` entry. This field has been replaced by `displacement`/`cylinders`/`fuelType`.
-27. **No `milestones` field** — verify there is no `milestones` array. Milestones are computed at runtime.
-28. **Check `serviceSources` exists** — the file must have a `serviceSources` object. Every MFR task in `serviceIntervals` must have a matching key in `serviceSources` with a non-empty value (URL or document reference).
-29. **Check source quality** — every MFR source must be Tier 1 or Tier 2 (official documentation or structured interval database). If any MFR source says "Inherited: ...", verify the inherited platform actually exists and is itself verified. No MFR source may be blank, "training knowledge", "commonly known", or a generic blog URL.
-30. **Cross-check intervals against the source table** — the km/months values in the JSON must exactly match the values in the source table from Step 2b. If they differ, something was changed without updating the source.
-31. **Check for missing sources** — every REC task should ideally have a source too. If a REC task has no source entry in `serviceSources`, add one or remove the task.
+12. **Check drivetrain-specific tasks have `drivetrain` tags** — on mixed-drivetrain platforms (`["RWD", "AWD"]` or `["FWD", "AWD"]`), every AWD-specific task (transfer case fluid, front differential oil) MUST have `"drivetrain": ["AWD"]`. On `["FWD", "AWD"]` platforms, also verify that `"differential fluids"` and `"rear differential oil"` are tagged `["AWD"]` (FWD cars have no separate diff or rear axle). On single-drivetrain platforms, no `drivetrain` tags should be present.
+13. **Verify model names are historically accurate** — confirm via web search that every model name in the `vehicles` array was actually produced for this generation. AWD availability varies by generation: BMW xDrive was not available on E39 5 Series, E38 7 Series, or E63 6 Series. Adding models that never existed is worse than omitting real ones. If unsure, leave it out.
+14. **Cross-check against other files for the same chassis** — if you generated multiple variants (petrol/diesel, different generations), verify: (a) intervals differ where expected (fuel filter, spark plugs, timing), (b) shared tasks like coolant and brake fluid appear on ALL variants, (c) task names are consistent within the same brand (don't use "cabin air filter" on one and "interior ventilation filter" on another unless the OEM actually changed terminology between generations)
+15. **Compare intervals to web search results** — do the numbers match what you found?
+16. **Verify every `serviceIntervals` entry has both `km` and `months` fields** — one may be null, but both keys must be present in every entry
+17. **Check that model names belong to this platform** — no models from other platforms (e.g., i4 belongs to G26, not G20; M5 belongs to F10/G30 M, not the standard chassis file)
+18. **Check transmission-specific tasks** — if the platform covers vehicles with multiple transmission types (manual + automatic, manual + CVT, etc.), verify that each transmission-specific fluid task has a `"transmission"` array tag. If the platform only comes with one transmission type, the tag may be omitted. Never include both `CVT fluid` and `manual transmission oil` without tagging each with the appropriate `transmission` value.
+19. **Check `drivetrains` array** — must be present and contain at least one of `"FWD"`, `"RWD"`, `"AWD"`. If the platform includes AWD models (xDrive, quattro, etc.), `"AWD"` must be in the array. If the platform is exclusively AWD (X-series, Subaru), it should be `["AWD"]` only. FWD-based platforms with optional AWD should be `["FWD", "AWD"]`, not `["RWD", "AWD"]`.
+20. **Validate every `rec` task against the qualifying criteria** — each `rec` entry must (a) service a physical wear item or fluid, (b) have a documented engineering reason specific to this platform/engine, and (c) have a specific km or month interval from specialist consensus. If any `rec` task is an additive, consumable product, or "nice to have" without a documented failure mode, remove it.
+21. **Check model names identify the engine variant** — no bare series names like `"3 Series"`, `"5 Series"`, `"Golf"`. Every model entry must include the engine designation (e.g., `"320d"`, `"520i xDrive"`, `"Golf TDI"`). If a user cannot tell from the model name alone which engine it refers to, the entry is invalid.
+22. **Check body style completeness** — if the platform covers multiple body styles (sedan + Touring/wagon, coupé + convertible), verify that every engine/drivetrain model name has a variant for each body style. For example, a G30/G31 platform must list both `"520d"` (sedan) and `"520d Touring"` (wagon), not just `"520d"`.
+23. **Check `transmissions` array** — must be present and contain at least one of `"manual"`, `"automatic"`, `"dct"`, `"cvt"`, `"ev"`. Use `"dct"` for dual-clutch (DSG, PDK), `"cvt"` for CVT, `"ev"` for BEV single-speed, `"automatic"` for conventional torque-converter auto. BEV platforms should be `["ev"]`, not `["automatic"]`.
+24. **Check `displacement`, `cylinders`, `fuelType`** — all three must be present at the platform level (use `null`/`0` for EV). Verify that the displacement and cylinder count match the specs for ALL models listed in the `vehicles` array. If models have different specs, the file must be split.
+25. **Cross-check displacement/cylinders against models** — if displacement is `"4.4L"` and cylinders is `8`, the platform should NOT contain models known to have I6 engines, and vice versa. If displacement is `"2.0L"` and cylinders is `4`, no V6 or V8 models should be listed.
+26. **Check per-entry `chassisCodes` on vehicles entries** — if the platform spans multiple chassis generations (e.g., different chassis codes for different year ranges), each `vehicles` entry must have per-entry `chassisCodes` arrays scoped to that entry's year range. A 2016 WRX STI user should only see chassis `VA`, not all codes from 2000–2021. Per-entry arrays must be subsets of the platform-level arrays.
+27. **No `engines` field** — verify there is no `engines` field at platform level or in any `vehicles` entry. This field has been replaced by `displacement`/`cylinders`/`fuelType`.
+28. **No `milestones` field** — verify there is no `milestones` array. Milestones are computed at runtime.
+29. **Check `serviceSources` exists** — the file must have a `serviceSources` object. Every MFR task in `serviceIntervals` must have a matching key in `serviceSources` with a non-empty value (URL or document reference).
+30. **Check source quality** — every MFR source must be Tier 1 or Tier 2 (official documentation or structured interval database). If any MFR source says "Inherited: ...", verify the inherited platform actually exists and is itself verified. No MFR source may be blank, "training knowledge", "commonly known", or a generic blog URL.
+31. **Cross-check intervals against the source table** — the km/months values in the JSON must exactly match the values in the source table from Step 2b. If they differ, something was changed without updating the source.
+32. **Check for missing sources** — every REC task should ideally have a source too. If a REC task has no source entry in `serviceSources`, add one or remove the task.
 
 If any check fails, go back and fix it before proceeding.
 
@@ -577,6 +646,9 @@ Do NOT rush. Quality over quantity. A platform with wrong intervals is worse tha
 - Omit xDrive/quattro/AWD model names from the `vehicles` array when the manufacturer sells them as distinct models — users with AWD cars must be able to find their vehicle
 - Omit transfer case and differential fluid tasks on platforms that cover AWD/4WD models — every AWD vehicle has these components and they need servicing
 - Add AWD model names to the `vehicles` array without also adding drivetrain service tasks to `serviceIntervals` — model names without matching tasks means missing maintenance reminders
+- Include drivetrain-specific tasks (transfer case fluid, front differential oil) on mixed-drivetrain platforms WITHOUT a `"drivetrain": ["AWD"]` tag — RWD/FWD users will see services for components their car doesn't have
+- Omit the `"drivetrain"` tag on `"differential fluids"` or `"rear differential oil"` on FWD+AWD platforms — FWD cars have no separate diff or rear axle, so these tasks are AWD-specific on FWD-based platforms
+- Add a `"drivetrain"` tag to tasks on single-drivetrain platforms — there is no ambiguity, and the tag is unnecessary
 - Invent model names that never existed — verify via web search that each AWD variant was actually produced for this generation (e.g., BMW E39 never had xDrive; E46 xi was petrol-only, no xd diesel AWD)
 - Add models from a different platform to the wrong file — the i4 belongs to G26/G22, not G20; keep model lists accurate to the chassis
 - Include spark plugs on diesel or EV platforms
