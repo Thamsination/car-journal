@@ -384,7 +384,7 @@
 						{/if}
 					</div>
 					<div class="ms-task-list">
-						{#each taskStats as ts}
+						{#each taskStats.filter((ts) => ms.km >= $latestOdometer.km || ts.status === 'amber' || ts.status === 'red') as ts}
 							<span class="ms-task-item ms-task-{ts.status}">{ts.task}</span>
 						{/each}
 					</div>
