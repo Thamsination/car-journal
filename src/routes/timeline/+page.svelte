@@ -5,7 +5,7 @@
 	import { goto } from '$app/navigation';
 	import { session, events, statusFilter, latestOdometer, nextScheduledEvent, dailyAverageKm, platformConfig, vehicleConfig, vehicleList, vehicleListLoaded } from '$lib/stores';
 	import { receiptUrl } from '$lib/data';
-	import { formatCost, formatDate, formatDateISO, deriveStatus, isEffectivelyCompleted, statusLabel, statusColor, eventCategory, categoryLabel, categoryColor, completionQuality, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask, getServiceIntervals, computeTimeMilestones } from '$lib/utils';
+	import { formatCost, formatDate, formatDateISO, deriveStatus, isEffectivelyCompleted, statusColor, eventCategory, categoryLabel, categoryColor, eventStatusDisplay, computeMfrMilestones, computeRecMilestones, milestoneId, milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask, getServiceIntervals, computeTimeMilestones } from '$lib/utils';
 	import type { TaskWithStatus, TimeMilestone } from '$lib/utils';
 	import type { CarEvent, DerivedStatus, ServiceMilestone } from '$lib/types';
 
@@ -44,23 +44,6 @@
 		};
 	}
 
-	function smartStatusText(evt: CarEvent, status: DerivedStatus, odoKm: number): string {
-		if (status === 'completed') return '✓';
-		if (status === 'overdue' && evt.km !== null && odoKm > 0) {
-			const over = odoKm - evt.km;
-			if (over > 0) return `Overdue ${over.toLocaleString()} km`;
-			return 'Overdue';
-		}
-		if (status === 'overdue') return 'Overdue';
-		if (status === 'scheduled' && evt.date) {
-			const today = new Date(formatDateISO(new Date()) + 'T00:00:00');
-			const target = new Date(evt.date + 'T00:00:00');
-			const days = Math.round((target.getTime() - today.getTime()) / 86400000);
-			if (days === 0) return 'Today';
-			return days === 1 ? 'In 1 day' : `In ${days} days`;
-		}
-		return 'Scheduled';
-	}
 
 	const statuses: { value: string; label: string }[] = [
 		{ value: 'all', label: 'All' },
@@ -342,6 +325,7 @@
 							<div class="ruler-line"></div>
 						</div>
 					<a class="odo-marker" href="{base}/timeline/new?km={$latestOdometer.km}">
+						<span class="odo-date">{formatDate(formatDateISO(new Date()))}</span>
 						{#if nextMilestone?.type === 'km'}
 							{@const remaining = nextMilestone.ms.km - $latestOdometer.km}
 							{#if remaining > 0}
@@ -475,14 +459,10 @@
 							<span class="category-label">
 								{categoryLabel(eventCategory(evt.event, evt.category))}
 							</span>
-							{#if status === 'completed'}
-								{@const quality = completionQuality(evt)}
-								<span class="status-label" style="color: {quality === 'green' ? '#34c759' : quality === 'amber' ? '#ff9500' : '#ff3b30'}">
-									{quality === 'green' ? 'OK' : quality === 'amber' ? 'No Receipt' : 'Overdue'}
-								</span>
-							{:else if status === 'overdue'}
-								<span class="status-label" style="color: #ff3b30">
-									{smartStatusText(evt, status, $latestOdometer.km)}
+							{@const esd = eventStatusDisplay(evt, $latestOdometer.km)}
+							{#if status === 'completed' || status === 'overdue'}
+								<span class="status-label" style="color: {esd.color}">
+									{esd.label}
 								</span>
 							{/if}
 						</div>
@@ -698,6 +678,12 @@
 		border: 2px solid var(--color-text);
 		border-radius: var(--radius-md);
 		margin-left: 8px;
+	}
+
+	.odo-date {
+		font-size: 11px;
+		color: var(--color-text-secondary);
+		opacity: 0.7;
 	}
 
 	.odo-label {

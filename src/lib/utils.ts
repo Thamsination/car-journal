@@ -557,6 +557,40 @@ export function generateHealthConfig(platform: PlatformConfig, transmission?: Tr
 	return { intervals };
 }
 
+export interface EventStatusInfo {
+	label: string;
+	color: string;
+}
+
+export function eventStatusDisplay(evt: CarEvent, currentOdometer: number): EventStatusInfo {
+	const status = deriveStatus(evt, currentOdometer);
+
+	if (status === 'completed') {
+		const quality = completionQuality(evt);
+		if (quality === 'green') return { label: 'OK', color: '#34c759' };
+		if (quality === 'amber') return { label: 'No Receipt', color: '#ff9500' };
+		return { label: 'Incomplete', color: '#ff3b30' };
+	}
+
+	if (status === 'overdue') {
+		if (evt.km !== null && currentOdometer > 0) {
+			const over = currentOdometer - evt.km;
+			if (over > 0) return { label: `Overdue ${over.toLocaleString()} km`, color: '#ff3b30' };
+		}
+		return { label: 'Overdue', color: '#ff3b30' };
+	}
+
+	if (evt.date) {
+		const today = new Date(formatDateISO(new Date()) + 'T00:00:00');
+		const target = new Date(evt.date + 'T00:00:00');
+		const days = Math.round((target.getTime() - today.getTime()) / 86400000);
+		if (days === 0) return { label: 'Today', color: '#007aff' };
+		if (days === 1) return { label: 'In 1 day', color: '#007aff' };
+		return { label: `In ${days} days`, color: '#007aff' };
+	}
+	return { label: 'Scheduled', color: '#007aff' };
+}
+
 export type CompletionQuality = 'green' | 'amber' | 'red';
 
 export function completionQuality(evt: CarEvent): CompletionQuality {
@@ -565,13 +599,12 @@ export function completionQuality(evt: CarEvent): CompletionQuality {
 	if (cat === 'official-service' || cat === 'tire-swap') return 'green';
 
 	const hasCategory = !!cat;
-	const hasDate = !!evt.date;
 	const hasKm = evt.km !== null && evt.km > 0;
 	const hasCost = typeof evt.cost === 'number';
 	const hasProvider = !!evt.provider.trim();
 	const hasReceipt = !!evt.receipts && evt.receipts.length > 0;
 
-	const coreComplete = hasCategory && hasDate && hasKm && hasCost && hasProvider;
+	const coreComplete = hasCategory && hasKm && hasCost && hasProvider;
 
 	if (!coreComplete) return 'red';
 	if (!hasReceipt) return 'amber';

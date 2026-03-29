@@ -11,8 +11,7 @@
 	} from '$lib/stores';
 	import { saveVehicleConfig } from '$lib/data';
 	import {
-		formatCost, formatDateISO, deriveStatus, statusColor,
-		eventCategory, categoryLabel, categoryColor,
+		formatCost, eventCategory, categoryLabel, categoryColor, eventStatusDisplay,
 		computeMfrMilestones, computeRecMilestones, computeTimeMilestones,
 		milestoneTaskStatuses, milestoneCardStatus, milestoneActionText, capitalizeTask,
 		getServiceIntervals, isEffectivelyCompleted
@@ -229,22 +228,6 @@
 	const nextMilestone = $derived(futureMilestones[0] ?? null);
 	const nextMilestoneCard = $derived(futureMilestones[1] ?? null);
 
-	function smartStatusText(evt: CarEvent, status: DerivedStatus, odoKm: number): string {
-		if (status === 'overdue' && evt.km !== null && odoKm > 0) {
-			const over = odoKm - evt.km;
-			if (over > 0) return `Overdue ${over.toLocaleString()} km`;
-			return 'Overdue';
-		}
-		if (status === 'overdue') return 'Overdue';
-		if (status === 'scheduled' && evt.date) {
-			const today = new Date(formatDateISO(new Date()) + 'T00:00:00');
-			const target = new Date(evt.date + 'T00:00:00');
-			const days = Math.round((target.getTime() - today.getTime()) / 86400000);
-			if (days === 0) return 'Today';
-			return days === 1 ? 'In 1 day' : `In ${days} days`;
-		}
-		return 'Scheduled';
-	}
 </script>
 
 <svelte:head>
@@ -463,8 +446,7 @@
 		<!-- 5. Next Scheduled -->
 		{#if $nextScheduledEvent}
 			{@const nse = $nextScheduledEvent}
-			{@const nseStatus = deriveStatus(nse, $latestOdometer.km)}
-			{@const nseText = smartStatusText(nse, nseStatus, $latestOdometer.km)}
+			{@const nseEsd = eventStatusDisplay(nse, $latestOdometer.km)}
 			<section class="section">
 				<h3 class="section-title">Next Scheduled</h3>
 				<a href="{base}/timeline/{nse.id}" class="event-card">
@@ -475,8 +457,8 @@
 					>
 						{categoryLabel(eventCategory(nse.event, nse.category))}
 						</span>
-						<span class="status-text" style="color: {statusColor(nseStatus)}">
-							{nseText}
+						<span class="status-text" style="color: {nseEsd.color}">
+							{nseEsd.label}
 						</span>
 					</div>
 					<h3 class="event-title">{nse.event}</h3>
@@ -520,8 +502,7 @@
 				<h3 class="section-title">Upcoming Services — {$nextBatchEvents[0].km?.toLocaleString()} km</h3>
 				<div class="card-list">
 					{#each $nextBatchEvents as evt}
-						{@const evtStatus = deriveStatus(evt, $latestOdometer.km)}
-						{@const evtText = smartStatusText(evt, evtStatus, $latestOdometer.km)}
+						{@const evtEsd = eventStatusDisplay(evt, $latestOdometer.km)}
 						<a href="{base}/timeline/{evt.id}" class="event-card">
 							<div class="event-header">
 								<span
@@ -530,8 +511,8 @@
 							>
 								{categoryLabel(eventCategory(evt.event, evt.category))}
 								</span>
-								<span class="status-text" style="color: {statusColor(evtStatus)}">
-									{evtText}
+								<span class="status-text" style="color: {evtEsd.color}">
+									{evtEsd.label}
 								</span>
 							</div>
 							<h3 class="event-title">{evt.event}</h3>
