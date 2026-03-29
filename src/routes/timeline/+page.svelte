@@ -162,23 +162,12 @@
 		const odoKm = $latestOdometer.km;
 
 		const allMilestones: ServiceMilestone[] = [];
-
-		function hasVisibleTasks(ms: ServiceMilestone): boolean {
-			if (ms.km >= odoKm) return true;
-			const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
-			return stats.some((ts) => ts.status === 'amber' || ts.status === 'red');
-		}
-
-		if (showMfr) {
-			for (const ms of mfrMilestones) {
-				if (hasVisibleTasks(ms)) allMilestones.push(ms);
-			}
-		}
+		if (showMfr) allMilestones.push(...mfrMilestones);
 		if (showRec) {
 			for (const ms of recMilestones) {
 				const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
 				const card = milestoneCardStatus(stats);
-				if ((card === 'red' || ms.km >= odoKm) && hasVisibleTasks(ms)) {
+				if (card === 'red' || ms.km >= odoKm || card === 'covered') {
 					allMilestones.push(ms);
 				}
 			}
@@ -212,9 +201,15 @@
 			};
 		});
 
+		function hasVisibleTasks(ms: ServiceMilestone): boolean {
+			if (ms.km >= odoKm) return true;
+			const stats = milestoneTaskStatuses(ms, $events, odoKm, serviceIntervals);
+			return stats.some((ts) => ts.status === 'amber' || ts.status === 'red');
+		}
+
 		const combined: TimelineEntry[] = [...eventEntries];
 		for (const ms of allMilestones) {
-			if (!attachedMsIds.has(`${ms.kind}-${ms.km}`)) {
+			if (!attachedMsIds.has(`${ms.kind}-${ms.km}`) && hasVisibleTasks(ms)) {
 				combined.push({ kind: 'milestone', milestone: ms, km: ms.km, sortDate: '' });
 			}
 		}
