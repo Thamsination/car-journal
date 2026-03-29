@@ -429,6 +429,7 @@
 		{:else if entry.evt}
 			{@const evt = entry.evt}
 			{@const status = deriveStatus(evt, $latestOdometer.km)}
+			{@const esd = eventStatusDisplay(evt, $latestOdometer.km)}
 			{@const isNext = evt.id === nextId}
 			{@const isFocus = focusId ? evt.id === focusId : false}
 			{@const isExpanded = expandedIds.has(evt.id)}
@@ -459,7 +460,6 @@
 							<span class="category-label">
 								{categoryLabel(eventCategory(evt.event, evt.category))}
 							</span>
-							{@const esd = eventStatusDisplay(evt, $latestOdometer.km)}
 							{#if status === 'completed' || status === 'overdue'}
 								<span class="status-label" style="color: {esd.color}">
 									{esd.label}
