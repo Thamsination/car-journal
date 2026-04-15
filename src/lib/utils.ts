@@ -302,9 +302,10 @@ function buildRollingChain(
 }
 
 function mergedDoneKms(completed: Map<string, number[]>, task: string): number[] {
-	const matchKey = task.replace('check ', '');
-	const exact = completed.get(task) ?? [];
-	const alt = task !== matchKey ? (completed.get(matchKey) ?? []) : [];
+	const key = task.toLowerCase().trim();
+	const matchKey = key.replace('check ', '');
+	const exact = completed.get(key) ?? [];
+	const alt = key !== matchKey ? (completed.get(matchKey) ?? []) : [];
 	if (alt.length === 0) return exact;
 	if (exact.length === 0) return alt;
 	const merged = [...new Set([...exact, ...alt])];
